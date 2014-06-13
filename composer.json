@@ -1,0 +1,30 @@
+{
+    "name": "webaccess/w-cms-laravel",
+    "description": "",
+    "authors": [
+        {
+            "name": "Louis Gandelin",
+            "email": "lgandelin@web-access.fr"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/lgandelin/cms-core.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "webaccess/cms": "0.1.0"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Webaccess\\WCMSLaravel\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
