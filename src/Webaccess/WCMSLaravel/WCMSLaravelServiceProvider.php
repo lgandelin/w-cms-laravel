@@ -19,6 +19,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('webaccess/w-cms-laravel');
+		include(__DIR__ . '/../../routes.php');
 	}
 
 	/**

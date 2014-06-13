@@ -1,0 +1,225 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+@import url(//fonts.googleapis.com/css?family=Lato);
+/* line 18, ../sass/vendor/_reset.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+/* line 28, ../sass/vendor/_reset.scss */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/* line 31, ../sass/vendor/_reset.scss */
+body {
+  line-height: 1;
+}
+
+/* line 34, ../sass/vendor/_reset.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 37, ../sass/vendor/_reset.scss */
+blockquote, q {
+  quotes: none;
+}
+
+/* line 41, ../sass/vendor/_reset.scss */
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+/* line 45, ../sass/vendor/_reset.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*
+* VARIABLES
+*/
+/* line 13, ../sass/style.scss */
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 19, ../sass/style.scss */
+html {
+  font-size: 62.5%;
+}
+
+/* line 23, ../sass/style.scss */
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  font-size: 1.5rem;
+  color: #4a4a4a;
+  background: #f3eeed;
+}
+
+/* line 31, ../sass/style.scss */
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+/* line 36, ../sass/style.scss */
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* line 41, ../sass/style.scss */
+h3 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* line 46, ../sass/style.scss */
+strong {
+  font-weight: bold;
+}
+
+/* line 50, ../sass/style.scss */
+a, a:visited {
+  text-decoration: none;
+  color: #2e6cb1;
+}
+
+/* line 55, ../sass/style.scss */
+a:hover {
+  border-bottom: 1px dotted #2e6cb1;
+}
+
+/* line 59, ../sass/style.scss */
+p {
+  margin-bottom: 1.5rem;
+}
+
+/* line 63, ../sass/style.scss */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-bottom: 2px solid #f3eeed;
+  margin: 2rem 0;
+  padding: 0;
+}
+
+/*
+* STRUCTURE
+*/
+/* line 75, ../sass/style.scss */
+.container {
+  max-width: 1000px;
+  padding: 30px 50px;
+  margin: 20px auto;
+  background: #fefefe;
+}
+
+/* line 83, ../sass/style.scss */
+nav {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #f3eeed;
+  padding-bottom: 1rem;
+}
+/* line 88, ../sass/style.scss */
+nav ul {
+  overflow: hidden;
+}
+/* line 91, ../sass/style.scss */
+nav ul li {
+  float: left;
+  list-style: none;
+  margin-right: 20px;
+  font-size: 1.8rem;
+  min-height: 2.5rem;
+}
+/* line 99, ../sass/style.scss */
+nav ul .selected {
+  color: #4a4a4a;
+}
+
+/*
+* CONTENT
+*/
+/* line 110, ../sass/style.scss */
+.content ul {
+  margin-bottom: 1.5rem;
+}
+/* line 113, ../sass/style.scss */
+.content ul li {
+  list-style: disc inside;
+  margin-bottom: 0.5rem;
+}
+
+/*
+* IMPORTS
+*/
+@media screen and (max-width: 480px) {
+  /* line 3, ../sass/_responsive.scss */
+  .container {
+    margin: 0;
+    padding: 2rem;
+  }
+
+  /* line 8, ../sass/_responsive.scss */
+  a:hover {
+    border-bottom: none;
+  }
+
+  /* line 14, ../sass/_responsive.scss */
+  nav ul li {
+    height: 3rem;
+    line-height: 3rem;
+    width: 100%;
+    float: none;
+    background: #f3eeed;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  /* line 23, ../sass/_responsive.scss */
+  nav ul li a {
+    color: white;
+  }
+  /* line 28, ../sass/_responsive.scss */
+  nav ul li:hover {
+    background: #2e6cb1;
+  }
+  /* line 31, ../sass/_responsive.scss */
+  nav ul li:hover a {
+    color: white;
+  }
+  /* line 36, ../sass/_responsive.scss */
+  nav ul .selected, nav ul .selected:hover {
+    background: #f3eeed;
+    color: #4a4a4a;
+  }
+}
