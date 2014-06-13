@@ -1,0 +1,77 @@
+<?php
+
+namespace Webaccess\WCMSLaravel\Repositories;
+
+class EloquentPageRepository implements \CMS\Mappers\PageMapperInterface {
+
+	public function findByIdentifier($identifier)
+	{
+		$pageDB = \Webaccess\WCMSLaravel\Models\Page::where('identifier', '=', $identifier)->first();
+			
+		if ($pageDB) {
+			$page = \CMS\Services\PageManager::createPageObject($pageDB->name, $pageDB->uri, $pageDB->identifier, $pageDB->text);
+			$page->setMetaTitle($pageDB->meta_title);
+			$page->setMetaDescription($pageDB->meta_description);
+			$page->setMetaKeywords($pageDB->meta_keywords);
+
+			return $page;
+		}
+		return false;
+	}
+
+	public function findByUri($uri)
+	{
+		$pageDB = \Webaccess\WCMSLaravel\Models\Page::where('uri', '=', $uri)->first();
+
+		if ($pageDB) {
+			$page = \CMS\Services\PageManager::createPageObject($pageDB->name, $pageDB->uri, $pageDB->identifier, $pageDB->text);
+			$page->setMetaTitle($pageDB->meta_title);
+			$page->setMetaDescription($pageDB->meta_description);
+			$page->setMetaKeywords($pageDB->meta_keywords);
+
+			return $page;
+		}
+		return false;
+	}
+
+	public function findAll()
+	{
+		return \Webaccess\WCMSLaravel\Models\Page::get();
+	}
+
+	public function createPage(\CMS\Entities\Page $page)
+	{
+		$pageDB = new \Webaccess\WCMSLaravel\Models\Page();
+		$pageDB->name = $page->getName();
+		$pageDB->identifier = $page->getIdentifier();
+		$pageDB->uri = $page->getUri();
+		$pageDB->text = $page->getText();
+
+		$pageDB->meta_title = $page->getMetaTitle();
+		$pageDB->meta_description = $page->getMetaDescription();
+		$pageDB->meta_keywords = $page->getMetaKeywords();
+
+		return $pageDB->save();
+	}
+
+	public function updatePage(\CMS\Entities\Page $page)
+	{
+		$pageDB = \Webaccess\WCMSLaravel\Models\Page::where('identifier', '=', $page->getIdentifier())->first();
+		$pageDB->name = $page->getName();
+		$pageDB->uri = $page->getUri();
+		$pageDB->text = $page->getText();
+
+		$pageDB->meta_title = $page->getMetaTitle();
+		$pageDB->meta_description = $page->getMetaDescription();
+		$pageDB->meta_keywords = $page->getMetaKeywords();
+
+		return $pageDB->save();
+	}
+
+	public function deletePage(\CMS\Entities\Page $page)
+	{
+		$pageDB = \Webaccess\WCMSLaravel\Models\Page::where('identifier', '=', $page->getIdentifier())->first();
+		
+		return $pageDB->delete();
+	}
+}

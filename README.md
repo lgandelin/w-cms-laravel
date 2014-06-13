@@ -1,9 +1,9 @@
-##CMS Laravel Package
+##W CMS Laravel package
 
 
-CMS is a web application created to provide a complete content management system, easy to use and to help people writing their content.
+W CMS is a web application created to provide a complete content management system, easy to use and to help people writing their content.
 
-**This repository is the Laravel package created for the [CMS core](https://github.com/lgandelin/cms-core).**
+**This repository is the Laravel package created for the [W CMS core](https://github.com/lgandelin/cms-core).**
 
 
 ##Features
@@ -32,7 +32,7 @@ CMS is a web application created to provide a complete content management system
 2. Add the package to your composer.json file :
 
         "require": {
-            "webaccess/cms-app": "dev-master"
+            "webaccess/w-cms-laravel": "dev-master"
         }
 
     and update your composer dependencies :
@@ -44,7 +44,7 @@ CMS is a web application created to provide a complete content management system
     
         'providers' => array(
                 [...],
-                'Webaccess\CMSApp\CMSAppServiceProvider',
+                'Webaccess\WCMSLaravel\WCMSLaravelServiceProvider',
         ),
 
  
@@ -52,7 +52,7 @@ CMS is a web application created to provide a complete content management system
 
 5. Execute the package migration to update your database :
 
-        php artisan migrate --package=webaccess/cms-app
+        php artisan migrate --package=webaccess/w-cms-laravel
 
 6. Publish the package assets :
 
@@ -60,7 +60,7 @@ CMS is a web application created to provide a complete content management system
 
 7.  Execute the package seeds :
 
-        php artisan db:seed --class=CmsSeeder
+        php artisan db:seed --class=WCMSSeeder
 
 ##Usage
 

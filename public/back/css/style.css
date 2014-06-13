@@ -1,0 +1,25 @@
+/* line 1, ../sass/style.scss */
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 7, ../sass/style.scss */
+.main {
+  margin-top: 40px;
+  padding: 40px;
+}
+
+/* line 14, ../sass/style.scss */
+.shortcuts li {
+  list-style: none;
+  display: inline-block;
+  text-align: center;
+  margin-right: 5rem;
+}
+
+/* line 22, ../sass/style.scss */
+.page-header {
+  margin-bottom: 5rem;
+}
