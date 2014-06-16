@@ -1,7 +1,7 @@
 @extends('w-cms-laravel::back.master')
 
 @section('page_title')
-	{{ trans('w-cms-laravel::titles.pages_create') }} > {{ w-cms-laravel::trans('pages.new_page') }}
+	{{ trans('w-cms-laravel::titles.pages_create') }} > {{ trans('w-cms-laravel::pages.new_page') }}
 @stop
 
 @section('javascripts')
@@ -34,7 +34,7 @@
 				<li><a href="#">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
 				<li><a href="#">{{ trans('w-cms-laravel::header.editorial') }}</a></li>
 				<li><a href="{{ route('back_pages_index') }}">{{ trans('w-cms-laravel::header.pages') }}</a></li>
-				<li class="active">{{ w-cms-laravel::trans('pages.new_page') }}</li>
+				<li class="active">{{ trans('w-cms-laravel::pages.new_page') }}</li>
 			</ol>
 
 			<h1 class="page-header">{{ trans('w-cms-laravel::titles.pages_create') }}</h1>
