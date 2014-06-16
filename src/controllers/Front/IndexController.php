@@ -11,9 +11,11 @@ class IndexController extends \Illuminate\Routing\Controller {
 
 	public function index($uri = null)
 	{
-		$page = $this->pageManager->getByUri('/' . $uri);
-
-		if (!$page) $page = $this->pageManager->getByUri('/404');
+		try {
+            $page = $this->pageManager->getByUri('/' . $uri);
+        } catch(\Exception $e) {
+            $page = $this->pageManager->getByUri('/404');
+        }
 
 		$this->layout = \View::make('w-cms-laravel::front.index', array(
 			'current_page' => $page,

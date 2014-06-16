@@ -11,113 +11,92 @@ class PageController extends \Illuminate\Routing\Controller {
 
 	public function index()
 	{
-		$this->layout = \View::make('w-cms-laravel::back.editorial.pages.index', array(
+		$this->layout = \View::make('w-cms-laravel::back.editorial.pages.index', [
 			'pages' => $this->pageManager->getAll()
-			)
-		);
+		]);
 	}
 
 	public function create()
 	{
-		$page = \CMS\Services\PageManager::createPageObject('New page', '/new-page');
-		$this->layout = \View::make('w-cms-laravel::back.editorial.pages.create', array(
-			'page' => $page
-			)
-		);
+		$this->layout = \View::make('w-cms-laravel::back.editorial.pages.create');
 	}
 
 	public function store()
 	{
-		$page = \CMS\Services\PageManager::createPageObject(
-			\Input::get('name'),
-			\Input::get('uri'),
-			\Input::get('identifier'),
-			\Input::get('text')
-		);
+		$pageS = new \CMS\Structures\PageStructure([
+		    'name' => \Input::get('name'),
+		    'uri' => \Input::get('uri'),
+		    'identifier' => \Input::get('identifier'),
+		    'text' => \Input::get('text'),
+		    'meta_title' => \Input::get('meta_title'),
+		    'meta_description' => \Input::get('meta_description'),
+		    'meta_keywords' => \Input::get('meta_keywords')
+		]);
+
 		$page->setMetaTitle(\Input::get('meta_title'));
 		$page->setMetaDescription(\Input::get('meta_description'));
 		$page->setMetaKeywords(\Input::get('meta_keywords'));
 		
 		try {
-			$this->pageManager->createPage($page);
-			return \Redirect::route('back_pages_index');
+			$this->pageManager->createPage($pageS);
+			return \Redirect::route('w-cms-laravel::back_pages_index');
 		} catch (Exception $e) {
 			 var_dump($e->getMessage());
 		}
 	}
 
-	public function edit($identifier = null)
+	public function edit($identifier)
 	{
 		$page = $this->pageManager->getByIdentifier($identifier);
 
-		if ($page) {
-			$this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', array(
-				'page' => $page)
-			);
-		} else
-			var_dump('The page was not found');
+		try {
+		    $pageS = $this->pageManager->getByIdentifier($identifier);
+		    $this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
+		        'page' => $pageS
+		    ]);
+		} catch (Exception $e) {
+		     var_dump($e->getMessage());
+		}
 	}
 
 	public function update()
 	{
-		$identifier = \Input::get('identifier');
-		$page = $this->pageManager->getByIdentifier($identifier);
-			
-		if ($page) {
-			$page->setName(\Input::get('name'));
-			$page->setUri(\Input::get('uri'));
-			$page->setText(\Input::get('text'));
-			$page->setMetaTitle(\Input::get('meta_title'));
-			$page->setMetaDescription(\Input::get('meta_description'));
-			$page->setMetaKeywords(\Input::get('meta_keywords'));
-			
-			$page->setMetaTitle(\Input::get('meta_title'));
-			$page->setMetaDescription(\Input::get('meta_description'));
-			$page->setMetaKeywords(\Input::get('meta_keywords'));
+		$pageS = new \CMS\Structures\PageStructure([
+		    'name' => \Input::get('name'),
+		    'uri' => \Input::get('uri'),
+		    'identifier' => \Input::get('identifier'),
+		    'text' => \Input::get('text'),
+		    'meta_title' => \Input::get('meta_title'),
+		    'meta_description' => \Input::get('meta_description'),
+		    'meta_keywords' => \Input::get('meta_keywords')
+		]);
 
-			try {
-				$this->pageManager->updatePage($page);
-				return \Redirect::route('back_pages_index');
-			} catch (Exception $e) {
-				 var_dump($e->getMessage());
-			}
-		} else
-			var_dump('The page was not found');
+		try {
+		    $this->pageManager->updatePage($pageS);
+		    return \Redirect::route('back_pages_index');
+		} catch (Exception $e) {
+		     var_dump($e->getMessage());
+		}
 	}
 
 	public function delete($identifier = null)
 	{
-		$page = $this->pageManager->getByIdentifier($identifier);
-
-		if ($page) {
-			try {
-				$this->pageManager->deletePage($page);
-			} catch (Exception $e) {
-				 var_dump($e->getMessage());
-			}
-		} else
-			var_dump('The page was not found');
-
-		return \Redirect::route('back_pages_index');
+		try {
+            $this->pageManager->deletePage($identifier);
+            return \Redirect::route('back_pages_index');
+        } catch (Exception $e) {
+             var_dump($e->getMessage());
+        }
 	}
 
 	public function duplicate($identifier = null)
 	{
-		$page = $this->pageManager->getByIdentifier($identifier);
-
-		if ($page) {
-			$pageCopy = \CMS\Services\PageManager::duplicatePageObject($page);
-
-			try {
-				$this->pageManager->createPage($pageCopy);
-			} catch (Exception $e) {
-				 var_dump($e->getMessage());
-			}
-		} else {
-			var_dump('The page was not found');
-		}
-
-		return \Redirect::route('back_pages_index');
+		try {
+			$this->pageManager->duplicatePage($identifier);
+            return \Redirect::route('back_pages_index');
+        } catch (Exception $e) {
+             var_dump($e->getMessage());
+        }
 	}
 
 }

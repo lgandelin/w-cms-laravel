@@ -10,5 +10,6 @@ return array(
     'meta_description' => 'Meta description',
     'meta_keywords' => 'Meta keywords',
     'no_page_created_yet' => 'No page created yet',
-    'not_found' => 'Page not found'
+    'not_found' => 'Page not found',
+    'new_page' => 'New page'
 );
