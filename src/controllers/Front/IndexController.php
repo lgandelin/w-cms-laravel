@@ -7,6 +7,7 @@ class IndexController extends \Illuminate\Routing\Controller {
 	public function __construct()
 	{
 		$this->pageManager = new \CMS\Services\PageManager(new \Webaccess\WCMSLaravel\Repositories\EloquentPageRepository());
+		$this->menuManager = new \CMS\Services\MenuManager(new \Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository());
 	}
 
 	public function index($uri = null)
@@ -17,9 +18,9 @@ class IndexController extends \Illuminate\Routing\Controller {
             $page = $this->pageManager->getByUri('/404');
         }
 
-		$this->layout = \View::make('w-cms-laravel::front.index', array(
+		$this->layout = \View::make('w-cms-laravel::front.index', [
 			'current_page' => $page,
-			'pages' => $this->pageManager->getAll())
-		);
+			'menu' => $this->menuManager->getByIdentifier('main-menu')
+		]);
 	}
 }

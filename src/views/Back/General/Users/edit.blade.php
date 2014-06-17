@@ -11,7 +11,7 @@
             
             <ol class="breadcrumb">
                 <li><a href="{{ route('back') }}">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
-                <li><a href="#">{{ trans('w-cms-laravel::header.editorial') }}</a></li>
+                <li><a href="{{ route('back_editorial') }}">{{ trans('w-cms-laravel::header.editorial') }}</a></li>
                 <li><a href="{{ route('back_users_index') }}">{{ trans('w-cms-laravel::header.users') }}</a></li>
                 <li class="active">{{ $user->login }} ({{ $user->last_name }} {{ $user->first_name }})</li>
             </ol>

@@ -15,7 +15,8 @@ class PageController extends AdminController {
 	public function index()
 	{
 		$this->layout = \View::make('w-cms-laravel::back.editorial.pages.index', [
-			'pages' => $this->pageManager->getAll()
+			'pages' => $this->pageManager->getAll(),
+            'error' => (\Session::has('error')) ? \Session::get('error') : null
 		]);
 	}
 
@@ -57,10 +58,8 @@ class PageController extends AdminController {
 		        'page' => $pageS
 		    ]);
 		} catch (\Exception $e) {
-		     $this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
-				'error' => $e->getMessage(),
-				'page' => $pageS
-             ]);
+		     \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_pages_index');
 		}
 	}
 

@@ -18,14 +18,14 @@
             <ul class="shortcuts">
                 <li>
                     <a href="{{ route('back_pages_index') }}">
-                          <img class="thumbnail" src="http://placehold.it/150x150" />
+                          <img class="thumbnail" src="http://placehold.it/150x150/8BB58E/FFFFFF" />
                           {{ trans('w-cms-laravel::header.pages') }} 
                       </a>
                   </li>
 
                 <li>
                     <a href="{{ route('back_pages_index') }}">
-                        <img class="thumbnail" src="http://placehold.it/150x150" />
+                        <img class="thumbnail" src="http://placehold.it/150x150/F2192C/FFFFFF" />
                         {{ trans('w-cms-laravel::header.articles') }}
                     </a>
                 </li>

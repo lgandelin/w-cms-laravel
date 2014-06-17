@@ -17,6 +17,10 @@
 
 			<h1 class="page-header">{{ trans('w-cms-laravel::header.pages') }}</h1>
 			
+			@if (isset($error))
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endif
+
 			@if ($pages)
 			<div class="table-responsive">
 				<table class="table table-striped">

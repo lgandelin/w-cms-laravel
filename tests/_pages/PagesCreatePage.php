@@ -7,8 +7,8 @@ class PagesCreatePage
 	static $title = 'Create a page';
     static $submit_button = 'Submit';
 
-    static $errorTwoPagesSameUri = 'There is already a page with the same URI';
     static $errorTwoPagesSameIdentifier = 'There is already a page with the same identifier';
+    static $errorTwoPagesSameUri = 'There is already a page with the same URI';
     static $errorIdentifierMandatory = 'You must provide an identifier for a page';
     static $errorUriMandatory = 'You must provide a URI for a page';
 

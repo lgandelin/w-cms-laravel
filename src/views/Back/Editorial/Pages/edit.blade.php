@@ -1,7 +1,7 @@
 @extends('w-cms-laravel::back.master')
 
 @section('page_title')
-	{{ trans('w-cms-laravel::titles.pages_edit') }} > {{ $page->name }}
+	{{ trans('w-cms-laravel::titles.pages_edit') }} > {{{ $page->name or '' }}}
 @stop
 
 @section('javascripts')
@@ -15,9 +15,9 @@
 			
 			<ol class="breadcrumb">
 				<li><a href="{{ route('back') }}">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
-				<li><a href="#">{{ trans('w-cms-laravel::header.editorial') }}</a></li>
+				<li><a href="{{ route('back_editorial') }}">{{ trans('w-cms-laravel::header.editorial') }}</a></li>
 				<li><a href="{{ route('back_pages_index') }}">{{ trans('w-cms-laravel::header.pages') }}</a></li>
-				<li class="active">{{ $page->name }}</li>
+				<li class="active">{{{ $page->name or '' }}}</li>
 			</ol>
 
 			<h1 class="page-header">{{ trans('w-cms-laravel::header.pages_edit') }}</h1>

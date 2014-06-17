@@ -15,7 +15,7 @@
 			
 			<ol class="breadcrumb">
 				<li><a href="{{ route('back') }}">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
-				<li><a href="#">{{ trans('w-cms-laravel::header.editorial') }}</a></li>
+				<li><a href="{{ route('back_editorial') }}">{{ trans('w-cms-laravel::header.editorial') }}</a></li>
 				<li><a href="{{ route('back_pages_index') }}">{{ trans('w-cms-laravel::header.pages') }}</a></li>
 				<li class="active">{{ trans('w-cms-laravel::pages.new_page') }}</li>
 			</ol>
