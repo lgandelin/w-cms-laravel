@@ -2,7 +2,9 @@
 
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
-class EditorialController extends \Illuminate\Routing\Controller {
+use Webaccess\WCMSLaravel\Back\AdminController;
+
+class EditorialController extends AdminController {
 
 	public function index()
 	{

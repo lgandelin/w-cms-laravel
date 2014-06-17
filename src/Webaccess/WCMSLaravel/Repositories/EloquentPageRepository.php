@@ -2,14 +2,18 @@
 
 namespace Webaccess\WCMSLaravel\Repositories;
 
-class EloquentPageRepository implements \CMS\Mappers\PageMapperInterface {
+class EloquentPageRepository implements \CMS\Repositories\PageRepositoryInterface {
 
 	public function findByIdentifier($identifier)
 	{
 		$pageDB = \Webaccess\WCMSLaravel\Models\Page::where('identifier', '=', $identifier)->first();
 			
 		if ($pageDB) {
-			$page = \CMS\Services\PageManager::createPageObject($pageDB->name, $pageDB->uri, $pageDB->identifier, $pageDB->text);
+			$page = new \CMS\Entities\Page();
+			$page->setName($pageDB->name);
+			$page->setUri($pageDB->uri);
+			$page->setIdentifier($pageDB->identifier);
+			$page->setText($pageDB->text);
 			$page->setMetaTitle($pageDB->meta_title);
 			$page->setMetaDescription($pageDB->meta_description);
 			$page->setMetaKeywords($pageDB->meta_keywords);
@@ -24,7 +28,11 @@ class EloquentPageRepository implements \CMS\Mappers\PageMapperInterface {
 		$pageDB = \Webaccess\WCMSLaravel\Models\Page::where('uri', '=', $uri)->first();
 
 		if ($pageDB) {
-			$page = \CMS\Services\PageManager::createPageObject($pageDB->name, $pageDB->uri, $pageDB->identifier, $pageDB->text);
+			$page = new \CMS\Entities\Page();
+			$page->setName($pageDB->name);
+			$page->setUri($pageDB->uri);
+			$page->setIdentifier($pageDB->identifier);
+			$page->setText($pageDB->text);
 			$page->setMetaTitle($pageDB->meta_title);
 			$page->setMetaDescription($pageDB->meta_description);
 			$page->setMetaKeywords($pageDB->meta_keywords);
