@@ -17,5 +17,7 @@ return array(
     'articles' => 'Articles',
     'articles_edit' => 'Edit an article',
     'menus' => 'Menus',
-    'menus_edit' => 'Edit a menu'
+    'menus_edit' => 'Edit a menu',
+    'welcome' => 'Welcome',
+    'logout' => 'Logout'
 );

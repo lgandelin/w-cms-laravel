@@ -18,4 +18,6 @@ return array(
     'articles_edit' => 'Editer un article',
     'menus' => 'Gestion des menus',
     'menus_edit' => 'Editer un menu',
+    'welcome' => 'Bienvenue',
+    'logout' => 'Déconnexion'
 );

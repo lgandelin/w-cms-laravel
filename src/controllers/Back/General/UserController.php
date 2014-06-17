@@ -2,10 +2,13 @@
 
 namespace Webaccess\WCMSLaravel\Back\General;
 
-class UserController extends \Illuminate\Routing\Controller {
+use Webaccess\WCMSLaravel\Back\AdminController;
+
+class UserController extends AdminController {
 
     public function __construct()
     {
+        parent::__construct();
         $this->userManager = new \CMS\Services\UserManager(new \Webaccess\WCMSLaravel\Repositories\EloquentUserRepository());
     }
 
@@ -25,7 +28,7 @@ class UserController extends \Illuminate\Routing\Controller {
     {
         $userS = new \CMS\Structures\UserStructure([
             'login' => \Input::get('login'),
-            'password' => \Input::get('password'),
+            'password' => (\Input::get('password')) ? \Hash::make(\Input::get('password')) : null,
             'last_name' => \Input::get('last_name'),
             'first_name' => \Input::get('first_name'),
             'email' => \Input::get('email'),

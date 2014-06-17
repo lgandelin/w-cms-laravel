@@ -9,6 +9,6 @@ return array(
     'first_name' => 'Prénom',
     'email' => 'Email',
     'no_user_created_yet' => 'Aucun utilisateur créé',
-    'not_found' => 'User not found',
-    'new_user' => 'New user'
+    'not_found' => 'Utilisateur non trouvé',
+    'new_user' => 'Nouvel utilisateur'
 );

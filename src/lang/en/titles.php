@@ -1,6 +1,8 @@
 <?php
 
 return array(
+	'login' => 'Login',
+	'dashboard' => 'Dashboard',
 	'pages' => 'Pages',
 	'pages_create' => 'Create a page',
 	'pages_edit' => 'Edit a page',

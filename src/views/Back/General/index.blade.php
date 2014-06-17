@@ -27,15 +27,34 @@
         <div class="row main">
             
             <ol class="breadcrumb">
-                <li><a href="#">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
+                <li><a href="{{ route('back') }}">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
                 <li class="active">{{ trans('w-cms-laravel::header.general') }}</li>
             </ol>
 
-            <h1 class="user-header">{{ trans('w-cms-laravel::header.general') }}</h1>
-            
-            <a href="{{ route('back_users_index') }}">{{ trans('w-cms-laravel::header.users') }}</a>
-            <a href="{{ route('back_users_index') }}">{{ trans('w-cms-laravel::header.roles') }}</a>
-            <a href="{{ route('back_users_index') }}">{{ trans('w-cms-laravel::header.languages') }}</a>
+            <h1 class="page-header">{{ trans('w-cms-laravel::header.general') }}</h1>
+             
+            <ul class="shortcuts">
+                <li>
+                    <a href="{{ route('back_users_index') }}">
+                          <img class="thumbnail" src="http://placehold.it/150x150" />
+                          {{ trans('w-cms-laravel::header.users') }} 
+                      </a>
+                  </li>
+
+                <li>
+                    <a href="{{ route('back_users_index') }}">
+                        <img class="thumbnail" src="http://placehold.it/150x150" />
+                        {{ trans('w-cms-laravel::header.roles') }}
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="{{ route('back_users_index') }}">
+                        <img class="thumbnail" src="http://placehold.it/150x150" />
+                        {{ trans('w-cms-laravel::header.languages') }}
+                    </a>
+                </li>
+            </div>
             
         </div>
     </div>

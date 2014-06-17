@@ -2,7 +2,9 @@
 
 namespace Webaccess\WCMSLaravel\Back\General;
 
-class GeneralController extends \Illuminate\Routing\Controller {
+use Webaccess\WCMSLaravel\Back\AdminController;
+
+class GeneralController extends AdminController {
 
     public function index()
     {

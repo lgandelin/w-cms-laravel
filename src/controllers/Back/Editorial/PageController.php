@@ -2,10 +2,13 @@
 
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
-class PageController extends \Illuminate\Routing\Controller {
+use Webaccess\WCMSLaravel\Back\AdminController;
+
+class PageController extends AdminController {
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->pageManager = new \CMS\Services\PageManager(new \Webaccess\WCMSLaravel\Repositories\EloquentPageRepository());
 	}
 
@@ -32,16 +35,15 @@ class PageController extends \Illuminate\Routing\Controller {
 		    'meta_description' => \Input::get('meta_description'),
 		    'meta_keywords' => \Input::get('meta_keywords')
 		]);
-
-		$page->setMetaTitle(\Input::get('meta_title'));
-		$page->setMetaDescription(\Input::get('meta_description'));
-		$page->setMetaKeywords(\Input::get('meta_keywords'));
 		
 		try {
 			$this->pageManager->createPage($pageS);
-			return \Redirect::route('w-cms-laravel::back_pages_index');
-		} catch (Exception $e) {
-			 var_dump($e->getMessage());
+			return \Redirect::route('back_pages_index');
+		} catch (\Exception $e) {
+			 $this->layout = \View::make('w-cms-laravel::back.editorial.pages.create', [
+				'error' => $e->getMessage(),
+				'page' => $pageS
+			]);
 		}
 	}
 
@@ -54,8 +56,11 @@ class PageController extends \Illuminate\Routing\Controller {
 		    $this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
 		        'page' => $pageS
 		    ]);
-		} catch (Exception $e) {
-		     var_dump($e->getMessage());
+		} catch (\Exception $e) {
+		     $this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
+				'error' => $e->getMessage(),
+				'page' => $pageS
+             ]);
 		}
 	}
 
@@ -74,7 +79,7 @@ class PageController extends \Illuminate\Routing\Controller {
 		try {
 		    $this->pageManager->updatePage($pageS);
 		    return \Redirect::route('back_pages_index');
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 		     var_dump($e->getMessage());
 		}
 	}
@@ -84,7 +89,7 @@ class PageController extends \Illuminate\Routing\Controller {
 		try {
             $this->pageManager->deletePage($identifier);
             return \Redirect::route('back_pages_index');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
              var_dump($e->getMessage());
         }
 	}
@@ -94,7 +99,7 @@ class PageController extends \Illuminate\Routing\Controller {
 		try {
 			$this->pageManager->duplicatePage($identifier);
             return \Redirect::route('back_pages_index');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
              var_dump($e->getMessage());
         }
 	}

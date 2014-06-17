@@ -13,7 +13,7 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
+					<li><a href="{{ route('back') }}">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
 					<li><a href="#">{{ trans('w-cms-laravel::header.editorial') }}</a></li>
 					<li><a href="#">{{ trans('w-cms-laravel::header.structure') }}</a></li>
 					<li><a href="#">{{ trans('w-cms-laravel::header.general') }}</a></li>
@@ -33,9 +33,28 @@
 
 			<h1 class="page-header">{{ trans('w-cms-laravel::header.editorial') }}</h1>
 			
-			<a href="{{ route('back_pages_index') }}">{{ trans('w-cms-laravel::header.pages') }}</a>
-			<a href="{{ route('back_pages_index') }}">{{ trans('w-cms-laravel::header.articles') }}</a>
-			<a href="{{ route('back_pages_index') }}">{{ trans('w-cms-laravel::header.menus') }}</a>
+			<ul class="shortcuts">
+                <li>
+                    <a href="{{ route('back_pages_index') }}">
+                          <img class="thumbnail" src="http://placehold.it/150x150" />
+                          {{ trans('w-cms-laravel::header.pages') }} 
+                      </a>
+                  </li>
+
+                <li>
+                    <a href="{{ route('back_pages_index') }}">
+                        <img class="thumbnail" src="http://placehold.it/150x150" />
+                        {{ trans('w-cms-laravel::header.articles') }}
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="{{ route('back_pages_index') }}">
+                        <img class="thumbnail" src="http://placehold.it/150x150" />
+                        {{ trans('w-cms-laravel::header.menus') }}
+                    </a>
+                </li>
+            </ul>
 			
 		</div>
 	</div>
