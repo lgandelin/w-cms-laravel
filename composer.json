@@ -1,6 +1,8 @@
 {
     "name": "webaccess/w-cms-laravel",
-    "description": "",
+    "type": "library",
+    "time" : "2014-06-20",
+    "description": "W CMS - Laravel package",
     "authors": [
         {
             "name": "Louis Gandelin",
@@ -10,13 +12,13 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/lgandelin/cms-core.git"
+            "url": "https://github.com/lgandelin/w-cms-core.git"
         }
     ],
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "4.2.*",
-        "webaccess/cms": "0.2.0"
+        "webaccess/w-cms-core": "0.2.0"
     },
     "autoload": {
         "classmap": [
