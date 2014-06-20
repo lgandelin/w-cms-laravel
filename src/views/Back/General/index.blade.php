@@ -5,23 +5,6 @@
 @stop
 
 @section('content')
-
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">{{ trans('w-cms-laravel::header.title') }}</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
-                    <li><a href="#">{{ trans('w-cms-laravel::header.editorial') }}</a></li>
-                    <li><a href="#">{{ trans('w-cms-laravel::header.structure') }}</a></li>
-                    <li><a href="#">{{ trans('w-cms-laravel::header.general') }}</a></li>
-                    <li><a href="#">{{ trans('w-cms-laravel::header.administration') }}</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
     
     <div class="container-fluid">
         <div class="row main">

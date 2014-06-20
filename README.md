@@ -1,9 +1,9 @@
-##W CMS Laravel package
+##W CMS - Laravel package
 
 
 W CMS is a web application created to provide a complete content management system, easy to use and to help people writing their content.
 
-**This repository is the Laravel package created for the [W CMS core](https://github.com/lgandelin/cms-core).**
+**This repository is the Laravel package created for the [W CMS - Core package](https://github.com/lgandelin/w-cms-core).**
 
 
 ##Features
@@ -12,7 +12,7 @@ W CMS is a web application created to provide a complete content management syst
 - Multilingual
 - Page architecture divided in Areas and Blocks, with dynamic reorganization (size, drag and drop)
 - Page templates
-- Mutliple types of Blocks : HMTL, Menus, Articles, Galleries, Custom ...
+- Multiple types of Blocks : HMTL, Menus, Articles, Galleries, Custom ...
 - User management for the back-office, with roles and permissions
 
 
@@ -71,8 +71,8 @@ W CMS is a web application created to provide a complete content management syst
 
 
 ##Roadmap
-Please go the the [CMS core page](https://github.com/lgandelin/cms-core/blob/master/ROADMAP.md).
+Please go the the [W CMS - Core package](https://github.com/lgandelin/w-cms-core/blob/master/ROADMAP.md).
 
 
 ##License
-The CMS Laravel Package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+W CMS is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
