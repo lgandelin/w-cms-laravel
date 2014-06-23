@@ -7,5 +7,5 @@ class PagesEditPage
 	static $title = 'Edit a page';
     static $submit_button = 'Submit';
 
-	static $page_fixture_edited = array('name' => 'Test Page edited', 'identifier' => 'home');
+	static $page_fixture_edited = array('name' => 'Test Page edited', 'uri' => '/test-page-edited');
 }

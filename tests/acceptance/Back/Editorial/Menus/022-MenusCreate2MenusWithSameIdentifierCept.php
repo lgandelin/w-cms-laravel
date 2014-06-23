@@ -1,6 +1,6 @@
 <?php
 $I = new WebGuy($scenario);
-$I->wantTo('create 2 pages with the same identifier');
+$I->wantTo('create 2 menus with the same identifier');
 
 //Login
 LoginUtils::login($I);

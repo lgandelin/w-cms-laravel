@@ -23,6 +23,7 @@ $I->seeCurrentUrlMatches('#(.*)' . PagesEditPage::$uri . '/'. PagesCreatePage::$
 $I->seeInTitle(PagesEditPage::$title);
 
 $I->fillField('Name', PagesEditPage::$page_fixture_edited['name']);
+$I->fillField('URI', PagesEditPage::$page_fixture_edited['uri']);
 $I->click(PagesEditPage::$submit_button);
 
 //Result
