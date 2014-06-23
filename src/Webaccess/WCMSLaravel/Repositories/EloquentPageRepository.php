@@ -20,6 +20,7 @@ class EloquentPageRepository implements \CMS\Repositories\PageRepositoryInterfac
 
 			return $page;
 		}
+		
 		return false;
 	}
 
@@ -39,12 +40,29 @@ class EloquentPageRepository implements \CMS\Repositories\PageRepositoryInterfac
 
 			return $page;
 		}
+
 		return false;
 	}
 
 	public function findAll()
 	{
-		return \Webaccess\WCMSLaravel\Models\Page::get();
+		$pagesDB = \Webaccess\WCMSLaravel\Models\Page::get();
+
+		$pages = [];
+		foreach ($pagesDB as $i => $pageDB) {
+			$page = new \CMS\Entities\Page();
+			$page->setName($pageDB->name);
+			$page->setUri($pageDB->uri);
+			$page->setIdentifier($pageDB->identifier);
+			$page->setText($pageDB->text);
+			$page->setMetaTitle($pageDB->meta_title);
+			$page->setMetaDescription($pageDB->meta_description);
+			$page->setMetaKeywords($pageDB->meta_keywords);
+		
+			$pages[]= $page;
+		}
+
+		return $pages;
 	}
 
 	public function createPage(\CMS\Entities\Page $page)
