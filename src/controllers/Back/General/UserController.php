@@ -58,7 +58,7 @@ class UserController extends AdminController {
     {
         $userS = new \CMS\Structures\UserStructure([
             'login' => \Input::get('login'),
-            'password' => \Input::get('password'),
+            'password' => (\Input::get('password')) ? \Hash::make(\Input::get('password')) : null,
             'last_name' => \Input::get('last_name'),
             'first_name' => \Input::get('first_name'),
             'email' => \Input::get('email'),
