@@ -58,7 +58,7 @@ class PageController extends AdminController {
 		        'page' => $pageS
 		    ]);
 		} catch (\Exception $e) {
-		     \Session::flash('error', $e->getMessage());
+			\Session::flash('error', $e->getMessage());
             return \Redirect::route('back_pages_index');
 		}
 	}
@@ -79,7 +79,8 @@ class PageController extends AdminController {
 		    $this->pageManager->updatePage($pageS);
 		    return \Redirect::route('back_pages_index');
 		} catch (\Exception $e) {
-		     var_dump($e->getMessage());
+			\Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_pages_index');
 		}
 	}
 
@@ -89,7 +90,8 @@ class PageController extends AdminController {
             $this->pageManager->deletePage($identifier);
             return \Redirect::route('back_pages_index');
         } catch (\Exception $e) {
-             var_dump($e->getMessage());
+			\Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_pages_index');
         }
 	}
 
@@ -99,7 +101,8 @@ class PageController extends AdminController {
 			$this->pageManager->duplicatePage($identifier);
             return \Redirect::route('back_pages_index');
         } catch (\Exception $e) {
-             var_dump($e->getMessage());
+			\Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_pages_index');
         }
 	}
 

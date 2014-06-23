@@ -89,7 +89,8 @@ class MenuController extends AdminController {
             $this->menuManager->updateMenu($menuS);
             return \Redirect::route('back_menus_index');
         } catch (\Exception $e) {
-             var_dump($e->getMessage());
+            \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_menus_index');
         }
     }
 
@@ -99,7 +100,8 @@ class MenuController extends AdminController {
             $this->menuManager->deleteMenu($identifier);
             return \Redirect::route('back_menus_index');
         } catch (\Exception $e) {
-             var_dump($e->getMessage());
+            \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_menus_index');
         }
     }
 
@@ -109,7 +111,8 @@ class MenuController extends AdminController {
             $this->menuManager->duplicateMenu($identifier);
             return \Redirect::route('back_menus_index');
         } catch (\Exception $e) {
-             var_dump($e->getMessage());
+            \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_menus_index');
         }
     }
 
