@@ -3,6 +3,7 @@
 namespace Webaccess\WCMSLaravel\Repositories;
 
 use CMS\Entities\Menu;
+use CMS\Entities\MenuItem;
 use CMS\Repositories\MenuRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Menu as MenuModel;
 use Webaccess\WCMSLaravel\Models\MenuItem as MenuItemModel;

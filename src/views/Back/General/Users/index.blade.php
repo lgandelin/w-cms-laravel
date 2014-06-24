@@ -17,6 +17,10 @@
 
             <h1 class="page-header">{{ trans('w-cms-laravel::header.users') }}</h1>
             
+            @if (isset($error))
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endif
+
             @if ($users)
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -32,7 +36,7 @@
                     <tbody>
                         @foreach ($users as $user)
                         <tr>
-                            <td>{{ $user->id }}</td>
+                            <td>{{{ $user->id or '' }}}</td>
                             <td>{{ $user->login }}</td>
                             <td>{{ $user->last_name }} {{ $user->first_name }}</td>
                             <td>{{ $user->email }}</td>

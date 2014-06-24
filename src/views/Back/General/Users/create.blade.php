@@ -18,6 +18,10 @@
 
             <h1 class="page-header">{{ trans('w-cms-laravel::titles.users_create') }}</h1>
             
+            @if (isset($error))
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endif
+            
             <form role="form" action="{{ route('back_users_store') }}" method="post">
                 <div class="form-group">
                     <label for="login">{{ trans('w-cms-laravel::users.login') }}</label>

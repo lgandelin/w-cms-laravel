@@ -36,5 +36,5 @@ $I->fillField('URI', PagesCreatePage::$page_fixture_created['uri']);
 $I->click(PagesEditPage::$submit_button);
 
 //Result
-$I->seeCurrentUrlMatches('#(.*)' . PagesIndexPage::$uri . '$#');
+$I->seeCurrentUrlMatches('#(.*)' . PagesEditPage::$uri_post . '$#');
 $I->see(PagesCreatePage::$errorTwoPagesSameUri);

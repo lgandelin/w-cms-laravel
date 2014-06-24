@@ -21,6 +21,10 @@
             </ol>
 
             <h1 class="menu-header">{{ trans('w-cms-laravel::header.menus_edit') }}</h1>
+                
+            @if (isset($error))
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endif
             
             @if ($menu)
                 <form role="form" action="{{ route('back_menus_update') }}" method="post">

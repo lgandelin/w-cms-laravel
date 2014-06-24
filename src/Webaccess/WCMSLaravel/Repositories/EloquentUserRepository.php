@@ -27,7 +27,21 @@ class EloquentUserRepository implements UserRepositoryInterface {
 
     public function findAll()
     {
-        return UserModel::get();
+        $usersDB = UserModel::get();
+
+        $users = [];
+        foreach ($usersDB as $i => $userDB) {
+            $user = new User();
+            $user->setLogin($userDB->login);
+            $user->setPassword($userDB->password);
+            $user->setLastName($userDB->last_name);
+            $user->setFirstName($userDB->first_name);
+            $user->setEmail($userDB->email);
+        
+            $users[]= $user;
+        }
+
+        return $users;
     }
 
     public function createUser(User $user)
