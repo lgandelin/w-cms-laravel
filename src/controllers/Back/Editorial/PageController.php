@@ -2,14 +2,16 @@
 
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
+use CMS\Services\PageManager;
+use CMS\Structures\PageStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
 class PageController extends AdminController {
 
-	public function __construct()
+	public function __construct(PageManager $pageManager)
 	{
 		parent::__construct();
-		$this->pageManager = new \CMS\Services\PageManager(new \Webaccess\WCMSLaravel\Repositories\EloquentPageRepository());
+		$this->pageManager = $pageManager;
 	}
 
 	public function index()
@@ -27,7 +29,7 @@ class PageController extends AdminController {
 
 	public function store()
 	{
-		$pageS = new \CMS\Structures\PageStructure([
+		$pageS = new PageStructure([
 		    'name' => \Input::get('name'),
 		    'uri' => \Input::get('uri'),
 		    'identifier' => \Input::get('identifier'),
@@ -41,7 +43,7 @@ class PageController extends AdminController {
 			$this->pageManager->createPage($pageS);
 			return \Redirect::route('back_pages_index');
 		} catch (\Exception $e) {
-			 $this->layout = \View::make('w-cms-laravel::back.editorial.pages.create', [
+			$this->layout = \View::make('w-cms-laravel::back.editorial.pages.create', [
 				'error' => $e->getMessage(),
 				'page' => $pageS
 			]);
@@ -65,7 +67,7 @@ class PageController extends AdminController {
 
 	public function update()
 	{
-		$pageS = new \CMS\Structures\PageStructure([
+		$pageS = new PageStructure([
 		    'name' => \Input::get('name'),
 		    'uri' => \Input::get('uri'),
 		    'identifier' => \Input::get('identifier'),
@@ -79,8 +81,10 @@ class PageController extends AdminController {
 		    $this->pageManager->updatePage($pageS);
 		    return \Redirect::route('back_pages_index');
 		} catch (\Exception $e) {
-			\Session::flash('error', $e->getMessage());
-            return \Redirect::route('back_pages_index');
+			$this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
+				'error' => $e->getMessage(),
+				'page' => $pageS
+			]);
 		}
 	}
 

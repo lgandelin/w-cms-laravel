@@ -2,23 +2,29 @@
 
 namespace Webaccess\WCMSLaravel\Repositories;
 
-class EloquentMenuRepository implements \CMS\Repositories\MenuRepositoryInterface {
+use CMS\Entities\Menu;
+use CMS\Repositories\MenuRepositoryInterface;
+use Webaccess\WCMSLaravel\Models\Menu as MenuModel;
+use Webaccess\WCMSLaravel\Models\MenuItem as MenuItemModel;
+use Webaccess\WCMSLaravel\Models\Page as PageModel;
+
+class EloquentMenuRepository implements MenuRepositoryInterface {
 
     public function findByIdentifier($identifier)
     {
-        $menuDB = \Webaccess\WCMSLaravel\Models\Menu::where('identifier', '=', $identifier)->first();
+        $menuDB = MenuModel::where('identifier', '=', $identifier)->first();
 
         if ($menuDB) {
-            $menu = new \CMS\Entities\Menu();
+            $menu = new Menu();
             $menu->setIdentifier($menuDB->identifier);
 
             if ($menuDB->items) {
                 foreach ($menuDB->items->sortBy('order') as $itemDB) {
-                    $item = new \CMS\Entities\MenuItem();
+                    $item = new MenuItem();
                     $item->setLabel($itemDB->label);
                     $item->setOrder($itemDB->order);
                     if ($itemDB->page_id) {
-                        $page = \Webaccess\WCMSLaravel\Models\Page::find($itemDB->page_id);
+                        $page = PageModel::find($itemDB->page_id);
                         $pageRepository = new EloquentPageRepository();
                         $item->setPage($pageRepository->findByIdentifier($page->identifier));
                     }
@@ -34,35 +40,34 @@ class EloquentMenuRepository implements \CMS\Repositories\MenuRepositoryInterfac
 
     public function findAll()
     {
-        return \Webaccess\WCMSLaravel\Models\Menu::get();
+        return MenuModel::get();
     }
 
-    public function createMenu(\CMS\Entities\Menu $menu)
+    public function createMenu(Menu $menu)
     {
-        $menuDB = new \Webaccess\WCMSLaravel\Models\Menu();
+        $menuDB = new MenuModel();
         $menuDB->identifier = $menu->getIdentifier();
-        //$menuDB->items = $menu->getItems();
         $menuDB->name = $menu->getName();
 
         return $menuDB->save();
     }
 
-    public function updateMenu(\CMS\Entities\Menu $menu)
+    public function updateMenu(Menu $menu)
     {
-        $menuDB = \Webaccess\WCMSLaravel\Models\Menu::where('identifier', '=', $menu->getIdentifier())->first();
+        $menuDB = MenuModel::where('identifier', '=', $menu->getIdentifier())->first();
         $menuDB->name = $menu->getName();
 
         //Delete existing items
-        \Webaccess\WCMSLaravel\Models\MenuItem::where('menu_id', '=', $menuDB->id)->delete();
+        MenuItemModel::where('menu_id', '=', $menuDB->id)->delete();
         
         //Add new items
         if (is_array($menu->getItems())) {
             foreach ($menu->getItems() as $item) {
-                $itemDB = new \Webaccess\WCMSLaravel\Models\MenuItem();
+                $itemDB = new MenuItemModel();
                 $itemDB->label = $item->getLabel();
                 $itemDB->order = $item->getOrder();
                 if ($item->getPage()) {
-                    $pageDB = \Webaccess\WCMSLaravel\Models\Page::where('identifier', '=', $item->getPage()->getIdentifier())->first();
+                    $pageDB = PageModel::where('identifier', '=', $item->getPage()->getIdentifier())->first();
                     $itemDB->page_id = $pageDB->id;
                 }
                 $itemDB->menu_id = $menuDB->id;
@@ -74,10 +79,11 @@ class EloquentMenuRepository implements \CMS\Repositories\MenuRepositoryInterfac
         return $menuDB->save();
     }
 
-    public function deleteMenu(\CMS\Entities\Menu $menu)
+    public function deleteMenu(Menu $menu)
     {
-        $menuDB = \Webaccess\WCMSLaravel\Models\Menu::where('identifier', '=', $menu->getIdentifier())->first();
+        $menuDB = MenuModel::where('identifier', '=', $menu->getIdentifier())->first();
         
         return $menuDB->delete();
     }
+    
 }

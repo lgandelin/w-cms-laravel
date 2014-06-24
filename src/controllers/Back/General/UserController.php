@@ -2,20 +2,23 @@
 
 namespace Webaccess\WCMSLaravel\Back\General;
 
+use CMS\Services\UserManager;
+use CMS\Structures\UserStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
 class UserController extends AdminController {
 
-    public function __construct()
+    public function __construct(UserManager $userManager)
     {
         parent::__construct();
-        $this->userManager = new \CMS\Services\UserManager(new \Webaccess\WCMSLaravel\Repositories\EloquentUserRepository());
+        $this->userManager = $userManager;
     }
 
     public function index()
     {
         $this->layout = \View::make('w-cms-laravel::back.general.users.index', [
-            'users' => $this->userManager->getAll()
+            'users' => $this->userManager->getAll(),
+            'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
 
@@ -26,7 +29,7 @@ class UserController extends AdminController {
 
     public function store()
     {
-        $userS = new \CMS\Structures\UserStructure([
+        $userS = new UserStructure([
             'login' => \Input::get('login'),
             'password' => (\Input::get('password')) ? \Hash::make(\Input::get('password')) : null,
             'last_name' => \Input::get('last_name'),
@@ -37,8 +40,11 @@ class UserController extends AdminController {
         try {
             $this->userManager->createUser($userS);
             return \Redirect::route('back_users_index');
-        } catch (Exception $e) {
-             var_dump($e->getMessage());
+        } catch (\Exception $e) {
+            $this->layout = \View::make('w-cms-laravel::back.general.users.create', [
+                'error' => $e->getMessage(),
+                'user' => $userS
+            ]);
         }
     }
 
@@ -49,14 +55,15 @@ class UserController extends AdminController {
             $this->layout = \View::make('w-cms-laravel::back.general.users.edit', [
                 'user' => $userS
             ]);
-        } catch (Exception $e) {
-             var_dump($e->getMessage());
+        } catch (\Exception $e) {
+            \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_users_index');
         }
     }
 
     public function update()
     {
-        $userS = new \CMS\Structures\UserStructure([
+        $userS = new UserStructure([
             'login' => \Input::get('login'),
             'password' => (\Input::get('password')) ? \Hash::make(\Input::get('password')) : null,
             'last_name' => \Input::get('last_name'),
@@ -67,8 +74,11 @@ class UserController extends AdminController {
         try {
             $this->userManager->updateUser($userS);
             return \Redirect::route('back_users_index');
-        } catch (Exception $e) {
-             var_dump($e->getMessage());
+        } catch (\Exception $e) {
+            $this->layout = \View::make('w-cms-laravel::back.editorial.users.edit', [
+                'error' => $e->getMessage(),
+                'user' => $userS
+            ]);
         }
     }
 
@@ -77,8 +87,9 @@ class UserController extends AdminController {
         try {
             $this->userManager->deleteUser($login);
             return \Redirect::route('back_users_index');
-        } catch (Exception $e) {
-             var_dump($e->getMessage());
+        } catch (\Exception $e) {
+            \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_users_index');
         }
     }
 

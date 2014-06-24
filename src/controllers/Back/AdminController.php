@@ -2,7 +2,9 @@
 
 namespace Webaccess\WCMSLaravel\Back;
 
-class AdminController extends \Illuminate\Routing\Controller {
+use Illuminate\Routing\Controller;
+
+class AdminController extends Controller {
 
      public function __construct()
      {
