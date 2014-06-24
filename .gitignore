@@ -7,3 +7,4 @@ tests/*
 !tests/_pages
 !tests/_utils
 codeception.yml
+*.scssc

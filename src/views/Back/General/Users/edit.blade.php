@@ -18,6 +18,10 @@
 
             <h1 class="page-header">{{ trans('w-cms-laravel::header.users_edit') }}</h1>
             
+            @if (isset($error))
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endif
+            
             @if ($user)
             <form role="form" action="{{ route('back_users_update') }}" method="post">
                 <div class="form-group">

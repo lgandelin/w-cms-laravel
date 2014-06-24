@@ -2,14 +2,18 @@
 
 namespace Webaccess\WCMSLaravel\Repositories;
 
-class EloquentPageRepository implements \CMS\Repositories\PageRepositoryInterface {
+use CMS\Entities\Page;
+use CMS\Repositories\PageRepositoryInterface;
+use Webaccess\WCMSLaravel\Models\Page as PageModel;
+
+class EloquentPageRepository implements PageRepositoryInterface {
 
 	public function findByIdentifier($identifier)
 	{
-		$pageDB = \Webaccess\WCMSLaravel\Models\Page::where('identifier', '=', $identifier)->first();
+		$pageDB = PageModel::where('identifier', '=', $identifier)->first();
 			
 		if ($pageDB) {
-			$page = new \CMS\Entities\Page();
+			$page = new Page();
 			$page->setName($pageDB->name);
 			$page->setUri($pageDB->uri);
 			$page->setIdentifier($pageDB->identifier);
@@ -20,15 +24,16 @@ class EloquentPageRepository implements \CMS\Repositories\PageRepositoryInterfac
 
 			return $page;
 		}
+		
 		return false;
 	}
 
 	public function findByUri($uri)
 	{
-		$pageDB = \Webaccess\WCMSLaravel\Models\Page::where('uri', '=', $uri)->first();
+		$pageDB = PageModel::where('uri', '=', $uri)->first();
 
 		if ($pageDB) {
-			$page = new \CMS\Entities\Page();
+			$page = new Page();
 			$page->setName($pageDB->name);
 			$page->setUri($pageDB->uri);
 			$page->setIdentifier($pageDB->identifier);
@@ -39,17 +44,34 @@ class EloquentPageRepository implements \CMS\Repositories\PageRepositoryInterfac
 
 			return $page;
 		}
+
 		return false;
 	}
 
 	public function findAll()
 	{
-		return \Webaccess\WCMSLaravel\Models\Page::get();
+		$pagesDB = PageModel::get();
+
+		$pages = [];
+		foreach ($pagesDB as $i => $pageDB) {
+			$page = new Page();
+			$page->setName($pageDB->name);
+			$page->setUri($pageDB->uri);
+			$page->setIdentifier($pageDB->identifier);
+			$page->setText($pageDB->text);
+			$page->setMetaTitle($pageDB->meta_title);
+			$page->setMetaDescription($pageDB->meta_description);
+			$page->setMetaKeywords($pageDB->meta_keywords);
+		
+			$pages[]= $page;
+		}
+
+		return $pages;
 	}
 
-	public function createPage(\CMS\Entities\Page $page)
+	public function createPage(Page $page)
 	{
-		$pageDB = new \Webaccess\WCMSLaravel\Models\Page();
+		$pageDB = new PageModel();
 		$pageDB->name = $page->getName();
 		$pageDB->identifier = $page->getIdentifier();
 		$pageDB->uri = $page->getUri();
@@ -62,9 +84,9 @@ class EloquentPageRepository implements \CMS\Repositories\PageRepositoryInterfac
 		return $pageDB->save();
 	}
 
-	public function updatePage(\CMS\Entities\Page $page)
+	public function updatePage(Page $page)
 	{
-		$pageDB = \Webaccess\WCMSLaravel\Models\Page::where('identifier', '=', $page->getIdentifier())->first();
+		$pageDB = PageModel::where('identifier', '=', $page->getIdentifier())->first();
 		$pageDB->name = $page->getName();
 		$pageDB->uri = $page->getUri();
 		$pageDB->text = $page->getText();
@@ -76,10 +98,11 @@ class EloquentPageRepository implements \CMS\Repositories\PageRepositoryInterfac
 		return $pageDB->save();
 	}
 
-	public function deletePage(\CMS\Entities\Page $page)
+	public function deletePage(Page $page)
 	{
-		$pageDB = \Webaccess\WCMSLaravel\Models\Page::where('identifier', '=', $page->getIdentifier())->first();
+		$pageDB = PageModel::where('identifier', '=', $page->getIdentifier())->first();
 		
 		return $pageDB->delete();
 	}
+	
 }

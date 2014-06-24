@@ -2,14 +2,18 @@
 
 namespace Webaccess\WCMSLaravel\Repositories;
 
-class EloquentUserRepository implements \CMS\Repositories\UserRepositoryInterface {
+use CMS\Entities\User;
+use CMS\Repositories\UserRepositoryInterface;
+use Webaccess\WCMSLaravel\Models\User as UserModel;
+
+class EloquentUserRepository implements UserRepositoryInterface {
 
     public function findByLogin($login)
     {
-        $userDB = \Webaccess\WCMSLaravel\Models\User::where('login', '=', $login)->first();
+        $userDB = UserModel::where('login', '=', $login)->first();
 
         if ($userDB) {
-            $user = new \CMS\Entities\User();
+            $user = new User();
             $user->setLogin($userDB->login);
             $user->setPassword($userDB->password);
             $user->setLastName($userDB->last_name);
@@ -23,12 +27,26 @@ class EloquentUserRepository implements \CMS\Repositories\UserRepositoryInterfac
 
     public function findAll()
     {
-        return \Webaccess\WCMSLaravel\Models\User::get();
+        $usersDB = UserModel::get();
+
+        $users = [];
+        foreach ($usersDB as $i => $userDB) {
+            $user = new User();
+            $user->setLogin($userDB->login);
+            $user->setPassword($userDB->password);
+            $user->setLastName($userDB->last_name);
+            $user->setFirstName($userDB->first_name);
+            $user->setEmail($userDB->email);
+        
+            $users[]= $user;
+        }
+
+        return $users;
     }
 
-    public function createUser(\CMS\Entities\User $user)
+    public function createUser(User $user)
     {
-        $userDB = new \Webaccess\WCMSLaravel\Models\User();
+        $userDB = new UserModel();
         $userDB->login = $user->getLogin();
         $userDB->password = $user->getPassword();
         $userDB->last_name = $user->getLastName();
@@ -38,9 +56,9 @@ class EloquentUserRepository implements \CMS\Repositories\UserRepositoryInterfac
         return $userDB->save();
     }
 
-    public function updateUser(\CMS\Entities\User $user)
+    public function updateUser(User $user)
     {
-        $userDB = \Webaccess\WCMSLaravel\Models\User::where('login', '=', $user->getLogin())->first();
+        $userDB = UserModel::where('login', '=', $user->getLogin())->first();
         $userDB->password = $user->getPassword();
         $userDB->last_name = $user->getLastName();
         $userDB->first_name = $user->getFirstName();
@@ -49,10 +67,11 @@ class EloquentUserRepository implements \CMS\Repositories\UserRepositoryInterfac
         return $userDB->save();
     }
 
-    public function deleteUser(\CMS\Entities\User $user)
+    public function deleteUser(User $user)
     {
-        $userDB = \Webaccess\WCMSLaravel\Models\User::where('login', '=', $user->getLogin())->first();
+        $userDB = UserModel::where('login', '=', $user->getLogin())->first();
         
         return $userDB->delete();
     }
+    
 }

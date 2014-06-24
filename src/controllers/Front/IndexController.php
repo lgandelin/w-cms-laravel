@@ -2,12 +2,16 @@
 
 namespace Webaccess\WCMSLaravel\Front;
 
-class IndexController extends \Illuminate\Routing\Controller {
+use CMS\Services\PageManager;
+use CMS\Services\MenuManager;
+use Illuminate\Routing\Controller;
 
-	public function __construct()
+class IndexController extends Controller {
+
+	public function __construct(PageManager $pageManager, MenuManager $menuManager)
 	{
-		$this->pageManager = new \CMS\Services\PageManager(new \Webaccess\WCMSLaravel\Repositories\EloquentPageRepository());
-		$this->menuManager = new \CMS\Services\MenuManager(new \Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository());
+		$this->pageManager = $pageManager;
+		$this->menuManager = $menuManager;
 	}
 
 	public function index($uri = null)

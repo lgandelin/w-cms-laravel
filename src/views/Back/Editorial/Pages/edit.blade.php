@@ -22,6 +22,10 @@
 
 			<h1 class="page-header">{{ trans('w-cms-laravel::header.pages_edit') }}</h1>
 			
+			@if (isset($error))
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endif
+            
 			@if ($page)
 			<form role="form" action="{{ route('back_pages_update') }}" method="post">
                 <div class="form-group">

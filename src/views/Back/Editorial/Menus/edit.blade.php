@@ -21,6 +21,10 @@
             </ol>
 
             <h1 class="menu-header">{{ trans('w-cms-laravel::header.menus_edit') }}</h1>
+                
+            @if (isset($error))
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endif
             
             @if ($menu)
                 <form role="form" action="{{ route('back_menus_update') }}" method="post">
@@ -42,9 +46,11 @@
                                 <label for="items_page[]">{{ trans('w-cms-laravel::menus.item_page') }}</label>
                                 <select name="items_page[]" class="form-control" autocomplete="off">
                                     <option>{{ trans('w-cms-laravel::menus.choose_page') }}</option>
-                                    @foreach ($pages as $page)
-                                        <option value="{{ $page->identifier }}" @if ($item->page->identifier == $page->identifier)selected="selected"@endif>{{ $page->name }}</option>
-                                    @endforeach
+                                    @if ($pages)
+                                         @foreach ($pages as $page)
+                                            <option value="{{ $page->identifier }}" @if ($item->page->identifier == $page->identifier)selected="selected"@endif>{{ $page->name }}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                                 <input type="button" class="btn btn-danger btn-delete" value="{{ trans('w-cms-laravel::generic.delete') }}" />
                             </div>
@@ -58,9 +64,11 @@
                             <label for="items_page[]">{{ trans('w-cms-laravel::menus.item_page') }}</label>
                             <select name="items_page[]" class="form-control" autocomplete="off">
                                 <option value="">{{ trans('w-cms-laravel::menus.choose_page') }}</option>
-                                @foreach ($pages as $page)
-                                    <option value="{{ $page->identifier }}">{{ $page->name }}</option>
-                                @endforeach
+                                 @if ($pages)
+                                    @foreach ($pages as $page)
+                                        <option value="{{ $page->identifier }}">{{ $page->name }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                             <input type="button" class="btn btn-danger btn-delete" value="{{ trans('w-cms-laravel::generic.delete') }}" />
                         </div>
@@ -75,9 +83,11 @@
                         <label for="items_page[]">{{ trans('w-cms-laravel::menus.item_page') }}</label>
                         <select name="items_page[]" class="form-control" autocomplete="off">
                             <option>{{ trans('w-cms-laravel::menus.choose_page') }}</option>
-                            @foreach ($pages as $page)
-                                <option value="{{ $page->identifier }}">{{ $page->name }}</option>
-                            @endforeach
+                            @if ($pages)
+                                @foreach ($pages as $page)
+                                    <option value="{{ $page->identifier }}">{{ $page->name }}</option>
+                                @endforeach
+                            @endif
                         </select>
                         <input type="button" class="btn btn-primary btn-create" value="{{ trans('w-cms-laravel::generic.create') }}" />
                     </div>

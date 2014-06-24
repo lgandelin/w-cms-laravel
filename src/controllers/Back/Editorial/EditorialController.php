@@ -8,6 +8,7 @@ class EditorialController extends AdminController {
 
 	public function index()
 	{
-		$this->layout = \View::make('w-cms-laravel::back.editorial.index', array());
+		$this->layout = \View::make('w-cms-laravel::back.editorial.index');
 	}
+	
 }

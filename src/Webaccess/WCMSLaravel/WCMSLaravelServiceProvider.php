@@ -1,6 +1,12 @@
 <?php namespace Webaccess\WCMSLaravel;
 
 use Illuminate\Support\ServiceProvider;
+use CMS\Services\PageManager;
+use CMS\Services\MenuManager;
+use CMS\Services\UserManager;
+use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
+use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
+use Webaccess\WCMSLaravel\Repositories\EloquentUserRepository;
 
 class WCMSLaravelServiceProvider extends ServiceProvider {
 
@@ -29,7 +35,17 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->app->bind('\CMS\Services\PageManager', function() {
+			return new PageManager(new EloquentPageRepository());
+		});
+
+		$this->app->bind('\CMS\Services\MenuManager', function() {
+			return new MenuManager(new EloquentMenuRepository(), new EloquentPageRepository());
+		});
+
+		$this->app->bind('\CMS\Services\UserManager', function() {
+			return new UserManager(new EloquentUserRepository());
+		});
 	}
 
 	/**
