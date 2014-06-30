@@ -11,6 +11,13 @@ use Webaccess\WCMSLaravel\Models\Page as PageModel;
 
 class EloquentMenuRepository implements MenuRepositoryInterface {
 
+    private $pageRepository;
+
+    public function __construct()
+    {
+        $this->pageRepository = new EloquentPageRepository();
+    }
+
     public function findByIdentifier($identifier)
     {
         $menuDB = MenuModel::where('identifier', '=', $identifier)->first();
@@ -18,6 +25,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface {
         if ($menuDB) {
             $menu = new Menu();
             $menu->setIdentifier($menuDB->identifier);
+            $menu->setName($menuDB->name);
 
             if ($menuDB->items) {
                 foreach ($menuDB->items->sortBy('order') as $itemDB) {
@@ -26,22 +34,43 @@ class EloquentMenuRepository implements MenuRepositoryInterface {
                     $item->setOrder($itemDB->order);
                     if ($itemDB->page_id) {
                         $page = PageModel::find($itemDB->page_id);
-                        $pageRepository = new EloquentPageRepository();
-                        $item->setPage($pageRepository->findByIdentifier($page->identifier));
+                        $item->setPage($this->pageRepository->findByIdentifier($page->identifier));
                     }
                     $menu->addItem($item);
                 }
             }
-            $menu->setName($menuDB->name);
 
             return $menu;
         }
+        
         return false;
     }
 
     public function findAll()
     {
-        return MenuModel::get();
+        $menusDB = MenuModel::get();
+
+        $menus = [];
+        foreach ($menusDB as $i => $menuDB) {
+            $menu = new Menu();
+            $menu->setIdentifier($menuDB->identifier);
+            $menu->setName($menuDB->name);
+
+            foreach ($menuDB->items as $itemDB) {
+                $item = new MenuItem();
+                $item->setLabel($itemDB->label);
+                $item->setOrder($itemDB->order);
+                if ($itemDB->page_id) {
+                    $page = PageModel::find($itemDB->page_id);
+                    $item->setPage($this->pageRepository->findByIdentifier($page->identifier));
+                }
+                $menu->addItem($item);
+            }
+        
+            $menus[]= $menu;
+        }
+
+        return $menus;
     }
 
     public function createMenu(Menu $menu)
