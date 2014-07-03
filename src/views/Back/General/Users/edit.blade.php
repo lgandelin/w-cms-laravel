@@ -48,6 +48,8 @@
                 
                 <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
                 <a class="btn btn-default" href="{{ route('back_users_index') }}" title="{{ trans('w-cms-laravel::header.users') }}">{{ trans('w-cms-laravel::generic.cancel') }}</a>
+                
+                <input type="hidden" name="ID" value="{{ $user->ID }}" />
             </form>
             @else
                 {{ trans('w-cms-laravel::users.not_found') }}

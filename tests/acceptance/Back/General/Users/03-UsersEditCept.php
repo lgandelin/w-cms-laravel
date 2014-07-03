@@ -20,7 +20,6 @@ $I->click(UsersCreatePage::$submit_button);
 
 //Edit the user
 $I->click('tr:contains("' . UsersCreatePage::$user_fixture_created['login']. '") a:nth-child(1)');
-$I->seeCurrentUrlMatches('#(.*)' . UsersEditPage::$uri . '/'. UsersCreatePage::$user_fixture_created['login'] . '$#');
 $I->seeInTitle(UsersEditPage::$title);
 
 $I->fillField('First name', UsersEditPage::$user_fixture_edited['first_name']);

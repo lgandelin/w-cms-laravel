@@ -1,9 +1,13 @@
 <?php namespace Webaccess\WCMSLaravel;
 
 use Illuminate\Support\ServiceProvider;
+use CMS\Interactors\Users\GetUserInteractor;
+use CMS\Interactors\Users\GetAllUsersInteractor;
+use CMS\Interactors\Users\CreateUserInteractor;
+use CMS\Interactors\Users\UpdateUserInteractor;
+use CMS\Interactors\Users\DeleteUserInteractor;
 use CMS\Services\PageManager;
 use CMS\Services\MenuManager;
-use CMS\Services\UserManager;
 use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentUserRepository;
@@ -43,8 +47,24 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
 			return new MenuManager(new EloquentMenuRepository(), new EloquentPageRepository());
 		});
 
-		$this->app->bind('\CMS\Services\UserManager', function() {
-			return new UserManager(new EloquentUserRepository());
+		$this->app->bind('\CMS\Interactors\GetUserInteractor', function() {
+			return new GetUserInteractor(new EloquentUserRepository());
+		});
+
+		$this->app->bind('\CMS\Interactors\GetAllUsersInteractor', function() {
+			return new GetAllUsersInteractor(new EloquentUserRepository());
+		});
+
+		$this->app->bind('\CMS\Interactors\CreateUserInteractor', function() {
+			return new CreateUserInteractor(new EloquentUserRepository());
+		});
+
+		$this->app->bind('\CMS\Interactors\UpdateUserInteractor', function() {
+			return new UpdateUserInteractor(new EloquentUserRepository());
+		});
+
+		$this->app->bind('\CMS\Interactors\DeleteUserInteractor', function() {
+			return new DeleteUserInteractor(new EloquentUserRepository());
 		});
 	}
 
