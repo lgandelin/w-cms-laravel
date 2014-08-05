@@ -2,22 +2,15 @@
 
 namespace Webaccess\WCMSLaravel\Back\General;
 
-use CMS\Services\UserManager;
 use CMS\Structures\UserStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
 class UserController extends AdminController {
 
-    public function __construct(UserManager $userManager)
-    {
-        parent::__construct();
-        $this->userManager = $userManager;
-    }
-
     public function index()
     {
         $this->layout = \View::make('w-cms-laravel::back.general.users.index', [
-            'users' => $this->userManager->getAll(),
+            'users' => \App::make('GetAllUsersInteractor')->getAll(),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
@@ -29,7 +22,7 @@ class UserController extends AdminController {
 
     public function store()
     {
-        $userS = new UserStructure([
+        $userStructure = new UserStructure([
             'login' => \Input::get('login'),
             'password' => (\Input::get('password')) ? \Hash::make(\Input::get('password')) : null,
             'last_name' => \Input::get('last_name'),
@@ -38,22 +31,22 @@ class UserController extends AdminController {
         ]);
         
         try {
-            $this->userManager->createUser($userS);
+            $userStructure = \App::make('CreateUserInteractor')->run($userStructure);
             return \Redirect::route('back_users_index');
         } catch (\Exception $e) {
             $this->layout = \View::make('w-cms-laravel::back.general.users.create', [
                 'error' => $e->getMessage(),
-                'user' => $userS
+                'user' => $userStructure
             ]);
         }
     }
 
-    public function edit($login)
+    public function edit($userID)
     {
         try {
-            $userS = $this->userManager->getByLogin($login);
+            $userStructure = \App::make('GetUserInteractor')->getByID($userID);
             $this->layout = \View::make('w-cms-laravel::back.general.users.edit', [
-                'user' => $userS
+                'user' => $userStructure
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
@@ -63,7 +56,8 @@ class UserController extends AdminController {
 
     public function update()
     {
-        $userS = new UserStructure([
+        $userID = \Input::get('ID');
+        $userStructure = new UserStructure([
             'login' => \Input::get('login'),
             'password' => (\Input::get('password')) ? \Hash::make(\Input::get('password')) : null,
             'last_name' => \Input::get('last_name'),
@@ -72,20 +66,20 @@ class UserController extends AdminController {
         ]);
 
         try {
-            $this->userManager->updateUser($userS);
+            \App::make('UpdateUserInteractor')->run($userID, $userStructure);
             return \Redirect::route('back_users_index');
         } catch (\Exception $e) {
-            $this->layout = \View::make('w-cms-laravel::back.editorial.users.edit', [
+            $this->layout = \View::make('w-cms-laravel::back.general.users.edit', [
                 'error' => $e->getMessage(),
-                'user' => $userS
+                'user' => $userStructure
             ]);
         }
     }
 
-    public function delete($login = null)
+    public function delete($userID)
     {
         try {
-            $this->userManager->deleteUser($login);
+            \App::make('DeleteUserInteractor')->run($userID);
             return \Redirect::route('back_users_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());

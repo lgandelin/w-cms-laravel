@@ -4,45 +4,69 @@ namespace Webaccess\WCMSLaravel\Repositories;
 
 use CMS\Entities\Page;
 use CMS\Repositories\PageRepositoryInterface;
+use CMS\Structures\PageStructure;
 use Webaccess\WCMSLaravel\Models\Page as PageModel;
 
 class EloquentPageRepository implements PageRepositoryInterface {
 
-	public function findByIdentifier($identifier)
+    public function findByID($pageID)
+    {
+        $pageDB = PageModel::find($pageID);
+
+        if ($pageDB) {
+            $pageStructure = new PageStructure();
+            $pageStructure->ID = $pageDB->id;
+            $pageStructure->name = $pageDB->name;
+            $pageStructure->uri = $pageDB->uri;
+            $pageStructure->identifier = $pageDB->identifier;
+            $pageStructure->text = $pageDB->text;
+            $pageStructure->meta_title = $pageDB->meta_title;
+            $pageStructure->meta_description = $pageDB->meta_description;
+            $pageStructure->meta_keywords = $pageDB->meta_keywords;
+
+            return $pageStructure;
+        }
+
+        return false;
+    }
+
+	public function findByIdentifier($pageIdentifier)
 	{
-		$pageDB = PageModel::where('identifier', '=', $identifier)->first();
+		$pageDB = PageModel::where('identifier', '=', $pageIdentifier)->first();
 			
 		if ($pageDB) {
-			$page = new Page();
-			$page->setName($pageDB->name);
-			$page->setUri($pageDB->uri);
-			$page->setIdentifier($pageDB->identifier);
-			$page->setText($pageDB->text);
-			$page->setMetaTitle($pageDB->meta_title);
-			$page->setMetaDescription($pageDB->meta_description);
-			$page->setMetaKeywords($pageDB->meta_keywords);
+            $pageStructure = new PageStructure();
+            $pageStructure->ID = $pageDB->id;
+            $pageStructure->name = $pageDB->name;
+            $pageStructure->uri = $pageDB->uri;
+            $pageStructure->identifier = $pageDB->identifier;
+            $pageStructure->text = $pageDB->text;
+            $pageStructure->meta_title = $pageDB->meta_title;
+            $pageStructure->meta_description = $pageDB->meta_description;
+            $pageStructure->meta_keywords = $pageDB->meta_keywords;
 
-			return $page;
+			return $pageStructure;
 		}
 		
 		return false;
 	}
 
-	public function findByUri($uri)
+	public function findByUri($pageURI)
 	{
-		$pageDB = PageModel::where('uri', '=', $uri)->first();
+		$pageDB = PageModel::where('uri', '=', $pageURI)->first();
 
 		if ($pageDB) {
-			$page = new Page();
-			$page->setName($pageDB->name);
-			$page->setUri($pageDB->uri);
-			$page->setIdentifier($pageDB->identifier);
-			$page->setText($pageDB->text);
-			$page->setMetaTitle($pageDB->meta_title);
-			$page->setMetaDescription($pageDB->meta_description);
-			$page->setMetaKeywords($pageDB->meta_keywords);
+            $pageStructure = new PageStructure();
+            $pageStructure->ID = $pageDB->id;
+            $pageStructure->name = $pageDB->name;
+            $pageStructure->uri = $pageDB->uri;
+            $pageStructure->identifier = $pageDB->identifier;
+            $pageStructure->text = $pageDB->text;
+            $pageStructure->meta_title = $pageDB->meta_title;
+            $pageStructure->meta_description = $pageDB->meta_description;
+            $pageStructure->meta_keywords = $pageDB->meta_keywords;
 
-			return $page;
+			return $pageStructure;
 		}
 
 		return false;
@@ -54,53 +78,53 @@ class EloquentPageRepository implements PageRepositoryInterface {
 
 		$pages = [];
 		foreach ($pagesDB as $i => $pageDB) {
-			$page = new Page();
-			$page->setName($pageDB->name);
-			$page->setUri($pageDB->uri);
-			$page->setIdentifier($pageDB->identifier);
-			$page->setText($pageDB->text);
-			$page->setMetaTitle($pageDB->meta_title);
-			$page->setMetaDescription($pageDB->meta_description);
-			$page->setMetaKeywords($pageDB->meta_keywords);
+            $pageStructure = new PageStructure();
+            $pageStructure->ID = $pageDB->id;
+            $pageStructure->name = $pageDB->name;
+            $pageStructure->uri = $pageDB->uri;
+            $pageStructure->identifier = $pageDB->identifier;
+            $pageStructure->text = $pageDB->text;
+            $pageStructure->meta_title = $pageDB->meta_title;
+            $pageStructure->meta_description = $pageDB->meta_description;
+            $pageStructure->meta_keywords = $pageDB->meta_keywords;
 		
-			$pages[]= $page;
+			$pages[]= $pageStructure;
 		}
 
 		return $pages;
 	}
 
-	public function createPage(Page $page)
+	public function createPage(PageStructure $pageStructure)
 	{
 		$pageDB = new PageModel();
-		$pageDB->name = $page->getName();
-		$pageDB->identifier = $page->getIdentifier();
-		$pageDB->uri = $page->getUri();
-		$pageDB->text = $page->getText();
-
-		$pageDB->meta_title = $page->getMetaTitle();
-		$pageDB->meta_description = $page->getMetaDescription();
-		$pageDB->meta_keywords = $page->getMetaKeywords();
-
-		return $pageDB->save();
-	}
-
-	public function updatePage(Page $page)
-	{
-		$pageDB = PageModel::where('identifier', '=', $page->getIdentifier())->first();
-		$pageDB->name = $page->getName();
-		$pageDB->uri = $page->getUri();
-		$pageDB->text = $page->getText();
-
-		$pageDB->meta_title = $page->getMetaTitle();
-		$pageDB->meta_description = $page->getMetaDescription();
-		$pageDB->meta_keywords = $page->getMetaKeywords();
+		$pageDB->name = $pageStructure->name;
+		$pageDB->identifier = $pageStructure->identifier;
+		$pageDB->uri = $pageStructure->uri;
+		$pageDB->text = $pageStructure->text;
+		$pageDB->meta_title = $pageStructure->meta_title;
+		$pageDB->meta_description = $pageStructure->meta_description;
+		$pageDB->meta_keywords = $pageStructure->meta_keywords;
 
 		return $pageDB->save();
 	}
 
-	public function deletePage(Page $page)
+	public function updatePage($pageID, PageStructure $pageStructure)
 	{
-		$pageDB = PageModel::where('identifier', '=', $page->getIdentifier())->first();
+		$pageDB = PageModel::find($pageID);
+		$pageDB->name = $pageStructure->name;
+        $pageDB->identifier = $pageStructure->identifier;
+		$pageDB->uri = $pageStructure->uri;
+		$pageDB->text = $pageStructure->text;
+		$pageDB->meta_title = $pageStructure->meta_title;
+		$pageDB->meta_description = $pageStructure->meta_description;
+		$pageDB->meta_keywords = $pageStructure->meta_keywords;
+
+		return $pageDB->save();
+	}
+
+	public function deletePage($pageID)
+	{
+		$pageDB = PageModel::find($pageID);
 		
 		return $pageDB->delete();
 	}

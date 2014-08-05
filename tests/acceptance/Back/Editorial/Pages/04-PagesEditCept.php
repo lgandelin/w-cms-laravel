@@ -19,7 +19,6 @@ $I->click(PagesCreatePage::$submit_button);
 
 //Edit the page
 $I->click('tr:contains("' . PagesCreatePage::$page_fixture_created['name']. '") a:nth-child(1)');
-$I->seeCurrentUrlMatches('#(.*)' . PagesEditPage::$uri . '/'. PagesCreatePage::$page_fixture_created['identifier'] . '$#');
 $I->seeInTitle(PagesEditPage::$title);
 
 $I->fillField('Name', PagesEditPage::$page_fixture_edited['name']);

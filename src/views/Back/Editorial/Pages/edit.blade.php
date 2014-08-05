@@ -38,6 +38,11 @@
                     <input type="text" class="form-control" id="uri" name="uri" placeholder="{{ trans('w-cms-laravel::pages.uri') }}" value="{{ $page->uri }}" />
                 </div>
 
+                <div class="form-group">
+                    <label for="identifier">{{ trans('w-cms-laravel::pages.identifier') }}</label>
+                    <input type="text" class="form-control" id="identifier" name="uri" placeholder="{{ trans('w-cms-laravel::pages.identifier') }}" value="{{ $page->identifier }}" />
+                </div>
+
 				<div class="form-group">
                     <label for="text">{{ trans('w-cms-laravel::pages.text') }}</label>
                     <textarea class="form-control" id="text" name="text" rows="30">{{ $page->text }}</textarea>
@@ -58,10 +63,10 @@
                     <input type="text" class="form-control" id="meta_keywords" name="meta_keywords" placeholder="{{ trans('w-cms-laravel::pages.meta_keywords') }}" value="{{ $page->meta_keywords }}" />
                 </div>
                 
-                <input type="hidden" name="identifier" value="{{ $page->identifier }}" />
-                
                 <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
                 <a class="btn btn-default" href="{{ route('back_pages_index') }}" title="{{ trans('w-cms-laravel::header.pages') }}">{{ trans('w-cms-laravel::generic.cancel') }}</a>
+
+                <input type="hidden" name="ID" value="{{ $page->ID }}" />
             </form>
 			@else
 				{{ trans('w-cms-laravel::pages.not_found') }}

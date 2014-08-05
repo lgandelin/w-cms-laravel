@@ -35,26 +35,28 @@
 
                     <div class="form-group">
                         <label for="items">{{ trans('w-cms-laravel::menus.items') }}</label>
+                        
+                        @if ($menu->items):
+                            @foreach ($menu->items as $item)
 
-                        @foreach ($menu->items as $item)
-
-                            <div class="form-inline">
-                                <label for="items_label[]">{{ trans('w-cms-laravel::menus.item_label') }}</label>
-                                <input type="text" class="form-control" name="items_label[]" value="{{ $item->label }}" />
-                                <label for="items_order[]">{{ trans('w-cms-laravel::menus.item_order') }}</label>
-                                <input type="text" class="form-control" name="items_order[]" value="{{ $item->order }}" />
-                                <label for="items_page[]">{{ trans('w-cms-laravel::menus.item_page') }}</label>
-                                <select name="items_page[]" class="form-control" autocomplete="off">
-                                    <option>{{ trans('w-cms-laravel::menus.choose_page') }}</option>
-                                    @if ($pages)
-                                         @foreach ($pages as $page)
-                                            <option value="{{ $page->identifier }}" @if ($item->page->identifier == $page->identifier)selected="selected"@endif>{{ $page->name }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                                <input type="button" class="btn btn-danger btn-delete" value="{{ trans('w-cms-laravel::generic.delete') }}" />
-                            </div>
-                        @endforeach
+                                <div class="form-inline">
+                                    <label for="items_label[]">{{ trans('w-cms-laravel::menus.item_label') }}</label>
+                                    <input type="text" class="form-control" name="items_label[]" value="{{ $item->label }}" />
+                                    <label for="items_order[]">{{ trans('w-cms-laravel::menus.item_order') }}</label>
+                                    <input type="text" class="form-control" name="items_order[]" value="{{ $item->order }}" />
+                                    <label for="items_page[]">{{ trans('w-cms-laravel::menus.item_page') }}</label>
+                                    <select name="items_page[]" class="form-control" autocomplete="off">
+                                        <option>{{ trans('w-cms-laravel::menus.choose_page') }}</option>
+                                        @if ($pages)
+                                             @foreach ($pages as $page)
+                                                <option value="{{ $page->identifier }}" @if ($item->page == $page->identifier)selected="selected"@endif>{{ $page->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    <input type="button" class="btn btn-danger btn-delete" value="{{ trans('w-cms-laravel::generic.delete') }}" />
+                                </div>
+                            @endforeach
+                        @endif
 
                         <div style="display:none" class="form-inline new-menu-pattern">
                             <label for="items_label[]">{{ trans('w-cms-laravel::menus.item_label') }}</label>

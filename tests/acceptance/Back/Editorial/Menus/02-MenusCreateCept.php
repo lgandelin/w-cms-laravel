@@ -1,4 +1,4 @@
-+<?php
+<?php
 $I = new WebGuy($scenario);
 $I->wantTo('create a menu');
 

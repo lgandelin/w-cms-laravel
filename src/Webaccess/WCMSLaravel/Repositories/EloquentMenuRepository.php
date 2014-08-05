@@ -2,8 +2,8 @@
 
 namespace Webaccess\WCMSLaravel\Repositories;
 
-use CMS\Entities\Menu;
-use CMS\Entities\MenuItem;
+use CMS\Structures\MenuStructure;
+use CMS\Structures\MenuItemStructure;
 use CMS\Repositories\MenuRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Menu as MenuModel;
 use Webaccess\WCMSLaravel\Models\MenuItem as MenuItemModel;
@@ -11,64 +11,93 @@ use Webaccess\WCMSLaravel\Models\Page as PageModel;
 
 class EloquentMenuRepository implements MenuRepositoryInterface {
 
+    private $pageRepository;
+
+    public function __construct()
+    {
+        $this->pageRepository = new EloquentPageRepository();
+    }
+
     public function findByIdentifier($identifier)
     {
         $menuDB = MenuModel::where('identifier', '=', $identifier)->first();
-
-        if ($menuDB) {
-            $menu = new Menu();
-            $menu->setIdentifier($menuDB->identifier);
-
-            if ($menuDB->items) {
-                foreach ($menuDB->items->sortBy('order') as $itemDB) {
-                    $item = new MenuItem();
-                    $item->setLabel($itemDB->label);
-                    $item->setOrder($itemDB->order);
-                    if ($itemDB->page_id) {
-                        $page = PageModel::find($itemDB->page_id);
-                        $pageRepository = new EloquentPageRepository();
-                        $item->setPage($pageRepository->findByIdentifier($page->identifier));
-                    }
-                    $menu->addItem($item);
-                }
-            }
-            $menu->setName($menuDB->name);
-
-            return $menu;
-        }
-        return false;
+        return ($menuDB) ? $this->convertMenuModelToMenuStructure($menuDB) : false;
     }
 
     public function findAll()
     {
-        return MenuModel::get();
+        $menusDB = MenuModel::get();
+
+        $menus = [];
+        foreach ($menusDB as $i => $menuDB) {
+            $menus[]= $this->convertMenuModelToMenuStructure($menuDB);
+        }
+
+        return $menus;
     }
 
-    public function createMenu(Menu $menu)
+    public function createMenu(MenuStructure $menuStructure)
     {
-        $menuDB = new MenuModel();
-        $menuDB->identifier = $menu->getIdentifier();
-        $menuDB->name = $menu->getName();
-
+        $menuDB = $this->convertMenuStructureToMenuModel($menuStructure, new MenuModel());
         return $menuDB->save();
     }
 
-    public function updateMenu(Menu $menu)
+    public function updateMenu(MenuStructure $menuStructure)
     {
-        $menuDB = MenuModel::where('identifier', '=', $menu->getIdentifier())->first();
-        $menuDB->name = $menu->getName();
+        $menuDB = MenuModel::where('identifier', '=', $menuStructure->identifier)->first();
+        $menuDB = $this->convertMenuStructureToMenuModel($menuStructure, $menuDB);
+        
+        return $menuDB->save();
+    }
+
+    public function deleteMenu(MenuStructure $menuStructure)
+    {
+        $menuDB = MenuModel::where('identifier', '=', $menuStructure->identifier)->first();
+        
+        return $menuDB->delete();
+    }
+
+    public function convertMenuModelToMenuStructure(MenuModel $menuModel)
+    {
+        $menuStructure = new MenuStructure();
+        $menuStructure->identifier = $menuModel->identifier;
+        $menuStructure->name = $menuModel->name;
+        $menuStructure->items = [];
+
+        if ($menuModel->items) {
+            foreach ($menuModel->items->sortBy('order') as $itemDB) {
+                $item = new MenuItemStructure();
+                $item->label = $itemDB->label;
+                $item->order = $itemDB->order;
+                if ($itemDB->page_id) {
+                    $page = PageModel::find($itemDB->page_id);
+                    $item->page = $page->identifier;
+                }
+                $menuStructure->items[]= $item;
+            }
+        }
+
+        return $menuStructure;
+    }
+
+    public function convertMenuStructureToMenuModel(MenuStructure $menuStructure, $menuDB)
+    {
+        $menuDB->name = $menuStructure->name;
 
         //Delete existing items
-        MenuItemModel::where('menu_id', '=', $menuDB->id)->delete();
+        if ($menuDB->id)
+            MenuItemModel::where('menu_id', '=', $menuDB->id)->delete();
+        else
+            $menuDB->identifier = $menuStructure->identifier;
         
         //Add new items
-        if (is_array($menu->getItems())) {
-            foreach ($menu->getItems() as $item) {
+        if (is_array($menuStructure->items)) {
+            foreach ($menuStructure->items as $item) {
                 $itemDB = new MenuItemModel();
-                $itemDB->label = $item->getLabel();
-                $itemDB->order = $item->getOrder();
-                if ($item->getPage()) {
-                    $pageDB = PageModel::where('identifier', '=', $item->getPage()->getIdentifier())->first();
+                $itemDB->label = $item->label;
+                $itemDB->order = $item->order;
+                if ($item->page) {
+                    $pageDB = PageModel::where('identifier', '=', $item->page->identifier)->first();
                     $itemDB->page_id = $pageDB->id;
                 }
                 $itemDB->menu_id = $menuDB->id;
@@ -76,15 +105,8 @@ class EloquentMenuRepository implements MenuRepositoryInterface {
                 $menuDB->items()->save($itemDB);
             }
         }
-        
-        return $menuDB->save();
-    }
 
-    public function deleteMenu(Menu $menu)
-    {
-        $menuDB = MenuModel::where('identifier', '=', $menu->getIdentifier())->first();
-        
-        return $menuDB->delete();
+        return $menuDB;
     }
     
 }

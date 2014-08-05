@@ -36,13 +36,13 @@
                     <tbody>
                         @foreach ($users as $user)
                         <tr>
-                            <td>{{{ $user->id or '' }}}</td>
+                            <td>{{{ $user->ID or '' }}}</td>
                             <td>{{ $user->login }}</td>
                             <td>{{ $user->last_name }} {{ $user->first_name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                <a class="btn btn-default" href="{{ route('back_users_edit', array($user->login)) }}" title="{{ $user->login }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
-                                <a class="btn btn-danger" href="{{ route('back_users_delete', array($user->login)) }}" title="{{ $user->login }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
+                                <a class="btn btn-default" href="{{ route('back_users_edit', array($user->ID)) }}" title="{{ $user->login }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
+                                <a class="btn btn-danger" href="{{ route('back_users_delete', array($user->ID)) }}" title="{{ $user->login }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
                             </td>
                         </tr>
                     @endforeach

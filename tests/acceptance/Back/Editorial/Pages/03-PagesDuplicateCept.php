@@ -23,4 +23,4 @@ $I->click('tr:contains("' . PagesCreatePage::$page_fixture_created['name'] . '")
 //Result
 $I->seeCurrentUrlMatches('#(.*)' . PagesIndexPage::$uri . '$#');
 $I->seeInTitle(PagesIndexPage::$title);
-$I->see(PagesCreatePage::$page_fixture_created['name'] . ' COPY');
+$I->see(PagesCreatePage::$page_fixture_created['name'] . ' - COPY');

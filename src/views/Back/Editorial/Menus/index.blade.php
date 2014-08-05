@@ -35,7 +35,7 @@
                     <tbody>
                         @foreach ($menus as $menu)
                         <tr>
-                            <td>{{ $menu->id }}</td>
+                            <td>{{{ $menu->id or '' }}}</td>
                             <td>{{ $menu->name }}</td>
                             <td>{{ $menu->identifier }}</td>
                             <td>
