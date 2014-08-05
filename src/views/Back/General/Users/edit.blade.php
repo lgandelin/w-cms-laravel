@@ -25,6 +25,11 @@
             @if ($user)
             <form role="form" action="{{ route('back_users_update') }}" method="post">
                 <div class="form-group">
+                    <label for="login">{{ trans('w-cms-laravel::users.login') }}</label>
+                    <input type="text" class="form-control" id="login" name="login" placeholder="{{ trans('w-cms-laravel::users.login') }}" value="{{ $user->login }}" />
+                </div>
+
+                <div class="form-group">
                     <label for="password">{{ trans('w-cms-laravel::users.password') }}</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="{{ trans('w-cms-laravel::users.password') }}" autocomplete="off" />
                 </div>
@@ -44,8 +49,6 @@
                     <input type="text" class="form-control" id="email" name="email" placeholder="{{ trans('w-cms-laravel::users.email') }}" value="{{ $user->email }}" />
                 </div>
 
-                <input type="hidden" name="login" value="{{ $user->login }}" />
-                
                 <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
                 <a class="btn btn-default" href="{{ route('back_users_index') }}" title="{{ trans('w-cms-laravel::header.users') }}">{{ trans('w-cms-laravel::generic.cancel') }}</a>
                 

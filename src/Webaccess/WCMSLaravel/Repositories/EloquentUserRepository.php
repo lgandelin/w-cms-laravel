@@ -79,6 +79,7 @@ class EloquentUserRepository implements UserRepositoryInterface {
     public function updateUser($userID, UserStructure $userStructure)
     {
         $userDB = UserModel::where('id', '=', $userID)->first();
+        $userDB->login = $userStructure->login;
         if ($userStructure->password)
             $userDB->password = $userStructure->password;
         $userDB->last_name = $userStructure->last_name;
