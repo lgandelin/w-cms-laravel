@@ -10,7 +10,7 @@ class UserController extends AdminController {
     public function index()
     {
         $this->layout = \View::make('w-cms-laravel::back.general.users.index', [
-            'users' => \App::make('\CMS\Interactors\GetAllUsersInteractor')->getAll(),
+            'users' => \App::make('GetAllUsersInteractor')->getAll(),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
@@ -31,7 +31,7 @@ class UserController extends AdminController {
         ]);
         
         try {
-            $userStructure = \App::make('\CMS\Interactors\CreateUserInteractor')->run($userStructure);
+            $userStructure = \App::make('CreateUserInteractor')->run($userStructure);
             return \Redirect::route('back_users_index');
         } catch (\Exception $e) {
             $this->layout = \View::make('w-cms-laravel::back.general.users.create', [
@@ -44,7 +44,7 @@ class UserController extends AdminController {
     public function edit($userID)
     {
         try {
-            $userStructure = \App::make('\CMS\Interactors\GetUserInteractor')->getByID($userID);
+            $userStructure = \App::make('GetUserInteractor')->getByID($userID);
             $this->layout = \View::make('w-cms-laravel::back.general.users.edit', [
                 'user' => $userStructure
             ]);
@@ -66,7 +66,7 @@ class UserController extends AdminController {
         ]);
 
         try {
-            \App::make('\CMS\Interactors\UpdateUserInteractor')->run($userID, $userStructure);
+            \App::make('UpdateUserInteractor')->run($userID, $userStructure);
             return \Redirect::route('back_users_index');
         } catch (\Exception $e) {
             $this->layout = \View::make('w-cms-laravel::back.general.users.edit', [
@@ -79,7 +79,7 @@ class UserController extends AdminController {
     public function delete($userID)
     {
         try {
-            \App::make('\CMS\Interactors\DeleteUserInteractor')->run($userID);
+            \App::make('DeleteUserInteractor')->run($userID);
             return \Redirect::route('back_users_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());

@@ -2,22 +2,15 @@
 
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
-use CMS\Services\PageManager;
 use CMS\Structures\PageStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
 class PageController extends AdminController {
 
-	public function __construct(PageManager $pageManager)
-	{
-		parent::__construct();
-		$this->pageManager = $pageManager;
-	}
-
 	public function index()
 	{
 		$this->layout = \View::make('w-cms-laravel::back.editorial.pages.index', [
-			'pages' => $this->pageManager->getAll(),
+			'pages' => \App::make('GetAllPagesInteractor')->getAll(),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
 		]);
 	}
@@ -29,7 +22,7 @@ class PageController extends AdminController {
 
 	public function store()
 	{
-		$pageS = new PageStructure([
+        $pageStructure = new PageStructure([
 		    'name' => \Input::get('name'),
 		    'uri' => \Input::get('uri'),
 		    'identifier' => \Input::get('identifier'),
@@ -40,24 +33,22 @@ class PageController extends AdminController {
 		]);
 		
 		try {
-			$this->pageManager->createPage($pageS);
+            $pageStructure = \App::make('CreatePageInteractor')->run($pageStructure);
 			return \Redirect::route('back_pages_index');
 		} catch (\Exception $e) {
 			$this->layout = \View::make('w-cms-laravel::back.editorial.pages.create', [
 				'error' => $e->getMessage(),
-				'page' => $pageS
+				'page' => $pageStructure
 			]);
 		}
 	}
 
-	public function edit($identifier)
+	public function edit($pageID)
 	{
-		$page = $this->pageManager->getByIdentifier($identifier);
-
 		try {
-		    $pageS = $this->pageManager->getByIdentifier($identifier);
+            $pageStructure = \App::make('GetPageInteractor')->getByID($pageID);
 		    $this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
-		        'page' => $pageS
+		        'page' => $pageStructure
 		    ]);
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());
@@ -67,7 +58,8 @@ class PageController extends AdminController {
 
 	public function update()
 	{
-		$pageS = new PageStructure([
+        $pageID = \Input::get('ID');
+        $pageStructure = new PageStructure([
 		    'name' => \Input::get('name'),
 		    'uri' => \Input::get('uri'),
 		    'identifier' => \Input::get('identifier'),
@@ -78,20 +70,20 @@ class PageController extends AdminController {
 		]);
 
 		try {
-		    $this->pageManager->updatePage($pageS);
+            \App::make('UpdatePageInteractor')->run($pageID, $pageStructure);
 		    return \Redirect::route('back_pages_index');
 		} catch (\Exception $e) {
 			$this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
 				'error' => $e->getMessage(),
-				'page' => $pageS
+				'page' => $pageStructure
 			]);
 		}
 	}
 
-	public function delete($identifier = null)
+	public function delete($pageID)
 	{
 		try {
-            $this->pageManager->deletePage($identifier);
+            \App::make('DeletePageInteractor')->run($pageID);
             return \Redirect::route('back_pages_index');
         } catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());
@@ -99,10 +91,10 @@ class PageController extends AdminController {
         }
 	}
 
-	public function duplicate($identifier = null)
+	public function duplicate($pageID)
 	{
 		try {
-			$this->pageManager->duplicatePage($identifier);
+            \App::make('DuplicatePageInteractor')->run($pageID);
             return \Redirect::route('back_pages_index');
         } catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());
