@@ -128,5 +128,19 @@ class EloquentPageRepository implements PageRepositoryInterface {
 		
 		return $pageDB->delete();
 	}
-	
+
+    public function convertPageModelToPageStructure(PageModel $pageModel)
+    {
+        $pageStructure = new PageStructure();
+        $pageStructure->ID = $pageDB->id;
+        $pageStructure->name = $pageDB->name;
+        $pageStructure->uri = $pageDB->uri;
+        $pageStructure->identifier = $pageDB->identifier;
+        $pageStructure->text = $pageDB->text;
+        $pageStructure->meta_title = $pageDB->meta_title;
+        $pageStructure->meta_description = $pageDB->meta_description;
+        $pageStructure->meta_keywords = $pageDB->meta_keywords;
+
+        return $pageStructure;
+    }
 }

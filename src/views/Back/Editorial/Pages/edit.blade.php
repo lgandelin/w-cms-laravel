@@ -40,7 +40,7 @@
 
                 <div class="form-group">
                     <label for="identifier">{{ trans('w-cms-laravel::pages.identifier') }}</label>
-                    <input type="text" class="form-control" id="identifier" name="uri" placeholder="{{ trans('w-cms-laravel::pages.identifier') }}" value="{{ $page->identifier }}" />
+                    <input type="text" class="form-control" id="identifier" name="identifier" placeholder="{{ trans('w-cms-laravel::pages.identifier') }}" value="{{ $page->identifier }}" />
                 </div>
 
 				<div class="form-group">

@@ -34,6 +34,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="identifier">{{ trans('w-cms-laravel::menus.identifier') }}</label>
+                        <input type="text" class="form-control" id="identifier" name="identifier" placeholder="{{ trans('w-cms-laravel::menus.identifier') }}" value="{{ $menu->identifier }}" />
+                    </div>
+
+                    <div class="form-group">
                         <label for="items">{{ trans('w-cms-laravel::menus.items') }}</label>
                         
                         @if ($menu->items):
@@ -41,19 +46,20 @@
 
                                 <div class="form-inline">
                                     <label for="items_label[]">{{ trans('w-cms-laravel::menus.item_label') }}</label>
-                                    <input type="text" class="form-control" name="items_label[]" value="{{ $item->label }}" />
+                                    <input type="text" class="form-control" name="items_label[]" value="{{ $item->label }}" autocomplete="off" />
                                     <label for="items_order[]">{{ trans('w-cms-laravel::menus.item_order') }}</label>
-                                    <input type="text" class="form-control" name="items_order[]" value="{{ $item->order }}" />
+                                    <input type="text" class="form-control" name="items_order[]" value="{{ $item->order }}" autocomplete="off" />
                                     <label for="items_page[]">{{ trans('w-cms-laravel::menus.item_page') }}</label>
                                     <select name="items_page[]" class="form-control" autocomplete="off">
                                         <option>{{ trans('w-cms-laravel::menus.choose_page') }}</option>
                                         @if ($pages)
                                              @foreach ($pages as $page)
-                                                <option value="{{ $page->identifier }}" @if ($item->page == $page->identifier)selected="selected"@endif>{{ $page->name }}</option>
+                                                <option value="{{ $page->ID }}" @if ($item->page_id == $page->ID)selected="selected"@endif>{{ $page->name }}</option>
                                             @endforeach
                                         @endif
                                     </select>
-                                    <input type="button" class="btn btn-danger btn-delete" value="{{ trans('w-cms-laravel::generic.delete') }}" />
+                                    <input type="button" class="btn btn-primary btn-update" value="{{ trans('w-cms-laravel::generic.edit') }}" data-item-id="{{ $item->ID }}" />
+                                    <input type="button" class="btn btn-danger btn-delete" value="{{ trans('w-cms-laravel::generic.delete') }}" data-item-id="{{ $item->ID }}" />
                                 </div>
                             @endforeach
                         @endif
@@ -66,12 +72,13 @@
                             <label for="items_page[]">{{ trans('w-cms-laravel::menus.item_page') }}</label>
                             <select name="items_page[]" class="form-control" autocomplete="off">
                                 <option value="">{{ trans('w-cms-laravel::menus.choose_page') }}</option>
-                                 @if ($pages)
+                                @if ($pages)
                                     @foreach ($pages as $page)
-                                        <option value="{{ $page->identifier }}">{{ $page->name }}</option>
+                                        <option value="{{ $page->ID }}">{{ $page->name }}</option>
                                     @endforeach
                                 @endif
                             </select>
+                            <input type="button" class="btn btn-primary btn-update" value="{{ trans('w-cms-laravel::generic.edit') }}" />
                             <input type="button" class="btn btn-danger btn-delete" value="{{ trans('w-cms-laravel::generic.delete') }}" />
                         </div>
 
@@ -87,17 +94,17 @@
                             <option>{{ trans('w-cms-laravel::menus.choose_page') }}</option>
                             @if ($pages)
                                 @foreach ($pages as $page)
-                                    <option value="{{ $page->identifier }}">{{ $page->name }}</option>
+                                    <option value="{{ $page->ID }}">{{ $page->name }}</option>
                                 @endforeach
                             @endif
                         </select>
                         <input type="button" class="btn btn-primary btn-create" value="{{ trans('w-cms-laravel::generic.create') }}" />
                     </div>
                     
-                    <input type="hidden" name="identifier" value="{{ $menu->identifier }}" />
-                    
                     <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
                     <a class="btn btn-default" href="{{ route('back_menus_index') }}" title="{{ trans('w-cms-laravel::header.menus') }}">{{ trans('w-cms-laravel::generic.cancel') }}</a>
+
+                    <input type="hidden" name="ID" value="{{ $menu->ID }}" />
                 </form>
             @else
                 {{ trans('w-cms-laravel::menus.not_found') }}

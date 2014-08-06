@@ -7,4 +7,9 @@ class MenuItem extends \Eloquent {
     protected $table = 'menu_items';
     protected $fillable = array('label', 'order');
 
+    public function page()
+    {
+        return $this->hasOne('Webaccess\WCMSLaravel\Models\Page');
+    }
+
 }

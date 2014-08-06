@@ -11,10 +11,5 @@ class Menu extends \Eloquent {
     {
         return $this->hasMany('Webaccess\WCMSLaravel\Models\MenuItem');
     }
-
-    public function page()
-    {
-        return $this->hasOne('Webaccess\WCMSLaravel\Models\Page');
-    }
     
 }

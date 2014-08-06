@@ -36,7 +36,7 @@
 					<tbody>
 						@foreach ($pages as $page)
 						<tr>
-							<td>{{{ $page->id or ''}}}</td>
+							<td>{{{ $page->ID or ''}}}</td>
 							<td>{{ $page->name }}</td>
 							<td>{{ $page->identifier }}</td>
 							<td>{{ $page->uri }}</td>

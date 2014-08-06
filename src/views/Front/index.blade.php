@@ -21,15 +21,15 @@
 @stop
 
 @section('content')
-	@if ($menu->items)
+	@if (isset($menu) && $menu->items)
 		<nav>
 			<ul>
 				@foreach ($menu->items as $item)
 	                @if ($item->page)
 	                    @if ($current_page->uri == $item->page->uri)
-	                        <li class="selected">{{ $item->page->name }}</li>
+	                        <li class="selected">{{ $item->label }}</li>
 	                    @else
-	                        <li><a href="{{ route('front_page_index', array($item->page->uri)) }}" title="{{ $item->page->name }}">{{ $item->page->name }}</a></li>
+	                        <li><a href="{{ route('front_page_index', array($item->page->uri)) }}" title="{{ $item->page->name }}">{{ $item->label }}</a></li>
 	                    @endif
 	                @else
 	                    <li>{{ $item->label }}
