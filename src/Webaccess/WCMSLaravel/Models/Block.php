@@ -1,0 +1,14 @@
+<?php
+
+namespace Webaccess\WCMSLaravel\Models;
+
+class Block extends \Eloquent {
+
+    protected $table = 'blocks';
+    protected $fillable = array('name', 'width', 'height', 'class');
+
+    public function area()
+    {
+        return $this->hasOne('Webaccess\WCMSLaravel\Models\Area');
+    }
+}

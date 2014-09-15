@@ -18,6 +18,9 @@ Route::post('/admin/editorial/pages/update', array('as' => 'back_pages_update', 
 Route::get('/admin/editorial/pages/delete/{id}', array('as' => 'back_pages_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@delete'));
 Route::get('/admin/editorial/pages/duplicate/{id}', array('as' => 'back_pages_duplicate', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@duplicate'));
 
+//BACK > EDITORIAL > PAGES > BLOCKS
+Route::post('/admin/editorial/pages/update_block_content', array('as' => 'back_pages_update_block_content', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_block_content'));
+
 //BACK > EDITORIAL > MENUS
 Route::get('/admin/editorial/menus', array('as' => 'back_menus_index', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@index'));
 Route::get('/admin/editorial/menus/create', array('as' => 'back_menus_create', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@create'));

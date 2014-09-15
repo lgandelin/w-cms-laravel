@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
+use CMS\Structures\BlockStructure;
 use CMS\Structures\PageStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
@@ -46,9 +47,15 @@ class PageController extends AdminController {
 	public function edit($pageID)
 	{
 		try {
-            $pageStructure = \App::make('GetPageInteractor')->getByID($pageID);
+            $page = \App::make('GetPageInteractor')->getByID($pageID);
+            $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
+            foreach ($areas as $area) {
+                $area->blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                $page->areas[]= $area;
+            }
+
 		    $this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
-		        'page' => $pageStructure
+		        'page' => $page
 		    ]);
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());
@@ -101,5 +108,21 @@ class PageController extends AdminController {
             return \Redirect::route('back_pages_index');
         }
 	}
+
+    public function update_block_content()
+    {
+        $blockID = \Input::get('blockID');
+
+        $blockStructure = new BlockStructure([
+            'html' => \Input::get('html'),
+        ]);
+
+        try {
+            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            return json_encode(array('success' => true));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
 
 }

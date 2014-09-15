@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+ 	CKEDITOR.replace( 'text' );
+ 	
 	$('.btn-delete-area').click(function() {
 		$(this).parent().remove();
 	});

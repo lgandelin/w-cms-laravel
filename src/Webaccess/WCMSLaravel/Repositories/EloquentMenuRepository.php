@@ -34,12 +34,15 @@ class EloquentMenuRepository implements MenuRepositoryInterface {
     public function findByIdentifier($identifier)
     {
         $menuDB = MenuModel::where('identifier', '=', $identifier)->first();
-        $menuStructure = $this->convertMenuModelToMenuStructure($menuDB);
-        if ($menuStructure) {
-            foreach ($menuStructure->items as $i => $item) {
-                $menuStructure->items[$i]->page =  $this->pageRepository->findByID($item->page_id);
+
+        if ($menuDB) {
+            $menuStructure = $this->convertMenuModelToMenuStructure($menuDB);
+            if ($menuStructure) {
+                foreach ($menuStructure->items as $i => $item) {
+                    $menuStructure->items[$i]->page =  $this->pageRepository->findByID($item->page_id);
+                }
+                return $menuStructure;
             }
-            return $menuStructure;
         }
         return false;
     }

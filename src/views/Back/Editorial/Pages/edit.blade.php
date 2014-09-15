@@ -43,9 +43,37 @@
                     <input type="text" class="form-control" id="identifier" name="identifier" placeholder="{{ trans('w-cms-laravel::pages.identifier') }}" value="{{ $page->identifier }}" />
                 </div>
 
-				<div class="form-group">
+				<!--<div class="form-group">
                     <label for="text">{{ trans('w-cms-laravel::pages.text') }}</label>
                     <textarea class="form-control" id="text" name="text" rows="30">{{ $page->text }}</textarea>
+                </div>-->
+
+                <div class="form-group">
+                    <p><strong>{{ trans('w-cms-laravel::pages.content') }}</strong></p>
+
+                    @foreach ($page->areas as $area)
+                        <div class="area" style="background: #ddd; padding: 10px; border: 1px solid #ccc; margin-bottom: 20px">
+                            <span class="title" style="cursor: pointer; font-weight: bold; display: block; margin-bottom: 10px">[AREA] {{ $area->name }}</span>
+
+                            <div class="content" style="display: none">
+                                @foreach ($area->blocks as $block)
+                                    <div class="block" data-type="html" data-id="{{ $block->ID }}" style="background: #eee; padding: 10px; border: 1px solid #ddd; margin-bottom: 20px">
+                                        <span class="title" style="cursor: pointer; font-weight: bold; display: block; margin-bottom: 10px">[Block] {{ $block->name }} <span class="type" style="font-weight: normal; text-transform: uppercase">({{ $block->type }})</span></span>
+
+                                        <div class="content" style="display: none">
+                                            @if ($block->type == 'html')
+                                                <textarea class="ckeditor" id="editor{{ $block->ID }}" name="editor{{ $block->ID }}">{{ $block->html }}</textarea>
+                                            @endif
+
+                                            <input type="button" data-id="{{ $block->ID }}" class="content-save-block btn btn-success" style="margin-top: 20px" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                        </div>
+                    @endforeach
+
                 </div>
                 
                 <div class="form-group">

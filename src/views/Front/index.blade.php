@@ -22,24 +22,36 @@
 
 @section('content')
 	@if (isset($menu) && $menu->items)
-		<nav>
-			<ul>
+        <nav class="navbar navbar-default" role="navigation">
+            <ul class="nav navbar-nav">
 				@foreach ($menu->items as $item)
 	                @if ($item->page)
 	                    @if ($current_page->uri == $item->page->uri)
-	                        <li class="selected">{{ $item->label }}</li>
+                            <li><a>{{ $item->label }}</a>
 	                    @else
 	                        <li><a href="{{ route('front_page_index', array($item->page->uri)) }}" title="{{ $item->page->name }}">{{ $item->label }}</a></li>
 	                    @endif
-	                @else
-	                    <li>{{ $item->label }}
                      @endif
 				@endforeach
 			</ul>
 		</nav>
 	@endif
 
-	<section class="content">
-		{{ $current_page->text }}
+	<section class="content row">
+        @foreach ($current_page->areas as $area)
+        <div class="area col-xs-{{ $area->width }} {{ $area->class }}">
+            <div class="row" style="margin-bottom: 20px">
+                @foreach ($area->blocks as $block)
+                <div class="block col-xs-{{ $block->width }} {{ $block->class }}">
+                    <div style="background: #efefef; padding: 10px; border: 1px solid #ccc; margin-bottom: 20px">
+                        @if ($block->type == 'html')
+                            {{ $block->html }}
+                        @endif
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        @endforeach
 	</section>
 @stop

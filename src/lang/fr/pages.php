@@ -4,6 +4,7 @@ return array(
 	'pages' => 'Gestion des pages',
     'name' => 'Nom',
     'identifier' => 'Identifiant',
+    'content' => 'Contenu',
     'uri' => 'URI',
     'text' => 'Texte',
     'meta_title' => 'Meta title',
@@ -11,5 +12,6 @@ return array(
     'meta_keywords' => 'Meta keywords',
     'no_page_created_yet' => 'Aucune page créée',
    	'not_found' => 'Page non trouvée',
-    'new_page' => 'Nouvelle page'
+    'new_page' => 'Nouvelle page',
+    'add_area' => 'Ajouter une zone'
 );
