@@ -63,6 +63,40 @@ class PageController extends AdminController {
 		}
 	}
 
+    public function update_page_infos()
+    {
+        $pageID = \Input::get('ID');
+        $pageStructure = new PageStructure([
+            'name' => \Input::get('name'),
+            'identifier' => \Input::get('identifier'),
+        ]);
+
+        try {
+            \App::make('UpdatePageInteractor')->run($pageID, $pageStructure);
+            return json_encode(array('success' => true));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+
+    public function update_page_seo()
+    {
+        $pageID = \Input::get('ID');
+        $pageStructure = new PageStructure([
+            'uri' => \Input::get('uri'),
+            'meta_title' => \Input::get('meta_title'),
+            'meta_description' => \Input::get('meta_description'),
+            'meta_keywords' => \Input::get('meta_keywords')
+        ]);
+
+        try {
+            \App::make('UpdatePageInteractor')->run($pageID, $pageStructure);
+            return json_encode(array('success' => true));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+
 	public function update()
 	{
         $pageID = \Input::get('ID');
@@ -111,7 +145,7 @@ class PageController extends AdminController {
 
     public function update_block_content()
     {
-        $blockID = \Input::get('blockID');
+        $blockID = \Input::get('ID');
 
         $blockStructure = new BlockStructure([
             'html' => \Input::get('html'),

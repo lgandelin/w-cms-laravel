@@ -38,20 +38,20 @@
 	@endif
 
 	<section class="content row">
-        @foreach ($current_page->areas as $area)
-        <div class="area col-xs-{{ $area->width }} {{ $area->class }}">
-            <div class="row" style="margin-bottom: 20px">
-                @foreach ($area->blocks as $block)
-                <div class="block col-xs-{{ $block->width }} {{ $block->class }}">
-                    <div style="background: #efefef; padding: 10px; border: 1px solid #ccc; margin-bottom: 20px">
+        @if (isset($current_page->areas))
+            @foreach ($current_page->areas as $area)
+            <div class="area col-xs-{{ $area->width }} {{ $area->class }}">
+                <div class="row">
+                    @foreach ($area->blocks as $block)
+                    <div class="block col-xs-{{ $block->width }} {{ $block->class }}">
                         @if ($block->type == 'html')
                             {{ $block->html }}
                         @endif
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
-        </div>
-        @endforeach
+            @endforeach
+        @endif
 	</section>
 @stop
