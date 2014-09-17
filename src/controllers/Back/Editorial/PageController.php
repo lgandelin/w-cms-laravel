@@ -63,6 +63,18 @@ class PageController extends AdminController {
 		}
 	}
 
+    public function delete_area()
+    {
+        $areaID = \Input::get('ID');
+
+        try {
+            \App::make('DeleteAreaInteractor')->run($areaID);
+            return json_encode(array('success' => true));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+
     public function update_page_infos()
     {
         $pageID = \Input::get('ID');
@@ -97,51 +109,16 @@ class PageController extends AdminController {
         }
     }
 
-	public function update()
-	{
-        $pageID = \Input::get('ID');
-        $pageStructure = new PageStructure([
-		    'name' => \Input::get('name'),
-		    'uri' => \Input::get('uri'),
-		    'identifier' => \Input::get('identifier'),
-		    'text' => \Input::get('text'),
-		    'meta_title' => \Input::get('meta_title'),
-		    'meta_description' => \Input::get('meta_description'),
-		    'meta_keywords' => \Input::get('meta_keywords')
-		]);
+    public function get_block_infos($blockID)
+    {
+        try {
+            $block = \App::make('GetBlockInteractor')->getByID($blockID);
 
-		try {
-            \App::make('UpdatePageInteractor')->run($pageID, $pageStructure);
-		    return \Redirect::route('back_pages_index');
-		} catch (\Exception $e) {
-			$this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
-				'error' => $e->getMessage(),
-				'page' => $pageStructure
-			]);
-		}
-	}
-
-	public function delete($pageID)
-	{
-		try {
-            \App::make('DeletePageInteractor')->run($pageID);
-            return \Redirect::route('back_pages_index');
+            return json_encode(array('success' => true, 'block' => $block->toArray()));
         } catch (\Exception $e) {
-			\Session::flash('error', $e->getMessage());
-            return \Redirect::route('back_pages_index');
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
-	}
-
-	public function duplicate($pageID)
-	{
-		try {
-            \App::make('DuplicatePageInteractor')->run($pageID);
-            return \Redirect::route('back_pages_index');
-        } catch (\Exception $e) {
-			\Session::flash('error', $e->getMessage());
-            return \Redirect::route('back_pages_index');
-        }
-	}
+    }
 
     public function update_block_content()
     {
@@ -158,5 +135,60 @@ class PageController extends AdminController {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
     }
+
+    public function update_block_infos()
+    {
+        $blockID = \Input::get('ID');
+
+        $blockStructure = new BlockStructure([
+            'name' => \Input::get('name'),
+            'width' => \Input::get('width'),
+            'height' => \Input::get('height'),
+            'type' => \Input::get('type'),
+            'class' => \Input::get('class'),
+        ]);
+
+        try {
+            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            return json_encode(array('success' => true));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+
+    public function delete_block()
+    {
+        $blockID = \Input::get('ID');
+
+        try {
+            \App::make('DeleteBlockInteractor')->run($blockID);
+            return json_encode(array('success' => true));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+
+    public function delete($pageID)
+    {
+        try {
+            \App::make('DeletePageInteractor')->run($pageID);
+            return \Redirect::route('back_pages_index');
+        } catch (\Exception $e) {
+            \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_pages_index');
+        }
+    }
+
+    public function duplicate($pageID)
+    {
+        try {
+            \App::make('DuplicatePageInteractor')->run($pageID);
+            return \Redirect::route('back_pages_index');
+        } catch (\Exception $e) {
+            \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_pages_index');
+        }
+    }
+
 
 }

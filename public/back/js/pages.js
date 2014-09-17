@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+	/********************************
+	* CONTENT
+	********************************/
+
 	//Save page infos
 	$('.page-content-save-infos').click(function() {
 		var page_id = $(this).attr('data-id');
@@ -24,12 +28,15 @@ $(document).ready(function() {
                 data = JSON.parse(data);
 
                 if (data.success) {
-                	var label_success = $('<p class="alert alert-success">Saved !</sp>');
+                	var label_success = $('<p class="alert alert-success">Saved !</p>');
                 	button.parent().after(label_success);
                 	label_success.fadeIn().delay(2000).fadeOut();
                 	button.val('Submit');
                 } else {
-                    alert(data.error);
+                    var label_error = $('<p class="alert alert-danger">' + data.error + '</p>');
+                	button.parent().after(label_error);
+                	label_error.fadeIn().delay(2000).fadeOut();
+                	button.val('Submit');
                 }
             }
         });
@@ -64,27 +71,19 @@ $(document).ready(function() {
                 data = JSON.parse(data);
 
                 if (data.success) {
-                	var label_success = $('<p class="alert alert-success">Saved !</sp>');
+                	var label_success = $('<p class="alert alert-success">Saved !</p>');
                 	button.parent().after(label_success);
                 	label_success.fadeIn().delay(2000).fadeOut();
                 	button.val('Submit');
                 } else {
-                    alert(data.error);
+                    var label_error = $('<p class="alert alert-danger">' + data.error + '</p>');
+                	button.parent().after(label_error);
+                	label_error.fadeIn().delay(2000).fadeOut();
+                	button.val('Submit');
                 }
             }
         });
 
-	});
-
-
-
-	//BLOCS
-	$('.area > .title, .block > .title').click(function() {
-		$(this).next().toggle();
-	});
-
-	$('.page-content-close-block').click(function() {
-		$(this).closest('.content').hide();
 	});
 
 	//Save content block
@@ -110,81 +109,176 @@ $(document).ready(function() {
                 data = JSON.parse(data);
 
                 if (data.success) {
-                	var label_success = $('<p class="alert alert-success">Saved !</sp>');
+                	var label_success = $('<p class="alert alert-success">Saved !</p>');
                 	button.parent().after(label_success);
                 	label_success.fadeIn().delay(2000).fadeOut();
                 	button.val('Submit');
                 } else {
-                    alert(data.error);
+                    var label_error = $('<p class="alert alert-danger">' + data.error + '</p>');
+                	button.parent().after(label_error);
+                	label_error.fadeIn().delay(2000).fadeOut();
+                	button.val('Submit');
                 }
             }
         });
 
 	});
 
-
-	$('.btn-delete-area').click(function() {
-		$(this).parent().remove();
+	$('.area > .title, .block > .title').click(function() {
+		$(this).next().toggle();
 	});
 
-	$('form').on('click', '.btn-create-area', function() {
-		
-		var name = $(this).parent().find('input[name="new_area_name"]').val();
-		var width = $(this).parent().find('input[name="new_area_width"]').val();
-		var height = $(this).parent().find('input[name="new_area_height"]').val();
-		var order = $(this).parent().find('input[name="new_area_order"]').val();
-		var css_class = $(this).parent().find('input[name="new_area_class"]').val();
-
-		$(this).parent().find('input[name="new_area_name"]').val('');
-		$(this).parent().find('input[name="new_area_width"]').val('');
-		$(this).parent().find('input[name="new_area_height"]').val('');
-		$(this).parent().find('input[name="new_area_order"]').val('');
-		$(this).parent().find('input[name="new_area_class"]').val('');
-
-		var wrapper = $('.new-area-pattern').clone();
-		wrapper.removeClass('new-area-pattern').show();
-		wrapper.find('input[name="areas_name[]"]').val(name);
-		wrapper.find('h4').text(name);
-		wrapper.find('input[name="areas_width[]"]').val(width);
-		wrapper.find('input[name="areas_height[]"]').val(height);
-		wrapper.find('input[name="areas_order[]"]').val(order);
-		wrapper.find('input[name="areas_class[]"]').val(css_class);
-
-		$('.new-area-pattern').before(wrapper);
+	$('.page-content-close-block').click(function() {
+		$(this).closest('.content').hide();
 	});
 
 
 
-	
+	/********************************
+	* STRUCTURE
+	********************************/
 
-	$('.btn-delete-block').click(function() {
-		$(this).parent().remove();
+	//Update block
+	$('.block-update').click(function() {
+		var block_id = $(this).attr('data-id');
+		$('.page-content-update-block').attr('data-id', block_id);
+
+		var block = $('.block[data-id="' + block_id + '"]');
+
+		var url = '/admin/editorial/pages/get_block_infos/' + block_id;
+
+		$.ajax({
+            type: "GET",
+            url: url,
+            success: function(data) {
+                data = JSON.parse(data);
+
+                if (data.success) {
+					$('.update-block-form .name').val(data.block.name);
+					$('.update-block-form .width').val(data.block.width);
+					$('.update-block-form .height').val(data.block.height);
+					$('.update-block-form .class').val(data.block.class);
+					$('.update-block-form .type').val(data.block.type);
+
+					$('.update-block-form').show();
+                } else {
+                    
+                }
+            }
+        });
 	});
 
-	$('form').on('click', '.btn-create-block', function() {
-		
-		var name = $(this).parent().find('input[name="new_block_name"]').val();
-		var width = $(this).parent().find('input[name="new_block_width"]').val();
-		var height = $(this).parent().find('input[name="new_block_height"]').val();
-		var order = $(this).parent().find('input[name="new_block_order"]').val();
-		var css_class = $(this).parent().find('input[name="new_block_class"]').val();
+	//Valid update block
+	$('.page-content-update-block').click(function() {
+		var block_id = $(this).attr('data-id');
+		var block = $('#structure .block[data-id="' + block_id + '"]');
 
-		$(this).parent().find('input[name="new_block_name"]').val('');
-		$(this).parent().find('input[name="new_block_width"]').val('');
-		$(this).parent().find('input[name="new_block_height"]').val('');
-		$(this).parent().find('input[name="new_block_order"]').val('');
-		$(this).parent().find('input[name="new_block_class"]').val('');
+		var url = '/admin/editorial/pages/update_block_infos';
+		var input_data = {
+			'ID': block_id,
+            'name': $('.update-block-form .name').val(),
+            'width': $('.update-block-form .width').val(),
+            'type': $('.update-block-form .type').val(),
+            'class': $('.update-block-form .class').val()
+        };
 
-		var wrapper = $('.new-block-pattern').clone();
-		wrapper.removeClass('new-block-pattern').show();
-		wrapper.find('input[name="blocks_name[]"]').val(name);
-		wrapper.find('h4').text(name);
-		wrapper.find('input[name="blocks_width[]"]').val(width);
-		wrapper.find('input[name="blocks_height[]"]').val(height);
-		wrapper.find('input[name="blocks_order[]"]').val(order);
-		wrapper.find('input[name="blocks_class[]"]').val(css_class);
+	    var button = $(this);
+	    button.val('Saving ...');
 
-		$('.new-block-pattern').before(wrapper);
+		$.ajax({
+            type: "POST",
+            url: url,
+            data: input_data,
+            success: function(data) {
+                data = JSON.parse(data);
+
+                if (data.success) {
+					var label_success = $('<p class="alert alert-success">Saved !</p>');
+                	button.parent().after(label_success);
+                	label_success.fadeIn().delay(2000).fadeOut();
+                	button.val('Submit');
+
+                	//Update block in "Structure" tab
+                	block.removeClass().addClass('block col-xs-' + input_data.width);
+                	block.find('.width_value').text(input_data.width);
+                	block.find('.name').text(input_data.name);
+                	block.find('.type').text('(' + input_data.type.toUpperCase() + ')');
+
+                	//Update block in "Content" tab
+                	$('#content .block[data-id="' + block_id + '"]').find('.name').text(input_data.name);
+                } else {
+                    
+                }
+            }
+        });
+	});
+
+	$('.update-block-form .page-content-close-update-block').click(function() {
+		$('.update-block-form').hide();
+	});
+
+	//Delete area
+	$('.area-delete').click(function() {
+		if (confirm('Are you sure that you want to delete this area ?')) {
+			var area_id = $(this).attr('data-id');
+			
+			var url = '/admin/editorial/pages/delete_area';
+	        var data = {
+	            'ID': area_id
+	        };
+
+	        $.ajax({
+	            type: "POST",
+	            url: url,
+	            data: data,
+	            success: function(data) {
+	                data = JSON.parse(data);
+
+	                if (data.success) {
+	                	$('.area[data-id="' + area_id + '"]').remove();
+	                	var label_success = $('<p class="alert alert-success">Saved !</p>');
+	                	$('#structure .row').after(label_success);
+	                	label_success.fadeIn().delay(2000).fadeOut();
+	                } else {
+	                    var label_error = $('<p class="alert alert-danger">' + data.error + '</p>');
+	                	$('#structure .row').after(label_error);
+	                	label_error.fadeIn().delay(2000).fadeOut();
+	                }
+	            }
+	        });
+		}
+	});
+
+	//Delete block
+	$('.block-delete').click(function() {
+		if (confirm('Are you sure that you want to delete this block ?')) {
+			var block_id = $(this).attr('data-id');
+			
+			var url = '/admin/editorial/pages/delete_block';
+	        var data = {
+	            'ID': block_id
+	        };
+
+	        $.ajax({
+	            type: "POST",
+	            url: url,
+	            data: data,
+	            success: function(data) {
+	                data = JSON.parse(data);
+
+	                if (data.success) {
+	                	$('.block[data-id="' + block_id + '"]').remove();
+	                	var label_success = $('<p class="alert alert-success">Saved !</p>');
+	                	$('#structure .row').after(label_success);
+	                	label_success.fadeIn().delay(2000).fadeOut();
+	                } else {
+	                    var label_error = $('<p class="alert alert-danger">' + data.error + '</p>');
+	                	$('#structure .row').after(label_error);
+	                	label_error.fadeIn().delay(2000).fadeOut();
+	                }
+	            }
+	        });
+		}
 	});
 
 });

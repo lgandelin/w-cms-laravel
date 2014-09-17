@@ -10,10 +10,10 @@
 
 @section('content')
 
-	<div class="container-fluid">
+	<div class="container-fluid pages-interface">
 		<div class="row main">
 			
-			<ol class="breadcrumb">
+		    <ol class="breadcrumb">
 				<li><a href="{{ route('back') }}">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
 				<li><a href="{{ route('back_editorial') }}">{{ trans('w-cms-laravel::header.editorial') }}</a></li>
 				<li><a href="{{ route('back_pages_index') }}">{{ trans('w-cms-laravel::header.pages') }}</a></li>
@@ -67,23 +67,26 @@
 
                             @if (isset($page->areas))
                                 @foreach ($page->areas as $area)
-                                <div class="area" style="background: #ddd; padding: 10px; border: 1px solid #ccc; margin-bottom: 20px">
-                                    <span class="title" style="cursor: pointer; font-weight: bold; display: block; margin-bottom: 10px">[AREA] {{ $area->name }}</span>
+                                <div class="area">
+                                    <span class="title">{{ $area->name }}</span>
 
-                                    <div class="content" style="display: none">
+                                    <div class="content">
                                         @foreach ($area->blocks as $block)
-                                        <div class="block" data-type="html" data-id="{{ $block->ID }}" style="background: #eee; padding: 10px; border: 1px solid #ddd; margin-bottom: 20px">
-                                            <span class="title" style="cursor: pointer; font-weight: bold; display: block; margin-bottom: 10px">[BLOCK] {{ $block->name }} <span class="type" style="font-weight: normal; text-transform: uppercase">({{ $block->type }})</span></span>
+                                        <div class="block" data-type="html" data-id="{{ $block->ID }}">
+                                            <span class="title"><span class="name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span></span>
 
-                                            <div class="content" style="display: none">
+                                            <div class="content">
                                                 @if ($block->type == 'html')
                                                 <textarea class="ckeditor" id="editor{{ $block->ID }}" name="editor{{ $block->ID }}">{{ $block->html }}</textarea>
                                                 @endif
 
-                                                <div class="form-group" style="margin-top: 20px" >
+                                                <!-- Save -->
+                                                <div class="submit_wrapper">
                                                     <input type="button" data-id="{{ $block->ID }}" class="page-content-save-block btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
                                                     <input type="button" data-id="{{ $block->ID }}" class="page-content-close-block btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
                                                 </div>
+                                                <!-- Save -->
+
                                             </div>
                                         </div>
                                         @endforeach
@@ -100,7 +103,86 @@
 
                     <!-- STRUCTURE -->
                     <div class="tab-pane" id="structure">
-                        TODO
+
+                        <p><strong>{{ trans('w-cms-laravel::pages.structure') }}</strong></p>
+
+                        @if (isset($page->areas))
+                            <div class="row">
+                                @foreach ($page->areas as $area)
+                                    <div data-id="{{ $area->ID }}" class="area col-xs-{{ $area->width }}">
+                                        <div class="area_color">
+                                            <span class="title">
+                                                {{ $area->name }} [{{ $area->width }}]
+                                                <span data-id="{{ $area->ID }}" class="area-delete glyphicon glyphicon-remove"></span>
+                                                <span data-id="{{ $area->ID }}" class="area-update glyphicon glyphicon-pencil"></span>
+                                            </span>
+
+                                            @foreach ($area->blocks as $block)
+                                            <div data-id="{{ $block->ID }}" class="block col-xs-{{ $block->width}}">
+                                                <div class="block_color">
+                                                    <span class="title">
+                                                        <span class="name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span> [<span class="width_value">{{ $block->width }}</span>]
+
+                                                        <span data-id="{{ $block->ID }}" class="block-delete glyphicon glyphicon-remove"></span>
+                                                        <span data-id="{{ $block->ID }}" class="block-update glyphicon glyphicon-pencil"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        <div class="update-block-form">
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_name') }}</label>
+                                <input type="text" class="form-control name" placeholder="{{ trans('w-cms-laravel::pages.block_name') }}" value="" />
+                            </div>
+                            <!-- Name -->
+
+                            <!-- Width -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_width') }}</label>
+                                <input type="text" class="form-control width" placeholder="{{ trans('w-cms-laravel::pages.block_width') }}" value="" />
+                            </div>
+                            <!-- Width -->
+
+                            <!-- Height -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_height') }}</label>
+                                <input type="text" class="form-control height" placeholder="{{ trans('w-cms-laravel::pages.block_height') }}" value="" />
+                            </div>
+                            <!-- Height -->
+
+                            <!-- Type -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_type') }}</label>
+                                <select class="type">
+                                    <option value="">Choose a type</option>
+                                    <option value="html">HTML</option>
+                                </select>
+                            </div>
+                            <!-- Type -->
+
+                            <!-- Class -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_class') }}</label>
+                                <input type="text" class="form-control class" placeholder="{{ trans('w-cms-laravel::pages.block_class') }}" value="" />
+                            </div>
+                            <!-- Class-->
+
+                            <!-- Save -->
+                            <div class="submit_wrapper">
+                                <input type="button" data-id="{{ $block->ID }}" class="page-content-update-block btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                                <input type="button" data-id="{{ $block->ID }}" class="page-content-close-update-block btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                            </div>
+                            <!-- Save -->
+
+                        </div>
+
                     </div>
                     <!-- STRUCTURE -->
 
@@ -108,7 +190,7 @@
 
                     <!-- VERSIONS -->
                     <div class="tab-pane" id="versions">
-                        TODO
+
                     </div>
                     <!-- VERSIONS -->
 

@@ -33,3 +33,92 @@
 .tab-navigation {
   margin-bottom: 3rem;
 }
+
+/* line 4, ../sass/_pages.scss */
+.pages-interface #content .title {
+  cursor: pointer;
+  font-weight: bold;
+  display: block;
+}
+/* line 10, ../sass/_pages.scss */
+.pages-interface #content .area {
+  background: #eee;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+/* line 16, ../sass/_pages.scss */
+.pages-interface #content .area .content {
+  margin-top: 10px;
+  display: none;
+}
+/* line 21, ../sass/_pages.scss */
+.pages-interface #content .area .block {
+  background: #fdfdfd;
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+/* line 27, ../sass/_pages.scss */
+.pages-interface #content .area .block .submit_wrapper {
+  margin: 20px 0;
+}
+/* line 31, ../sass/_pages.scss */
+.pages-interface #content .area .block .type {
+  font-weight: normal;
+  text-transform: uppercase;
+}
+/* line 41, ../sass/_pages.scss */
+.pages-interface #structure .title {
+  font-weight: bold;
+  display: block;
+  min-height: 40px;
+  line-height: 40px;
+}
+/* line 49, ../sass/_pages.scss */
+.pages-interface #structure .area {
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 10px;
+}
+/* line 54, ../sass/_pages.scss */
+.pages-interface #structure .area .area_color {
+  overflow: hidden;
+  background: #eee;
+  border: 1px solid #ccc;
+}
+/* line 60, ../sass/_pages.scss */
+.pages-interface #structure .area .area-delete, .pages-interface #structure .area .area-update {
+  cursor: pointer;
+  float: right;
+  margin: 5px 5px 0 0;
+}
+/* line 66, ../sass/_pages.scss */
+.pages-interface #structure .area .block {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+/* line 70, ../sass/_pages.scss */
+.pages-interface #structure .area .block .block_color {
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+}
+/* line 75, ../sass/_pages.scss */
+.pages-interface #structure .area .block .submit_wrapper {
+  margin: 20px 0;
+}
+/* line 79, ../sass/_pages.scss */
+.pages-interface #structure .area .block .type {
+  font-weight: normal;
+  text-transform: uppercase;
+}
+/* line 84, ../sass/_pages.scss */
+.pages-interface #structure .area .block .block-delete, .pages-interface #structure .area .block .block-update {
+  cursor: pointer;
+  float: right;
+  margin: 5px 5px 0 0;
+}
+/* line 92, ../sass/_pages.scss */
+.pages-interface #structure .update-block-form {
+  display: none;
+}

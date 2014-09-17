@@ -10,8 +10,12 @@ use CMS\Interactors\Pages\DeletePageInteractor;
 use CMS\Interactors\Pages\DuplicatePageInteractor;
 
 use CMS\Interactors\Areas\GetAllAreasInteractor;
+use CMS\Interactors\Areas\DeleteAreaInteractor;
+
+use CMS\Interactors\Blocks\GetBlockInteractor;
 use CMS\Interactors\Blocks\GetAllBlocksInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
+use CMS\Interactors\Blocks\DeleteBlockInteractor;
 
 use CMS\Interactors\Menus\GetMenuInteractor;
 use CMS\Interactors\Menus\GetAllMenusInteractor;
@@ -94,14 +98,26 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             return new GetAllAreasInteractor(new EloquentAreaRepository(), new EloquentPageRepository());
         });
 
+        $this->app->bind('DeleteAreaInteractor', function () {
+            return new DeleteAreaInteractor(new EloquentAreaRepository(), new EloquentBlockRepository());
+        });
+
 
         //Blocks
+        $this->app->bind('GetBlockInteractor', function () {
+            return new GetBlockInteractor(new EloquentBlockRepository());
+        });
+
         $this->app->bind('GetAllBlocksInteractor', function () {
             return new GetAllBlocksInteractor(new EloquentBlockRepository(), new EloquentAreaRepository());
         });
 
         $this->app->bind('UpdateBlockInteractor', function () {
             return new UpdateBlockInteractor(new EloquentBlockRepository());
+        });
+
+        $this->app->bind('DeleteBlockInteractor', function () {
+            return new DeleteBlockInteractor(new EloquentBlockRepository());
         });
 
 

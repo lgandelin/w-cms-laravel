@@ -20,8 +20,14 @@ Route::post('/admin/editorial/pages/update_page_seo', array('as' => 'back_pages_
 Route::get('/admin/editorial/pages/delete/{id}', array('as' => 'back_pages_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@delete'));
 Route::get('/admin/editorial/pages/duplicate/{id}', array('as' => 'back_pages_duplicate', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@duplicate'));
 
+//BACK > EDITORIAL > PAGES > AREAS
+Route::post('/admin/editorial/pages/delete_area', array('as' => 'back_pages_delete_area', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@delete_area'));
+
 //BACK > EDITORIAL > PAGES > BLOCKS
+Route::get('/admin/editorial/pages/get_block_infos/{blockID}', array('as' => 'back_pages_get_block_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@get_block_infos'));
 Route::post('/admin/editorial/pages/update_block_content', array('as' => 'back_pages_update_block_content', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_block_content'));
+Route::post('/admin/editorial/pages/update_block_infos', array('as' => 'back_pages_update_block_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_block_infos'));
+Route::post('/admin/editorial/pages/delete_block', array('as' => 'back_pages_delete_block', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@delete_block'));
 
 //BACK > EDITORIAL > MENUS
 Route::get('/admin/editorial/menus', array('as' => 'back_menus_index', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@index'));

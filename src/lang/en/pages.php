@@ -14,6 +14,13 @@ return array(
     'meta_title' => 'Meta title',
     'meta_description' => 'Meta description',
     'meta_keywords' => 'Meta keywords',
+
+    'block_name' => 'Name',
+    'block_width' => 'Width',
+    'block_height' => 'Height',
+    'block_type' => 'Type',
+    'block_class' => 'CSS class',
+
     'no_page_created_yet' => 'No page created yet',
     'not_found' => 'Page not found',
     'new_page' => 'New page',
