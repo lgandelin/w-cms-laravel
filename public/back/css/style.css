@@ -24,6 +24,12 @@
   margin-bottom: 5rem;
 }
 
+/* line 26, ../sass/style.scss */
 .form-inline {
   margin-bottom: 1rem;
+}
+
+/* line 30, ../sass/style.scss */
+.tab-navigation {
+  margin-bottom: 3rem;
 }

@@ -28,11 +28,11 @@
             
 			@if ($page)
 
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#content" role="tab" data-toggle="tab">Content</a></li>
-                    <li><a href="#structure" role="tab" data-toggle="tab">Structure</a></li>
-                    <li><a href="#versions" role="tab" data-toggle="tab">Versions</a></li>
-                    <li><a href="#seo" role="tab" data-toggle="tab">SEO</a></li>
+                <ul class="nav nav-tabs tab-navigation" role="tablist">
+                    <li class="active"><a href="#content" role="tab" data-toggle="tab">{{ trans('w-cms-laravel::pages.content') }}</a></li>
+                    <li><a href="#structure" role="tab" data-toggle="tab">{{ trans('w-cms-laravel::pages.structure') }}</a></li>
+                    <li><a href="#versions" role="tab" data-toggle="tab">{{ trans('w-cms-laravel::pages.versions') }}</a></li>
+                    <li><a href="#seo" role="tab" data-toggle="tab">{{ trans('w-cms-laravel::pages.seo') }}</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -80,7 +80,10 @@
                                                 <textarea class="ckeditor" id="editor{{ $block->ID }}" name="editor{{ $block->ID }}">{{ $block->html }}</textarea>
                                                 @endif
 
-                                                <input type="button" data-id="{{ $block->ID }}" class="page-content-save-block btn btn-success" style="margin-top: 20px" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                                                <div class="form-group" style="margin-top: 20px" >
+                                                    <input type="button" data-id="{{ $block->ID }}" class="page-content-save-block btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                                                    <input type="button" data-id="{{ $block->ID }}" class="page-content-close-block btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                                                </div>
                                             </div>
                                         </div>
                                         @endforeach

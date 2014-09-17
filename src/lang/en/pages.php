@@ -2,11 +2,15 @@
 
 return array(
 	'pages' => 'Pages interface',
+
+    'structure' => 'Structure',
+    'versions' => 'Versions',
+    'seo' => 'SEO',
+
     'name' => 'Name',
     'identifier' => 'Identifier',
     'content' => 'Content',
     'uri' => 'URI',
-    'text' => 'Text',
     'meta_title' => 'Meta title',
     'meta_description' => 'Meta description',
     'meta_keywords' => 'Meta keywords',

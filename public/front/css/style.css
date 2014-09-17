@@ -71,45 +71,13 @@ table {
 }
 
 /*
-* IMPORTS
+* STRUCTURE
 */
-@media screen and (max-width: 480px) {
-  /* line 3, ../sass/_responsive.scss */
-  .container {
-    margin: 0;
-    padding: 2rem;
-  }
-
-  /* line 8, ../sass/_responsive.scss */
-  a:hover {
-    border-bottom: none;
-  }
-
-  /* line 14, ../sass/_responsive.scss */
-  nav ul li {
-    height: 3rem;
-    line-height: 3rem;
-    width: 100%;
-    float: none;
-    background: #f3eeed;
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  /* line 23, ../sass/_responsive.scss */
-  nav ul li a {
-    color: white;
-  }
-  /* line 28, ../sass/_responsive.scss */
-  nav ul li:hover {
-    background: #2e6cb1;
-  }
-  /* line 31, ../sass/_responsive.scss */
-  nav ul li:hover a {
-    color: white;
-  }
-  /* line 36, ../sass/_responsive.scss */
-  nav ul .selected, nav ul .selected:hover {
-    background: #f3eeed;
-    color: #4a4a4a;
-  }
+/* line 25, ../sass/style.scss */
+.content .area {
+  margin-bottom: 20px;
+}
+/* line 28, ../sass/style.scss */
+.content .area .block {
+  margin-bottom: 20px;
 }

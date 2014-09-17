@@ -16,7 +16,17 @@ $light-gray: #F3EEED;
 	box-sizing: border-box;
 }
 
+
 /*
-* IMPORTS
+* STRUCTURE
 */
-@import "_responsive";
+.content {
+	
+	.area {
+		margin-bottom: 20px;
+		
+		.block {
+			margin-bottom: 20px;
+		}
+	}
+}

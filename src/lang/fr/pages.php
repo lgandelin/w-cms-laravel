@@ -2,6 +2,11 @@
 
 return array(
 	'pages' => 'Gestion des pages',
+
+    'structure' => 'Structure',
+    'versions' => 'Versions',
+    'seo' => 'Référencement',
+
     'name' => 'Nom',
     'identifier' => 'Identifiant',
     'content' => 'Contenu',

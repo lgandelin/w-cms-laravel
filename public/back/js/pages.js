@@ -1,7 +1,128 @@
 $(document).ready(function() {
 
- 	CKEDITOR.replace( 'text' );
- 	
+	//Save page infos
+	$('.page-content-save-infos').click(function() {
+		var page_id = $(this).attr('data-id');
+		var name = $('#name').val();
+		var identifier = $('#identifier').val();
+
+		var url = '/admin/editorial/pages/update_page_infos';
+        var data = {
+            'ID': page_id,
+            'name': name,
+            'identifier': identifier
+        };
+
+        var button = $(this);
+        button.val('Saving ...');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function(data) {
+                data = JSON.parse(data);
+
+                if (data.success) {
+                	var label_success = $('<p class="alert alert-success">Saved !</sp>');
+                	button.parent().after(label_success);
+                	label_success.fadeIn().delay(2000).fadeOut();
+                	button.val('Submit');
+                } else {
+                    alert(data.error);
+                }
+            }
+        });
+
+	});
+
+	//Save page seo
+	$('.page-content-save-seo').click(function() {
+		var page_id = $(this).attr('data-id');
+		var uri = $('#uri').val();
+		var meta_title = $('#meta_title').val();
+		var meta_description = $('#meta_description').val();
+		var meta_keywords = $('#meta_keywords').val();
+
+		var url = '/admin/editorial/pages/update_page_seo';
+        var data = {
+            'ID': page_id,
+            'uri': uri,
+            'meta_title': meta_title,
+            'meta_description': meta_description,
+            'meta_keywords': meta_keywords
+        };
+
+        var button = $(this);
+        button.val('Saving ...');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function(data) {
+                data = JSON.parse(data);
+
+                if (data.success) {
+                	var label_success = $('<p class="alert alert-success">Saved !</sp>');
+                	button.parent().after(label_success);
+                	label_success.fadeIn().delay(2000).fadeOut();
+                	button.val('Submit');
+                } else {
+                    alert(data.error);
+                }
+            }
+        });
+
+	});
+
+
+
+	//BLOCS
+	$('.area > .title, .block > .title').click(function() {
+		$(this).next().toggle();
+	});
+
+	$('.page-content-close-block').click(function() {
+		$(this).closest('.content').hide();
+	});
+
+	//Save content block
+	$('.page-content-save-block').click(function() {
+		var block_id = $(this).attr('data-id');
+		var textarea_id = $('.block[data-id="' + block_id + '"] textarea').attr('id');
+		var html = CKEDITOR.instances[textarea_id].getData();
+		
+		var url = '/admin/editorial/pages/update_block_content';
+        var data = {
+            'ID': block_id,
+            'html': html
+        };
+
+        var button = $(this);
+        button.val('Saving ...');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function(data) {
+                data = JSON.parse(data);
+
+                if (data.success) {
+                	var label_success = $('<p class="alert alert-success">Saved !</sp>');
+                	button.parent().after(label_success);
+                	label_success.fadeIn().delay(2000).fadeOut();
+                	button.val('Submit');
+                } else {
+                    alert(data.error);
+                }
+            }
+        });
+
+	});
+
+
 	$('.btn-delete-area').click(function() {
 		$(this).parent().remove();
 	});
