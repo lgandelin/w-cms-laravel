@@ -89,8 +89,12 @@
 			}
 		}
 
-		.update-block-form {
+		.update-block-form, .update-area-form {
 			display: none;
+
+			.submit_wrapper {
+				margin-bottom: 20px;
+			}
 		}
 	}
 }

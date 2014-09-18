@@ -140,6 +140,8 @@ $(document).ready(function() {
 
 	//Update block
 	$('.block-update').click(function() {
+		$('.update-area-form, .update-block-form').hide();
+
 		var block_id = $(this).attr('data-id');
 		$('.page-content-update-block').attr('data-id', block_id);
 
@@ -205,7 +207,7 @@ $(document).ready(function() {
                 	block.find('.type').text('(' + input_data.type.toUpperCase() + ')');
 
                 	//Update block in "Content" tab
-                	$('#content .block[data-id="' + block_id + '"]').find('.name').text(input_data.name);
+                	$('#content .block[data-id="' + block_id + '"]').find('.block_name').text(input_data.name);
                 } else {
                     
                 }
@@ -215,6 +217,86 @@ $(document).ready(function() {
 
 	$('.update-block-form .page-content-close-update-block').click(function() {
 		$('.update-block-form').hide();
+	});
+
+
+
+	//Update area
+	$('.area-update').click(function() {
+		$('.update-area-form, .update-block-form').hide();
+		
+		var area_id = $(this).attr('data-id');
+		$('.page-content-update-area').attr('data-id', area_id);
+
+		var area = $('.area[data-id="' + area_id + '"]');
+
+		var url = '/admin/editorial/pages/get_area_infos/' + area_id;
+
+		$.ajax({
+            type: "GET",
+            url: url,
+            success: function(data) {
+                data = JSON.parse(data);
+
+                if (data.success) {
+					$('.update-area-form .name').val(data.area.name);
+					$('.update-area-form .width').val(data.area.width);
+					$('.update-area-form .height').val(data.area.height);
+					$('.update-area-form .class').val(data.area.class);
+
+					$('.update-area-form').show();
+                } else {
+                    
+                }
+            }
+        });
+	});
+
+	//Valid update area
+	$('.page-content-update-area').click(function() {
+		var area_id = $(this).attr('data-id');
+		var area = $('#structure .area[data-id="' + area_id + '"]');
+
+		var url = '/admin/editorial/pages/update_area_infos';
+		var input_data = {
+			'ID': area_id,
+            'name': $('.update-area-form .name').val(),
+            'width': $('.update-area-form .width').val(),
+            'class': $('.update-area-form .class').val()
+        };
+
+	    var button = $(this);
+	    button.val('Saving ...');
+
+		$.ajax({
+            type: "POST",
+            url: url,
+            data: input_data,
+            success: function(data) {
+                data = JSON.parse(data);
+
+                if (data.success) {
+					var label_success = $('<p class="alert alert-success">Saved !</p>');
+                	button.parent().after(label_success);
+                	label_success.fadeIn().delay(2000).fadeOut();
+                	button.val('Submit');
+
+                	//Update area in "Structure" tab
+                	area.removeClass().addClass('area col-xs-' + input_data.width);
+                	area.find('.area_width .width_value').text(input_data.width);
+                	area.find('.area_name').text(input_data.name);
+
+                	//Update area in "Content" tab
+                	$('#content .area[data-id="' + area_id + '"]').find('.area_name').text(input_data.name);
+                } else {
+                    
+                }
+            }
+        });
+	});
+
+	$('.update-area-form .page-content-close-update-area').click(function() {
+		$('.update-area-form').hide();
 	});
 
 	//Delete area

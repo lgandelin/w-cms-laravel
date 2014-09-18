@@ -3,6 +3,7 @@
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
 use CMS\Structures\BlockStructure;
+use CMS\Structures\AreaStructure;
 use CMS\Structures\PageStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
@@ -109,6 +110,36 @@ class PageController extends AdminController {
         }
     }
 
+    public function get_area_infos($areaID)
+    {
+        try {
+            $area = \App::make('GetAreaInteractor')->getByID($areaID);
+
+            return json_encode(array('success' => true, 'area' => $area->toArray()));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+
+    public function update_area_infos()
+    {
+        $areaID = \Input::get('ID');
+
+        $areaStructure = new AreaStructure([
+            'name' => \Input::get('name'),
+            'width' => \Input::get('width'),
+            'height' => \Input::get('height'),
+            'class' => \Input::get('class'),
+        ]);
+
+        try {
+            \App::make('UpdateAreaInteractor')->run($areaID, $areaStructure);
+            return json_encode(array('success' => true));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+    
     public function get_block_infos($blockID)
     {
         try {

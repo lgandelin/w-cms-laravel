@@ -67,13 +67,13 @@
 
                             @if (isset($page->areas))
                                 @foreach ($page->areas as $area)
-                                <div class="area">
-                                    <span class="title">{{ $area->name }}</span>
+                                <div class="area" data-id="{{ $area->ID }}">
+                                    <span class="title"><span class="area_name">{{ $area->name }}</span></span>
 
                                     <div class="content">
                                         @foreach ($area->blocks as $block)
-                                        <div class="block" data-type="html" data-id="{{ $block->ID }}">
-                                            <span class="title"><span class="name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span></span>
+                                        <div class="block" data-id="{{ $block->ID }}">
+                                            <span class="title"><span class="block_name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span></span>
 
                                             <div class="content">
                                                 @if ($block->type == 'html')
@@ -112,7 +112,7 @@
                                     <div data-id="{{ $area->ID }}" class="area col-xs-{{ $area->width }}">
                                         <div class="area_color">
                                             <span class="title">
-                                                {{ $area->name }} [{{ $area->width }}]
+                                                <span class="area_name">{{ $area->name }}</span> <span class="area_width">[<span class="width_value">{{ $area->width }}</span>]</span>
                                                 <span data-id="{{ $area->ID }}" class="area-delete glyphicon glyphicon-remove"></span>
                                                 <span data-id="{{ $area->ID }}" class="area-update glyphicon glyphicon-pencil"></span>
                                             </span>
@@ -135,6 +135,7 @@
                             </div>
                         @endif
 
+                        <!-- UPDATE BLOCK FORM -->
                         <div class="update-block-form">
                             <!-- Name -->
                             <div class="form-group">
@@ -182,6 +183,48 @@
                             <!-- Save -->
 
                         </div>
+                        <!-- UPDATE BLOCK FORM -->
+
+                        <!-- UPDATE AREA FORM -->
+                        <div class="update-area-form">
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.area_name') }}</label>
+                                <input type="text" class="form-control name" placeholder="{{ trans('w-cms-laravel::pages.area_name') }}" value="" />
+                            </div>
+                            <!-- Name -->
+
+                            <!-- Width -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.area_width') }}</label>
+                                <input type="text" class="form-control width" placeholder="{{ trans('w-cms-laravel::pages.area_width') }}" value="" />
+                            </div>
+                            <!-- Width -->
+
+                            <!-- Height -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.area_height') }}</label>
+                                <input type="text" class="form-control height" placeholder="{{ trans('w-cms-laravel::pages.area_height') }}" value="" />
+                            </div>
+                            <!-- Height -->
+
+                            <!-- Class -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.area_class') }}</label>
+                                <input type="text" class="form-control class" placeholder="{{ trans('w-cms-laravel::pages.area_class') }}" value="" />
+                            </div>
+                            <!-- Class-->
+
+                            <!-- Save -->
+                            <div class="submit_wrapper">
+                                <input type="button" data-id="{{ $area->ID }}" class="page-content-update-area btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                                <input type="button" data-id="{{ $area->ID }}" class="page-content-close-update-area btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                            </div>
+                            <!-- Save -->
+
+                        </div>
+                        <!-- UPDATE AREA FORM -->
+                        
 
                     </div>
                     <!-- STRUCTURE -->

@@ -15,6 +15,12 @@ return array(
     'meta_description' => 'Meta description',
     'meta_keywords' => 'Meta keywords',
 
+    'area_name' => 'Name',
+    'area_width' => 'Width',
+    'area_height' => 'Height',
+    'area_type' => 'Type',
+    'area_class' => 'CSS class',
+
     'block_name' => 'Name',
     'block_width' => 'Width',
     'block_height' => 'Height',

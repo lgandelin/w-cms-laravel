@@ -119,6 +119,10 @@
   margin: 5px 5px 0 0;
 }
 /* line 92, ../sass/_pages.scss */
-.pages-interface #structure .update-block-form {
+.pages-interface #structure .update-block-form, .pages-interface #structure .update-area-form {
   display: none;
+}
+/* line 95, ../sass/_pages.scss */
+.pages-interface #structure .update-block-form .submit_wrapper, .pages-interface #structure .update-area-form .submit_wrapper {
+  margin-bottom: 20px;
 }
