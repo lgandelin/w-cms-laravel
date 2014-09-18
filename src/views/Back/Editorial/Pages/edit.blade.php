@@ -106,8 +106,8 @@
 
                         <p><strong>{{ trans('w-cms-laravel::pages.structure') }}</strong></p>
 
-                        @if (isset($page->areas))
-                            <div class="row">
+                        <div class="row">
+                            @if (isset($page->areas))
                                 @foreach ($page->areas as $area)
                                     <div data-id="{{ $area->ID }}" class="area col-xs-{{ $area->width }}">
                                         <div class="area_color">
@@ -115,6 +115,7 @@
                                                 <span class="area_name">{{ $area->name }}</span> <span class="area_width">[<span class="width_value">{{ $area->width }}</span>]</span>
                                                 <span data-id="{{ $area->ID }}" class="area-delete glyphicon glyphicon-remove"></span>
                                                 <span data-id="{{ $area->ID }}" class="area-update glyphicon glyphicon-pencil"></span>
+                                                <span data-id="{{ $area->ID }}" class="area-create-block glyphicon glyphicon-plus"></span>
                                             </span>
 
                                             @foreach ($area->blocks as $block)
@@ -132,36 +133,94 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            </div>
-                        @endif
+                            @endif
+                        </div>
 
-                        <!-- UPDATE BLOCK FORM -->
-                        <div class="update-block-form">
+                        <!-- Createa area -->
+                        <div class="form-group">
+                            <input type="button" data-id="{{ $page->ID }}" class="page-content-create-area btn btn-success" value="{{ trans('w-cms-laravel::pages.add_area') }}" />
+                            <a class="btn btn-default" href="{{ route('back_pages_index') }}" title="{{ trans('w-cms-laravel::header.pages') }}">{{ trans('w-cms-laravel::generic.cancel') }}</a>
+                        </div>
+                        <!-- Createa area -->
+
+                        <!-- CREATE AREA FORM -->
+                        <div class="create-area-form">
+
+                            <h2>Create an area</h2>
+
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.area_name') }}</label>
+                                <input type="text" class="form-control name" placeholder="{{ trans('w-cms-laravel::pages.area_name') }}" autocomplete="off" />
+                            </div>
+                            <!-- Name -->
+
+                            <!-- Width -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.area_width') }}</label>
+                                <input type="text" class="form-control width" placeholder="{{ trans('w-cms-laravel::pages.area_width') }}" autocomplete="off" />
+                            </div>
+                            <!-- Width -->
+
+                            <!-- Height -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.area_height') }}</label>
+                                <input type="text" class="form-control height" placeholder="{{ trans('w-cms-laravel::pages.area_height') }}" autocomplete="off" />
+                            </div>
+                            <!-- Height -->
+
+                            <!-- Class -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.area_class') }}</label>
+                                <input type="text" class="form-control class" placeholder="{{ trans('w-cms-laravel::pages.area_class') }}" autocomplete="off" />
+                            </div>
+                            <!-- Class-->
+
+                            <input type="hidden" class="page_id" value="{{ $page->ID }}" />
+
+                            <!-- Save -->
+                            <div class="submit_wrapper">
+                                <input type="button" class="page-content-valid-create-area btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                                <input type="button" class="page-content-close-create-area btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                            </div>
+                            <!-- Save -->
+
+                        </div>
+                        <!-- CREATE AREA FORM -->
+                        
+                        
+                        
+
+                        <!-- CREATE BLOCK FORM -->
+                        <div class="create-block-form">
+
+                            <h2>Create a block</h2>
+
                             <!-- Name -->
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::pages.block_name') }}</label>
-                                <input type="text" class="form-control name" placeholder="{{ trans('w-cms-laravel::pages.block_name') }}" value="" />
+                                <input type="text" class="form-control name" placeholder="{{ trans('w-cms-laravel::pages.block_name') }}" autocomplete="off" />
                             </div>
                             <!-- Name -->
 
                             <!-- Width -->
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::pages.block_width') }}</label>
-                                <input type="text" class="form-control width" placeholder="{{ trans('w-cms-laravel::pages.block_width') }}" value="" />
+                                <input type="text" class="form-control width" placeholder="{{ trans('w-cms-laravel::pages.block_width') }}" autocomplete="off" />
                             </div>
                             <!-- Width -->
 
                             <!-- Height -->
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::pages.block_height') }}</label>
-                                <input type="text" class="form-control height" placeholder="{{ trans('w-cms-laravel::pages.block_height') }}" value="" />
+                                <input type="text" class="form-control height" placeholder="{{ trans('w-cms-laravel::pages.block_height') }}" autocomplete="off" />
                             </div>
                             <!-- Height -->
 
                             <!-- Type -->
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::pages.block_type') }}</label>
-                                <select class="type">
+                                <select class="type form-control" autocomplete="off">
                                     <option value="">Choose a type</option>
                                     <option value="html">HTML</option>
                                 </select>
@@ -171,14 +230,70 @@
                             <!-- Class -->
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::pages.block_class') }}</label>
-                                <input type="text" class="form-control class" placeholder="{{ trans('w-cms-laravel::pages.block_class') }}" value="" />
+                                <input type="text" class="form-control class" placeholder="{{ trans('w-cms-laravel::pages.block_class') }}" autocomplete="off" />
+                            </div>
+                            <!-- Class-->
+
+                            <input type="hidden" class="area_id" />
+
+                            <!-- Save -->
+                            <div class="submit_wrapper">
+                                <input type="button" class="page-content-valid-create-block btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                                <input type="button" class="page-content-close-create-block btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                            </div>
+                            <!-- Save -->
+
+                        </div>
+                        <!-- CREATE BLOCK FORM -->
+
+
+                        <!-- UPDATE BLOCK FORM -->
+                        <div class="update-block-form">
+
+                            <h2>Edit a block</h2>
+
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_name') }}</label>
+                                <input type="text" class="form-control name" placeholder="{{ trans('w-cms-laravel::pages.block_name') }}" autocomplete="off" />
+                            </div>
+                            <!-- Name -->
+
+                            <!-- Width -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_width') }}</label>
+                                <input type="text" class="form-control width" placeholder="{{ trans('w-cms-laravel::pages.block_width') }}" autocomplete="off" />
+                            </div>
+                            <!-- Width -->
+
+                            <!-- Height -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_height') }}</label>
+                                <input type="text" class="form-control height" placeholder="{{ trans('w-cms-laravel::pages.block_height') }}" autocomplete="off" />
+                            </div>
+                            <!-- Height -->
+
+                            <!-- Type -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_type') }}</label>
+                                <select class="type form-control" autocomplete="off">
+                                    <option value="">Choose a type</option>
+                                    <option value="html">HTML</option>
+                                </select>
+                            </div>
+                            <!-- Type -->
+
+                            <!-- Class -->
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_class') }}</label>
+                                <input type="text" class="form-control class" placeholder="{{ trans('w-cms-laravel::pages.block_class') }}" autocomplete="off" />
                             </div>
                             <!-- Class-->
 
                             <!-- Save -->
                             <div class="submit_wrapper">
-                                <input type="button" data-id="{{ $block->ID }}" class="page-content-update-block btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
-                                <input type="button" data-id="{{ $block->ID }}" class="page-content-close-update-block btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                                <input type="button" class="page-content-update-block btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                                <input type="button" class="page-content-close-update-block btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
                             </div>
                             <!-- Save -->
 
@@ -190,35 +305,35 @@
                             <!-- Name -->
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::pages.area_name') }}</label>
-                                <input type="text" class="form-control name" placeholder="{{ trans('w-cms-laravel::pages.area_name') }}" value="" />
+                                <input type="text" class="form-control name" placeholder="{{ trans('w-cms-laravel::pages.area_name') }}" autocomplete="off" />
                             </div>
                             <!-- Name -->
 
                             <!-- Width -->
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::pages.area_width') }}</label>
-                                <input type="text" class="form-control width" placeholder="{{ trans('w-cms-laravel::pages.area_width') }}" value="" />
+                                <input type="text" class="form-control width" placeholder="{{ trans('w-cms-laravel::pages.area_width') }}" autocomplete="off" />
                             </div>
                             <!-- Width -->
 
                             <!-- Height -->
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::pages.area_height') }}</label>
-                                <input type="text" class="form-control height" placeholder="{{ trans('w-cms-laravel::pages.area_height') }}" value="" />
+                                <input type="text" class="form-control height" placeholder="{{ trans('w-cms-laravel::pages.area_height') }}" autocomplete="off" />
                             </div>
                             <!-- Height -->
 
                             <!-- Class -->
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::pages.area_class') }}</label>
-                                <input type="text" class="form-control class" placeholder="{{ trans('w-cms-laravel::pages.area_class') }}" value="" />
+                                <input type="text" class="form-control class" placeholder="{{ trans('w-cms-laravel::pages.area_class') }}" autocomplete="off" />
                             </div>
                             <!-- Class-->
 
                             <!-- Save -->
                             <div class="submit_wrapper">
-                                <input type="button" data-id="{{ $area->ID }}" class="page-content-update-area btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
-                                <input type="button" data-id="{{ $area->ID }}" class="page-content-close-update-area btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                                <input type="button" class="page-content-update-area btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                                <input type="button" class="page-content-close-update-area btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
                             </div>
                             <!-- Save -->
 

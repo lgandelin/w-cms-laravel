@@ -11,11 +11,13 @@ use CMS\Interactors\Pages\DuplicatePageInteractor;
 
 use CMS\Interactors\Areas\GetAreaInteractor;
 use CMS\Interactors\Areas\GetAllAreasInteractor;
+use CMS\Interactors\Areas\CreateAreaInteractor;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
 use CMS\Interactors\Areas\DeleteAreaInteractor;
 
 use CMS\Interactors\Blocks\GetBlockInteractor;
 use CMS\Interactors\Blocks\GetAllBlocksInteractor;
+use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;
 
@@ -104,6 +106,10 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             return new GetAllAreasInteractor(new EloquentAreaRepository(), new EloquentPageRepository());
         });
 
+        $this->app->bind('CreateAreaInteractor', function () {
+            return new CreateAreaInteractor(new EloquentAreaRepository(), new EloquentPageRepository());
+        });
+
         $this->app->bind('UpdateAreaInteractor', function () {
             return new UpdateAreaInteractor(new EloquentAreaRepository());
         });
@@ -119,7 +125,11 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('GetAllBlocksInteractor', function () {
-            return new GetAllBlocksInteractor(new EloquentBlockRepository(), new EloquentAreaRepository());
+            return new GetAllBlocksInteractor(new EloquentBlockRepository());
+        });
+
+        $this->app->bind('CreateBlockInteractor', function () {
+            return new CreateBlockInteractor(new EloquentBlockRepository());
         });
 
         $this->app->bind('UpdateBlockInteractor', function () {

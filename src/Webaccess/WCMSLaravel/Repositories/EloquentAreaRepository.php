@@ -69,16 +69,18 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
         return $areas;
     }
 
-    public function createArea(AreaStructure $areaStructure)
+    public function createArea(Area $area)
     {
         $areaDB = new AreaModel();
-        $areaDB->name = $areaStructure->name;
-        $areaDB->width = $areaStructure->identifier;
-        $areaDB->height = $areaStructure->uri;
-        $areaDB->class = $areaStructure->text;
-        $areaDB->page_id = $areaStructure->page_id;
+        $areaDB->name = $area->getName();
+        $areaDB->width = $area->getWidth();
+        $areaDB->height = $area->getHeight();
+        $areaDB->class = $area->getClass();
+        $areaDB->page_id = $area->getPageID();
 
-        return $areaDB->save();
+        $areaDB->save();
+
+        return $areaDB->id;
     }
 
     public function updateArea(Area $area)

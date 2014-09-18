@@ -121,6 +121,26 @@ class PageController extends AdminController {
         }
     }
 
+    public function create_area()
+    {
+        $areaStructure = new AreaStructure([
+            'name' => \Input::get('name'),
+            'width' => \Input::get('width'),
+            'height' => \Input::get('height'),
+            'class' => \Input::get('class'),
+            'page_id' => \Input::get('page_id'),
+        ]);
+
+        try {
+            $areaID = \App::make('CreateAreaInteractor')->run($areaStructure);
+            $area = \App::make('GetAreaInteractor')->getByID($areaID);
+
+            return json_encode(array('success' => true, 'area' => $area->toArray()));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+    
     public function update_area_infos()
     {
         $areaID = \Input::get('ID');
@@ -143,6 +163,27 @@ class PageController extends AdminController {
     public function get_block_infos($blockID)
     {
         try {
+            $block = \App::make('GetBlockInteractor')->getByID($blockID);
+
+            return json_encode(array('success' => true, 'block' => $block->toArray()));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+
+    public function create_block()
+    {
+        $blockStructure = new BlockStructure([
+            'name' => \Input::get('name'),
+            'width' => \Input::get('width'),
+            'height' => \Input::get('height'),
+            'type' => \Input::get('type'),
+            'class' => \Input::get('class'),
+            'area_id' => \Input::get('area_id'),
+        ]);
+
+        try {
+            $blockID = \App::make('CreateBlockInteractor')->run($blockStructure);
             $block = \App::make('GetBlockInteractor')->getByID($blockID);
 
             return json_encode(array('success' => true, 'block' => $block->toArray()));

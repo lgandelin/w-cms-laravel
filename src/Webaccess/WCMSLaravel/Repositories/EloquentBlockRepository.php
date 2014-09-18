@@ -80,18 +80,19 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
         return $blocks;
     }
 
-    public function createBlock(BlockStructure $blockStructure)
+    public function createBlock(Block $block)
     {
         $blockDB = new BlockModel();
-        $blockDB->name = $blockStructure->name;
-        $blockDB->width = $blockStructure->width;
-        $blockDB->height = $blockStructure->height;
-        $blockDB->class = $blockStructure->class;
-        if ($blockDB->type == 'html')
-            $blockDB->html = $blockStructure->html;
-        $blockDB->area_id = $blockStructure->area_id;
+        $blockDB->name = $block->getName();
+        $blockDB->width = $block->getWidth();
+        $blockDB->height = $block->getHeight();
+        $blockDB->class = $block->getClass();
+        $blockDB->type = $block->getType();
+        $blockDB->area_id = $block->getAreaID();
 
-        return $blockDB->save();
+        $blockDB->save();
+
+        return $blockDB->id;
     }
 
     public function updateBlock(Block $block)

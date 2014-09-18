@@ -42,15 +42,15 @@
             @foreach ($current_page->areas as $area)
             <div class=" col-xs-{{ $area->width }}">
                 <div class="area {{ $area->class }}">
-                        @foreach ($area->blocks as $block)
-                        <div class="col-xs-{{ $block->width }}">
-                            <div class="block {{ $block->class }}">
-                                @if ($block->type == 'html')
-                                    {{ $block->html }}
-                                @endif
-                            </div>
+                    @foreach ($area->blocks as $block)
+                    <div class="col-xs-{{ $block->width }}">
+                        <div class="block {{ $block->class }}">
+                            @if ($block->type == 'html')
+                                {{ $block->html }}
+                            @endif
                         </div>
-                        @endforeach
+                    </div>
+                    @endforeach
                 </div>
             </div>
             @endforeach
