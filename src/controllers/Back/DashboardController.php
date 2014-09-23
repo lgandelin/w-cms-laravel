@@ -2,8 +2,6 @@
 
 namespace Webaccess\WCMSLaravel\Back;
 
-use Webaccess\WCMSLaravel\Back\AdminController;
-
 class DashboardController extends AdminController {
 
     public function index()
