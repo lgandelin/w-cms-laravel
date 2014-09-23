@@ -35,13 +35,13 @@
                     <tbody>
                         @foreach ($menus as $menu)
                         <tr>
-                            <td>{{{ $menu->id or '' }}}</td>
+                            <td>{{{ $menu->ID or '' }}}</td>
                             <td>{{ $menu->name }}</td>
                             <td>{{ $menu->identifier }}</td>
                             <td>
-                                <a class="btn btn-default" href="{{ route('back_menus_edit', array($menu->identifier)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
-                                <a class="btn btn-default" href="{{ route('back_menus_duplicate', array($menu->identifier)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.duplicate') }}</a>
-                                <a class="btn btn-danger" href="{{ route('back_menus_delete', array($menu->identifier)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
+                                <a class="btn btn-default" href="{{ route('back_menus_edit', array($menu->ID)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
+                                <a class="btn btn-default" href="{{ route('back_menus_duplicate', array($menu->ID)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.duplicate') }}</a>
+                                <a class="btn btn-danger" href="{{ route('back_menus_delete', array($menu->ID)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
                             </td>
                         </tr>
                     @endforeach

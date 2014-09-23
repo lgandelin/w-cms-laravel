@@ -4,6 +4,7 @@ class MenusCreatePage
 {
     static $uri = '/admin/editorial/menus/create';
     static $uri_post = '/admin/editorial/menus/store';
+    static $uri_add_item_post = '/admin/editorial/menus/add_item';
     static $title = 'Create a menu';
     static $submit_button = 'Submit';
 

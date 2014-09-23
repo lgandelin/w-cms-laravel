@@ -21,4 +21,4 @@ $I->click('tr:contains("' . MenusCreatePage::$menu_fixture_created['name'] . '")
 //Result
 $I->seeCurrentUrlMatches('#(.*)' . MenusIndexPage::$uri . '$#');
 $I->seeInTitle(MenusIndexPage::$title);
-$I->see(MenusCreatePage::$menu_fixture_created['name'] . ' COPY');
+$I->see(MenusCreatePage::$menu_fixture_created['name'] . ' - COPY');

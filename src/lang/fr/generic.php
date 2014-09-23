@@ -7,5 +7,6 @@ return array(
     'delete' => 'Supprimer',
     'duplicate' => 'Dupliquer',
     'submit' => 'Valider',
-    'cancel' => 'Annuler'
+    'cancel' => 'Annuler',
+    'close' => 'Fermer'
 );

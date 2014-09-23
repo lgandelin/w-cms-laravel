@@ -2,29 +2,27 @@
 
 namespace Webaccess\WCMSLaravel\Front;
 
-use CMS\Services\PageManager;
-use CMS\Services\MenuManager;
 use Illuminate\Routing\Controller;
 
 class IndexController extends Controller {
 
-	public function __construct(PageManager $pageManager, MenuManager $menuManager)
-	{
-		$this->pageManager = $pageManager;
-		$this->menuManager = $menuManager;
-	}
-
 	public function index($uri = null)
 	{
 		try {
-            $page = $this->pageManager->getByUri('/' . $uri);
+            $page = \App::make('GetPageInteractor')->getByUri('/' . $uri);
+            $areas = \App::make('GetAllAreasInteractor')->getAll($page->ID);
+            foreach ($areas as $area) {
+                $area->blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                $page->areas[]= $area;
+            }
+
         } catch(\Exception $e) {
-            $page = $this->pageManager->getByUri('/404');
+            $page = \App::make('GetPageInteractor')->getByUri('/404');
         }
 
 		$this->layout = \View::make('w-cms-laravel::front.index', [
 			'current_page' => $page,
-			'menu' => $this->menuManager->getByIdentifier('main-menu')
+			'menu' => \App::make('GetMenuInteractor')->getByIdentifier('main-menu')
 		]);
 	}
 }

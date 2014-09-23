@@ -1,0 +1,102 @@
+.pages-interface {
+	
+	#content {
+		.title {
+			cursor: pointer;
+			font-weight: bold;
+			display: block;
+		}
+
+		.area {
+			background: #eee;
+			padding: 10px;
+			border: 1px solid #ccc;
+			margin-bottom: 20px;
+
+			.content {
+				margin-top: 10px;
+				display: block;
+			}
+
+			.block {
+				background: #fdfdfd;
+				padding: 10px;
+				border: 1px solid #ddd;
+				margin-bottom: 20px;
+
+				.submit_wrapper {
+					margin: 20px 0;
+				}
+
+				.content {
+					display: none;
+				}
+
+				.type {
+					font-weight: normal;
+					text-transform: uppercase;
+				}
+			}
+		}
+	}
+
+	#structure {
+
+		.title {
+			font-weight: bold;
+			display: block;
+
+			min-height: 40px;
+			line-height: 40px;
+		}
+
+		.area {
+			text-align: center;
+			padding: 10px;
+		
+			.area_color {
+				overflow: hidden;
+				background: #eee;
+				border: 1px solid #ccc;
+			}
+
+			.area-delete, .area-update, .area-create-block {
+				cursor: pointer;
+				float: right;
+				margin: 5px 5px 0 0;
+			}
+
+			.block {
+				padding: 10px;
+
+				.block_color {
+					background: #fdfdfd;
+					border: 1px solid #ddd;
+				}
+
+				.submit_wrapper {
+					margin: 20px 0;
+				}
+
+				.type {
+					font-weight: normal;
+					text-transform: uppercase;
+				}
+
+				.block-delete, .block-update {
+					cursor: pointer;
+					float: right;
+					margin: 5px 5px 0 0;
+				}
+			}
+		}
+
+		.update-block-form, .update-area-form, .create-block-form, .create-area-form {
+			display: none;
+
+			.submit_wrapper {
+				margin-bottom: 20px;
+			}
+		}
+	}
+}

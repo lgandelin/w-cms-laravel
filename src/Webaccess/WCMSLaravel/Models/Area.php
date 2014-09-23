@@ -2,14 +2,13 @@
 
 namespace Webaccess\WCMSLaravel\Models;
 
-class MenuItem extends \Eloquent {
+class Area extends \Eloquent {
 
-    protected $table = 'menu_items';
-    protected $fillable = array('label', 'order');
+    protected $table = 'areas';
+    protected $fillable = array('name', 'width', 'height', 'class');
 
     public function page()
     {
         return $this->hasOne('Webaccess\WCMSLaravel\Models\Page');
     }
-
 }

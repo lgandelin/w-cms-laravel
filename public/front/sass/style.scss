@@ -1,14 +1,7 @@
-@import "vendor/reset";
-
-@import url(//fonts.googleapis.com/css?family=Lato);
-
 
 /*
 * VARIABLES
 */
-$blue: #2E6CB1;
-$dark-gray: #4A4A4A;
-$light-gray: #F3EEED;
 
 *, *:before, *:after {
 	-moz-box-sizing: border-box;
@@ -16,7 +9,26 @@ $light-gray: #F3EEED;
 	box-sizing: border-box;
 }
 
+
 /*
-* IMPORTS
+* STRUCTURE
 */
-@import "_responsive";
+.content {
+	
+	.area {
+		overflow: hidden;
+		margin-bottom: 15px;
+		padding: 15px 0;
+
+		.block {
+			overflow: hidden;
+			margin-bottom: 15px;
+			padding: 0 15px;
+		}
+	}
+}
+
+body {
+	background: #FFFFFF;
+	color: #324044;
+}

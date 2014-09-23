@@ -128,5 +128,4 @@ class EloquentPageRepository implements PageRepositoryInterface {
 		
 		return $pageDB->delete();
 	}
-	
 }
