@@ -29,8 +29,8 @@ class MenuController extends AdminController {
         ]);
         
         try {
-            \App::make('CreateMenuInteractor')->run($menuStructure);
-            return \Redirect::route('back_menus_index');
+            $menuID = \App::make('CreateMenuInteractor')->run($menuStructure);
+            return \Redirect::route('back_menus_edit', array('menuID' => $menuID));
         } catch (\Exception $e) {
             $this->layout = \View::make('w-cms-laravel::back.editorial.menus.create', [
                 'error' => $e->getMessage(),

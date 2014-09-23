@@ -28,15 +28,11 @@ class PageController extends AdminController {
 		    'name' => \Input::get('name'),
 		    'uri' => \Input::get('uri'),
 		    'identifier' => \Input::get('identifier'),
-		    'text' => \Input::get('text'),
-		    'meta_title' => \Input::get('meta_title'),
-		    'meta_description' => \Input::get('meta_description'),
-		    'meta_keywords' => \Input::get('meta_keywords')
 		]);
 		
 		try {
-            $pageStructure = \App::make('CreatePageInteractor')->run($pageStructure);
-			return \Redirect::route('back_pages_index');
+            $pageID = \App::make('CreatePageInteractor')->run($pageStructure);
+			return \Redirect::route('back_pages_edit', array('pageID' => $pageID));
 		} catch (\Exception $e) {
 			$this->layout = \View::make('w-cms-laravel::back.editorial.pages.create', [
 				'error' => $e->getMessage(),

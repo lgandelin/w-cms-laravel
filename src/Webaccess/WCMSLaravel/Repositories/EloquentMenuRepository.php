@@ -65,7 +65,9 @@ class EloquentMenuRepository implements MenuRepositoryInterface {
         $menuDB->name = $menuStructure->name;
         $menuDB->identifier = $menuStructure->identifier;
 
-        return $menuDB->save();
+        $menuDB->save();
+
+        return $menuDB->id;
     }
 
     public function updateMenu($menuID, MenuStructure $menuStructure)
