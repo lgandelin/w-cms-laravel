@@ -6,9 +6,8 @@ $(document).ready(function() {
 		var label = $(this).parent().find('input[name="items_label[]"]').val();
 		var order = $(this).parent().find('input[name="items_order[]"]').val();
         var page_id = $(this).parent().find('select[name="items_page[]"]').val();
-
-        var url = '/admin/editorial/menus/add_item';
         var menu_id = $('input[name="ID"]').val();
+
 		var data = {
             'menuID': menu_id,
 			'label': label,
@@ -18,7 +17,7 @@ $(document).ready(function() {
 
 		$.ajax({
 			type: "POST",
-			url: url,
+			url: route_menus_add_item,
 			data: data,
 			success: function(data) {
                 data = JSON.parse(data);
@@ -53,8 +52,6 @@ $(document).ready(function() {
         var label = $(this).parent().find('input[name="items_label[]"]').val();
         var order = $(this).parent().find('input[name="items_order[]"]').val();
         var page_id = $(this).parent().find('select[name="items_page[]"]').val();
-
-        var url = '/admin/editorial/menus/update_item';
         var menu_id = $('input[name="ID"]').val();
         var item_id = $(this).attr('data-item-id');
 
@@ -68,7 +65,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: url,
+            url: route_menus_update_item,
             data: data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -85,7 +82,6 @@ $(document).ready(function() {
     //Delete
     $('form').on('click', '.btn-delete', function() {
 
-        var url = '/admin/editorial/menus/delete_item';
         var menu_id = $('input[name="ID"]').val();
         var item_id = $(this).attr('data-item-id');
 
@@ -96,7 +92,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: url,
+            url: route_menus_delete_item,
             data: data,
             success: function(data) {
                 data = JSON.parse(data);

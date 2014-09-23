@@ -5,6 +5,19 @@
 @stop
 
 @section('javascripts')
+    <script type="text/javascript">
+        var route_pages_update_page_infos = "{{ route('back_pages_update_page_infos') }}";
+        var route_pages_update_page_seo = "{{ route('back_pages_update_page_seo') }}";
+        var route_pages_update_block_content = "{{ route('back_pages_update_block_content') }}";
+        var route_pages_create_area = "{{ route('back_pages_create_area') }}";
+        var route_pages_create_block = "{{ route('back_pages_create_block') }}";
+        var route_pages_get_block_infos = "{{ route('back_pages_get_block_infos') }}";
+        var route_pages_update_block_infos = "{{ route('back_pages_update_block_infos') }}";
+        var route_pages_get_area_infos = "{{ route('back_pages_get_area_infos') }}";
+        var route_pages_update_area_infos = "{{ route('back_pages_update_area_infos') }}";
+        var route_pages_delete_area = "{{ route('back_pages_delete_area') }}";
+        var route_pages_delete_block = "{{ route('back_pages_delete_block') }}";
+    </script>
 	{{ HTML::script('packages/webaccess/w-cms-laravel/back/js/pages.js') }}
 @stop
 

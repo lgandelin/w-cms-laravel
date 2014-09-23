@@ -10,7 +10,6 @@ $(document).ready(function() {
 		var name = $('#name').val();
 		var identifier = $('#identifier').val();
 
-		var url = '/admin/editorial/pages/update_page_infos';
         var data = {
             'ID': page_id,
             'name': name,
@@ -22,7 +21,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: url,
+            url: route_pages_update_page_infos,
             data: data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -51,7 +50,6 @@ $(document).ready(function() {
 		var meta_description = $('#meta_description').val();
 		var meta_keywords = $('#meta_keywords').val();
 
-		var url = '/admin/editorial/pages/update_page_seo';
         var data = {
             'ID': page_id,
             'uri': uri,
@@ -65,7 +63,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: url,
+            url: route_pages_update_page_seo,
             data: data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -91,8 +89,7 @@ $(document).ready(function() {
 		var block_id = $(this).attr('data-id');
 		var textarea_id = $('.block[data-id="' + block_id + '"] textarea').attr('id');
 		var html = CKEDITOR.instances[textarea_id].getData();
-		
-		var url = '/admin/editorial/pages/update_block_content';
+
         var data = {
             'ID': block_id,
             'html': html
@@ -103,7 +100,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: url,
+            url: route_pages_update_block_content,
             data: data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -151,7 +148,7 @@ $(document).ready(function() {
 	});
 
 	$('body').on('click', '.page-content-valid-create-area', function() {
-		var url = '/admin/editorial/pages/create_area';
+
 		var input_data = {
             'name': $('.create-area-form .name').val(),
             'width': $('.create-area-form .width').val(),
@@ -165,7 +162,7 @@ $(document).ready(function() {
 
 		$.ajax({
             type: "POST",
-            url: url,
+            url: route_pages_create_area,
             data: input_data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -203,7 +200,7 @@ $(document).ready(function() {
 	});
 
 	$('body').on('click', '.page-content-valid-create-block', function() {
-		var url = '/admin/editorial/pages/create_block';
+
 		var input_data = {
             'name': $('.create-block-form .name').val(),
             'width': $('.create-block-form .width').val(),
@@ -218,7 +215,7 @@ $(document).ready(function() {
 
 		$.ajax({
             type: "POST",
-            url: url,
+            url: route_pages_create_block,
             data: input_data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -255,11 +252,9 @@ $(document).ready(function() {
 
 		var block = $('.block[data-id="' + block_id + '"]');
 
-		var url = '/admin/editorial/pages/get_block_infos/' + block_id;
-
 		$.ajax({
             type: "GET",
-            url: url,
+            url: route_pages_get_block_infos + '/' + block_id,
             success: function(data) {
                 data = JSON.parse(data);
 
@@ -283,7 +278,6 @@ $(document).ready(function() {
 		var block_id = $(this).attr('data-id');
 		var block = $('#structure .block[data-id="' + block_id + '"]');
 
-		var url = '/admin/editorial/pages/update_block_infos';
 		var input_data = {
 			'ID': block_id,
             'name': $('.update-block-form .name').val(),
@@ -298,7 +292,7 @@ $(document).ready(function() {
 
 		$.ajax({
             type: "POST",
-            url: url,
+            url: route_pages_update_block_infos,
             data: input_data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -346,11 +340,9 @@ $(document).ready(function() {
 
 		var area = $('.area[data-id="' + area_id + '"]');
 
-		var url = '/admin/editorial/pages/get_area_infos/' + area_id;
-
 		$.ajax({
             type: "GET",
-            url: url,
+            url: back_pages_get_area_infos + '/' + area_id,
             success: function(data) {
                 data = JSON.parse(data);
 
@@ -373,7 +365,6 @@ $(document).ready(function() {
 		var area_id = $(this).attr('data-id');
 		var area = $('#structure .area[data-id="' + area_id + '"]');
 
-		var url = '/admin/editorial/pages/update_area_infos';
 		var input_data = {
 			'ID': area_id,
             'name': $('.update-area-form .name').val(),
@@ -386,7 +377,7 @@ $(document).ready(function() {
 
 		$.ajax({
             type: "POST",
-            url: url,
+            url: route_pages_update_area_infos,
             data: input_data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -420,14 +411,13 @@ $(document).ready(function() {
 		if (confirm('Are you sure that you want to delete this area ?')) {
 			var area_id = $(this).attr('data-id');
 			
-			var url = '/admin/editorial/pages/delete_area';
 	        var data = {
 	            'ID': area_id
 	        };
 
 	        $.ajax({
 	            type: "POST",
-	            url: url,
+	            url: route_pages_delete_area,
 	            data: data,
 	            success: function(data) {
 	                data = JSON.parse(data);
@@ -452,14 +442,13 @@ $(document).ready(function() {
 		if (confirm('Are you sure that you want to delete this block ?')) {
 			var block_id = $(this).attr('data-id');
 			
-			var url = '/admin/editorial/pages/delete_block';
 	        var data = {
 	            'ID': block_id
 	        };
 
 	        $.ajax({
 	            type: "POST",
-	            url: url,
+	            url: route_pages_delete_block,
 	            data: data,
 	            success: function(data) {
 	                data = JSON.parse(data);
