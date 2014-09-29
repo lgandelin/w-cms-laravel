@@ -25,6 +25,7 @@ Route::get('/admin/editorial/pages/get_area_infos/{areaID?}', array('as' => 'bac
 Route::post('/admin/editorial/pages/update_area_infos', array('as' => 'back_pages_update_area_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_area_infos'));
 Route::post('/admin/editorial/pages/create_area', array('as' => 'back_pages_create_area', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@create_area'));
 Route::post('/admin/editorial/pages/delete_area', array('as' => 'back_pages_delete_area', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@delete_area'));
+Route::post('/admin/editorial/pages/update_areas_order', array('as' => 'back_pages_update_areas_order', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_areas_order'));
 
 //BACK > EDITORIAL > PAGES > BLOCKS
 Route::get('/admin/editorial/pages/get_block_infos/{blockID?}', array('as' => 'back_pages_get_block_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@get_block_infos'));
@@ -32,6 +33,7 @@ Route::post('/admin/editorial/pages/create_block', array('as' => 'back_pages_cre
 Route::post('/admin/editorial/pages/update_block_content', array('as' => 'back_pages_update_block_content', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_block_content'));
 Route::post('/admin/editorial/pages/update_block_infos', array('as' => 'back_pages_update_block_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_block_infos'));
 Route::post('/admin/editorial/pages/delete_block', array('as' => 'back_pages_delete_block', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@delete_block'));
+Route::post('/admin/editorial/pages/update_blocks_order', array('as' => 'back_pages_update_blocks_order', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_blocks_order'));
 
 //BACK > EDITORIAL > MENUS
 Route::get('/admin/editorial/menus', array('as' => 'back_menus_index', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@index'));

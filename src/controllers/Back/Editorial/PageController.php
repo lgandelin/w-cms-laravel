@@ -124,6 +124,7 @@ class PageController extends AdminController {
             'width' => \Input::get('width'),
             'height' => \Input::get('height'),
             'class' => \Input::get('class'),
+            'order' => 999,
             'page_id' => \Input::get('page_id'),
         ]);
 
@@ -155,6 +156,26 @@ class PageController extends AdminController {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
     }
+
+    public function update_areas_order()
+    {
+        $areas = json_decode(\Input::get('areas'));
+        for ($i = 0; $i < sizeof($areas); $i++) {
+            $areaID = preg_replace('/a-/', '', $areas[$i]);
+
+            $areaStructure = new AreaStructure([
+                'order' => $i + 1,
+            ]);
+
+            try {
+                \App::make('UpdateAreaInteractor')->run($areaID, $areaStructure);
+            } catch (\Exception $e) {
+                return json_encode(array('success' => false, 'error' => $e->getMessage()));
+            }
+        }
+
+        return json_encode(array('success' => true));
+    }
     
     public function get_block_infos($blockID)
     {
@@ -175,6 +196,7 @@ class PageController extends AdminController {
             'height' => \Input::get('height'),
             'type' => \Input::get('type'),
             'class' => \Input::get('class'),
+            'order' => 999,
             'area_id' => \Input::get('area_id'),
         ]);
 
@@ -222,6 +244,37 @@ class PageController extends AdminController {
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
+    }
+
+    public function update_blocks_order()
+    {
+        try {
+            $blockID = \Input::get('block_id');
+            $blockStructure = new BlockStructure([
+                'area_id' => \Input::get('area_id')
+            ]);
+
+            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+
+        $blocks = json_decode(\Input::get('blocks'));
+        for ($i = 0; $i < sizeof($blocks); $i++) {
+            $blockID = preg_replace('/b-/', '', $blocks[$i]);
+
+            $blockStructure = new BlockStructure([
+                'order' => $i + 1,
+            ]);
+
+            try {
+                \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            } catch (\Exception $e) {
+                return json_encode(array('success' => false, 'error' => $e->getMessage()));
+            }
+        }
+
+        return json_encode(array('success' => true));
     }
 
     public function delete_block()

@@ -18,6 +18,7 @@ class CreateAreasTable extends Migration {
             $table->integer('width')->nullable();
             $table->integer('height')->nullable();
             $table->string('class')->nullable();
+            $table->integer('order')->nullable();
             $table->integer('page_id')->nullable();
             $table->timestamps();
         });

@@ -56,11 +56,12 @@
 		
 			.area_color {
 				overflow: hidden;
+				min-height: 104px;
 				background: #eee;
 				border: 1px solid #ccc;
 			}
 
-			.area-delete, .area-update, .area-create-block {
+			.area-delete, .area-update, .area-create-block, .area-move {
 				cursor: pointer;
 				float: right;
 				margin: 5px 5px 0 0;
@@ -83,11 +84,20 @@
 					text-transform: uppercase;
 				}
 
-				.block-delete, .block-update {
+				.block-delete, .block-update, .block-move {
 					cursor: pointer;
 					float: right;
 					margin: 5px 5px 0 0;
 				}
+			}
+		}
+
+		.sortable-placeholder {
+			.area_color, .block_color {
+				background: #FFCC66 !important;
+				height: 43px;
+				line-height: 43px;
+				overflow: hidden;
 			}
 		}
 

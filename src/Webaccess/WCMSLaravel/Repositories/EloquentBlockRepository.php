@@ -26,6 +26,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             $block->setWidth($blockDB->width);
             $block->setHeight($blockDB->height);
             $block->setClass($blockDB->class);
+            $block->setOrder($blockDB->order);
             $block->setType($blockDB->type);
             $block->setAreaID($blockDB->area_id);
 
@@ -37,7 +38,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
 
     public function findByAreaID($areaID)
     {
-        $blocksDB = BlockModel::where('area_id', '=', $areaID)->get();
+        $blocksDB = BlockModel::where('area_id', '=', $areaID)->orderBy('order', 'asc')->get();
 
         $blocks = [];
         foreach ($blocksDB as $i => $blockDB) {
@@ -47,8 +48,10 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             $blockStructure->width = $blockDB->width;
             $blockStructure->height = $blockDB->height;
             $blockStructure->class = $blockDB->class;
+            $blockStructure->order = $blockDB->order;
             $blockStructure->type = $blockDB->type;
-            $blockStructure->html = $blockDB->html;
+            if ($blockDB->type == 'html')
+                $blockStructure->html = $blockDB->html;
             $blockStructure->area_id = $blockDB->area_id;
 
             $blocks[]= $blockStructure;
@@ -59,7 +62,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
 
     public function findAll()
     {
-        $blocksDB = BlockModel::get();
+        $blocksDB = BlockModel::table('blocks')->orderBy('order', 'asc')->get();
 
         $blocks = [];
         foreach ($blocksDB as $i => $blockDB) {
@@ -69,6 +72,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             $blockStructure->width = $blockDB->width;
             $blockStructure->height = $blockDB->height;
             $blockStructure->class = $blockDB->class;
+            $blockStructure->order = $blockDB->order;
             $blockStructure->type = $blockDB->type;
             if ($blockDB->type == 'html')
                 $blockStructure->html = $blockDB->html;
@@ -87,6 +91,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
         $blockDB->width = $block->getWidth();
         $blockDB->height = $block->getHeight();
         $blockDB->class = $block->getClass();
+        $blockDB->order = $block->getOrder();
         $blockDB->type = $block->getType();
         $blockDB->area_id = $block->getAreaID();
 
@@ -102,7 +107,9 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
         $blockDB->width = $block->getWidth();
         $blockDB->height = $block->getHeight();
         $blockDB->class = $block->getClass();
+        $blockDB->order = $block->getOrder();
         $blockDB->type = $block->getType();
+        $blockDB->area_id = $block->getAreaID();
 
         if ($blockDB->type == 'html')
             $blockDB->html = $block->getHTML();

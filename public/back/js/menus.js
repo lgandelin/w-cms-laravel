@@ -1,28 +1,28 @@
 $(document).ready(function() {
 
     //Create
-	$('form').on('click', '.btn-create', function() {
+    $('form').on('click', '.btn-create', function() {
 
-		var label = $(this).parent().find('input[name="items_label[]"]').val();
-		var order = $(this).parent().find('input[name="items_order[]"]').val();
+        var label = $(this).parent().find('input[name="items_label[]"]').val();
+        var order = $(this).parent().find('input[name="items_order[]"]').val();
         var page_id = $(this).parent().find('select[name="items_page[]"]').val();
         var menu_id = $('input[name="ID"]').val();
 
-		var data = {
+        var data = {
             'menuID': menu_id,
-			'label': label,
-			'order': parseInt(order),
+            'label': label,
+            'order': parseInt(order),
             'pageID': page_id
-		};
+        };
 
-		$.ajax({
-			type: "POST",
-			url: route_menus_add_item,
-			data: data,
-			success: function(data) {
+        $.ajax({
+            type: "POST",
+            url: route_menus_add_item,
+            data: data,
+            success: function(data) {
                 data = JSON.parse(data);
 
-				if (data.success) {
+                if (data.success) {
 
                     $('.btn-create').parent().find('input[name="items_label[]"]').val('');
                     $('.btn-create').parent().find('input[name="items_order[]"]').val('');
@@ -42,9 +42,9 @@ $(document).ready(function() {
                 } else {
                     alert(data.error);
                 }
-			}
-		});
-	});
+            }
+        });
+    });
 
     //Update
     $('form').on('click', '.btn-update', function() {
