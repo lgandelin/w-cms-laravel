@@ -26,9 +26,13 @@ return array(
     'block_height' => 'Height',
     'block_type' => 'Type',
     'block_class' => 'CSS class',
+    'block_menu' => 'Menu',
+    'block_view_file' => 'View file',
 
     'no_page_created_yet' => 'No page created yet',
     'not_found' => 'Page not found',
     'new_page' => 'New page',
-    'add_area' => 'Add an area'
+    'add_area' => 'Add an area',
+
+    'choose_menu' => 'Choose a menu'
 );

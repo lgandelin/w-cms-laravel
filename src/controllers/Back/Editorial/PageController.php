@@ -46,13 +46,18 @@ class PageController extends AdminController {
 		try {
             $page = \App::make('GetPageInteractor')->getByID($pageID);
             $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
-            foreach ($areas as $area) {
-                $area->blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
-                $page->areas[]= $area;
+            $menus = \App::make('GetAllMenusInteractor')->getAll();
+
+            if ($areas) {
+                foreach ($areas as $area) {
+                    $area->blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                    $page->areas[]= $area;
+                }
             }
 
 		    $this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
-		        'page' => $page
+		        'page' => $page,
+                'menus' => $menus
 		    ]);
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());
@@ -216,6 +221,8 @@ class PageController extends AdminController {
 
         $blockStructure = new BlockStructure([
             'html' => \Input::get('html'),
+            'menu_id' => \Input::get('menu_id'),
+            'view_file' => \Input::get('view_file'),
         ]);
 
         try {
@@ -235,7 +242,7 @@ class PageController extends AdminController {
             'width' => \Input::get('width'),
             'height' => \Input::get('height'),
             'type' => \Input::get('type'),
-            'class' => \Input::get('class'),
+            'class' => \Input::get('class')
         ]);
 
         try {
@@ -292,6 +299,17 @@ class PageController extends AdminController {
     public function delete($pageID)
     {
         try {
+            $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
+
+            foreach ($areas as $i => $area) {
+                $blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+
+                foreach ($blocks as $j => $block) {
+                    \App::make('DeleteBlockInteractor')->run($block->ID);
+                }
+                \App::make('DeleteAreaInteractor')->run($area->ID);
+            }
+
             \App::make('DeletePageInteractor')->run($pageID);
             return \Redirect::route('back_pages_index');
         } catch (\Exception $e) {
@@ -303,13 +321,52 @@ class PageController extends AdminController {
     public function duplicate($pageID)
     {
         try {
-            \App::make('DuplicatePageInteractor')->run($pageID);
+            $newPageID = \App::make('DuplicatePageInteractor')->run($pageID);
+
+            $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
+            foreach ($areas as $i => $area) {
+
+                $areaStructure = new AreaStructure([
+                    'name' => $area->name,
+                    'width' => $area->width,
+                    'height' => $area->height,
+                    'class' => $area->class,
+                    'order' => $area->order,
+                    'page_id' => $newPageID
+                ]);
+
+                $newAreaID = \App::make('CreateAreaInteractor')->run($areaStructure);
+
+                $blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                foreach ($blocks as $j => $block) {
+
+                    $blockStructure = new BlockStructure([
+                        'name' => $block->name,
+                        'width' => $block->width,
+                        'height' => $block->height,
+                        'type' => $block->type,
+                        'class' => $block->class,
+                        'order' => $block->order,
+                        'area_id' => $newAreaID
+                    ]);
+
+                    $blockID = \App::make('CreateBlockInteractor')->run($blockStructure);
+
+                    $blockStructureContent = new BlockStructure([
+                        'html' => $block->html,
+                        'menu_id' => $block->menu_id,
+                        'view_file' => $block->view_file,
+                    ]);
+
+                    \App::make('UpdateBlockInteractor')->run($blockID, $blockStructureContent);
+                }
+            }
+
             return \Redirect::route('back_pages_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
             return \Redirect::route('back_pages_index');
         }
     }
-
 
 }

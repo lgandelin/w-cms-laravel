@@ -89,12 +89,29 @@
 
                                     <div class="content">
                                         @foreach ($area->blocks as $block)
-                                        <div class="block" data-id="{{ $block->ID }}">
+                                        <div class="block" data-id="{{ $block->ID }}" data-type="{{ $block->type }}">
                                             <span class="title"><span class="block_name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span></span>
 
                                             <div class="content">
                                                 @if ($block->type == 'html')
-                                                <textarea class="ckeditor" id="editor{{ $block->ID }}" name="editor{{ $block->ID }}">{{ $block->html }}</textarea>
+                                                    <textarea class="ckeditor" id="editor{{ $block->ID }}" name="editor{{ $block->ID }}">{{ $block->html }}</textarea>
+                                                @elseif ($block->type == 'menu')
+                                                    <div class="form-group">
+                                                        <label for="identifier">{{ trans('w-cms-laravel::pages.block_menu') }}</label>
+                                                        <select class="menu_id form-control" autocomplete="off">
+                                                            <option value="">{{ trans('w-cms-laravel::pages.choose_menu') }}</option>
+                                                            @if (isset($menus))
+                                                                @foreach ($menus as $menu)
+                                                                    <option value="{{ $menu->ID }}" @if ($block->menu_id == $menu->ID) selected="selected" @endif>{{ $menu->name }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                @elseif ($block->type == 'view_file')
+                                                    <div class="form-group">
+                                                        <label for="identifier">{{ trans('w-cms-laravel::pages.block_view_file') }}</label>
+                                                        <input type="text" class="form-control view_file" placeholder="{{ trans('w-cms-laravel::pages.view_file') }}" value="{{ $block->view_file }}" autocomplete="off" />
+                                                    </div>
                                                 @endif
 
                                                 <!-- Save -->
@@ -116,6 +133,26 @@
                     </div>
                     <!-- CONTENT -->
 
+                    <div style="display:none;" id="select_menu_template">
+                        <div class="form-group">
+                            <label for="identifier">{{ trans('w-cms-laravel::pages.block_menu') }}</label>
+                            <select class="menu_id form-control" autocomplete="off">
+                                <option value="">{{ trans('w-cms-laravel::pages.choose_menu') }}</option>
+                                @if (isset($menus))
+                                @foreach ($menus as $menu)
+                                <option value="{{ $menu->ID }}">{{ $menu->name }}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="display:none" id="view_file_template">
+                        <div class="form-group">
+                            <label for="identifier">{{ trans('w-cms-laravel::pages.block_view_file') }}</label>
+                            <input type="text" class="form-control view_file" placeholder="{{ trans('w-cms-laravel::pages.block_view_file') }}" value="" autocomplete="off" />
+                        </div>
+                    </div>
 
 
                     <!-- STRUCTURE -->
@@ -242,6 +279,8 @@
                                 <select class="type form-control" autocomplete="off">
                                     <option value="">Choose a type</option>
                                     <option value="html">HTML</option>
+                                    <option value="menu">Menu</option>
+                                    <option value="view_file">View file</option>
                                 </select>
                             </div>
                             <!-- Type -->
@@ -298,6 +337,8 @@
                                 <select class="type form-control" autocomplete="off">
                                     <option value="">Choose a type</option>
                                     <option value="html">HTML</option>
+                                    <option value="menu">Menu</option>
+                                    <option value="view_file">View file</option>
                                 </select>
                             </div>
                             <!-- Type -->

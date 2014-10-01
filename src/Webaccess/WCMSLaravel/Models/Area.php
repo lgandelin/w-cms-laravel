@@ -5,7 +5,7 @@ namespace Webaccess\WCMSLaravel\Models;
 class Area extends \Eloquent {
 
     protected $table = 'areas';
-    protected $fillable = array('name', 'width', 'height', 'class');
+    protected $fillable = array('name', 'width', 'height', 'class', 'order');
 
     public function page()
     {
