@@ -23,6 +23,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
             $area->setClass($areaDB->class);
             $area->setOrder($areaDB->order);
             $area->setPageID($areaDB->page_id);
+            $area->setDisplay($areaDB->display);
 
             return $area;
         }
@@ -44,6 +45,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
             $areaStructure->class = $areaDB->class;
             $areaStructure->order = $areaDB->order;
             $areaStructure->page_id = $areaDB->page_id;
+            $areaStructure->display = $areaDB->display;
 
             $areas[]= $areaStructure;
         }
@@ -65,6 +67,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
             $areaStructure->class = $areaDB->class;
             $areaStructure->order = $areaDB->order;
             $areaStructure->page_id = $areaDB->page_id;
+            $areaStructure->display = $areaDB->display;
 
             $areas[]= $areaStructure;
         }
@@ -81,6 +84,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
         $areaDB->class = $area->getClass();
         $areaDB->order = $area->getOrder();
         $areaDB->page_id = $area->getPageID();
+        $areaDB->display = $area->getDisplay();
 
         $areaDB->save();
 
@@ -95,10 +99,10 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
         $areaDB->height = $area->getHeight();
         $areaDB->order = $area->getOrder();
         $areaDB->class = $area->getClass();
+        $areaDB->display = $area->getDisplay();
 
         return $areaDB->save();
     }
-
 
     public function deleteArea($areaID)
     {

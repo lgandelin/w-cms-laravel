@@ -181,7 +181,22 @@ class PageController extends AdminController {
 
         return json_encode(array('success' => true));
     }
-    
+
+    public function display_area()
+    {
+        try {
+            $areaID = \Input::get('ID');
+            $areaStructure = new AreaStructure([
+                'display'=> \Input::get('display')
+            ]);
+
+            \App::make('UpdateAreaInteractor')->run($areaID, $areaStructure);
+            return json_encode(array('success' => true));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+
     public function get_block_infos($blockID)
     {
         try {
@@ -282,6 +297,21 @@ class PageController extends AdminController {
         }
 
         return json_encode(array('success' => true));
+    }
+
+    public function display_block()
+    {
+        try {
+            $blockID = \Input::get('ID');
+            $blockStructure = new BlockStructure([
+                'display'=> \Input::get('display')
+            ]);
+
+            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            return json_encode(array('success' => true));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
     }
 
     public function delete_block()

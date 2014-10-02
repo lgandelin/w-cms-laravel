@@ -37,6 +37,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             $block->setOrder($blockDB->order);
             $block->setType($blockDB->type);
             $block->setAreaID($blockDB->area_id);
+            $block->setDisplay($blockDB->display);
 
             return $block;
         }
@@ -58,10 +59,11 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             $blockStructure->class = $blockDB->class;
             $blockStructure->order = $blockDB->order;
             $blockStructure->type = $blockDB->type;
+            $blockStructure->area_id = $blockDB->area_id;
+            $blockStructure->display = $blockDB->display;
             if ($blockDB->type == 'html') $blockStructure->html = $blockDB->html;
             if ($blockDB->type == 'menu') $blockStructure->menu_id = $blockDB->menu_id;
             if ($blockDB->type == 'view_file') $blockStructure->view_file = $blockDB->view_file;
-            $blockStructure->area_id = $blockDB->area_id;
 
             $blocks[]= $blockStructure;
         }
@@ -83,10 +85,11 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             $blockStructure->class = $blockDB->class;
             $blockStructure->order = $blockDB->order;
             $blockStructure->type = $blockDB->type;
+            $blockStructure->area_id = $blockDB->area_id;
+            $blockStructure->display = $blockDB->display;
             if ($blockDB->type == 'html') $blockStructure->html = $blockDB->html;
             if ($blockDB->type == 'menu') $blockStructure->menu_id = $blockDB->menu_id;
             if ($blockDB->type == 'view_file') $blockStructure->view_file = $blockDB->view_file;
-            $blockStructure->area_id = $blockDB->area_id;
 
             $blocks[]= $blockStructure;
         }
@@ -104,6 +107,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
         $blockDB->order = $block->getOrder();
         $blockDB->type = $block->getType();
         $blockDB->area_id = $block->getAreaID();
+        $blockDB->display = $block->getDisplay();
 
         $blockDB->save();
 
@@ -119,6 +123,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
         $blockDB->class = $block->getClass();
         $blockDB->order = $block->getOrder();
         $blockDB->area_id = $block->getAreaID();
+        $blockDB->display = $block->getDisplay();
         if ($blockDB->type == 'html') $blockDB->html = $block->getHTML();
         if ($blockDB->type == 'menu') $blockDB->menu_id = $block->getMenuID();
         if ($blockDB->type == 'view_file') $blockDB->view_file = $block->getViewFile();

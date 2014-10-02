@@ -81,12 +81,22 @@ $(document).ready(function() {
     //Save content block
     $('body').on('click', '.page-content-save-block', function() {
         var block_id = $(this).attr('data-id');
-        var textarea_id = $('.block[data-id="' + block_id + '"] textarea').attr('id');
-        var html = CKEDITOR.instances[textarea_id].getData();
+        var block = $('.block[data-id="' + block_id + '"]');
+        
+        if (block.attr('data-type') == 'html') {
+            var textarea_id = $('.block[data-id="' + block_id + '"] textarea').attr('id');
+            var html = CKEDITOR.instances[textarea_id].getData();    
+        } else if (block.attr('data-type') == 'menu') {
+            var menu_id = $('.block[data-id="' + block_id + '"] .menu_id').val();
+        } else if (block.attr('data-type') == 'view_file') {
+            var view_file = $('.block[data-id="' + block_id + '"] .view_file').val();
+        }
 
         var data = {
             'ID': block_id,
-            'html': html
+            'html': html,
+            'menu_id': menu_id,
+            'view_file': view_file
         };
 
         var button = $(this);
@@ -170,9 +180,10 @@ $(document).ready(function() {
                     $('.create-area-form .class').val('');
 
                     //Create area in "Structure" tab
-                    var area_content = '<div id="a'+ data.area.ID + '" data-width="' + data.area.width + '" data-id="' + data.area.ID + '" class="area col-xs-' + data.area.width + '"><div class="area_color"><span class="title"><span class="area_name">' + data.area.name + '</span> <span class="area_width">[<span class="width_value">' + data.area.width + '</span>]</span><span data-id="' + data.area.ID + '" class="area-delete glyphicon glyphicon-remove"></span><span data-id="' + data.area.ID + '" class="area-update glyphicon glyphicon-pencil"></span><span data-id="' + data.area.ID + '" class="area-move glyphicon glyphicon-move"></span><span data-id="' + data.area.ID + '" class="area-create-block glyphicon glyphicon-plus"></span></span></div></div>';
+                    var area_content = '<div id="a-'+ data.area.ID + '" data-width="' + data.area.width + '" data-id="' + data.area.ID + '" class="area col-xs-' + data.area.width + '"><div class="area_color"><span class="title"><span class="area_name">' + data.area.name + '</span> <span class="area_width">[<span class="width_value">' + data.area.width + '</span>]</span><span data-id="' + data.area.ID + '" class="area-delete glyphicon glyphicon-remove"></span><span data-id="' + data.area.ID + '" class="area-move glyphicon glyphicon-move"></span><span data-id="' + data.area.ID + '" class="area-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.area.ID + '" class="area-update glyphicon glyphicon-pencil"></span><span data-id="' + data.area.ID + '" class="area-create-block glyphicon glyphicon-plus"></span></span></div></div>';
                     $('#structure > .areas-wrapper').append(area_content);
                     init_area_sortable();
+                    init_block_sortable();
 
                     //Create area in "Content" tab
                     var area_content = '<div class="area" data-id="' + data.area.ID + '"><span class="title"><span class="area_name">' + data.area.name + '</span></span><div class="content"></div></div>';
@@ -222,14 +233,26 @@ $(document).ready(function() {
                     $('.create-block-form').hide();
 
                     //Create block in "Structure" tab
-                    var block_content = '<div id="b' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + '"><div class="block_color"><span class="title"><span class="name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-pencil"></span></span></div></div>';
+                    var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + '"><div class="block_color"><span class="title"><span class="name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-pencil"></span></span></div></div>';
                     $('#structure .area[data-id="' + input_data.area_id + '"] .area_color').append(block_content);
                     init_block_sortable();
 
                     //Create block in "Content" tab
-                    var block_content = '<div class="block" data-id="' + data.block.ID + '"><span class="title"><span class="block_name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span></span><div class="content"><textarea class="ckeditor" id="editor' + data.block.ID + '" name="editor' + data.block.ID + '"></textarea><!-- Save --><div class="submit_wrapper"><input data-id="' + data.block.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + data.block.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div><!-- Save --></div></div>';
+                    var block_content = '<div class="block" data-id="' + data.block.ID + '" data-type="' + data.block.type + '"><span class="title"><span class="block_name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span></span><div class="content">';
+                
+                    if (data.block.type == 'html')
+                        block_content += '<textarea class="ckeditor" id="editor' + data.block.ID + '" name="editor' + data.block.ID + '"></textarea>';
+                    else if (data.block.type == 'menu')
+                        block_content += $('#select_menu_template').html();
+                    else if (data.block.type == 'view_file')
+                        block_content += $('#view_file_template').html();
+
+                    block_content += '<div class="submit_wrapper"><input data-id="' + data.block.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + data.block.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                     $('#content .area[data-id="' + input_data.area_id + '"] > .content').append(block_content);
-                    CKEDITOR.replace( 'editor' + data.block.ID);
+                    
+                    if (data.block.type == 'html')
+                        CKEDITOR.replace( 'editor' + data.block.ID);
+
                 } else {
                     
                 }
@@ -382,6 +405,7 @@ $(document).ready(function() {
 
                     //Update area in "Structure" tab
                     area.removeClass().addClass('area col-xs-' + input_data.width);
+                    area.attr('data-width', input_data.width);
                     area.find('.area_width .width_value').text(input_data.width);
                     area.find('.area_name').text(input_data.name);
 
@@ -426,6 +450,41 @@ $(document).ready(function() {
         }
     });
 
+    //Display area
+    $('body').on('click', '.area-display', function() {
+        var area_id = $(this).attr('data-id');
+        var area = $('#structure .area[data-id="' + area_id + '"]');
+        
+        var data = {
+            'ID': area_id,
+            'display': ((1 + parseInt(area.attr('data-display'))) % 2)
+        };
+
+        $.ajax({
+            type: "POST",
+            url: route_pages_display_area,
+            data: data,
+            success: function(data) {
+                data = JSON.parse(data);
+
+                if (data.success) {
+                    var area = $('#structure .area[data-id="' + area_id + '"]');
+                    if (parseInt(area.attr('data-display')) == 0) {
+                        area.find('.area-display').removeClass('area-hidden');
+                        area.attr('data-display', 1);
+                    } else {
+                        area.find('.area-display').addClass('area-hidden');
+                        area.attr('data-display', 0);
+                    }
+                } else {
+                    var label_error = $('<p class="alert alert-danger">' + data.error + '</p>');
+                    $('#structure .areas-wrapper').after(label_error);
+                    label_error.fadeIn().delay(2000).fadeOut();
+                }
+            }
+        });
+    });
+
     //Delete block
     $('body').on('click', '.block-delete', function() {
         if (confirm('Are you sure that you want to delete this block ?')) {
@@ -453,6 +512,42 @@ $(document).ready(function() {
             });
         }
     });
+
+    //Display block
+    $('body').on('click', '.block-display', function() {
+        var block_id = $(this).attr('data-id');
+        var block = $('#structure .block[data-id="' + block_id + '"]');
+
+        var data = {
+            'ID': block_id,
+            'display': ((1 + parseInt(block.attr('data-display'))) % 2)
+        };
+
+        $.ajax({
+            type: "POST",
+            url: route_pages_display_block,
+            data: data,
+            success: function(data) {
+                data = JSON.parse(data);
+
+                if (data.success) {
+                    var block = $('#structure .block[data-id="' + block_id + '"]');
+                    if (parseInt(block.attr('data-display')) == 0) {
+                        block.find('.block-display').removeClass('block-hidden');
+                        block.attr('data-display', 1);
+                    } else {
+                        block.find('.block-display').addClass('block-hidden');
+                        block.attr('data-display', 0);
+                    }
+                } else {
+                    var label_error = $('<p class="alert alert-danger">' + data.error + '</p>');
+                    $('#structure .blocks-wrapper').after(label_error);
+                    label_error.fadeIn().delay(2000).fadeOut();
+                }
+            }
+        });
+    });
+
 
 });
 
@@ -483,7 +578,8 @@ function init_area_sortable() {
                 type: 'POST',
                 url: route_pages_update_areas_order
             });
-        }
+        },
+        tolerance: 'intersect'
     });
 }
 
@@ -514,6 +610,7 @@ function init_block_sortable() {
                 type: 'POST',
                 url: route_pages_update_blocks_order
             });
-        }
+        },
+        tolerance: 'intersect'
     });
 }

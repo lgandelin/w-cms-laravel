@@ -4,6 +4,8 @@
 	box-sizing: border-box;
 }
 
+$blue: #2A6496;
+
 .main {
 	margin-top: 40px;
 	padding: 40px;
@@ -29,6 +31,10 @@
 
 .tab-navigation {
     margin-bottom: 3rem;
+}
+
+.glyphicon:hover {
+	color: $blue;
 }
 
 @import "_pages.scss";

@@ -24,33 +24,38 @@
 	<section class="content row">
         @if (isset($current_page->areas))
             @foreach ($current_page->areas as $area)
-            <div class="col-xs-{{ $area->width }} area {{ $area->class }}">
-                @if (isset($area->blocks))
-                    @foreach ($area->blocks as $block)
-                    <div class="col-xs-{{ $block->width }} block {{ $block->class }}">
-                        @if ($block->type == 'html')
-                            {{ $block->html }}
-                        @elseif ($block->type == 'menu' && isset($block->menu))
-                            <nav class="navbar navbar-default" role="navigation">
-                                <ul class="nav navbar-nav">
-                                    @foreach ($block->menu->items as $item)
-                                        @if ($item->page)
-                                            @if ($current_page->uri == $item->page->uri)
-                                                <li><a>{{ $item->label }}</a>
-                                            @else
-                                                <li><a href="{{ route('front_page_index', array($item->page->uri)) }}" title="{{ $item->page->name }}">{{ $item->label }}</a></li>
-                                            @endif
+
+                @if ($area->display)
+                    <div class="col-xs-{{ $area->width }} area {{ $area->class }}">
+                        @if (isset($area->blocks))
+                            @foreach ($area->blocks as $block)
+                                @if ($block->display)
+                                    <div class="col-xs-{{ $block->width }} block {{ $block->class }}">
+                                        @if ($block->type == 'html')
+                                            {{ $block->html }}
+                                        @elseif ($block->type == 'menu' && isset($block->menu))
+                                            <nav class="navbar navbar-default" role="navigation">
+                                                <ul class="nav navbar-nav">
+                                                    @foreach ($block->menu->items as $item)
+                                                        @if ($item->page)
+                                                            @if ($current_page->uri == $item->page->uri)
+                                                                <li><a>{{ $item->label }}</a>
+                                                            @else
+                                                                <li><a href="{{ route('front_page_index', array($item->page->uri)) }}" title="{{ $item->page->name }}">{{ $item->label }}</a></li>
+                                                            @endif
+                                                        @endif
+                                                    @endforeach
+                                                </ul>
+                                            </nav>
+                                        @elseif ($block->type == 'view_file')
+                                            @include($block->view_file)
                                         @endif
-                                    @endforeach
-                                </ul>
-                            </nav>
-                        @elseif ($block->type == 'view_file')
-                            @include($block->view_file)
+                                    </div>
+                                @endif
+                            @endforeach
                         @endif
                     </div>
-                    @endforeach
                 @endif
-            </div>
             @endforeach
         @endif
 	</section>
