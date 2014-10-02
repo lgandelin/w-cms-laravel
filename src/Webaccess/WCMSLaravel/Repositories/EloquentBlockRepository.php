@@ -7,6 +7,9 @@ use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Entities\Blocks\MenuBlock;
 use CMS\Entities\Blocks\ViewFileBlock;
 use CMS\Structures\BlockStructure;
+use CMS\Structures\Blocks\HTMLBlockStructure;
+use CMS\Structures\Blocks\MenuBlockStructure;
+use CMS\Structures\Blocks\ViewFileBlockStructure;
 use CMS\Repositories\BlockRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
 
@@ -51,7 +54,18 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
 
         $blocks = [];
         foreach ($blocksDB as $i => $blockDB) {
-            $blockStructure = new BlockStructure();
+            if ($blockDB->type == 'html') {
+                $blockStructure = new HTMLBlockStructure();
+                $blockStructure->html = $blockDB->html;
+            } elseif ($blockDB->type == 'menu') {
+                $blockStructure = new MenuBlockStructure();
+                $blockStructure->menu_id = $blockDB->menu_id;
+            } elseif ($blockDB->type == 'view_file') {
+                $blockStructure = new ViewFileBlockStructure();
+                $blockStructure->menu_id = $blockDB->menu_id;
+            } else
+                $blockStructure = new BlockStructure();
+
             $blockStructure->ID = $blockDB->id;
             $blockStructure->name = $blockDB->name;
             $blockStructure->width = $blockDB->width;
@@ -61,8 +75,6 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             $blockStructure->type = $blockDB->type;
             $blockStructure->area_id = $blockDB->area_id;
             $blockStructure->display = $blockDB->display;
-            if ($blockDB->type == 'html') $blockStructure->html = $blockDB->html;
-            if ($blockDB->type == 'menu') $blockStructure->menu_id = $blockDB->menu_id;
             if ($blockDB->type == 'view_file') $blockStructure->view_file = $blockDB->view_file;
 
             $blocks[]= $blockStructure;
@@ -77,7 +89,18 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
 
         $blocks = [];
         foreach ($blocksDB as $i => $blockDB) {
-            $blockStructure = new BlockStructure();
+            if ($blockDB->type == 'html') {
+                $blockStructure = new HTMLBlockStructure();
+                $blockStructure->html = $blockDB->html;
+            } elseif ($blockDB->type == 'menu') {
+                $blockStructure = new MenuBlockStructure();
+                $blockStructure->menu_id = $blockDB->menu_id;
+            } elseif ($blockDB->type == 'view_file') {
+                $blockStructure = new ViewFileBlockStructure();
+                $blockStructure->menu_id = $blockDB->menu_id;
+            } else
+                $blockStructure = new BlockStructure();
+
             $blockStructure->ID = $blockDB->id;
             $blockStructure->name = $blockDB->name;
             $blockStructure->width = $blockDB->width;
@@ -87,7 +110,6 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             $blockStructure->type = $blockDB->type;
             $blockStructure->area_id = $blockDB->area_id;
             $blockStructure->display = $blockDB->display;
-            if ($blockDB->type == 'html') $blockStructure->html = $blockDB->html;
             if ($blockDB->type == 'menu') $blockStructure->menu_id = $blockDB->menu_id;
             if ($blockDB->type == 'view_file') $blockStructure->view_file = $blockDB->view_file;
 
