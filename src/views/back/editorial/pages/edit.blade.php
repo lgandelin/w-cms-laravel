@@ -5,6 +5,23 @@
 @stop
 
 @section('javascripts')
+    <script type="text/javascript">
+        var route_pages_update_page_infos = "{{ route('back_pages_update_page_infos') }}";
+        var route_pages_update_page_seo = "{{ route('back_pages_update_page_seo') }}";
+        var route_pages_update_block_content = "{{ route('back_pages_update_block_content') }}";
+        var route_pages_create_area = "{{ route('back_pages_create_area') }}";
+        var route_pages_create_block = "{{ route('back_pages_create_block') }}";
+        var route_pages_get_block_infos = "{{ route('back_pages_get_block_infos') }}";
+        var route_pages_update_block_infos = "{{ route('back_pages_update_block_infos') }}";
+        var route_pages_get_area_infos = "{{ route('back_pages_get_area_infos') }}";
+        var route_pages_update_area_infos = "{{ route('back_pages_update_area_infos') }}";
+        var route_pages_delete_area = "{{ route('back_pages_delete_area') }}";
+        var route_pages_delete_block = "{{ route('back_pages_delete_block') }}";
+        var route_pages_update_blocks_order = "{{ route('back_pages_update_blocks_order') }}";
+        var route_pages_update_areas_order = "{{ route('back_pages_update_areas_order') }}";
+    </script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 	{{ HTML::script('packages/webaccess/w-cms-laravel/back/js/pages.js') }}
 @stop
 
@@ -72,12 +89,29 @@
 
                                     <div class="content">
                                         @foreach ($area->blocks as $block)
-                                        <div class="block" data-id="{{ $block->ID }}">
+                                        <div class="block" data-id="{{ $block->ID }}" data-type="{{ $block->type }}">
                                             <span class="title"><span class="block_name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span></span>
 
                                             <div class="content">
                                                 @if ($block->type == 'html')
-                                                <textarea class="ckeditor" id="editor{{ $block->ID }}" name="editor{{ $block->ID }}">{{ $block->html }}</textarea>
+                                                    <textarea class="ckeditor" id="editor{{ $block->ID }}" name="editor{{ $block->ID }}">{{ $block->html }}</textarea>
+                                                @elseif ($block->type == 'menu')
+                                                    <div class="form-group">
+                                                        <label for="identifier">{{ trans('w-cms-laravel::pages.block_menu') }}</label>
+                                                        <select class="menu_id form-control" autocomplete="off">
+                                                            <option value="">{{ trans('w-cms-laravel::pages.choose_menu') }}</option>
+                                                            @if (isset($menus))
+                                                                @foreach ($menus as $menu)
+                                                                    <option value="{{ $menu->ID }}" @if ($block->menu_id == $menu->ID) selected="selected" @endif>{{ $menu->name }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                @elseif ($block->type == 'view_file')
+                                                    <div class="form-group">
+                                                        <label for="identifier">{{ trans('w-cms-laravel::pages.block_view_file') }}</label>
+                                                        <input type="text" class="form-control view_file" placeholder="{{ trans('w-cms-laravel::pages.view_file') }}" value="{{ $block->view_file }}" autocomplete="off" />
+                                                    </div>
                                                 @endif
 
                                                 <!-- Save -->
@@ -99,6 +133,26 @@
                     </div>
                     <!-- CONTENT -->
 
+                    <div style="display:none;" id="select_menu_template">
+                        <div class="form-group">
+                            <label for="identifier">{{ trans('w-cms-laravel::pages.block_menu') }}</label>
+                            <select class="menu_id form-control" autocomplete="off">
+                                <option value="">{{ trans('w-cms-laravel::pages.choose_menu') }}</option>
+                                @if (isset($menus))
+                                @foreach ($menus as $menu)
+                                <option value="{{ $menu->ID }}">{{ $menu->name }}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="display:none" id="view_file_template">
+                        <div class="form-group">
+                            <label for="identifier">{{ trans('w-cms-laravel::pages.block_view_file') }}</label>
+                            <input type="text" class="form-control view_file" placeholder="{{ trans('w-cms-laravel::pages.block_view_file') }}" value="" autocomplete="off" />
+                        </div>
+                    </div>
 
 
                     <!-- STRUCTURE -->
@@ -106,25 +160,27 @@
 
                         <p><strong>{{ trans('w-cms-laravel::pages.structure') }}</strong></p>
 
-                        <div class="row">
+                        <div class="row areas-wrapper">
                             @if (isset($page->areas))
                                 @foreach ($page->areas as $area)
-                                    <div data-id="{{ $area->ID }}" class="area col-xs-{{ $area->width }}">
+                                    <div id="a-{{ $area->ID }}" data-id="{{ $area->ID }}" class="area col-xs-{{ $area->width }}" data-width="{{ $area->width }}">
                                         <div class="area_color">
                                             <span class="title">
                                                 <span class="area_name">{{ $area->name }}</span> <span class="area_width">[<span class="width_value">{{ $area->width }}</span>]</span>
                                                 <span data-id="{{ $area->ID }}" class="area-delete glyphicon glyphicon-remove"></span>
                                                 <span data-id="{{ $area->ID }}" class="area-update glyphicon glyphicon-pencil"></span>
+                                                <span data-id="{{ $area->ID }}" class="area-move glyphicon glyphicon-move"></span>
                                                 <span data-id="{{ $area->ID }}" class="area-create-block glyphicon glyphicon-plus"></span>
                                             </span>
 
                                             @foreach ($area->blocks as $block)
-                                            <div data-id="{{ $block->ID }}" class="block col-xs-{{ $block->width}}">
+                                            <div id="b-{{ $block->ID }}" data-id="{{ $block->ID }}" class="block col-xs-{{ $block->width}}" data-width="{{ $block->width }}">
                                                 <div class="block_color">
                                                     <span class="title">
                                                         <span class="name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span> [<span class="width_value">{{ $block->width }}</span>]
 
                                                         <span data-id="{{ $block->ID }}" class="block-delete glyphicon glyphicon-remove"></span>
+                                                        <span data-id="{{ $block->ID }}" class="block-move glyphicon glyphicon-move"></span>
                                                         <span data-id="{{ $block->ID }}" class="block-update glyphicon glyphicon-pencil"></span>
                                                     </span>
                                                 </div>
@@ -223,6 +279,8 @@
                                 <select class="type form-control" autocomplete="off">
                                     <option value="">Choose a type</option>
                                     <option value="html">HTML</option>
+                                    <option value="menu">Menu</option>
+                                    <option value="view_file">View file</option>
                                 </select>
                             </div>
                             <!-- Type -->
@@ -279,6 +337,8 @@
                                 <select class="type form-control" autocomplete="off">
                                     <option value="">Choose a type</option>
                                     <option value="html">HTML</option>
+                                    <option value="menu">Menu</option>
+                                    <option value="view_file">View file</option>
                                 </select>
                             </div>
                             <!-- Type -->

@@ -21,6 +21,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
             $area->setWidth($areaDB->width);
             $area->setHeight($areaDB->height);
             $area->setClass($areaDB->class);
+            $area->setOrder($areaDB->order);
             $area->setPageID($areaDB->page_id);
 
             return $area;
@@ -31,7 +32,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
 
     public function findByPageID($pageID)
     {
-        $areasDB = AreaModel::where('page_id', '=', $pageID)->get();
+        $areasDB = AreaModel::where('page_id', '=', $pageID)->orderBy('order', 'asc')->get();
 
         $areas = [];
         foreach ($areasDB as $i => $areaDB) {
@@ -41,6 +42,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
             $areaStructure->width = $areaDB->width;
             $areaStructure->height = $areaDB->height;
             $areaStructure->class = $areaDB->class;
+            $areaStructure->order = $areaDB->order;
             $areaStructure->page_id = $areaDB->page_id;
 
             $areas[]= $areaStructure;
@@ -51,7 +53,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
 
     public function findAll()
     {
-        $areasDB = AreaModel::get();
+        $areasDB = AreaModel::table('areas')->orderBy('order', 'asc')->get();
 
         $areas = [];
         foreach ($areasDB as $i => $areaDB) {
@@ -61,6 +63,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
             $areaStructure->width = $areaDB->width;
             $areaStructure->height = $areaDB->height;
             $areaStructure->class = $areaDB->class;
+            $areaStructure->order = $areaDB->order;
             $areaStructure->page_id = $areaDB->page_id;
 
             $areas[]= $areaStructure;
@@ -76,6 +79,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
         $areaDB->width = $area->getWidth();
         $areaDB->height = $area->getHeight();
         $areaDB->class = $area->getClass();
+        $areaDB->order = $area->getOrder();
         $areaDB->page_id = $area->getPageID();
 
         $areaDB->save();
@@ -89,6 +93,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
         $areaDB->name = $area->getName();
         $areaDB->width = $area->getWidth();
         $areaDB->height = $area->getHeight();
+        $areaDB->order = $area->getOrder();
         $areaDB->class = $area->getClass();
 
         return $areaDB->save();

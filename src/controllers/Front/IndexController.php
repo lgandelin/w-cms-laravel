@@ -11,9 +11,15 @@ class IndexController extends Controller {
 		try {
             $page = \App::make('GetPageInteractor')->getByUri('/' . $uri);
             $areas = \App::make('GetAllAreasInteractor')->getAll($page->ID);
-            foreach ($areas as $area) {
-                $area->blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
-                $page->areas[]= $area;
+            if ($areas) {
+                foreach ($areas as $area) {
+                    $blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                    foreach ($blocks as $block) {
+                        if ($block->menu_id) $block->menu = \App::make('GetMenuInteractor')->getByID($block->menu_id);
+                        $area->blocks[]= $block;
+                    }
+                    $page->areas[]= $area;
+                }
             }
 
         } catch(\Exception $e) {

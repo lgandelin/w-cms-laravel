@@ -87,44 +87,52 @@
 /* line 57, ../sass/_pages.scss */
 .pages-interface #structure .area .area_color {
   overflow: hidden;
+  min-height: 104px;
   background: #eee;
   border: 1px solid #ccc;
 }
-/* line 63, ../sass/_pages.scss */
-.pages-interface #structure .area .area-delete, .pages-interface #structure .area .area-update, .pages-interface #structure .area .area-create-block {
+/* line 64, ../sass/_pages.scss */
+.pages-interface #structure .area .area-delete, .pages-interface #structure .area .area-update, .pages-interface #structure .area .area-create-block, .pages-interface #structure .area .area-move {
   cursor: pointer;
   float: right;
   margin: 5px 5px 0 0;
 }
-/* line 69, ../sass/_pages.scss */
+/* line 70, ../sass/_pages.scss */
 .pages-interface #structure .area .block {
   padding: 10px;
 }
-/* line 72, ../sass/_pages.scss */
+/* line 73, ../sass/_pages.scss */
 .pages-interface #structure .area .block .block_color {
   background: #fdfdfd;
   border: 1px solid #ddd;
 }
-/* line 77, ../sass/_pages.scss */
+/* line 78, ../sass/_pages.scss */
 .pages-interface #structure .area .block .submit_wrapper {
   margin: 20px 0;
 }
-/* line 81, ../sass/_pages.scss */
+/* line 82, ../sass/_pages.scss */
 .pages-interface #structure .area .block .type {
   font-weight: normal;
   text-transform: uppercase;
 }
-/* line 86, ../sass/_pages.scss */
-.pages-interface #structure .area .block .block-delete, .pages-interface #structure .area .block .block-update {
+/* line 87, ../sass/_pages.scss */
+.pages-interface #structure .area .block .block-delete, .pages-interface #structure .area .block .block-update, .pages-interface #structure .area .block .block-move {
   cursor: pointer;
   float: right;
   margin: 5px 5px 0 0;
 }
-/* line 94, ../sass/_pages.scss */
+/* line 96, ../sass/_pages.scss */
+.pages-interface #structure .sortable-placeholder .area_color, .pages-interface #structure .sortable-placeholder .block_color {
+  background: #FFCC66 !important;
+  height: 43px;
+  line-height: 43px;
+  overflow: hidden;
+}
+/* line 104, ../sass/_pages.scss */
 .pages-interface #structure .update-block-form, .pages-interface #structure .update-area-form, .pages-interface #structure .create-block-form, .pages-interface #structure .create-area-form {
   display: none;
 }
-/* line 97, ../sass/_pages.scss */
+/* line 107, ../sass/_pages.scss */
 .pages-interface #structure .update-block-form .submit_wrapper, .pages-interface #structure .update-area-form .submit_wrapper, .pages-interface #structure .create-block-form .submit_wrapper, .pages-interface #structure .create-area-form .submit_wrapper {
   margin-bottom: 20px;
 }

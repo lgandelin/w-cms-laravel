@@ -28,15 +28,11 @@ class PageController extends AdminController {
 		    'name' => \Input::get('name'),
 		    'uri' => \Input::get('uri'),
 		    'identifier' => \Input::get('identifier'),
-		    'text' => \Input::get('text'),
-		    'meta_title' => \Input::get('meta_title'),
-		    'meta_description' => \Input::get('meta_description'),
-		    'meta_keywords' => \Input::get('meta_keywords')
 		]);
 		
 		try {
-            $pageStructure = \App::make('CreatePageInteractor')->run($pageStructure);
-			return \Redirect::route('back_pages_index');
+            $pageID = \App::make('CreatePageInteractor')->run($pageStructure);
+			return \Redirect::route('back_pages_edit', array('pageID' => $pageID));
 		} catch (\Exception $e) {
 			$this->layout = \View::make('w-cms-laravel::back.editorial.pages.create', [
 				'error' => $e->getMessage(),
@@ -50,13 +46,18 @@ class PageController extends AdminController {
 		try {
             $page = \App::make('GetPageInteractor')->getByID($pageID);
             $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
-            foreach ($areas as $area) {
-                $area->blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
-                $page->areas[]= $area;
+            $menus = \App::make('GetAllMenusInteractor')->getAll();
+
+            if ($areas) {
+                foreach ($areas as $area) {
+                    $area->blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                    $page->areas[]= $area;
+                }
             }
 
 		    $this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
-		        'page' => $page
+		        'page' => $page,
+                'menus' => $menus
 		    ]);
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());
@@ -128,6 +129,7 @@ class PageController extends AdminController {
             'width' => \Input::get('width'),
             'height' => \Input::get('height'),
             'class' => \Input::get('class'),
+            'order' => 999,
             'page_id' => \Input::get('page_id'),
         ]);
 
@@ -159,6 +161,26 @@ class PageController extends AdminController {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
     }
+
+    public function update_areas_order()
+    {
+        $areas = json_decode(\Input::get('areas'));
+        for ($i = 0; $i < sizeof($areas); $i++) {
+            $areaID = preg_replace('/a-/', '', $areas[$i]);
+
+            $areaStructure = new AreaStructure([
+                'order' => $i + 1,
+            ]);
+
+            try {
+                \App::make('UpdateAreaInteractor')->run($areaID, $areaStructure);
+            } catch (\Exception $e) {
+                return json_encode(array('success' => false, 'error' => $e->getMessage()));
+            }
+        }
+
+        return json_encode(array('success' => true));
+    }
     
     public function get_block_infos($blockID)
     {
@@ -179,6 +201,7 @@ class PageController extends AdminController {
             'height' => \Input::get('height'),
             'type' => \Input::get('type'),
             'class' => \Input::get('class'),
+            'order' => 999,
             'area_id' => \Input::get('area_id'),
         ]);
 
@@ -198,6 +221,8 @@ class PageController extends AdminController {
 
         $blockStructure = new BlockStructure([
             'html' => \Input::get('html'),
+            'menu_id' => \Input::get('menu_id'),
+            'view_file' => \Input::get('view_file'),
         ]);
 
         try {
@@ -217,7 +242,7 @@ class PageController extends AdminController {
             'width' => \Input::get('width'),
             'height' => \Input::get('height'),
             'type' => \Input::get('type'),
-            'class' => \Input::get('class'),
+            'class' => \Input::get('class')
         ]);
 
         try {
@@ -226,6 +251,37 @@ class PageController extends AdminController {
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
+    }
+
+    public function update_blocks_order()
+    {
+        try {
+            $blockID = \Input::get('block_id');
+            $blockStructure = new BlockStructure([
+                'area_id' => \Input::get('area_id')
+            ]);
+
+            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+
+        $blocks = json_decode(\Input::get('blocks'));
+        for ($i = 0; $i < sizeof($blocks); $i++) {
+            $blockID = preg_replace('/b-/', '', $blocks[$i]);
+
+            $blockStructure = new BlockStructure([
+                'order' => $i + 1,
+            ]);
+
+            try {
+                \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            } catch (\Exception $e) {
+                return json_encode(array('success' => false, 'error' => $e->getMessage()));
+            }
+        }
+
+        return json_encode(array('success' => true));
     }
 
     public function delete_block()
@@ -243,6 +299,17 @@ class PageController extends AdminController {
     public function delete($pageID)
     {
         try {
+            $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
+
+            foreach ($areas as $i => $area) {
+                $blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+
+                foreach ($blocks as $j => $block) {
+                    \App::make('DeleteBlockInteractor')->run($block->ID);
+                }
+                \App::make('DeleteAreaInteractor')->run($area->ID);
+            }
+
             \App::make('DeletePageInteractor')->run($pageID);
             return \Redirect::route('back_pages_index');
         } catch (\Exception $e) {
@@ -254,13 +321,52 @@ class PageController extends AdminController {
     public function duplicate($pageID)
     {
         try {
-            \App::make('DuplicatePageInteractor')->run($pageID);
+            $newPageID = \App::make('DuplicatePageInteractor')->run($pageID);
+
+            $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
+            foreach ($areas as $i => $area) {
+
+                $areaStructure = new AreaStructure([
+                    'name' => $area->name,
+                    'width' => $area->width,
+                    'height' => $area->height,
+                    'class' => $area->class,
+                    'order' => $area->order,
+                    'page_id' => $newPageID
+                ]);
+
+                $newAreaID = \App::make('CreateAreaInteractor')->run($areaStructure);
+
+                $blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                foreach ($blocks as $j => $block) {
+
+                    $blockStructure = new BlockStructure([
+                        'name' => $block->name,
+                        'width' => $block->width,
+                        'height' => $block->height,
+                        'type' => $block->type,
+                        'class' => $block->class,
+                        'order' => $block->order,
+                        'area_id' => $newAreaID
+                    ]);
+
+                    $blockID = \App::make('CreateBlockInteractor')->run($blockStructure);
+
+                    $blockStructureContent = new BlockStructure([
+                        'html' => $block->html,
+                        'menu_id' => $block->menu_id,
+                        'view_file' => $block->view_file,
+                    ]);
+
+                    \App::make('UpdateBlockInteractor')->run($blockID, $blockStructureContent);
+                }
+            }
+
             return \Redirect::route('back_pages_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
             return \Redirect::route('back_pages_index');
         }
     }
-
 
 }

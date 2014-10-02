@@ -18,8 +18,11 @@ class CreateBlocksTable extends Migration {
             $table->integer('width')->nullable();
             $table->integer('height')->nullable();
             $table->string('class')->nullable();
+            $table->integer('order')->nullable();
             $table->string('type')->nullable();
             $table->text('html')->nullable();
+            $table->integer('menu_id')->nullable();
+            $table->string('view_file')->nullable();
             $table->integer('area_id')->nullable();
             $table->timestamps();
         });

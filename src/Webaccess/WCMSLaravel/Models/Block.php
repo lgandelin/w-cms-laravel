@@ -5,7 +5,7 @@ namespace Webaccess\WCMSLaravel\Models;
 class Block extends \Eloquent {
 
     protected $table = 'blocks';
-    protected $fillable = array('name', 'width', 'height', 'class');
+    protected $fillable = array('name', 'width', 'height', 'class', 'type', 'order', 'html', 'menu_id');
 
     public function area()
     {

@@ -105,7 +105,9 @@ class EloquentPageRepository implements PageRepositoryInterface {
 		$pageDB->meta_description = $pageStructure->meta_description;
 		$pageDB->meta_keywords = $pageStructure->meta_keywords;
 
-		return $pageDB->save();
+		$pageDB->save();
+
+        return $pageDB->id;
 	}
 
 	public function updatePage($pageID, PageStructure $pageStructure)

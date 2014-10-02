@@ -26,9 +26,13 @@ return array(
     'block_height' => 'Hauteur',
     'block_type' => 'Type',
     'block_class' => 'Classe CSS',
+    'block_menu' => 'Menu',
+    'block_view_file' => 'Fichier "View"',
 
     'no_page_created_yet' => 'Aucune page créée',
    	'not_found' => 'Page non trouvée',
     'new_page' => 'Nouvelle page',
-    'add_area' => 'Ajouter une zone'
+    'add_area' => 'Ajouter une zone',
+
+    'choose_menu' => 'Choisir un menu'
 );

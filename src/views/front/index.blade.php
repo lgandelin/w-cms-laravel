@@ -21,37 +21,35 @@
 @stop
 
 @section('content')
-	@if (isset($menu) && $menu->items)
-        <nav class="navbar navbar-default" role="navigation">
-            <ul class="nav navbar-nav">
-				@foreach ($menu->items as $item)
-	                @if ($item->page)
-	                    @if ($current_page->uri == $item->page->uri)
-                            <li><a>{{ $item->label }}</a>
-	                    @else
-	                        <li><a href="{{ route('front_page_index', array($item->page->uri)) }}" title="{{ $item->page->name }}">{{ $item->label }}</a></li>
-	                    @endif
-                     @endif
-				@endforeach
-			</ul>
-		</nav>
-	@endif
-
 	<section class="content row">
         @if (isset($current_page->areas))
             @foreach ($current_page->areas as $area)
-            <div class=" col-xs-{{ $area->width }}">
-                <div class="area {{ $area->class }}">
+            <div class="col-xs-{{ $area->width }} area {{ $area->class }}">
+                @if (isset($area->blocks))
                     @foreach ($area->blocks as $block)
-                    <div class="col-xs-{{ $block->width }}">
-                        <div class="block {{ $block->class }}">
-                            @if ($block->type == 'html')
-                                {{ $block->html }}
-                            @endif
-                        </div>
+                    <div class="col-xs-{{ $block->width }} block {{ $block->class }}">
+                        @if ($block->type == 'html')
+                            {{ $block->html }}
+                        @elseif ($block->type == 'menu' && isset($block->menu))
+                            <nav class="navbar navbar-default" role="navigation">
+                                <ul class="nav navbar-nav">
+                                    @foreach ($block->menu->items as $item)
+                                        @if ($item->page)
+                                            @if ($current_page->uri == $item->page->uri)
+                                                <li><a>{{ $item->label }}</a>
+                                            @else
+                                                <li><a href="{{ route('front_page_index', array($item->page->uri)) }}" title="{{ $item->page->name }}">{{ $item->label }}</a></li>
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </nav>
+                        @elseif ($block->type == 'view_file')
+                            @include($block->view_file)
+                        @endif
                     </div>
                     @endforeach
-                </div>
+                @endif
             </div>
             @endforeach
         @endif

@@ -4,6 +4,8 @@ namespace Webaccess\WCMSLaravel\Repositories;
 
 use CMS\Entities\Block;
 use CMS\Entities\Blocks\HTMLBlock;
+use CMS\Entities\Blocks\MenuBlock;
+use CMS\Entities\Blocks\ViewFileBlock;
 use CMS\Structures\BlockStructure;
 use CMS\Repositories\BlockRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
@@ -18,6 +20,12 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             if ($blockDB->type == 'html') {
                 $block = new HTMLBlock();
                 $block->setHTML($blockDB->html);
+            } elseif ($blockDB->type == 'menu') {
+                $block = new MenuBlock();
+                $block->setMenuID($blockDB->menu_id);
+            } elseif ($blockDB->type == 'view_file') {
+                $block = new ViewFileBlock();
+                $block->setViewFile($blockDB->view_file);
             } else
                 $block = new Block();
 
@@ -26,6 +34,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             $block->setWidth($blockDB->width);
             $block->setHeight($blockDB->height);
             $block->setClass($blockDB->class);
+            $block->setOrder($blockDB->order);
             $block->setType($blockDB->type);
             $block->setAreaID($blockDB->area_id);
 
@@ -37,7 +46,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
 
     public function findByAreaID($areaID)
     {
-        $blocksDB = BlockModel::where('area_id', '=', $areaID)->get();
+        $blocksDB = BlockModel::where('area_id', '=', $areaID)->orderBy('order', 'asc')->get();
 
         $blocks = [];
         foreach ($blocksDB as $i => $blockDB) {
@@ -47,8 +56,11 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             $blockStructure->width = $blockDB->width;
             $blockStructure->height = $blockDB->height;
             $blockStructure->class = $blockDB->class;
+            $blockStructure->order = $blockDB->order;
             $blockStructure->type = $blockDB->type;
-            $blockStructure->html = $blockDB->html;
+            if ($blockDB->type == 'html') $blockStructure->html = $blockDB->html;
+            if ($blockDB->type == 'menu') $blockStructure->menu_id = $blockDB->menu_id;
+            if ($blockDB->type == 'view_file') $blockStructure->view_file = $blockDB->view_file;
             $blockStructure->area_id = $blockDB->area_id;
 
             $blocks[]= $blockStructure;
@@ -59,7 +71,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
 
     public function findAll()
     {
-        $blocksDB = BlockModel::get();
+        $blocksDB = BlockModel::table('blocks')->orderBy('order', 'asc')->get();
 
         $blocks = [];
         foreach ($blocksDB as $i => $blockDB) {
@@ -69,9 +81,11 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
             $blockStructure->width = $blockDB->width;
             $blockStructure->height = $blockDB->height;
             $blockStructure->class = $blockDB->class;
+            $blockStructure->order = $blockDB->order;
             $blockStructure->type = $blockDB->type;
-            if ($blockDB->type == 'html')
-                $blockStructure->html = $blockDB->html;
+            if ($blockDB->type == 'html') $blockStructure->html = $blockDB->html;
+            if ($blockDB->type == 'menu') $blockStructure->menu_id = $blockDB->menu_id;
+            if ($blockDB->type == 'view_file') $blockStructure->view_file = $blockDB->view_file;
             $blockStructure->area_id = $blockDB->area_id;
 
             $blocks[]= $blockStructure;
@@ -87,6 +101,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
         $blockDB->width = $block->getWidth();
         $blockDB->height = $block->getHeight();
         $blockDB->class = $block->getClass();
+        $blockDB->order = $block->getOrder();
         $blockDB->type = $block->getType();
         $blockDB->area_id = $block->getAreaID();
 
@@ -102,10 +117,19 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
         $blockDB->width = $block->getWidth();
         $blockDB->height = $block->getHeight();
         $blockDB->class = $block->getClass();
-        $blockDB->type = $block->getType();
+        $blockDB->order = $block->getOrder();
+        $blockDB->area_id = $block->getAreaID();
+        if ($blockDB->type == 'html') $blockDB->html = $block->getHTML();
+        if ($blockDB->type == 'menu') $blockDB->menu_id = $block->getMenuID();
+        if ($blockDB->type == 'view_file') $blockDB->view_file = $block->getViewFile();
 
-        if ($blockDB->type == 'html')
-            $blockDB->html = $block->getHTML();
+        return $blockDB->save();
+    }
+
+    public function updateBlockType(Block $block)
+    {
+        $blockDB = BlockModel::find($block->getID());
+        $blockDB->type = $block->getType();
 
         return $blockDB->save();
     }

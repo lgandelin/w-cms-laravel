@@ -5,6 +5,12 @@
 @stop
 
 @section('javascripts')
+    <script type="text/javascript">
+        var route_menus_add_item = "{{ route('back_menus_add_item') }}";
+        var route_menus_update_item = "{{ route('back_menus_update_item') }}";
+        var route_menus_delete_item = "{{ route('back_menus_delete_item') }}";
+    </script>
+
     {{ HTML::script('packages/webaccess/w-cms-laravel/back/js/menus.js') }}
 @stop
 
