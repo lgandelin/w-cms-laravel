@@ -5,13 +5,13 @@
   box-sizing: border-box;
 }
 
-/* line 7, ../sass/style.scss */
+/* line 9, ../sass/style.scss */
 .main {
   margin-top: 40px;
   padding: 40px;
 }
 
-/* line 14, ../sass/style.scss */
+/* line 16, ../sass/style.scss */
 .shortcuts li {
   list-style: none;
   display: inline-block;
@@ -19,19 +19,24 @@
   margin-right: 5rem;
 }
 
-/* line 22, ../sass/style.scss */
+/* line 24, ../sass/style.scss */
 .page-header {
   margin-bottom: 5rem;
 }
 
-/* line 26, ../sass/style.scss */
+/* line 28, ../sass/style.scss */
 .form-inline {
   margin-bottom: 1rem;
 }
 
-/* line 30, ../sass/style.scss */
+/* line 32, ../sass/style.scss */
 .tab-navigation {
   margin-bottom: 3rem;
+}
+
+/* line 36, ../sass/style.scss */
+.glyphicon:hover {
+  color: #2a6496;
 }
 
 /* line 4, ../sass/_pages.scss */
@@ -92,7 +97,7 @@
   border: 1px solid #ccc;
 }
 /* line 64, ../sass/_pages.scss */
-.pages-interface #structure .area .area-delete, .pages-interface #structure .area .area-update, .pages-interface #structure .area .area-create-block, .pages-interface #structure .area .area-move {
+.pages-interface #structure .area .area-delete, .pages-interface #structure .area .area-update, .pages-interface #structure .area .area-create-block, .pages-interface #structure .area .area-move, .pages-interface #structure .area .area-display {
   cursor: pointer;
   float: right;
   margin: 5px 5px 0 0;
@@ -116,23 +121,28 @@
   text-transform: uppercase;
 }
 /* line 87, ../sass/_pages.scss */
-.pages-interface #structure .area .block .block-delete, .pages-interface #structure .area .block .block-update, .pages-interface #structure .area .block .block-move {
+.pages-interface #structure .area .block .block-delete, .pages-interface #structure .area .block .block-update, .pages-interface #structure .area .block .block-move, .pages-interface #structure .area .block .block-display {
   cursor: pointer;
   float: right;
   margin: 5px 5px 0 0;
 }
-/* line 96, ../sass/_pages.scss */
+/* line 94, ../sass/_pages.scss */
+.pages-interface #structure .area .area-hidden, .pages-interface #structure .area .block-hidden {
+  color: #ccc;
+}
+/* line 100, ../sass/_pages.scss */
 .pages-interface #structure .sortable-placeholder .area_color, .pages-interface #structure .sortable-placeholder .block_color {
-  background: #FFCC66 !important;
+  border: 1px solid #2a6496 !important;
+  background: #8AB4D8 !important;
   height: 43px;
   line-height: 43px;
   overflow: hidden;
 }
-/* line 104, ../sass/_pages.scss */
+/* line 109, ../sass/_pages.scss */
 .pages-interface #structure .update-block-form, .pages-interface #structure .update-area-form, .pages-interface #structure .create-block-form, .pages-interface #structure .create-area-form {
   display: none;
 }
-/* line 107, ../sass/_pages.scss */
+/* line 112, ../sass/_pages.scss */
 .pages-interface #structure .update-block-form .submit_wrapper, .pages-interface #structure .update-area-form .submit_wrapper, .pages-interface #structure .create-block-form .submit_wrapper, .pages-interface #structure .create-area-form .submit_wrapper {
   margin-bottom: 20px;
 }

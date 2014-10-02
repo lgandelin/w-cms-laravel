@@ -61,7 +61,7 @@
 				border: 1px solid #ccc;
 			}
 
-			.area-delete, .area-update, .area-create-block, .area-move {
+			.area-delete, .area-update, .area-create-block, .area-move, .area-display {
 				cursor: pointer;
 				float: right;
 				margin: 5px 5px 0 0;
@@ -84,17 +84,22 @@
 					text-transform: uppercase;
 				}
 
-				.block-delete, .block-update, .block-move {
+				.block-delete, .block-update, .block-move, .block-display {
 					cursor: pointer;
 					float: right;
 					margin: 5px 5px 0 0;
 				}
 			}
+
+			.area-hidden, .block-hidden {
+				color: #ccc;
+			}
 		}
 
 		.sortable-placeholder {
 			.area_color, .block_color {
-				background: #FFCC66 !important;
+				border: 1px solid $blue !important;
+				background: #8AB4D8 !important;
 				height: 43px;
 				line-height: 43px;
 				overflow: hidden;
