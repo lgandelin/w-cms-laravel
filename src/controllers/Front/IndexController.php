@@ -18,7 +18,7 @@ class IndexController extends Controller {
                 foreach ($areas as $area) {
                     $blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
                     foreach ($blocks as $block) {
-                        if ($block instanceof MenuBlockStructure)
+                        if ($block instanceof MenuBlockStructure && $block->menu_id)
                             $block->menu = \App::make('GetMenuInteractor')->getByID($block->menu_id);
 
                         $area->blocks[]= $block;

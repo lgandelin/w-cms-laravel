@@ -3,6 +3,9 @@
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
 use CMS\Structures\BlockStructure;
+use CMS\Structures\Blocks\MenuBlockStructure;
+use CMS\Structures\Blocks\HTMLBlockStructure;
+use CMS\Structures\Blocks\ViewFileBlockStructure;
 use CMS\Structures\AreaStructure;
 use CMS\Structures\PageStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
@@ -234,11 +237,21 @@ class PageController extends AdminController {
     {
         $blockID = \Input::get('ID');
 
-        $blockStructure = new BlockStructure([
-            'html' => \Input::get('html'),
-            'menu_id' => \Input::get('menu_id'),
-            'view_file' => \Input::get('view_file'),
-        ]);
+        if ($menuID = \Input::get('menu_id'))
+            $blockStructure = new MenuBlockStructure([
+                'menu_id' => $menuID,
+                'type' => 'menu'
+            ]);
+        elseif ($html = \Input::get('html'))
+            $blockStructure = new HTMLBlockStructure([
+                'html' => $html,
+                'type' => 'html'
+            ]);
+        elseif ($viewFile = \Input::get('view_file'))
+            $blockStructure = new ViewFileBlockStructure([
+                'view_file' => $viewFile,
+                'type' => 'view_file'
+            ]);
 
         try {
             \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
