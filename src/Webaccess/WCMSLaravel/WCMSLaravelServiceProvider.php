@@ -2,6 +2,8 @@
 
 use Illuminate\Support\ServiceProvider;
 
+use CreateUserCommand;
+
 use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Interactors\Pages\GetAllPagesInteractor;
 use CMS\Interactors\Pages\CreatePageInteractor;
@@ -62,6 +64,14 @@ class WCMSLaravelServiceProvider extends ServiceProvider
     {
         $this->package('webaccess/w-cms-laravel');
         include(__DIR__ . '/../../routes.php');
+
+        $this->app->bind('CreateUserCommand', function($app) {
+            return new CreateUserCommand();
+        });
+
+        $this->commands(array(
+            'CreateUserCommand'
+        ));
     }
 
     /**
