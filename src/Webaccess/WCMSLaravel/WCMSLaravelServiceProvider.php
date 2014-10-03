@@ -34,7 +34,7 @@ use CMS\Interactors\Menus\UpdateMenuItemInteractor;
 use CMS\Interactors\Menus\DeleteMenuItemInteractor;
 
 use CMS\Interactors\Users\GetUserInteractor;
-use CMS\Interactors\Users\GetAllUsersInteractor;
+use CMS\Interactors\Users\GetUsersInteractor;
 use CMS\Interactors\Users\CreateUserInteractor;
 use CMS\Interactors\Users\UpdateUserInteractor;
 use CMS\Interactors\Users\DeleteUserInteractor;
@@ -194,8 +194,8 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             return new GetUserInteractor(new EloquentUserRepository());
         });
 
-        $this->app->bind('GetAllUsersInteractor', function () {
-            return new GetAllUsersInteractor(new EloquentUserRepository());
+        $this->app->bind('GetUsersInteractor', function () {
+            return new GetUsersInteractor(new EloquentUserRepository());
         });
 
         $this->app->bind('CreateUserInteractor', function () {
