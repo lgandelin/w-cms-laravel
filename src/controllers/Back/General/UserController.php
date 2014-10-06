@@ -9,8 +9,14 @@ class UserController extends AdminController {
 
     public function index()
     {
+        $users = \App::make('GetUsersInteractor')->getAll();
+
+        if (is_array($users) && sizeof($users) > 0)
+            foreach ($users as $user)
+                $userStructures[]= UserStructure::toStructure($user);
+
         $this->layout = \View::make('w-cms-laravel::back.general.users.index', [
-            'users' => \App::make('GetAllUsersInteractor')->getAll(),
+            'users' => ($userStructures) ? $userStructures : array(),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
@@ -44,9 +50,10 @@ class UserController extends AdminController {
     public function edit($userID)
     {
         try {
-            $userStructure = \App::make('GetUserInteractor')->getByID($userID);
+            $user = \App::make('GetUserInteractor')->getByID($userID);
+
             $this->layout = \View::make('w-cms-laravel::back.general.users.edit', [
-                'user' => $userStructure
+                'user' => UserStructure::toStructure($user)
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());

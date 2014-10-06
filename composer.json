@@ -23,8 +23,8 @@
     "autoload": {
         "classmap": [
             "src/migrations",
-            "src/controllers",
-            "src/seeds"
+            "src/commands",
+            "src/controllers"
         ],
         "psr-0": {
             "Webaccess\\WCMSLaravel\\": "src/"

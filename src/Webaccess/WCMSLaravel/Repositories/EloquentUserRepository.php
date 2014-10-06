@@ -2,7 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Repositories;
 
-use CMS\Structures\UserStructure;
+use CMS\Entities\User;
 use CMS\Repositories\UserRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\User as UserModel;
 
@@ -10,38 +10,38 @@ class EloquentUserRepository implements UserRepositoryInterface {
 
     public function findByID($userID)
     {
-        $userDB = UserModel::where('id', '=', $userID)->first();
+        $userDB = UserModel::find($userID);
 
         if ($userDB) {
-            $userStructure = new UserStructure();
-            $userStructure->ID = $userDB->id;
-            $userStructure->login = $userDB->login;
-            $userStructure->password = $userDB->password;
-            $userStructure->last_name = $userDB->last_name;
-            $userStructure->first_name = $userDB->first_name;
-            $userStructure->email = $userDB->email;
+            $user = new User();
+            $user->setID($userDB->id);
+            $user->setLogin($userDB->login);
+            $user->setPassword($userDB->password);
+            $user->setLastName($userDB->last_name);
+            $user->setFirstName($userDB->first_name);
+            $user->setEmail($userDB->email);
 
-            return $userStructure;
+            return $user;
         }
+
         return false;
     }
 
-    public function findByLogin($login)
+    public function findByLogin($userLogin)
     {
-        $userDB = UserModel::where('login', '=', $login)->first();
+        $userDB = UserModel::where('login', '=', $userLogin)->first();
 
         if ($userDB) {
-            $userStructure = new UserStructure();
-            $userStructure->ID = $userDB->id;
-            $userStructure->login = $userDB->login;
-            $userStructure->password = $userDB->password;
-            $userStructure->last_name = $userDB->last_name;
-            $userStructure->first_name = $userDB->first_name;
-            $userStructure->email = $userDB->email;
+            $user = new User();
+            $user->setID($userDB->id);
+            $user->setLogin($userDB->login);
+            $user->setPassword($userDB->password);
+            $user->setLastName($userDB->last_name);
+            $user->setFirstName($userDB->first_name);
+            $user->setEmail($userDB->email);
 
-            return $userStructure;
+            return $user;
         }
-        return false;
     }
 
     public function findAll()
@@ -50,41 +50,40 @@ class EloquentUserRepository implements UserRepositoryInterface {
 
         $users = [];
         foreach ($usersDB as $i => $userDB) {
-            $userStructure = new UserStructure();
-            $userStructure->ID = $userDB->id;
-            $userStructure->login = $userDB->login;
-            $userStructure->password = $userDB->password;
-            $userStructure->last_name = $userDB->last_name;
-            $userStructure->first_name = $userDB->first_name;
-            $userStructure->email = $userDB->email;
-        
-            $users[]= $userStructure;
+            $user = new User();
+            $user->setID($userDB->id);
+            $user->setLogin($userDB->login);
+            $user->setPassword($userDB->password);
+            $user->setLastName($userDB->last_name);
+            $user->setFirstName($userDB->first_name);
+            $user->setEmail($userDB->email);
+
+            $users[]= $user;
         }
 
         return $users;
     }
 
-    public function createUser(UserStructure $userStructure)
+    public function createUser(User $user)
     {
         $userDB = new UserModel();
-        $userDB->login = $userStructure->login;
-        $userDB->password = $userStructure->password;
-        $userDB->last_name = $userStructure->last_name;
-        $userDB->first_name = $userStructure->first_name;
-        $userDB->email = $userStructure->email;
+        $userDB->login = $user->getLogin();
+        $userDB->password = $user->getPassword();
+        $userDB->last_name = $user->getLastName();
+        $userDB->first_name = $user->getFirstName();
+        $userDB->email = $user->getEmail();
 
         return $userDB->save();
     }
 
-    public function updateUser($userID, UserStructure $userStructure)
+    public function updateUser(User $user)
     {
-        $userDB = UserModel::where('id', '=', $userID)->first();
-        $userDB->login = $userStructure->login;
-        if ($userStructure->password)
-            $userDB->password = $userStructure->password;
-        $userDB->last_name = $userStructure->last_name;
-        $userDB->first_name = $userStructure->first_name;
-        $userDB->email = $userStructure->email;
+        $userDB = UserModel::find($user->getID());
+        $userDB->login = $user->getLogin();
+        if ($user->getPassword()) $userDB->password = $user->getPassword();
+        $userDB->last_name = $user->getLastName();
+        $userDB->first_name = $user->getFirstName();
+        $userDB->email = $user->getEmail();
 
         return $userDB->save();
     }

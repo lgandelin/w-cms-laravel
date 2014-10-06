@@ -2,6 +2,8 @@
 
 use Illuminate\Support\ServiceProvider;
 
+use CreateUserCommand;
+
 use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Interactors\Pages\GetAllPagesInteractor;
 use CMS\Interactors\Pages\CreatePageInteractor;
@@ -32,7 +34,7 @@ use CMS\Interactors\Menus\UpdateMenuItemInteractor;
 use CMS\Interactors\Menus\DeleteMenuItemInteractor;
 
 use CMS\Interactors\Users\GetUserInteractor;
-use CMS\Interactors\Users\GetAllUsersInteractor;
+use CMS\Interactors\Users\GetUsersInteractor;
 use CMS\Interactors\Users\CreateUserInteractor;
 use CMS\Interactors\Users\UpdateUserInteractor;
 use CMS\Interactors\Users\DeleteUserInteractor;
@@ -62,6 +64,14 @@ class WCMSLaravelServiceProvider extends ServiceProvider
     {
         $this->package('webaccess/w-cms-laravel');
         include(__DIR__ . '/../../routes.php');
+
+        $this->app->bind('CreateUserCommand', function($app) {
+            return new CreateUserCommand();
+        });
+
+        $this->commands(array(
+            'CreateUserCommand'
+        ));
     }
 
     /**
@@ -184,8 +194,8 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             return new GetUserInteractor(new EloquentUserRepository());
         });
 
-        $this->app->bind('GetAllUsersInteractor', function () {
-            return new GetAllUsersInteractor(new EloquentUserRepository());
+        $this->app->bind('GetUsersInteractor', function () {
+            return new GetUsersInteractor(new EloquentUserRepository());
         });
 
         $this->app->bind('CreateUserInteractor', function () {
