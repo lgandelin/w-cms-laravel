@@ -4,8 +4,8 @@ namespace Webaccess\WCMSLaravel\Back;
 
 use Illuminate\Routing\Controller;
 
-class AdminController extends Controller {
-
+class AdminController extends Controller
+{
      public function __construct()
      {
         $this->beforeFilter(function()
@@ -17,5 +17,4 @@ class AdminController extends Controller {
         //Global variables
         \View::share('user', \Auth::user());
     }
-
 }

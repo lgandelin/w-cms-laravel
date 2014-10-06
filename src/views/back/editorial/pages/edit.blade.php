@@ -6,21 +6,23 @@
 
 @section('javascripts')
     <script type="text/javascript">
-        var route_pages_update_page_infos = "{{ route('back_pages_update_page_infos') }}";
-        var route_pages_update_page_seo = "{{ route('back_pages_update_page_seo') }}";
-        var route_pages_update_block_content = "{{ route('back_pages_update_block_content') }}";
-        var route_pages_create_area = "{{ route('back_pages_create_area') }}";
-        var route_pages_create_block = "{{ route('back_pages_create_block') }}";
-        var route_pages_get_block_infos = "{{ route('back_pages_get_block_infos') }}";
-        var route_pages_update_block_infos = "{{ route('back_pages_update_block_infos') }}";
-        var route_pages_get_area_infos = "{{ route('back_pages_get_area_infos') }}";
-        var route_pages_update_area_infos = "{{ route('back_pages_update_area_infos') }}";
-        var route_pages_delete_area = "{{ route('back_pages_delete_area') }}";
-        var route_pages_delete_block = "{{ route('back_pages_delete_block') }}";
-        var route_pages_update_blocks_order = "{{ route('back_pages_update_blocks_order') }}";
-        var route_pages_update_areas_order = "{{ route('back_pages_update_areas_order') }}";
-        var route_pages_display_area = "{{ route('back_pages_display_area') }}";
-        var route_pages_display_block = "{{ route('back_pages_display_block') }}";
+        var route_pages_update_infos = "{{ route('back_pages_update_infos') }}";
+        var route_pages_update_seo = "{{ route('back_pages_update_seo') }}";
+
+        var route_areas_get_infos = "{{ route('back_areas_get_infos') }}";
+        var route_areas_update_infos = "{{ route('back_areas_update_infos') }}";
+        var route_areas_create = "{{ route('back_areas_create') }}";
+        var route_areas_update_order = "{{ route('back_areas_update_order') }}";
+        var route_areas_display = "{{ route('back_areas_display') }}";
+        var route_areas_delete = "{{ route('back_areas_delete') }}";
+
+        var route_blocks_get_infos = "{{ route('back_blocks_get_infos') }}";
+        var route_blocks_update_infos = "{{ route('back_blocks_update_infos') }}";
+        var route_blocks_create = "{{ route('back_blocks_create') }}";
+        var route_blocks_update_content = "{{ route('back_blocks_update_content') }}";
+        var route_blocks_update_order = "{{ route('back_blocks_update_order') }}";
+        var route_blocks_display = "{{ route('back_blocks_display') }}";
+        var route_blocks_delete = "{{ route('back_blocks_delete') }}";
     </script>
 
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>

@@ -5,8 +5,8 @@ namespace Webaccess\WCMSLaravel\Back\General;
 use CMS\Structures\UserStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
-class UserController extends AdminController {
-
+class UserController extends AdminController
+{
     public function index()
     {
         $this->layout = \View::make('w-cms-laravel::back.general.users.index', [
@@ -85,5 +85,4 @@ class UserController extends AdminController {
             return \Redirect::route('back_users_index');
         }
     }
-
 }

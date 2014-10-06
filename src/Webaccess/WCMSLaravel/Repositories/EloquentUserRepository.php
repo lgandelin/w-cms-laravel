@@ -6,8 +6,8 @@ use CMS\Entities\User;
 use CMS\Repositories\UserRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\User as UserModel;
 
-class EloquentUserRepository implements UserRepositoryInterface {
-
+class EloquentUserRepository implements UserRepositoryInterface
+{
     public function findByID($userID)
     {
         if ($userModel = UserModel::find($userID))
@@ -78,5 +78,4 @@ class EloquentUserRepository implements UserRepositoryInterface {
 
         return $user;
     }
-    
 }

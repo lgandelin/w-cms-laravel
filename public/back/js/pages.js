@@ -21,7 +21,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: route_pages_update_page_infos,
+            url: route_pages_update_infos,
             data: data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -60,7 +60,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: route_pages_update_page_seo,
+            url: route_pages_update_seo,
             data: data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -104,7 +104,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: route_pages_update_block_content,
+            url: route_blocks_update_content,
             data: data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -165,7 +165,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: route_pages_create_area,
+            url: route_areas_create,
             data: input_data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -180,7 +180,7 @@ $(document).ready(function() {
                     $('.create-area-form .class').val('');
 
                     //Create area in "Structure" tab
-                    var area_content = '<div id="a-'+ data.area.ID + '" data-width="' + data.area.width + '" data-id="' + data.area.ID + '" class="area col-xs-' + data.area.width + '"><div class="area_color"><span class="title"><span class="area_name">' + data.area.name + '</span> <span class="area_width">[<span class="width_value">' + data.area.width + '</span>]</span><span data-id="' + data.area.ID + '" class="area-delete glyphicon glyphicon-remove"></span><span data-id="' + data.area.ID + '" class="area-move glyphicon glyphicon-move"></span><span data-id="' + data.area.ID + '" class="area-display area-hidden glyphicon glyphicon-eye-open"></span><span data-id="' + data.area.ID + '" class="area-update glyphicon glyphicon-pencil"></span><span data-id="' + data.area.ID + '" class="area-create-block glyphicon glyphicon-plus"></span></span></div></div>';
+                    var area_content = '<div id="a-'+ data.area.ID + '" data-width="' + data.area.width + '" data-id="' + data.area.ID + '" class="area col-xs-' + data.area.width + '"><div class="area_color"><span class="title"><span class="area_name">' + data.area.name + '</span> <span class="area_width">[<span class="width_value">' + data.area.width + '</span>]</span><span data-id="' + data.area.ID + '" class="area-delete glyphicon glyphicon-remove"></span><span data-id="' + data.area.ID + '" class="area-move glyphicon glyphicon-move"></span><span data-id="' + data.area.ID + '" class="area-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.area.ID + '" class="area-update glyphicon glyphicon-pencil"></span><span data-id="' + data.area.ID + '" class="area-create-block glyphicon glyphicon-plus"></span></span></div></div>';
                     $('#structure > .areas-wrapper').append(area_content);
                     init_area_sortable();
                     init_block_sortable();
@@ -223,7 +223,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: route_pages_create_block,
+            url: route_blocks_create,
             data: input_data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -233,7 +233,7 @@ $(document).ready(function() {
                     $('.create-block-form').hide();
 
                     //Create block in "Structure" tab
-                    var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + '"><div class="block_color"><span class="title"><span class="name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display block-hidden glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-pencil"></span></span></div></div>';
+                    var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + '"><div class="block_color"><span class="title"><span class="name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-pencil"></span></span></div></div>';
                     $('#structure .area[data-id="' + input_data.area_id + '"] .area_color').append(block_content);
                     init_block_sortable();
 
@@ -273,7 +273,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "GET",
-            url: route_pages_get_block_infos + '/' + block_id,
+            url: route_blocks_get_infos + '/' + block_id,
             success: function(data) {
                 data = JSON.parse(data);
 
@@ -311,7 +311,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: route_pages_update_block_infos,
+            url: route_blocks_update_infos,
             data: input_data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -359,7 +359,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "GET",
-            url: route_pages_get_area_infos + '/' + area_id,
+            url: route_areas_get_infos + '/' + area_id,
             success: function(data) {
                 data = JSON.parse(data);
 
@@ -394,7 +394,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: route_pages_update_area_infos,
+            url: route_areas_update_infos,
             data: input_data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -433,7 +433,7 @@ $(document).ready(function() {
 
             $.ajax({
                 type: "POST",
-                url: route_pages_delete_area,
+                url: route_areas_delete,
                 data: data,
                 success: function(data) {
                     data = JSON.parse(data);
@@ -462,7 +462,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: route_pages_display_area,
+            url: route_areas_display,
             data: data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -496,7 +496,7 @@ $(document).ready(function() {
 
             $.ajax({
                 type: "POST",
-                url: route_pages_delete_block,
+                url: route_blocks_delete,
                 data: data,
                 success: function(data) {
                     data = JSON.parse(data);
@@ -525,7 +525,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: route_pages_display_block,
+            url: route_blocks_display,
             data: data,
             success: function(data) {
                 data = JSON.parse(data);
@@ -576,7 +576,7 @@ function init_area_sortable() {
             $.ajax({
                 data: data,
                 type: 'POST',
-                url: route_pages_update_areas_order
+                url: route_areas_update_order
             });
         },
         tolerance: 'intersect'
@@ -608,7 +608,7 @@ function init_block_sortable() {
             $.ajax({
                 data: data,
                 type: 'POST',
-                url: route_pages_update_blocks_order
+                url: route_blocks_update_order
             });
         },
         tolerance: 'intersect'

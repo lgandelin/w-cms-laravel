@@ -6,15 +6,11 @@ use CMS\Entities\Block;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Entities\Blocks\MenuBlock;
 use CMS\Entities\Blocks\ViewFileBlock;
-use CMS\Structures\BlockStructure;
-use CMS\Structures\Blocks\HTMLBlockStructure;
-use CMS\Structures\Blocks\MenuBlockStructure;
-use CMS\Structures\Blocks\ViewFileBlockStructure;
 use CMS\Repositories\BlockRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
 
-class EloquentBlockRepository implements BlockRepositoryInterface {
-
+class EloquentBlockRepository implements BlockRepositoryInterface
+{
     public function findByID($blockID)
     {
         if ($blockModel = BlockModel::find($blockID))
@@ -120,5 +116,4 @@ class EloquentBlockRepository implements BlockRepositoryInterface {
         
         return $block;
     }
-
 } 

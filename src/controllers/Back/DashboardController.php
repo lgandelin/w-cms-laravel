@@ -2,8 +2,8 @@
 
 namespace Webaccess\WCMSLaravel\Back;
 
-class DashboardController extends AdminController {
-
+class DashboardController extends AdminController
+{
     public function index()
     {
         $this->layout = \View::make('w-cms-laravel::back.index');
@@ -32,5 +32,4 @@ class DashboardController extends AdminController {
         \Auth::logout();
         return \Redirect::intended('admin/login');
     }
-
 }

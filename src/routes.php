@@ -15,27 +15,27 @@ Route::get('/admin/editorial/pages/create', array('as' => 'back_pages_create', '
 Route::post('/admin/editorial/pages/store', array('as' => 'back_pages_store', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@store'));
 Route::get('/admin/editorial/pages/edit/{pageID}', array('as' => 'back_pages_edit', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@edit'));
 Route::post('/admin/editorial/pages/update', array('as' => 'back_pages_update', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update'));
-Route::post('/admin/editorial/pages/update_page_infos', array('as' => 'back_pages_update_page_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_page_infos'));
-Route::post('/admin/editorial/pages/update_page_seo', array('as' => 'back_pages_update_page_seo', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_page_seo'));
+Route::post('/admin/editorial/pages/update_page_infos', array('as' => 'back_pages_update_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_infos'));
+Route::post('/admin/editorial/pages/update_page_seo', array('as' => 'back_pages_update_seo', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_seo'));
 Route::get('/admin/editorial/pages/delete/{pageID}', array('as' => 'back_pages_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@delete'));
 Route::get('/admin/editorial/pages/duplicate/{pageID}', array('as' => 'back_pages_duplicate', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@duplicate'));
 
 //BACK > EDITORIAL > PAGES > AREAS
-Route::get('/admin/editorial/pages/get_area_infos/{areaID?}', array('as' => 'back_pages_get_area_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@get_area_infos'));
-Route::post('/admin/editorial/pages/update_area_infos', array('as' => 'back_pages_update_area_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_area_infos'));
-Route::post('/admin/editorial/pages/create_area', array('as' => 'back_pages_create_area', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@create_area'));
-Route::post('/admin/editorial/pages/delete_area', array('as' => 'back_pages_delete_area', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@delete_area'));
-Route::post('/admin/editorial/pages/update_areas_order', array('as' => 'back_pages_update_areas_order', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_areas_order'));
-Route::post('/admin/editorial/pages/display_area', array('as' => 'back_pages_display_area', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@display_area'));
+Route::get('/admin/editorial/areas/get_infos/{areaID?}', array('as' => 'back_areas_get_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\AreaController@get_infos'));
+Route::post('/admin/editorial/areas/update_area_infos', array('as' => 'back_areas_update_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\AreaController@update_infos'));
+Route::post('/admin/editorial/areas/create_area', array('as' => 'back_areas_create', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\AreaController@create'));
+Route::post('/admin/editorial/areas/delete_area', array('as' => 'back_areas_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\AreaController@delete'));
+Route::post('/admin/editorial/areas/update_areas_order', array('as' => 'back_areas_update_order', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\AreaController@update_order'));
+Route::post('/admin/editorial/areas/display_area', array('as' => 'back_areas_display', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\AreaController@display'));
 
 //BACK > EDITORIAL > PAGES > BLOCKS
-Route::get('/admin/editorial/pages/get_block_infos/{blockID?}', array('as' => 'back_pages_get_block_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@get_block_infos'));
-Route::post('/admin/editorial/pages/create_block', array('as' => 'back_pages_create_block', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@create_block'));
-Route::post('/admin/editorial/pages/update_block_content', array('as' => 'back_pages_update_block_content', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_block_content'));
-Route::post('/admin/editorial/pages/update_block_infos', array('as' => 'back_pages_update_block_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_block_infos'));
-Route::post('/admin/editorial/pages/delete_block', array('as' => 'back_pages_delete_block', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@delete_block'));
-Route::post('/admin/editorial/pages/update_blocks_order', array('as' => 'back_pages_update_blocks_order', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@update_blocks_order'));
-Route::post('/admin/editorial/pages/display_block', array('as' => 'back_pages_display_block', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\PageController@display_block'));
+Route::get('/admin/editorial/blocks/get_infos/{blockID?}', array('as' => 'back_blocks_get_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\BlockController@get_infos'));
+Route::post('/admin/editorial/blocks/create', array('as' => 'back_blocks_create', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\BlockController@create'));
+Route::post('/admin/editorial/blocks/update_content', array('as' => 'back_blocks_update_content', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\BlockController@update_content'));
+Route::post('/admin/editorial/blocks/update_infos', array('as' => 'back_blocks_update_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\BlockController@update_infos'));
+Route::post('/admin/editorial/blocks/delete', array('as' => 'back_blocks_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\BlockController@delete'));
+Route::post('/admin/editorial/blocks/update_order', array('as' => 'back_blocks_update_order', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\BlockController@update_order'));
+Route::post('/admin/editorial/blocks/display', array('as' => 'back_blocks_display', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\BlockController@display'));
 
 //BACK > EDITORIAL > MENUS
 Route::get('/admin/editorial/menus', array('as' => 'back_menus_index', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@index'));

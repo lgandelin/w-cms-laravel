@@ -2,168 +2,144 @@
 
 namespace Webaccess\WCMSLaravel\Repositories;
 
+use CMS\Entities\Menu;
+use CMS\Entities\MenuItem;
 use CMS\Structures\MenuStructure;
 use CMS\Structures\MenuItemStructure;
 use CMS\Repositories\MenuRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Menu as MenuModel;
 use Webaccess\WCMSLaravel\Models\MenuItem as MenuItemModel;
-use Webaccess\WCMSLaravel\Models\Page as PageModel;
 
-class EloquentMenuRepository implements MenuRepositoryInterface {
-
-    private $pageRepository;
-
-    public function __construct()
-    {
-        $this->pageRepository = new EloquentPageRepository();
-    }
-
+class EloquentMenuRepository implements MenuRepositoryInterface
+{
     public function findByID($menuID)
     {
-        $menuDB = MenuModel::find($menuID);
-        $menuStructure = $this->convertMenuModelToMenuStructure($menuDB);
-        if ($menuStructure) {
-            foreach ($menuStructure->items as $i => $item) {
-                $menuStructure->items[$i]->page =  $this->pageRepository->findByID($item->page_id);
-            }
-            return $menuStructure;
-        }
+        if ($menuModel = MenuModel::find($menuID))
+            return self::createMenuFromModel($menuModel);
+
         return false;
     }
 
     public function findByIdentifier($identifier)
     {
-        $menuDB = MenuModel::where('identifier', '=', $identifier)->first();
+        if ($menuModel = MenuModel::where('identifier', '=', $identifier)->first())
+            return self::createMenuFromModel($menuModel);
 
-        if ($menuDB) {
-            $menuStructure = $this->convertMenuModelToMenuStructure($menuDB);
-            if ($menuStructure) {
-                foreach ($menuStructure->items as $i => $item) {
-                    $menuStructure->items[$i]->page =  $this->pageRepository->findByID($item->page_id);
-                }
-                return $menuStructure;
-            }
-        }
         return false;
     }
 
     public function findAll()
     {
-        $menusDB = MenuModel::get();
+        $menuModels = MenuModel::get();
 
         $menus = [];
-        foreach ($menusDB as $i => $menuDB) {
-            $menus[]= $this->convertMenuModelToMenuStructure($menuDB);
+        foreach ($menuModels as $i => $menuModel) {
+            $menus[]= self::createMenuFromModel($menuModel);
         }
 
         return $menus;
     }
 
-    public function createMenu(MenuStructure $menuStructure)
+    public function findByMenuID($menuID)
     {
-        $menuDB = new MenuModel();
-        $menuDB->name = $menuStructure->name;
-        $menuDB->identifier = $menuStructure->identifier;
+        $menuItemModels = MenuItemModel::where('menu_id', '=', $menuID)->get();
 
-        $menuDB->save();
+        $menuItems = [];
+        foreach ($menuItemModels as $i => $menuItemModel) {
+            $menuItems[]= self::createMenuItemFromModel($menuItemModel);
+        }
 
-        return $menuDB->id;
+        return $menuItems;
     }
 
-    public function updateMenu($menuID, MenuStructure $menuStructure)
+    public function createMenu(Menu $menu)
     {
-        $menuDB = MenuModel::find($menuID);
-        $menuDB->name = $menuStructure->name;
-        $menuDB->identifier = $menuStructure->identifier;
+        $menuModel = new MenuModel();
+        $menuModel->name = $menu->getName();
+        $menuModel->identifier = $menu->getIdentifier();
 
-        return $menuDB->save();
+        $menuModel->save();
+
+        return $menuModel->id;
+    }
+
+    public function updateMenu(Menu $menu)
+    {
+        $menuModel = MenuModel::find($menu->getID());
+        $menuModel->name = $menu->getName();
+        $menuModel->identifier = $menu->getIdentifier();
+
+        return $menuModel->save();
     }
 
     public function deleteMenu($menuID)
     {
-        $menuDB = MenuModel::find($menuID);
+        $menuModel = MenuModel::find($menuID);
         
-        return $menuDB->delete();
+        return $menuModel->delete();
     }
 
-    public function findItemByID($menuID, $menuItemID)
+
+
+
+    public function findItemByID($menuItemID)
     {
-        if ($menu = $this->findByID($menuID)) {
-            if (is_array($menu->items) && sizeof($menu->items) > 0) {
-                foreach ($menu->items as $menuItem) {
-                    if ($menuItem->ID == $menuItemID)
-                        return $menuItem;
-                }
-            }
-        }
+        if ($menuItemModel = MenuItemModel::find($menuItemID))
+            return self::createMenuItemFromModel($menuItemModel);
 
         return false;
     }
 
     public function addItem($menuID, MenuItemStructure $menuItemStructure)
     {
-        if ($menu = $this->findByID($menuID)) {
-            $menuDB = MenuModel::find($menuID);
+        $menuModel = MenuModel::find($menuID);
 
-            $menuItemDB = new MenuItemModel();
-            $menuItemDB->label = $menuItemStructure->label;
-            $menuItemDB->order = $menuItemStructure->order;
-            $menuItemDB->page_id = $menuItemStructure->page_id;
-            $menuItemDB->menu_id = $menuDB->id;
+        $menuItemModel = new MenuItemModel();
+        $menuItemModel->label = $menuItemStructure->label;
+        $menuItemModel->order = $menuItemStructure->order;
+        $menuItemModel->page_id = $menuItemStructure->page_id;
+        $menuItemModel->menu_id = $menuModel->id;
 
-            $result = $menuDB->items()->save($menuItemDB);
-            return $result->id;
-        }
-
-        return false;
+        $result = $menuModel->items()->save($menuItemModel);
+        return $result->id;
     }
 
-    public function updateItem($menuID, $menuItemID, MenuItemStructure $menuItemStructure)
+    public function updateItem(MenuItem $menuItem)
     {
-        if ($menu = $this->findByID($menuID)) {
-            $menuDB = MenuModel::find($menuID);
+        $menuItemModel = MenuItemModel::find($menuItem->getID());
+        $menuItemModel->label = $menuItem->getLabel();
+        $menuItemModel->order = $menuItem->getOrder();
+        $menuItemModel->page_id = $menuItem->getPageID();
 
-            $menuItemDB = MenuItemModel::find($menuItemID);
-            $menuItemDB->label = $menuItemStructure->label;
-            $menuItemDB->order = $menuItemStructure->order;
-            $menuItemDB->page_id = $menuItemStructure->page_id;
-
-            $menuDB->items()->save($menuItemDB);
-        }
-
-        return false;
+        return $menuItemModel->save();
     }
 
-    public function deleteItem($menuID, $menuItemID)
+    public function deleteItem($menuItemID)
     {
-        if ($menu = $this->findByID($menuID))
-            if ($menuItem = $this->findItemByID($menuID, $menuItemID))
-                MenuItemModel::find($menuItemID)->delete();
+        $menuItemModel = MenuItemModel::find($menuItemID);
+
+        return $menuItemModel->delete();
     }
 
-    public function convertMenuModelToMenuStructure(MenuModel $menuModel)
+    public static function createMenuFromModel(MenuModel $menuModel)
     {
-        $menuStructure = new MenuStructure();
-        $menuStructure->ID = $menuModel->id;
-        $menuStructure->identifier = $menuModel->identifier;
-        $menuStructure->name = $menuModel->name;
-        $menuStructure->items = [];
+        $menu = new Menu();
+        $menu->setID($menuModel->id);
+        $menu->setIdentifier($menuModel->identifier);
+        $menu->setName($menuModel->name);
 
-        if ($menuModel->items) {
-            foreach ($menuModel->items->sortBy('order') as $itemDB) {
-                $item = new MenuItemStructure();
-                $item->ID = $itemDB->id;
-                $item->label = $itemDB->label;
-                $item->order = $itemDB->order;
-                if ($itemDB->page_id) {
-                    $pageDB = PageModel::find($itemDB->page_id);
-                    $item->page_id = $pageDB->id;
-                }
-                $menuStructure->items[]= $item;
-            }
-        }
+        return $menu;
+    }
+    
+    public static function createMenuItemFromModel(MenuItemModel $menuItemModel)
+    {
+        $menuItem = new MenuItem();
+        $menuItem->setID($menuItemModel->id);
+        $menuItem->setLabel($menuItemModel->label);
+        $menuItem->setOrder($menuItemModel->order);
+        $menuItem->setPageID($menuItemModel->page_id);
 
-        return $menuStructure;
+        return $menuItem;
     }
 
 }
