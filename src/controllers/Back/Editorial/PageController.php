@@ -375,7 +375,8 @@ class PageController extends AdminController {
                     'height' => $area->height,
                     'class' => $area->class,
                     'order' => $area->order,
-                    'page_id' => $newPageID
+                    'page_id' => $newPageID,
+                    'display' => $area->display
                 ]);
 
                 $newAreaID = \App::make('CreateAreaInteractor')->run($areaStructure);
@@ -390,16 +391,24 @@ class PageController extends AdminController {
                         'type' => $block->type,
                         'class' => $block->class,
                         'order' => $block->order,
-                        'area_id' => $newAreaID
+                        'area_id' => $newAreaID,
+                        'display' => $block->display
                     ]);
 
                     $blockID = \App::make('CreateBlockInteractor')->run($blockStructure);
 
-                    $blockStructureContent = new BlockStructure([
-                        'html' => $block->html,
-                        'menu_id' => $block->menu_id,
-                        'view_file' => $block->view_file,
-                    ]);
+                    if ($block->type == 'html')
+                        $blockStructureContent = new HTMLBlockStructure([
+                            'html' => $block->html,
+                        ]);
+                    elseif ($block->type == 'menu')
+                        $blockStructureContent = new MenuBlockStructure([
+                            'menu_id' => $block->menu_id,
+                        ]);
+                    elseif ($block->type == 'view_file')
+                        $blockStructureContent = new ViewFileBlockStructure([
+                            'view_file' => $block->view_file,
+                        ]);
 
                     \App::make('UpdateBlockInteractor')->run($blockID, $blockStructureContent);
                 }
