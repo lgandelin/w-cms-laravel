@@ -18,14 +18,21 @@ class IndexController extends Controller {
                 foreach ($areas as $area) {
                     $blocks = \App::make('GetBlocksInteractor')->getAll($area->ID, true);
                     foreach ($blocks as $block) {
-                        if ($block instanceof MenuBlockStructure && $block->menu_id)
-                            $block->menu = \App::make('GetMenuInteractor')->getByID($block->menu_id);
+                        if ($block instanceof MenuBlockStructure && $block->menu_id) {
+                            $block->menu = \App::make('GetMenuInteractor')->getMenuByID($block->menu_id, true);
+                            $menuItems = \App::make('GetMenuItemsInteractor')->getAll($block->menu_id, true);
 
+                            foreach ($menuItems as $menuItem)
+                                $menuItem->page = \App::make('GetPageInteractor')->getPageByID($menuItem->page_id, true);
+
+                            $block->menu->items =$menuItems;
+                        }
                         $area->blocks[]= $block;
                     }
                     $page->areas[]= $area;
                 }
             }
+
         } catch(\Exception $e) {
             $page = \App::make('GetPageInteractor')->getPageByUri('/404', true);
         }

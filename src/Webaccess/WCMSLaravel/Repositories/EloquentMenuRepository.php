@@ -3,12 +3,9 @@
 namespace Webaccess\WCMSLaravel\Repositories;
 
 use CMS\Entities\Menu;
-use CMS\Entities\MenuItem;
 use CMS\Structures\MenuStructure;
-use CMS\Structures\MenuItemStructure;
 use CMS\Repositories\MenuRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Menu as MenuModel;
-use Webaccess\WCMSLaravel\Models\MenuItem as MenuItemModel;
 
 class EloquentMenuRepository implements MenuRepositoryInterface
 {
@@ -33,23 +30,11 @@ class EloquentMenuRepository implements MenuRepositoryInterface
         $menuModels = MenuModel::get();
 
         $menus = [];
-        foreach ($menuModels as $i => $menuModel) {
+        foreach ($menuModels as $menuModel) {
             $menus[]= self::createMenuFromModel($menuModel);
         }
 
         return $menus;
-    }
-
-    public function findByMenuID($menuID)
-    {
-        $menuItemModels = MenuItemModel::where('menu_id', '=', $menuID)->get();
-
-        $menuItems = [];
-        foreach ($menuItemModels as $i => $menuItemModel) {
-            $menuItems[]= self::createMenuItemFromModel($menuItemModel);
-        }
-
-        return $menuItems;
     }
 
     public function createMenu(Menu $menu)
@@ -79,49 +64,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
         return $menuModel->delete();
     }
 
-
-
-
-    public function findItemByID($menuItemID)
-    {
-        if ($menuItemModel = MenuItemModel::find($menuItemID))
-            return self::createMenuItemFromModel($menuItemModel);
-
-        return false;
-    }
-
-    public function addItem($menuID, MenuItemStructure $menuItemStructure)
-    {
-        $menuModel = MenuModel::find($menuID);
-
-        $menuItemModel = new MenuItemModel();
-        $menuItemModel->label = $menuItemStructure->label;
-        $menuItemModel->order = $menuItemStructure->order;
-        $menuItemModel->page_id = $menuItemStructure->page_id;
-        $menuItemModel->menu_id = $menuModel->id;
-
-        $result = $menuModel->items()->save($menuItemModel);
-        return $result->id;
-    }
-
-    public function updateItem(MenuItem $menuItem)
-    {
-        $menuItemModel = MenuItemModel::find($menuItem->getID());
-        $menuItemModel->label = $menuItem->getLabel();
-        $menuItemModel->order = $menuItem->getOrder();
-        $menuItemModel->page_id = $menuItem->getPageID();
-
-        return $menuItemModel->save();
-    }
-
-    public function deleteItem($menuItemID)
-    {
-        $menuItemModel = MenuItemModel::find($menuItemID);
-
-        return $menuItemModel->delete();
-    }
-
-    public static function createMenuFromModel(MenuModel $menuModel)
+    private static function createMenuFromModel(MenuModel $menuModel)
     {
         $menu = new Menu();
         $menu->setID($menuModel->id);
@@ -130,16 +73,4 @@ class EloquentMenuRepository implements MenuRepositoryInterface
 
         return $menu;
     }
-    
-    public static function createMenuItemFromModel(MenuItemModel $menuItemModel)
-    {
-        $menuItem = new MenuItem();
-        $menuItem->setID($menuItemModel->id);
-        $menuItem->setLabel($menuItemModel->label);
-        $menuItem->setOrder($menuItemModel->order);
-        $menuItem->setPageID($menuItemModel->page_id);
-
-        return $menuItem;
-    }
-
 }

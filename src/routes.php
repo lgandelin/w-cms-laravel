@@ -46,9 +46,9 @@ Route::post('/admin/editorial/menus/update', array('as' => 'back_menus_update', 
 Route::get('/admin/editorial/menus/delete/{menuID}', array('as' => 'back_menus_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@delete'));
 Route::get('/admin/editorial/menus/duplicate/{menuID}', array('as' => 'back_menus_duplicate', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@duplicate'));
 
-Route::post('/admin/editorial/menus/add_item', array('as' => 'back_menus_add_item', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@add_item'));
-Route::post('/admin/editorial/menus/update_item', array('as' => 'back_menus_update_item', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@update_item'));
-Route::post('/admin/editorial/menus/delete_item', array('as' => 'back_menus_delete_item', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@delete_item'));
+Route::post('/admin/editorial/menu_items/create', array('as' => 'back_menu_items_create', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuItemController@create'));
+Route::post('/admin/editorial/menu_items/update', array('as' => 'back_menu_items_update', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuItemController@update'));
+Route::post('/admin/editorial/menu_items/delete', array('as' => 'back_menu_items_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuItemController@delete'));
 
 //BACK > GENERAL
 Route::get('/admin/general', array('as' => 'back_general', 'uses' => 'Webaccess\WCMSLaravel\Back\General\GeneralController@index'));
