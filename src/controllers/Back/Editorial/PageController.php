@@ -15,7 +15,7 @@ class PageController extends AdminController {
 	public function index()
 	{
 		$this->layout = \View::make('w-cms-laravel::back.editorial.pages.index', [
-			'pages' => \App::make('GetAllPagesInteractor')->getAll(),
+			'pages' => \App::make('GetPagesInteractor')->getAll(true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
 		]);
 	}
@@ -47,13 +47,13 @@ class PageController extends AdminController {
 	public function edit($pageID)
 	{
 		try {
-            $page = \App::make('GetPageInteractor')->getByID($pageID);
-            $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
-            $menus = \App::make('GetAllMenusInteractor')->getAll();
+            $page = \App::make('GetPageInteractor')->getPageByID($pageID, true);
+            $areas = \App::make('GetAreasInteractor')->getAll($pageID, true);
+            $menus = \App::make('GetMenusInteractor')->getAll(true);
 
             if ($areas) {
                 foreach ($areas as $area) {
-                    $area->blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                    $area->blocks = \App::make('GetBlocksInteractor')->getAll($area->ID, true);
                     $page->areas[]= $area;
                 }
             }
@@ -117,7 +117,7 @@ class PageController extends AdminController {
     public function get_area_infos($areaID)
     {
         try {
-            $area = \App::make('GetAreaInteractor')->getByID($areaID);
+            $area = \App::make('GetAreaInteractor')->getAreaByID($areaID, true);
 
             return json_encode(array('success' => true, 'area' => $area->toArray()));
         } catch (\Exception $e) {
@@ -138,7 +138,7 @@ class PageController extends AdminController {
 
         try {
             $areaID = \App::make('CreateAreaInteractor')->run($areaStructure);
-            $area = \App::make('GetAreaInteractor')->getByID($areaID);
+            $area = \App::make('GetAreaInteractor')->getAreaByID($areaID, true);
 
             return json_encode(array('success' => true, 'area' => $area->toArray()));
         } catch (\Exception $e) {
@@ -203,7 +203,7 @@ class PageController extends AdminController {
     public function get_block_infos($blockID)
     {
         try {
-            $block = \App::make('GetBlockInteractor')->getByID($blockID);
+            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID, true);
 
             return json_encode(array('success' => true, 'block' => $block->toArray()));
         } catch (\Exception $e) {
@@ -225,7 +225,7 @@ class PageController extends AdminController {
 
         try {
             $blockID = \App::make('CreateBlockInteractor')->run($blockStructure);
-            $block = \App::make('GetBlockInteractor')->getByID($blockID);
+            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID, true);
 
             return json_encode(array('success' => true, 'block' => $block->toArray()));
         } catch (\Exception $e) {
@@ -342,10 +342,10 @@ class PageController extends AdminController {
     public function delete($pageID)
     {
         try {
-            $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
+            $areas = \App::make('GetAreasInteractor')->getAll($pageID, true);
 
             foreach ($areas as $i => $area) {
-                $blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                $blocks = \App::make('GetBlocksInteractor')->getAll($area->ID, true);
 
                 foreach ($blocks as $j => $block) {
                     \App::make('DeleteBlockInteractor')->run($block->ID);
@@ -366,7 +366,7 @@ class PageController extends AdminController {
         try {
             $newPageID = \App::make('DuplicatePageInteractor')->run($pageID);
 
-            $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
+            $areas = \App::make('GetAreasInteractor')->getAll($pageID, true);
             foreach ($areas as $i => $area) {
 
                 $areaStructure = new AreaStructure([
@@ -381,7 +381,7 @@ class PageController extends AdminController {
 
                 $newAreaID = \App::make('CreateAreaInteractor')->run($areaStructure);
 
-                $blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                $blocks = \App::make('GetBlocksInteractor')->getAll($area->ID, true);
                 foreach ($blocks as $j => $block) {
 
                     $blockStructure = new BlockStructure([

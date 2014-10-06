@@ -5,26 +5,26 @@ use Illuminate\Support\ServiceProvider;
 use CreateUserCommand;
 
 use CMS\Interactors\Pages\GetPageInteractor;
-use CMS\Interactors\Pages\GetAllPagesInteractor;
+use CMS\Interactors\Pages\GetPagesInteractor;
 use CMS\Interactors\Pages\CreatePageInteractor;
 use CMS\Interactors\Pages\UpdatePageInteractor;
 use CMS\Interactors\Pages\DeletePageInteractor;
 use CMS\Interactors\Pages\DuplicatePageInteractor;
 
 use CMS\Interactors\Areas\GetAreaInteractor;
-use CMS\Interactors\Areas\GetAllAreasInteractor;
+use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Areas\CreateAreaInteractor;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
 use CMS\Interactors\Areas\DeleteAreaInteractor;
 
 use CMS\Interactors\Blocks\GetBlockInteractor;
-use CMS\Interactors\Blocks\GetAllBlocksInteractor;
+use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;
 
 use CMS\Interactors\Menus\GetMenuInteractor;
-use CMS\Interactors\Menus\GetAllMenusInteractor;
+use CMS\Interactors\Menus\GetMenusInteractor;
 use CMS\Interactors\Menus\CreateMenuInteractor;
 use CMS\Interactors\Menus\UpdateMenuInteractor;
 use CMS\Interactors\Menus\DuplicateMenuInteractor;
@@ -86,8 +86,8 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             return new GetPageInteractor(new EloquentPageRepository());
         });
 
-        $this->app->bind('GetAllPagesInteractor', function () {
-            return new GetAllPagesInteractor(new EloquentPageRepository());
+        $this->app->bind('GetPagesInteractor', function () {
+            return new GetPagesInteractor(new EloquentPageRepository());
         });
 
         $this->app->bind('CreatePageInteractor', function () {
@@ -112,8 +112,8 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             return new GetAreaInteractor(new EloquentAreaRepository());
         });
 
-        $this->app->bind('GetAllAreasInteractor', function () {
-            return new GetAllAreasInteractor(new EloquentAreaRepository(), new EloquentPageRepository());
+        $this->app->bind('GetAreasInteractor', function () {
+            return new GetAreasInteractor(new EloquentAreaRepository(), new EloquentPageRepository());
         });
 
         $this->app->bind('CreateAreaInteractor', function () {
@@ -134,8 +134,8 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             return new GetBlockInteractor(new EloquentBlockRepository());
         });
 
-        $this->app->bind('GetAllBlocksInteractor', function () {
-            return new GetAllBlocksInteractor(new EloquentBlockRepository());
+        $this->app->bind('GetBlocksInteractor', function () {
+            return new GetBlocksInteractor(new EloquentBlockRepository(), new EloquentAreaRepository());
         });
 
         $this->app->bind('CreateBlockInteractor', function () {
@@ -160,8 +160,8 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             return new GetMenuInteractor(new EloquentMenuRepository());
         });
 
-        $this->app->bind('GetAllMenusInteractor', function () {
-            return new GetAllMenusInteractor(new EloquentMenuRepository());
+        $this->app->bind('GetMenusInteractor', function () {
+            return new GetMenusInteractor(new EloquentMenuRepository());
         });
 
         $this->app->bind('UpdateMenuInteractor', function () {

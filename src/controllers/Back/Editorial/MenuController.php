@@ -11,7 +11,7 @@ class MenuController extends AdminController {
     public function index()
     {
         $this->layout = \View::make('w-cms-laravel::back.editorial.menus.index', [
-            'menus' => \App::make('GetAllMenusInteractor')->getAll(),
+            'menus' => \App::make('GetMenusInteractor')->getAll(),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
@@ -45,7 +45,7 @@ class MenuController extends AdminController {
             $menuStructure = \App::make('GetMenuInteractor')->getByID($menuID);
             $this->layout = \View::make('w-cms-laravel::back.editorial.menus.edit', [
                 'menu' => $menuStructure,
-                'pages' => \App::make('GetAllPagesInteractor')->getAll()
+                'pages' => \App::make('GetPagesInteractor')->getAll(true)
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
@@ -68,7 +68,7 @@ class MenuController extends AdminController {
             $this->layout = \View::make('w-cms-laravel::back.editorial.menus.edit', [
                 'error' => $e->getMessage(),
                 'menu' => $menuStructure,
-                'pages' => \App::make('GetAllPagesInteractor')->getAll()
+                'pages' => \App::make('GetPagesInteractor')->getAll()
             ]);
         }
     }
