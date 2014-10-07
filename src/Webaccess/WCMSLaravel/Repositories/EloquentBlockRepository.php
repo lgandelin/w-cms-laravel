@@ -6,166 +6,114 @@ use CMS\Entities\Block;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Entities\Blocks\MenuBlock;
 use CMS\Entities\Blocks\ViewFileBlock;
-use CMS\Structures\BlockStructure;
-use CMS\Structures\Blocks\HTMLBlockStructure;
-use CMS\Structures\Blocks\MenuBlockStructure;
-use CMS\Structures\Blocks\ViewFileBlockStructure;
 use CMS\Repositories\BlockRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
 
-class EloquentBlockRepository implements BlockRepositoryInterface {
-
+class EloquentBlockRepository implements BlockRepositoryInterface
+{
     public function findByID($blockID)
     {
-        $blockDB = BlockModel::find($blockID);
-
-        if ($blockDB) {
-            if ($blockDB->type == 'html') {
-                $block = new HTMLBlock();
-                $block->setHTML($blockDB->html);
-            } elseif ($blockDB->type == 'menu') {
-                $block = new MenuBlock();
-                $block->setMenuID($blockDB->menu_id);
-            } elseif ($blockDB->type == 'view_file') {
-                $block = new ViewFileBlock();
-                $block->setViewFile($blockDB->view_file);
-            } else
-                $block = new Block();
-
-            $block->setID($blockDB->id);
-            $block->setName($blockDB->name);
-            $block->setWidth($blockDB->width);
-            $block->setHeight($blockDB->height);
-            $block->setClass($blockDB->class);
-            $block->setOrder($blockDB->order);
-            $block->setType($blockDB->type);
-            $block->setAreaID($blockDB->area_id);
-            $block->setDisplay($blockDB->display);
-
-            return $block;
-        }
+        if ($blockModel = BlockModel::find($blockID))
+            return self::createBlockFromModel($blockModel);
 
         return false;
     }
 
     public function findByAreaID($areaID)
     {
-        $blocksDB = BlockModel::where('area_id', '=', $areaID)->orderBy('order', 'asc')->get();
+        $blocksModel = BlockModel::where('area_id', '=', $areaID)->orderBy('order', 'asc')->get();
 
         $blocks = [];
-        foreach ($blocksDB as $i => $blockDB) {
-            if ($blockDB->type == 'html') {
-                $blockStructure = new HTMLBlockStructure();
-                $blockStructure->html = $blockDB->html;
-            } elseif ($blockDB->type == 'menu') {
-                $blockStructure = new MenuBlockStructure();
-                $blockStructure->menu_id = $blockDB->menu_id;
-            } elseif ($blockDB->type == 'view_file') {
-                $blockStructure = new ViewFileBlockStructure();
-                $blockStructure->menu_id = $blockDB->menu_id;
-            } else
-                $blockStructure = new BlockStructure();
-
-            $blockStructure->ID = $blockDB->id;
-            $blockStructure->name = $blockDB->name;
-            $blockStructure->width = $blockDB->width;
-            $blockStructure->height = $blockDB->height;
-            $blockStructure->class = $blockDB->class;
-            $blockStructure->order = $blockDB->order;
-            $blockStructure->type = $blockDB->type;
-            $blockStructure->area_id = $blockDB->area_id;
-            $blockStructure->display = $blockDB->display;
-            if ($blockDB->type == 'view_file') $blockStructure->view_file = $blockDB->view_file;
-
-            $blocks[]= $blockStructure;
-        }
+        foreach ($blocksModel as $i => $blockModel)
+            $blocks[]= self::createBlockFromModel($blockModel);
 
         return $blocks;
     }
 
     public function findAll()
     {
-        $blocksDB = BlockModel::table('blocks')->orderBy('order', 'asc')->get();
+        $blockModels = BlockModel::table('blocks')->orderBy('order', 'asc')->get();
 
         $blocks = [];
-        foreach ($blocksDB as $i => $blockDB) {
-            if ($blockDB->type == 'html') {
-                $blockStructure = new HTMLBlockStructure();
-                $blockStructure->html = $blockDB->html;
-            } elseif ($blockDB->type == 'menu') {
-                $blockStructure = new MenuBlockStructure();
-                $blockStructure->menu_id = $blockDB->menu_id;
-            } elseif ($blockDB->type == 'view_file') {
-                $blockStructure = new ViewFileBlockStructure();
-                $blockStructure->menu_id = $blockDB->menu_id;
-            } else
-                $blockStructure = new BlockStructure();
-
-            $blockStructure->ID = $blockDB->id;
-            $blockStructure->name = $blockDB->name;
-            $blockStructure->width = $blockDB->width;
-            $blockStructure->height = $blockDB->height;
-            $blockStructure->class = $blockDB->class;
-            $blockStructure->order = $blockDB->order;
-            $blockStructure->type = $blockDB->type;
-            $blockStructure->area_id = $blockDB->area_id;
-            $blockStructure->display = $blockDB->display;
-            if ($blockDB->type == 'menu') $blockStructure->menu_id = $blockDB->menu_id;
-            if ($blockDB->type == 'view_file') $blockStructure->view_file = $blockDB->view_file;
-
-            $blocks[]= $blockStructure;
-        }
+        foreach ($blockModels as $blockModel)
+            $blocks[]= self::createBlockFromModel($blockModel);
 
         return $blocks;
     }
 
     public function createBlock(Block $block)
     {
-        $blockDB = new BlockModel();
-        $blockDB->name = $block->getName();
-        $blockDB->width = $block->getWidth();
-        $blockDB->height = $block->getHeight();
-        $blockDB->class = $block->getClass();
-        $blockDB->order = $block->getOrder();
-        $blockDB->type = $block->getType();
-        $blockDB->area_id = $block->getAreaID();
-        $blockDB->display = $block->getDisplay();
+        $blockModel = new BlockModel();
+        $blockModel->name = $block->getName();
+        $blockModel->width = $block->getWidth();
+        $blockModel->height = $block->getHeight();
+        $blockModel->class = $block->getClass();
+        $blockModel->order = $block->getOrder();
+        $blockModel->type = $block->getType();
+        $blockModel->area_id = $block->getAreaID();
+        $blockModel->display = $block->getDisplay();
 
-        $blockDB->save();
+        $blockModel->save();
 
-        return $blockDB->id;
+        return $blockModel->id;
     }
 
     public function updateBlock(Block $block)
     {
-        $blockDB = BlockModel::find($block->getID());
-        $blockDB->name = $block->getName();
-        $blockDB->width = $block->getWidth();
-        $blockDB->height = $block->getHeight();
-        $blockDB->class = $block->getClass();
-        $blockDB->order = $block->getOrder();
-        $blockDB->area_id = $block->getAreaID();
-        $blockDB->display = $block->getDisplay();
-        if ($blockDB->type == 'html') $blockDB->html = $block->getHTML();
-        if ($blockDB->type == 'menu') $blockDB->menu_id = $block->getMenuID();
-        if ($blockDB->type == 'view_file') $blockDB->view_file = $block->getViewFile();
+        $blockModel = BlockModel::find($block->getID());
+        $blockModel->name = $block->getName();
+        $blockModel->width = $block->getWidth();
+        $blockModel->height = $block->getHeight();
+        $blockModel->class = $block->getClass();
+        $blockModel->order = $block->getOrder();
+        $blockModel->area_id = $block->getAreaID();
+        $blockModel->display = $block->getDisplay();
+        if ($blockModel->type == 'html') $blockModel->html = $block->getHTML();
+        if ($blockModel->type == 'menu') $blockModel->menu_id = $block->getMenuID();
+        if ($blockModel->type == 'view_file') $blockModel->view_file = $block->getViewFile();
 
-        return $blockDB->save();
+        return $blockModel->save();
     }
 
     public function updateBlockType(Block $block)
     {
-        $blockDB = BlockModel::find($block->getID());
-        $blockDB->type = $block->getType();
+        $blockModel = BlockModel::find($block->getID());
+        $blockModel->type = $block->getType();
 
-        return $blockDB->save();
+        return $blockModel->save();
     }
 
     public function deleteBlock($blockID)
     {
-        $blockDB = BlockModel::find($blockID);
+        $blockModel = BlockModel::find($blockID);
 
-        return $blockDB->delete();
+        return $blockModel->delete();
     }
 
+    private static function createBlockFromModel($blockModel)
+    {
+        if ($blockModel->type == 'html') {
+            $block = new HTMLBlock();
+            $block->setHTML($blockModel->html);
+        } elseif ($blockModel->type == 'menu') {
+            $block = new MenuBlock();
+            $block->setMenuID($blockModel->menu_id);
+        } elseif ($blockModel->type == 'view_file') {
+            $block = new ViewFileBlock();
+            $block->setViewFile($blockModel->view_file);
+        } else
+            $block = new Block();
+
+        $block->setID($blockModel->id);
+        $block->setName($blockModel->name);
+        $block->setWidth($blockModel->width);
+        $block->setHeight($blockModel->height);
+        $block->setClass($blockModel->class);
+        $block->setOrder($blockModel->order);
+        $block->setType($blockModel->type);
+        $block->setAreaID($blockModel->area_id);
+        $block->setDisplay($blockModel->display);
+        
+        return $block;
+    }
 } 

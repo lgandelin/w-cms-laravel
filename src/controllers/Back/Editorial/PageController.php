@@ -10,12 +10,12 @@ use CMS\Structures\AreaStructure;
 use CMS\Structures\PageStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
-class PageController extends AdminController {
-
+class PageController extends AdminController
+{
 	public function index()
 	{
 		$this->layout = \View::make('w-cms-laravel::back.editorial.pages.index', [
-			'pages' => \App::make('GetAllPagesInteractor')->getAll(),
+			'pages' => \App::make('GetPagesInteractor')->getAll(true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
 		]);
 	}
@@ -47,13 +47,13 @@ class PageController extends AdminController {
 	public function edit($pageID)
 	{
 		try {
-            $page = \App::make('GetPageInteractor')->getByID($pageID);
-            $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
-            $menus = \App::make('GetAllMenusInteractor')->getAll();
+            $page = \App::make('GetPageInteractor')->getPageByID($pageID, true);
+            $areas = \App::make('GetAreasInteractor')->getAll($pageID, true);
+            $menus = \App::make('GetMenusInteractor')->getAll(true);
 
             if ($areas) {
                 foreach ($areas as $area) {
-                    $area->blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                    $area->blocks = \App::make('GetBlocksInteractor')->getAll($area->ID, true);
                     $page->areas[]= $area;
                 }
             }
@@ -68,19 +68,7 @@ class PageController extends AdminController {
 		}
 	}
 
-    public function delete_area()
-    {
-        $areaID = \Input::get('ID');
-
-        try {
-            \App::make('DeleteAreaInteractor')->run($areaID);
-            return json_encode(array('success' => true));
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-    }
-
-    public function update_page_infos()
+    public function update_infos()
     {
         $pageID = \Input::get('ID');
         $pageStructure = new PageStructure([
@@ -96,7 +84,7 @@ class PageController extends AdminController {
         }
     }
 
-    public function update_page_seo()
+    public function update_seo()
     {
         $pageID = \Input::get('ID');
         $pageStructure = new PageStructure([
@@ -114,238 +102,13 @@ class PageController extends AdminController {
         }
     }
 
-    public function get_area_infos($areaID)
-    {
-        try {
-            $area = \App::make('GetAreaInteractor')->getByID($areaID);
-
-            return json_encode(array('success' => true, 'area' => $area->toArray()));
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-    }
-
-    public function create_area()
-    {
-        $areaStructure = new AreaStructure([
-            'name' => \Input::get('name'),
-            'width' => \Input::get('width'),
-            'height' => \Input::get('height'),
-            'class' => \Input::get('class'),
-            'order' => 999,
-            'page_id' => \Input::get('page_id'),
-        ]);
-
-        try {
-            $areaID = \App::make('CreateAreaInteractor')->run($areaStructure);
-            $area = \App::make('GetAreaInteractor')->getByID($areaID);
-
-            return json_encode(array('success' => true, 'area' => $area->toArray()));
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-    }
-    
-    public function update_area_infos()
-    {
-        $areaID = \Input::get('ID');
-
-        $areaStructure = new AreaStructure([
-            'name' => \Input::get('name'),
-            'width' => \Input::get('width'),
-            'height' => \Input::get('height'),
-            'class' => \Input::get('class'),
-        ]);
-
-        try {
-            \App::make('UpdateAreaInteractor')->run($areaID, $areaStructure);
-            return json_encode(array('success' => true));
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-    }
-
-    public function update_areas_order()
-    {
-        $areas = json_decode(\Input::get('areas'));
-        for ($i = 0; $i < sizeof($areas); $i++) {
-            $areaID = preg_replace('/a-/', '', $areas[$i]);
-
-            $areaStructure = new AreaStructure([
-                'order' => $i + 1,
-            ]);
-
-            try {
-                \App::make('UpdateAreaInteractor')->run($areaID, $areaStructure);
-            } catch (\Exception $e) {
-                return json_encode(array('success' => false, 'error' => $e->getMessage()));
-            }
-        }
-
-        return json_encode(array('success' => true));
-    }
-
-    public function display_area()
-    {
-        try {
-            $areaID = \Input::get('ID');
-            $areaStructure = new AreaStructure([
-                'display'=> \Input::get('display')
-            ]);
-
-            \App::make('UpdateAreaInteractor')->run($areaID, $areaStructure);
-            return json_encode(array('success' => true));
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-    }
-
-    public function get_block_infos($blockID)
-    {
-        try {
-            $block = \App::make('GetBlockInteractor')->getByID($blockID);
-
-            return json_encode(array('success' => true, 'block' => $block->toArray()));
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-    }
-
-    public function create_block()
-    {
-        $blockStructure = new BlockStructure([
-            'name' => \Input::get('name'),
-            'width' => \Input::get('width'),
-            'height' => \Input::get('height'),
-            'type' => \Input::get('type'),
-            'class' => \Input::get('class'),
-            'order' => 999,
-            'area_id' => \Input::get('area_id'),
-        ]);
-
-        try {
-            $blockID = \App::make('CreateBlockInteractor')->run($blockStructure);
-            $block = \App::make('GetBlockInteractor')->getByID($blockID);
-
-            return json_encode(array('success' => true, 'block' => $block->toArray()));
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-    }
-
-    public function update_block_content()
-    {
-        $blockID = \Input::get('ID');
-
-        if ($menuID = \Input::get('menu_id'))
-            $blockStructure = new MenuBlockStructure([
-                'menu_id' => $menuID,
-                'type' => 'menu'
-            ]);
-        elseif ($html = \Input::get('html'))
-            $blockStructure = new HTMLBlockStructure([
-                'html' => $html,
-                'type' => 'html'
-            ]);
-        elseif ($viewFile = \Input::get('view_file'))
-            $blockStructure = new ViewFileBlockStructure([
-                'view_file' => $viewFile,
-                'type' => 'view_file'
-            ]);
-
-        try {
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
-            return json_encode(array('success' => true));
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-    }
-
-    public function update_block_infos()
-    {
-        $blockID = \Input::get('ID');
-
-        $blockStructure = new BlockStructure([
-            'name' => \Input::get('name'),
-            'width' => \Input::get('width'),
-            'height' => \Input::get('height'),
-            'type' => \Input::get('type'),
-            'class' => \Input::get('class')
-        ]);
-
-        try {
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
-            return json_encode(array('success' => true));
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-    }
-
-    public function update_blocks_order()
-    {
-        try {
-            $blockID = \Input::get('block_id');
-            $blockStructure = new BlockStructure([
-                'area_id' => \Input::get('area_id')
-            ]);
-
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-
-        $blocks = json_decode(\Input::get('blocks'));
-        for ($i = 0; $i < sizeof($blocks); $i++) {
-            $blockID = preg_replace('/b-/', '', $blocks[$i]);
-
-            $blockStructure = new BlockStructure([
-                'order' => $i + 1,
-            ]);
-
-            try {
-                \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
-            } catch (\Exception $e) {
-                return json_encode(array('success' => false, 'error' => $e->getMessage()));
-            }
-        }
-
-        return json_encode(array('success' => true));
-    }
-
-    public function display_block()
-    {
-        try {
-            $blockID = \Input::get('ID');
-            $blockStructure = new BlockStructure([
-                'display'=> \Input::get('display')
-            ]);
-
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
-            return json_encode(array('success' => true));
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-    }
-
-    public function delete_block()
-    {
-        $blockID = \Input::get('ID');
-
-        try {
-            \App::make('DeleteBlockInteractor')->run($blockID);
-            return json_encode(array('success' => true));
-        } catch (\Exception $e) {
-            return json_encode(array('success' => false, 'error' => $e->getMessage()));
-        }
-    }
-
     public function delete($pageID)
     {
         try {
-            $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
+            $areas = \App::make('GetAreasInteractor')->getAll($pageID, true);
 
             foreach ($areas as $i => $area) {
-                $blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                $blocks = \App::make('GetBlocksInteractor')->getAll($area->ID, true);
 
                 foreach ($blocks as $j => $block) {
                     \App::make('DeleteBlockInteractor')->run($block->ID);
@@ -366,7 +129,7 @@ class PageController extends AdminController {
         try {
             $newPageID = \App::make('DuplicatePageInteractor')->run($pageID);
 
-            $areas = \App::make('GetAllAreasInteractor')->getAll($pageID);
+            $areas = \App::make('GetAreasInteractor')->getAll($pageID, true);
             foreach ($areas as $i => $area) {
 
                 $areaStructure = new AreaStructure([
@@ -375,12 +138,13 @@ class PageController extends AdminController {
                     'height' => $area->height,
                     'class' => $area->class,
                     'order' => $area->order,
-                    'page_id' => $newPageID
+                    'page_id' => $newPageID,
+                    'display' => $area->display
                 ]);
 
                 $newAreaID = \App::make('CreateAreaInteractor')->run($areaStructure);
 
-                $blocks = \App::make('GetAllBlocksInteractor')->getAll($area->ID);
+                $blocks = \App::make('GetBlocksInteractor')->getAll($area->ID, true);
                 foreach ($blocks as $j => $block) {
 
                     $blockStructure = new BlockStructure([
@@ -390,16 +154,24 @@ class PageController extends AdminController {
                         'type' => $block->type,
                         'class' => $block->class,
                         'order' => $block->order,
-                        'area_id' => $newAreaID
+                        'area_id' => $newAreaID,
+                        'display' => $block->display
                     ]);
 
                     $blockID = \App::make('CreateBlockInteractor')->run($blockStructure);
 
-                    $blockStructureContent = new BlockStructure([
-                        'html' => $block->html,
-                        'menu_id' => $block->menu_id,
-                        'view_file' => $block->view_file,
-                    ]);
+                    if ($block->type == 'html')
+                        $blockStructureContent = new HTMLBlockStructure([
+                            'html' => $block->html,
+                        ]);
+                    elseif ($block->type == 'menu')
+                        $blockStructureContent = new MenuBlockStructure([
+                            'menu_id' => $block->menu_id,
+                        ]);
+                    elseif ($block->type == 'view_file')
+                        $blockStructureContent = new ViewFileBlockStructure([
+                            'view_file' => $block->view_file,
+                        ]);
 
                     \App::make('UpdateBlockInteractor')->run($blockID, $blockStructureContent);
                 }
@@ -411,5 +183,4 @@ class PageController extends AdminController {
             return \Redirect::route('back_pages_index');
         }
     }
-
 }

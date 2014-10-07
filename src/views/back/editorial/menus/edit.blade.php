@@ -6,9 +6,9 @@
 
 @section('javascripts')
     <script type="text/javascript">
-        var route_menus_add_item = "{{ route('back_menus_add_item') }}";
-        var route_menus_update_item = "{{ route('back_menus_update_item') }}";
-        var route_menus_delete_item = "{{ route('back_menus_delete_item') }}";
+        var route_menu_items_create = "{{ route('back_menu_items_create') }}";
+        var route_menu_items_update = "{{ route('back_menu_items_update') }}";
+        var route_menu_items_delete = "{{ route('back_menu_items_delete') }}";
     </script>
 
     {{ HTML::script('packages/webaccess/w-cms-laravel/back/js/menus.js') }}

@@ -11,123 +11,85 @@ class EloquentPageRepository implements PageRepositoryInterface {
 
     public function findByID($pageID)
     {
-        $pageDB = PageModel::find($pageID);
-
-        if ($pageDB) {
-            $pageStructure = new PageStructure();
-            $pageStructure->ID = $pageDB->id;
-            $pageStructure->name = $pageDB->name;
-            $pageStructure->uri = $pageDB->uri;
-            $pageStructure->identifier = $pageDB->identifier;
-            $pageStructure->text = $pageDB->text;
-            $pageStructure->meta_title = $pageDB->meta_title;
-            $pageStructure->meta_description = $pageDB->meta_description;
-            $pageStructure->meta_keywords = $pageDB->meta_keywords;
-
-            return $pageStructure;
-        }
+        if ($pageModel = PageModel::find($pageID))
+            return self::createPageFromModel($pageModel);
 
         return false;
     }
 
 	public function findByIdentifier($pageIdentifier)
 	{
-		$pageDB = PageModel::where('identifier', '=', $pageIdentifier)->first();
-			
-		if ($pageDB) {
-            $pageStructure = new PageStructure();
-            $pageStructure->ID = $pageDB->id;
-            $pageStructure->name = $pageDB->name;
-            $pageStructure->uri = $pageDB->uri;
-            $pageStructure->identifier = $pageDB->identifier;
-            $pageStructure->text = $pageDB->text;
-            $pageStructure->meta_title = $pageDB->meta_title;
-            $pageStructure->meta_description = $pageDB->meta_description;
-            $pageStructure->meta_keywords = $pageDB->meta_keywords;
-
-			return $pageStructure;
-		}
+		if ($pageModel = PageModel::where('identifier', '=', $pageIdentifier)->first())
+            return self::createPageFromModel($pageModel);
 		
 		return false;
 	}
 
 	public function findByUri($pageURI)
 	{
-		$pageDB = PageModel::where('uri', '=', $pageURI)->first();
-
-		if ($pageDB) {
-            $pageStructure = new PageStructure();
-            $pageStructure->ID = $pageDB->id;
-            $pageStructure->name = $pageDB->name;
-            $pageStructure->uri = $pageDB->uri;
-            $pageStructure->identifier = $pageDB->identifier;
-            $pageStructure->text = $pageDB->text;
-            $pageStructure->meta_title = $pageDB->meta_title;
-            $pageStructure->meta_description = $pageDB->meta_description;
-            $pageStructure->meta_keywords = $pageDB->meta_keywords;
-
-			return $pageStructure;
-		}
+		if ($pageModel = PageModel::where('uri', '=', $pageURI)->first())
+            return self::createPageFromModel($pageModel);
 
 		return false;
 	}
 
 	public function findAll()
 	{
-		$pagesDB = PageModel::get();
+		$pageModels = PageModel::get();
 
 		$pages = [];
-		foreach ($pagesDB as $i => $pageDB) {
-            $pageStructure = new PageStructure();
-            $pageStructure->ID = $pageDB->id;
-            $pageStructure->name = $pageDB->name;
-            $pageStructure->uri = $pageDB->uri;
-            $pageStructure->identifier = $pageDB->identifier;
-            $pageStructure->text = $pageDB->text;
-            $pageStructure->meta_title = $pageDB->meta_title;
-            $pageStructure->meta_description = $pageDB->meta_description;
-            $pageStructure->meta_keywords = $pageDB->meta_keywords;
-		
-			$pages[]= $pageStructure;
-		}
+		foreach ($pageModels as $pageModel)
+			$pages[]= self::createPageFromModel($pageModel);
 
 		return $pages;
 	}
 
-	public function createPage(PageStructure $pageStructure)
+	public function createPage(Page $page)
 	{
-		$pageDB = new PageModel();
-		$pageDB->name = $pageStructure->name;
-		$pageDB->identifier = $pageStructure->identifier;
-		$pageDB->uri = $pageStructure->uri;
-		$pageDB->text = $pageStructure->text;
-		$pageDB->meta_title = $pageStructure->meta_title;
-		$pageDB->meta_description = $pageStructure->meta_description;
-		$pageDB->meta_keywords = $pageStructure->meta_keywords;
+		$pageModel = new PageModel();
+		$pageModel->name = $page->getName();
+		$pageModel->identifier = $page->getIdentifier();
+		$pageModel->uri = $page->getURI();
+		$pageModel->meta_title = $page->getMetaTitle();
+		$pageModel->meta_description = $page->getMetaDescription();
+		$pageModel->meta_keywords = $page->getMetaKeywords();
 
-		$pageDB->save();
+		$pageModel->save();
 
-        return $pageDB->id;
+        return $pageModel->id;
 	}
 
-	public function updatePage($pageID, PageStructure $pageStructure)
+	public function updatePage(Page $page)
 	{
-		$pageDB = PageModel::find($pageID);
-		$pageDB->name = $pageStructure->name;
-        $pageDB->identifier = $pageStructure->identifier;
-		$pageDB->uri = $pageStructure->uri;
-		$pageDB->text = $pageStructure->text;
-		$pageDB->meta_title = $pageStructure->meta_title;
-		$pageDB->meta_description = $pageStructure->meta_description;
-		$pageDB->meta_keywords = $pageStructure->meta_keywords;
+		$pageModel = PageModel::find($page->getID());
+        $pageModel->name = $page->getName();
+        $pageModel->identifier = $page->getIdentifier();
+        $pageModel->uri = $page->getURI();
+        $pageModel->meta_title = $page->getMetaTitle();
+        $pageModel->meta_description = $page->getMetaDescription();
+        $pageModel->meta_keywords = $page->getMetaKeywords();
 
-		return $pageDB->save();
+		return $pageModel->save();
 	}
 
 	public function deletePage($pageID)
 	{
-		$pageDB = PageModel::find($pageID);
+		$pageModel = PageModel::find($pageID);
 		
-		return $pageDB->delete();
+		return $pageModel->delete();
 	}
+
+    private static function createPageFromModel(PageModel $pageModel)
+    {
+        $page = new Page();
+        $page->setID($pageModel->id);
+        $page->setName($pageModel->name);
+        $page->setIdentifier($pageModel->identifier);
+        $page->setURI($pageModel->uri);
+        $page->setMetaTitle($pageModel->meta_title);
+        $page->setMetaDescription($pageModel->meta_description);
+        $page->setMetaKeywords($pageModel->meta_keywords);
+
+        return $page;
+    }
 }
