@@ -12,25 +12,35 @@ class MenuItemController extends AdminController
         $menuItemStructure = new MenuItemStructure([
             'menu_id' => \Input::get('menuID'),
             'label' => \Input::get('label'),
-            'order' => (int) \Input::get('order'),
+            'order' => 999,
             'page_id' => \Input::get('pageID')
         ]);
 
         try {
-            $id = \App::make('CreateMenuItemInteractor')->run($menuItemStructure);
-            return json_encode(array('success' => true, 'id' => $id));
+            $menuItemID = \App::make('CreateMenuItemInteractor')->run($menuItemStructure);
+            $menuItem = \App::make('GetMenuItemInteractor')->getMenuItemByID($menuItemID, true);
+
+            return json_encode(array('success' => true, 'menu_item' => $menuItem->toArray()));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
     }
 
-    public function update()
+    public function get_infos($menuItemID)
+    {
+        try {
+            $menuItem = \App::make('GetMenuItemInteractor')->getMenuItemByID($menuItemID, true);
+            return json_encode(array('success' => true, 'menu_item' => $menuItem->toArray()));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+
+    public function update_infos()
     {
         $menuItemID = \Input::get('ID');
-
         $menuItemStructure = new MenuItemStructure([
             'label' => \Input::get('label'),
-            'order' => (int) \Input::get('order'),
             'page_id' => \Input::get('pageID')
         ]);
 
@@ -40,6 +50,26 @@ class MenuItemController extends AdminController
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
+    }
+
+    public function update_order()
+    {
+        $menuItems = json_decode(\Input::get('menu_items'));
+        for ($i = 0; $i < sizeof($menuItems ); $i++) {
+            $menuItemID = preg_replace('/mi-/', '', $menuItems[$i]);
+
+            $menuItemStructure = new MenuItemStructure([
+                'order' => $i + 1,
+            ]);
+
+            try {
+                \App::make('UpdateMenuItemInteractor')->run($menuItemID, $menuItemStructure);
+            } catch (\Exception $e) {
+                return json_encode(array('success' => false, 'error' => $e->getMessage()));
+            }
+        }
+
+        return json_encode(array('success' => true));
     }
 
     public function delete()

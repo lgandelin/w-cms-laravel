@@ -1,0 +1,45 @@
+.menus-interface {
+
+	.items-order {
+		float: left;
+		clear: both;
+		margin-top: 20px;
+		width: 15%;
+		margin-right: 5%;
+	}
+
+	.menu_item {
+		background: #eee;
+		border: 1px solid #ccc;
+		margin-bottom: 20px;
+		text-align: center;
+
+		.title {
+			font-weight: bold;
+			display: block;
+
+			min-height: 40px;
+			line-height: 40px;
+		}
+
+		.menu-item-delete, .menu-item-update, .menu-item-move, .menu-item-display {
+			cursor: pointer;
+			float: right;
+			margin: 5px 5px 0 0;
+		}
+	}
+
+	.menu-item-form {
+		width: 50%;
+		float: left;
+	}
+
+	.sortable-placeholder {
+		border: 1px solid $blue !important;
+		background: #8AB4D8 !important;
+		height: 43px;
+		line-height: 43px;
+		overflow: hidden;
+	}
+
+}

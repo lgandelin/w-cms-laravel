@@ -10,4 +10,5 @@ return array(
     'choose_page' => 'Choisir une page',
     'no_menu_created_yet' => 'Aucun menu créé',
    	'not_found' => 'Menu non trouvé',
+    'add_menu_item'=> 'Ajouter un onglet'
 );

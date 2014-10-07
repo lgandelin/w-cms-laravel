@@ -22,8 +22,10 @@ class IndexController extends Controller {
                             $block->menu = \App::make('GetMenuInteractor')->getMenuByID($block->menu_id, true);
                             $menuItems = \App::make('GetMenuItemsInteractor')->getAll($block->menu_id, true);
 
-                            foreach ($menuItems as $menuItem)
-                                $menuItem->page = \App::make('GetPageInteractor')->getPageByID($menuItem->page_id, true);
+                            foreach ($menuItems as $menuItem) {
+                                if ($menuItem->page_id)
+                                    $menuItem->page = \App::make('GetPageInteractor')->getPageByID($menuItem->page_id, true);
+                            }
 
                             $block->menu->items =$menuItems;
                         }
