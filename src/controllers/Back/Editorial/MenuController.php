@@ -3,6 +3,7 @@
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
 use CMS\Structures\MenuStructure;
+use CMS\Structures\MenuItemStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
 class MenuController extends AdminController
@@ -85,7 +86,23 @@ class MenuController extends AdminController
     public function duplicate($menuID)
     {
         try {
-            \App::make('DuplicateMenuInteractor')->run($menuID);
+            $newMenuID = \App::make('DuplicateMenuInteractor')->run($menuID);
+
+            $menuItems = \App::make('GetMenuItemsInteractor')->getAll($menuID, true);
+            foreach ($menuItems as $menuItem) {
+                $menuItemStructure = new MenuItemStructure([
+                    'menu_id' => $newMenuID,
+                    'label' => $menuItem->label,
+                    'order' => $menuItem->order,
+                    'page_id' => $menuItem->page_id,
+                    'class' => $menuItem->class,
+                    'display' => $menuItem->display,
+                    'external_url' => $menuItem->external_url,
+                ]);
+
+                \App::make('CreateMenuItemInteractor')->run($menuItemStructure);
+            }
+
             return \Redirect::route('back_menus_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
