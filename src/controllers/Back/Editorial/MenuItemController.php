@@ -13,7 +13,10 @@ class MenuItemController extends AdminController
             'menu_id' => \Input::get('menuID'),
             'label' => \Input::get('label'),
             'order' => 999,
-            'page_id' => \Input::get('pageID')
+            'page_id' => \Input::get('pageID'),
+            'class' => \Input::get('class'),
+            'display' => 0,
+            'external_url' => \Input::get('externalURL'),
         ]);
 
         try {
@@ -41,7 +44,9 @@ class MenuItemController extends AdminController
         $menuItemID = \Input::get('ID');
         $menuItemStructure = new MenuItemStructure([
             'label' => \Input::get('label'),
-            'page_id' => \Input::get('pageID')
+            'page_id' => \Input::get('pageID'),
+            'class' => \Input::get('class'),
+            'external_url' => \Input::get('externalURL'),
         ]);
 
         try {
@@ -57,7 +62,6 @@ class MenuItemController extends AdminController
         $menuItems = json_decode(\Input::get('menu_items'));
         for ($i = 0; $i < sizeof($menuItems ); $i++) {
             $menuItemID = preg_replace('/mi-/', '', $menuItems[$i]);
-
             $menuItemStructure = new MenuItemStructure([
                 'order' => $i + 1,
             ]);
@@ -70,6 +74,21 @@ class MenuItemController extends AdminController
         }
 
         return json_encode(array('success' => true));
+    }
+
+    public function display()
+    {
+        try {
+            $menuItemID = \Input::get('ID');
+            $menuItemStructure = new MenuItemStructure([
+                'display'=> \Input::get('display')
+            ]);
+
+            \App::make('UpdateMenuItemInteractor')->run($menuItemID, $menuItemStructure);
+            return json_encode(array('success' => true));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
     }
 
     public function delete()

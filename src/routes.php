@@ -50,6 +50,7 @@ Route::post('/admin/editorial/menu_items/create', array('as' => 'back_menu_items
 Route::get('/admin/editorial/menu_items/get_infos/{menuItemID?}', array('as' => 'back_menu_items_get_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuItemController@get_infos'));
 Route::post('/admin/editorial/menu_items/update_infos', array('as' => 'back_menu_items_update_infos', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuItemController@update_infos'));
 Route::post('/admin/editorial/menu_items/update_order', array('as' => 'back_menu_items_update_order', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuItemController@update_order'));
+Route::post('/admin/editorial/menu_items/display', array('as' => 'back_menu_items_display', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuItemController@display'));
 Route::post('/admin/editorial/menu_items/delete', array('as' => 'back_menu_items_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuItemController@delete'));
 
 //BACK > GENERAL

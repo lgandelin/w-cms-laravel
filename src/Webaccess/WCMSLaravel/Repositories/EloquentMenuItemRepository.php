@@ -35,7 +35,10 @@ class EloquentMenuItemRepository implements MenuItemRepositoryInterface
         $menuItemModel->label = $menuItem->getLabel();
         $menuItemModel->order = $menuItem->getOrder();
         $menuItemModel->page_id = $menuItem->getPageID();
+        $menuItemModel->external_url = $menuItem->getExternalURL();
         $menuItemModel->menu_id = $menuItem->getMenuID();
+        $menuItemModel->class = $menuItem->getClass();
+        $menuItemModel->display = $menuItem->getDisplay();
 
         $menuItemModel->save();
 
@@ -48,6 +51,9 @@ class EloquentMenuItemRepository implements MenuItemRepositoryInterface
         $menuItemModel->label = $menuItem->getLabel();
         $menuItemModel->order = $menuItem->getOrder();
         $menuItemModel->page_id = $menuItem->getPageID();
+        $menuItemModel->external_url = $menuItem->getExternalURL();
+        $menuItemModel->class = $menuItem->getClass();
+        $menuItemModel->display = $menuItem->getDisplay();
 
         return $menuItemModel->save();
     }
@@ -66,6 +72,9 @@ class EloquentMenuItemRepository implements MenuItemRepositoryInterface
         $menuItem->setLabel($menuItemModel->label);
         $menuItem->setOrder($menuItemModel->order);
         $menuItem->setPageID($menuItemModel->page_id);
+        $menuItem->setExternalURL($menuItemModel->external_url);
+        $menuItem->setClass($menuItemModel->class);
+        $menuItem->setDisplay($menuItemModel->display);
 
         return $menuItem;
     }

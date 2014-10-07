@@ -10,6 +10,7 @@
         var route_menu_items_get_infos = "{{ route('back_menu_items_get_infos') }}";
         var route_menu_items_update_infos = "{{ route('back_menu_items_update_infos') }}";
         var route_menu_items_update_order = "{{ route('back_menu_items_update_order') }}";
+        var route_menu_items_display = "{{ route('back_menu_items_display') }}";
         var route_menu_items_delete = "{{ route('back_menu_items_delete') }}";
     </script>
 
@@ -63,63 +64,7 @@
 
                 </form>
 
-                <!--<div class="form-group">
-                    <label for="items">{{ trans('w-cms-laravel::menus.items') }}</label>
-
-                    @if ($menu->items):
-                        @foreach ($menu->items as $item)
-
-                            <div class="form-inline">
-                                <label for="items_label[]">{{ trans('w-cms-laravel::menus.item_label') }}</label>
-                                <input type="text" class="form-control" name="items_label[]" value="{{ $item->label }}" autocomplete="off" />
-                                <label for="items_page[]">{{ trans('w-cms-laravel::menus.item_page') }}</label>
-                                <select name="items_page[]" class="form-control" autocomplete="off">
-                                    <option>{{ trans('w-cms-laravel::menus.choose_page') }}</option>
-                                    @if ($pages)
-                                         @foreach ($pages as $page)
-                                            <option value="{{ $page->ID }}" @if ($item->page_id == $page->ID)selected="selected"@endif>{{ $page->name }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                                <input type="button" class="btn btn-primary btn-update" value="{{ trans('w-cms-laravel::generic.edit') }}" data-item-id="{{ $item->ID }}" />
-                                <input type="button" class="btn btn-danger btn-delete" value="{{ trans('w-cms-laravel::generic.delete') }}" data-item-id="{{ $item->ID }}" />
-                            </div>
-                        @endforeach
-                    @endif
-
-                    <div style="display:none" class="form-inline new-menu-pattern">
-                        <label for="items_label[]">{{ trans('w-cms-laravel::menus.item_label') }}</label>
-                        <input type="text" class="form-control" name="items_label[]" autocomplete="off" />
-                        <label for="items_page[]">{{ trans('w-cms-laravel::menus.item_page') }}</label>
-                        <select name="items_page[]" class="form-control" autocomplete="off">
-                            <option value="">{{ trans('w-cms-laravel::menus.choose_page') }}</option>
-                            @if ($pages)
-                                @foreach ($pages as $page)
-                                    <option value="{{ $page->ID }}">{{ $page->name }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                        <input type="button" class="btn btn-primary btn-update" value="{{ trans('w-cms-laravel::generic.edit') }}" />
-                        <input type="button" class="btn btn-danger btn-delete" value="{{ trans('w-cms-laravel::generic.delete') }}" />
-                    </div>
-
-                </div>
-
-                <div class="form-group form-inline">
-                    <label for="items_label[]">{{ trans('w-cms-laravel::menus.item_label') }}</label>
-                    <input type="text" class="form-control" name="items_label[]" autocomplete="off" />
-                    <label for="items_page[]">{{ trans('w-cms-laravel::menus.item_page') }}</label>
-                    <select name="items_page[]" class="form-control" autocomplete="off">
-                        <option>{{ trans('w-cms-laravel::menus.choose_page') }}</option>
-                        @if ($pages)
-                            @foreach ($pages as $page)
-                                <option value="{{ $page->ID }}">{{ $page->name }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    <input type="button" class="btn btn-primary btn-create" value="{{ trans('w-cms-laravel::generic.create') }}" />
-                </div>-->
-
+                
                 <div class="form-group">
                     <label for="items">{{ trans('w-cms-laravel::menus.items') }}</label>
 
@@ -128,7 +73,7 @@
                             <div class="menu-items-wrapper">
                                 @if ($menu->items)
                                     @foreach ($menu->items as $item)
-                                    <div id="mi-{{ $item->ID }}" class="menu_item">
+                                    <div id="mi-{{ $item->ID }}" class="menu_item" data-display="{{ $item->display }}">
                                         <span class="title">
                                             <span class="menu_item_label">{{ $item->label }}</span>
                                             <span data-id="{{ $item->ID }}" class="menu-item-delete glyphicon glyphicon-remove"></span>
@@ -153,19 +98,55 @@
                             <!-- CREATE MENU ITEM FORM -->
                             <div class="create-menu-item-form" style="display:none">
 
-                                <!-- Label -->
-                                <div class="form-group">
-                                    <label>{{ trans('w-cms-laravel::menus.item_label') }}</label>
-                                    <input type="text" class="form-control menu-item-label" placeholder="{{ trans('w-cms-laravel::menus.item_label') }}" autocomplete="off" />
-                                </div>
-                                <!-- Label -->
+                                <div class="col-xs-6">
 
-                                <!-- Save -->
-                                <div class="submit_wrapper">
-                                    <input type="button" class="menu-valid-create-menu-item btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
-                                    <input type="button" class="menu-close-create-menu-item btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                                    <!-- Page -->
+                                    <div class="form-group">
+                                        <label for="page_id">{{ trans('w-cms-laravel::menus.item_page') }}</label>
+                                        <select class="page_id form-control" autocomplete="off">
+                                            <option value="">{{ trans('w-cms-laravel::menus.choose_page') }}</option>
+                                            @if (isset($pages))
+                                            @foreach ($pages as $page)
+                                            <option value="{{ $page->ID }}">{{ $page->name }}</option>
+                                            @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <!-- Page -->
+
+                                    <!-- Label -->
+                                    <div class="form-group">
+                                        <label>{{ trans('w-cms-laravel::menus.item_label') }}</label>
+                                        <input type="text" class="form-control menu-item-label" placeholder="{{ trans('w-cms-laravel::menus.item_label') }}" autocomplete="off" />
+                                    </div>
+                                    <!-- Label -->
+
+                                    <!-- Class -->
+                                    <div class="form-group">
+                                        <label>{{ trans('w-cms-laravel::menus.item_class') }}</label>
+                                        <input type="text" class="form-control menu-item-class" placeholder="{{ trans('w-cms-laravel::menus.item_class') }}" autocomplete="off" />
+                                    </div>
+                                    <!-- Class -->
+
+                                    <!-- Save -->
+                                    <div class="submit_wrapper" style="clear:both; margin-top: 20px">
+                                        <input type="button" class="menu-valid-create-menu-item btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                                        <input type="button" class="menu-close-create-menu-item btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                                    </div>
+                                    <!-- Save -->
+
                                 </div>
-                                <!-- Save -->
+
+                                <div class="col-xs-6">
+
+                                    <!-- External link -->
+                                    <div class="form-group">
+                                        <label>{{ trans('w-cms-laravel::menus.item_external_url') }}</label>
+                                        <input type="text" class="form-control menu-item-external-url" placeholder="{{ trans('w-cms-laravel::menus.item_external_url') }}" autocomplete="off" />
+                                    </div>
+                                    <!-- External link -->
+
+                                </div>
 
                             </div>
                             <!-- CREATE MENU ITEM FORM -->
@@ -174,28 +155,63 @@
                             <!-- UPDATE MENU ITEM FORM -->
                             <div class="update-menu-item-form" style="display:none">
 
-                                <!-- Label -->
-                                <div class="form-group">
-                                    <label>{{ trans('w-cms-laravel::menus.item_label') }}</label>
-                                    <input type="text" class="form-control menu-item-label" placeholder="{{ trans('w-cms-laravel::menus.item_label') }}" autocomplete="off" />
-                                </div>
-                                <!-- Label -->
+                                <div class="col-xs-6">
 
-                                <!-- Save -->
-                                <div class="submit_wrapper">
-                                    <input type="button" class="menu-valid-update-menu-item btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
-                                    <input type="button" class="menu-close-update-menu-item btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                                    <!-- Page -->
+                                    <div class="form-group">
+                                        <label for="page_id">{{ trans('w-cms-laravel::menus.item_page') }}</label>
+                                        <select class="page_id form-control" autocomplete="off">
+                                            <option value="">{{ trans('w-cms-laravel::menus.choose_page') }}</option>
+                                            @if (isset($pages))
+                                            @foreach ($pages as $page)
+                                            <option value="{{ $page->ID }}">{{ $page->name }}</option>
+                                            @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <!-- Page -->
+
+                                    <!-- Label -->
+                                    <div class="form-group">
+                                        <label>{{ trans('w-cms-laravel::menus.item_label') }}</label>
+                                        <input type="text" class="form-control menu-item-label" placeholder="{{ trans('w-cms-laravel::menus.item_label') }}" autocomplete="off" />
+                                    </div>
+                                    <!-- Label -->
+
+                                    <!-- Class -->
+                                    <div class="form-group">
+                                        <label>{{ trans('w-cms-laravel::menus.item_class') }}</label>
+                                        <input type="text" class="form-control menu-item-class" placeholder="{{ trans('w-cms-laravel::menus.item_class') }}" autocomplete="off" />
+                                    </div>
+                                    <!-- Class -->
+
+                                    <!-- Save -->
+                                    <div class="submit_wrapper" style="clear:both; margin-top: 20px">
+                                        <input type="button" class="menu-valid-update-menu-item btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                                        <input type="button" class="menu-close-update-menu-item btn btn-default" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                                    </div>
+                                    <!-- Save -->
+
                                 </div>
-                                <!-- Save -->
+
+                                <div class="col-xs-6">
+
+                                    <!-- External link -->
+                                    <div class="form-group">
+                                        <label>{{ trans('w-cms-laravel::menus.item_external_url') }}</label>
+                                        <input type="text" class="form-control menu-item-external-url" placeholder="{{ trans('w-cms-laravel::menus.item_external_url') }}" autocomplete="off" />
+                                    </div>
+                                    <!-- External link -->
+
+                                </div>
 
                             </div>
                             <!-- UPDATE MENU ITEM FORM -->
 
                         </div>
+
                     </div>
                 </div>
-
-
 
             @else
                 {{ trans('w-cms-laravel::menus.not_found') }}

@@ -37,14 +37,13 @@
                                             <nav class="navbar navbar-default" role="navigation">
                                                 <ul class="nav navbar-nav">
                                                     @foreach ($block->menu->items as $item)
-                                                        @if (isset($item->page))
-                                                            @if ($current_page->uri == $item->page->uri)
-                                                                <li><a>{{ $item->label }}</a></li>
-                                                            @else
-                                                                <li><a href="{{ route('front_page_index', array($item->page->uri)) }}" title="{{ $item->page->name }}">{{ $item->label }}</a></li>
+                                                        @if ($item->display)
+
+                                                            @if (isset($item->page))
+                                                                <li class="{{ $item->class }} @if ($current_page->uri == $item->page->uri) current @endif"><a href="{{ route('front_page_index', array($item->page->uri)) }}" title="{{ $item->page->name }}">{{ $item->label }}</a></li>
+                                                            @elseif ($item->external_url)
+                                                                <li class="{{ $item->class }}"><a href="{{ $item->external_url }}" target="_blank">{{ $item->label }}</a></li>
                                                             @endif
-                                                        @else
-                                                            <li><a>{{ $item->label }}</a></li>
                                                         @endif
                                                     @endforeach
                                                 </ul>

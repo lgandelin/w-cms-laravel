@@ -152,8 +152,8 @@
   float: left;
   clear: both;
   margin-top: 20px;
-  width: 15%;
-  margin-right: 5%;
+  width: 30%;
+  margin-right: 3%;
 }
 /* line 11, ../sass/_menus.scss */
 .menus-interface .menu_item {
@@ -177,10 +177,14 @@
 }
 /* line 32, ../sass/_menus.scss */
 .menus-interface .menu-item-form {
-  width: 50%;
+  width: 60%;
   float: left;
 }
 /* line 37, ../sass/_menus.scss */
+.menus-interface .menu-item-hidden {
+  color: #ccc;
+}
+/* line 41, ../sass/_menus.scss */
 .menus-interface .sortable-placeholder {
   border: 1px solid #2a6496 !important;
   background: #8AB4D8 !important;

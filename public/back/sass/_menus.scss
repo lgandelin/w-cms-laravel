@@ -4,8 +4,8 @@
 		float: left;
 		clear: both;
 		margin-top: 20px;
-		width: 15%;
-		margin-right: 5%;
+		width: 30%;
+		margin-right: 3%;
 	}
 
 	.menu_item {
@@ -30,8 +30,12 @@
 	}
 
 	.menu-item-form {
-		width: 50%;
+		width: 60%;
 		float: left;
+	}
+
+	.menu-item-hidden {
+		color: #ccc;
 	}
 
 	.sortable-placeholder {
