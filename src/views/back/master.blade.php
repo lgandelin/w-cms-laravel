@@ -42,6 +42,33 @@
 		{{ HTML::script('packages/webaccess/w-cms-laravel/back/vendor/bootstrap/js/bootstrap.min.js') }}
 		{{ HTML::script('packages/webaccess/w-cms-laravel/back/vendor/ckeditor/ckeditor.js') }}
 
+        <script type="text/javascript">
+            var route_pages_update_infos = "{{ route('back_pages_update_infos') }}";
+            var route_pages_update_seo = "{{ route('back_pages_update_seo') }}";
+
+            var route_areas_get_infos = "{{ route('back_areas_get_infos') }}";
+            var route_areas_update_infos = "{{ route('back_areas_update_infos') }}";
+            var route_areas_create = "{{ route('back_areas_create') }}";
+            var route_areas_update_order = "{{ route('back_areas_update_order') }}";
+            var route_areas_display = "{{ route('back_areas_display') }}";
+            var route_areas_delete = "{{ route('back_areas_delete') }}";
+
+            var route_blocks_get_infos = "{{ route('back_blocks_get_infos') }}";
+            var route_blocks_update_infos = "{{ route('back_blocks_update_infos') }}";
+            var route_blocks_create = "{{ route('back_blocks_create') }}";
+            var route_blocks_update_content = "{{ route('back_blocks_update_content') }}";
+            var route_blocks_update_order = "{{ route('back_blocks_update_order') }}";
+            var route_blocks_display = "{{ route('back_blocks_display') }}";
+            var route_blocks_delete = "{{ route('back_blocks_delete') }}";
+
+            var route_menu_items_create = "{{ route('back_menu_items_create') }}";
+            var route_menu_items_get_infos = "{{ route('back_menu_items_get_infos') }}";
+            var route_menu_items_update_infos = "{{ route('back_menu_items_update_infos') }}";
+            var route_menu_items_update_order = "{{ route('back_menu_items_update_order') }}";
+            var route_menu_items_display = "{{ route('back_menu_items_display') }}";
+            var route_menu_items_delete = "{{ route('back_menu_items_delete') }}";
+        </script>
+
 		@yield('javascripts')
     </body>
 </html>

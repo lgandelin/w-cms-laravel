@@ -5,26 +5,6 @@
 @stop
 
 @section('javascripts')
-    <script type="text/javascript">
-        var route_pages_update_infos = "{{ route('back_pages_update_infos') }}";
-        var route_pages_update_seo = "{{ route('back_pages_update_seo') }}";
-
-        var route_areas_get_infos = "{{ route('back_areas_get_infos') }}";
-        var route_areas_update_infos = "{{ route('back_areas_update_infos') }}";
-        var route_areas_create = "{{ route('back_areas_create') }}";
-        var route_areas_update_order = "{{ route('back_areas_update_order') }}";
-        var route_areas_display = "{{ route('back_areas_display') }}";
-        var route_areas_delete = "{{ route('back_areas_delete') }}";
-
-        var route_blocks_get_infos = "{{ route('back_blocks_get_infos') }}";
-        var route_blocks_update_infos = "{{ route('back_blocks_update_infos') }}";
-        var route_blocks_create = "{{ route('back_blocks_create') }}";
-        var route_blocks_update_content = "{{ route('back_blocks_update_content') }}";
-        var route_blocks_update_order = "{{ route('back_blocks_update_order') }}";
-        var route_blocks_display = "{{ route('back_blocks_display') }}";
-        var route_blocks_delete = "{{ route('back_blocks_delete') }}";
-    </script>
-
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 	{{ HTML::script('packages/webaccess/w-cms-laravel/back/js/page_content.js') }}
 	{{ HTML::script('packages/webaccess/w-cms-laravel/back/js/page_structure_areas.js') }}

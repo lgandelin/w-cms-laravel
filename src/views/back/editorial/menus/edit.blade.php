@@ -5,15 +5,6 @@
 @stop
 
 @section('javascripts')
-    <script type="text/javascript">
-        var route_menu_items_create = "{{ route('back_menu_items_create') }}";
-        var route_menu_items_get_infos = "{{ route('back_menu_items_get_infos') }}";
-        var route_menu_items_update_infos = "{{ route('back_menu_items_update_infos') }}";
-        var route_menu_items_update_order = "{{ route('back_menu_items_update_order') }}";
-        var route_menu_items_display = "{{ route('back_menu_items_display') }}";
-        var route_menu_items_delete = "{{ route('back_menu_items_delete') }}";
-    </script>
-
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
     {{ HTML::script('packages/webaccess/w-cms-laravel/back/js/menus.js') }}
 @stop
