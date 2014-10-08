@@ -139,11 +139,11 @@
   overflow: hidden;
 }
 /* line 109, ../sass/_pages.scss */
-.pages-interface #structure .update-block-form, .pages-interface #structure .update-area-form, .pages-interface #structure .create-block-form, .pages-interface #structure .create-area-form {
+.pages-interface #structure .block-form, .pages-interface #structure .area-form {
   display: none;
 }
 /* line 112, ../sass/_pages.scss */
-.pages-interface #structure .update-block-form .submit_wrapper, .pages-interface #structure .update-area-form .submit_wrapper, .pages-interface #structure .create-block-form .submit_wrapper, .pages-interface #structure .create-area-form .submit_wrapper {
+.pages-interface #structure .block-form .submit_wrapper, .pages-interface #structure .area-form .submit_wrapper {
   margin-bottom: 20px;
 }
 
