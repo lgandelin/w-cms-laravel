@@ -146,3 +146,49 @@
 .pages-interface #structure .update-block-form .submit_wrapper, .pages-interface #structure .update-area-form .submit_wrapper, .pages-interface #structure .create-block-form .submit_wrapper, .pages-interface #structure .create-area-form .submit_wrapper {
   margin-bottom: 20px;
 }
+
+/* line 3, ../sass/_menus.scss */
+.menus-interface .items-order {
+  float: left;
+  clear: both;
+  margin-top: 20px;
+  width: 30%;
+  margin-right: 3%;
+}
+/* line 11, ../sass/_menus.scss */
+.menus-interface .menu_item {
+  background: #eee;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  text-align: center;
+}
+/* line 17, ../sass/_menus.scss */
+.menus-interface .menu_item .title {
+  font-weight: bold;
+  display: block;
+  min-height: 40px;
+  line-height: 40px;
+}
+/* line 25, ../sass/_menus.scss */
+.menus-interface .menu_item .menu-item-delete, .menus-interface .menu_item .menu-item-update, .menus-interface .menu_item .menu-item-move, .menus-interface .menu_item .menu-item-display {
+  cursor: pointer;
+  float: right;
+  margin: 5px 5px 0 0;
+}
+/* line 32, ../sass/_menus.scss */
+.menus-interface .menu-item-form {
+  width: 60%;
+  float: left;
+}
+/* line 37, ../sass/_menus.scss */
+.menus-interface .menu-item-hidden {
+  color: #ccc;
+}
+/* line 41, ../sass/_menus.scss */
+.menus-interface .sortable-placeholder {
+  border: 1px solid #2a6496 !important;
+  background: #8AB4D8 !important;
+  height: 43px;
+  line-height: 43px;
+  overflow: hidden;
+}

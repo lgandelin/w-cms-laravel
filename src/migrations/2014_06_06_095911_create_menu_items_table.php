@@ -17,7 +17,10 @@ class CreateMenuItemsTable extends Migration {
             $table->string('label')->nullable();
             $table->integer('order')->nullable();
             $table->integer('page_id')->nullable();
+            $table->string('external_url')->nullable();
+            $table->string('class')->nullable();
             $table->integer('menu_id')->nullable();
+            $table->bool('display')->nullable();
             $table->timestamps();
         });
     }
