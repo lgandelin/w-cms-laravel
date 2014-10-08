@@ -11,6 +11,7 @@ $(document).ready(function() {
     //Create area
     $('body').on('click', '.page-content-create-area', function() {
         $('.area-form .btn-valid').attr('data-page-id', $(this).attr('data-id')).attr('data-action', 'create');
+        $('.block-form').hide();
         $('.area-form').show();
     });
 
@@ -18,7 +19,8 @@ $(document).ready(function() {
     $('body').on('click', '.area-update', function() {
         var area_id = $(this).attr('data-id');
         $('.area-form .btn-valid').attr('data-id', area_id).attr('data-action', 'update');
-
+        $('.block-form').hide();
+        
         var area = $('.area[data-id="' + area_id + '"]');
 
         $.ajax({

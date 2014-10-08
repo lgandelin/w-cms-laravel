@@ -11,6 +11,7 @@ $(document).ready(function() {
     //Create block
     $('body').on('click', '.area-create-block', function() {
         $('.block-form .btn-valid').attr('data-area-id', $(this).attr('data-id')).attr('data-action', 'create');
+        $('.area-form').hide();
         $('.block-form').show();
     });
 
@@ -18,7 +19,8 @@ $(document).ready(function() {
     $('body').on('click', '.block-update', function() {
         var block_id = $(this).attr('data-id');
         $('.block-form .btn-valid').attr('data-id', block_id).attr('data-action', 'update');
-
+        $('.area-form').hide();
+        
         var block = $('.block[data-id="' + block_id + '"]');
 
         $.ajax({
