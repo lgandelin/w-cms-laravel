@@ -48,7 +48,7 @@
                                                     @endforeach
                                                 </ul>
                                             </nav>
-                                        @elseif ($block->type == 'view_file')
+                                        @elseif ($block->type == 'view_file' && $block->view_file != '')
                                             @include($block->view_file)
                                         @endif
                                     </div>

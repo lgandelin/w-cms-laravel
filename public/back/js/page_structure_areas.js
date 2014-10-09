@@ -199,8 +199,8 @@ function init_area_sortable() {
         start: function(event, ui) {
             var placeholder = ui.placeholder;
             var width = ui.item.attr('data-width');
-            placeholder.addClass('col-xs-' + width);
-            placeholder.html('<div class="area_color"></div>');
+            var height = ui.item.height();
+            placeholder.addClass('col-xs-' + width).html('<div class="area_color" style="height:' + height + 'px"></div>');
         },
         handle: '.area-move',
         update: function (event, ui) {
