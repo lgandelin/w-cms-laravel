@@ -85,32 +85,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //Pages
-        $this->app->bind('GetPageInteractor', function () {
-            return new GetPageInteractor(new EloquentPageRepository());
-        });
-
-        $this->app->bind('GetPagesInteractor', function () {
-            return new GetPagesInteractor(new EloquentPageRepository());
-        });
-
-        $this->app->bind('CreatePageInteractor', function () {
-            return new CreatePageInteractor(new EloquentPageRepository());
-        });
-
-        $this->app->bind('UpdatePageInteractor', function () {
-            return new UpdatePageInteractor(new EloquentPageRepository());
-        });
-
-        $this->app->bind('DeletePageInteractor', function () {
-            return new DeletePageInteractor(new EloquentPageRepository());
-        });
-
-        $this->app->bind('DuplicatePageInteractor', function () {
-            return new DuplicatePageInteractor(new EloquentPageRepository());
-        });
-
-
         //Areas
         $this->app->bind('GetAreaInteractor', function () {
             return new GetAreaInteractor(new EloquentAreaRepository());
@@ -173,7 +147,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('DuplicateMenuInteractor', function () {
-            return new DuplicateMenuInteractor(new EloquentMenuRepository());
+            return new DuplicateMenuInteractor(new EloquentMenuRepository(), $this->app->make('CreateMenuInteractor'), $this->app->make('GetMenuItemsInteractor'), $this->app->make('CreateMenuItemInteractor'));
         });
 
         $this->app->bind('DeleteMenuInteractor', function () {
@@ -222,6 +196,32 @@ class WCMSLaravelServiceProvider extends ServiceProvider
 
         $this->app->bind('DeleteUserInteractor', function () {
             return new DeleteUserInteractor(new EloquentUserRepository());
+        });
+
+
+        //Pages
+        $this->app->bind('GetPageInteractor', function () {
+            return new GetPageInteractor(new EloquentPageRepository());
+        });
+
+        $this->app->bind('GetPagesInteractor', function () {
+            return new GetPagesInteractor(new EloquentPageRepository());
+        });
+
+        $this->app->bind('CreatePageInteractor', function () {
+            return new CreatePageInteractor(new EloquentPageRepository());
+        });
+
+        $this->app->bind('UpdatePageInteractor', function () {
+            return new UpdatePageInteractor(new EloquentPageRepository());
+        });
+
+        $this->app->bind('DeletePageInteractor', function () {
+            return new DeletePageInteractor(new EloquentPageRepository(), $this->app->make('GetAreasInteractor'), $this->app->make('GetBlocksInteractor'), $this->app->make('DeleteAreaInteractor'), $this->app->make('DeleteBlockInteractor'));
+        });
+
+        $this->app->bind('DuplicatePageInteractor', function () {
+            return new DuplicatePageInteractor(new EloquentPageRepository(), $this->app->make('GetAreasInteractor'), $this->app->make('GetBlocksInteractor'), $this->app->make('CreatePageInteractor'), $this->app->make('CreateAreaInteractor'), $this->app->make('CreateBlockInteractor'), $this->app->make('UpdateBlockInteractor'));
         });
     }
 

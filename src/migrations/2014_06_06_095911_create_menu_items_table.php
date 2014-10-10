@@ -20,7 +20,7 @@ class CreateMenuItemsTable extends Migration {
             $table->string('external_url')->nullable();
             $table->string('class')->nullable();
             $table->integer('menu_id')->nullable();
-            $table->bool('display')->nullable();
+            $table->boolean('display')->nullable();
             $table->timestamps();
         });
     }

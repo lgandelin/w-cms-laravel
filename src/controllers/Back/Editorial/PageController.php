@@ -2,11 +2,6 @@
 
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
-use CMS\Structures\BlockStructure;
-use CMS\Structures\Blocks\MenuBlockStructure;
-use CMS\Structures\Blocks\HTMLBlockStructure;
-use CMS\Structures\Blocks\ViewFileBlockStructure;
-use CMS\Structures\AreaStructure;
 use CMS\Structures\PageStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
@@ -105,17 +100,6 @@ class PageController extends AdminController
     public function delete($pageID)
     {
         try {
-            $areas = \App::make('GetAreasInteractor')->getAll($pageID, true);
-
-            foreach ($areas as $i => $area) {
-                $blocks = \App::make('GetBlocksInteractor')->getAll($area->ID, true);
-
-                foreach ($blocks as $j => $block) {
-                    \App::make('DeleteBlockInteractor')->run($block->ID);
-                }
-                \App::make('DeleteAreaInteractor')->run($area->ID);
-            }
-
             \App::make('DeletePageInteractor')->run($pageID);
             return \Redirect::route('back_pages_index');
         } catch (\Exception $e) {
@@ -127,56 +111,7 @@ class PageController extends AdminController
     public function duplicate($pageID)
     {
         try {
-            $newPageID = \App::make('DuplicatePageInteractor')->run($pageID);
-
-            $areas = \App::make('GetAreasInteractor')->getAll($pageID, true);
-            foreach ($areas as $i => $area) {
-
-                $areaStructure = new AreaStructure([
-                    'name' => $area->name,
-                    'width' => $area->width,
-                    'height' => $area->height,
-                    'class' => $area->class,
-                    'order' => $area->order,
-                    'page_id' => $newPageID,
-                    'display' => $area->display
-                ]);
-
-                $newAreaID = \App::make('CreateAreaInteractor')->run($areaStructure);
-
-                $blocks = \App::make('GetBlocksInteractor')->getAll($area->ID, true);
-                foreach ($blocks as $j => $block) {
-
-                    $blockStructure = new BlockStructure([
-                        'name' => $block->name,
-                        'width' => $block->width,
-                        'height' => $block->height,
-                        'type' => $block->type,
-                        'class' => $block->class,
-                        'order' => $block->order,
-                        'area_id' => $newAreaID,
-                        'display' => $block->display
-                    ]);
-
-                    $blockID = \App::make('CreateBlockInteractor')->run($blockStructure);
-
-                    if ($block->type == 'html')
-                        $blockStructureContent = new HTMLBlockStructure([
-                            'html' => $block->html,
-                        ]);
-                    elseif ($block->type == 'menu')
-                        $blockStructureContent = new MenuBlockStructure([
-                            'menu_id' => $block->menu_id,
-                        ]);
-                    elseif ($block->type == 'view_file')
-                        $blockStructureContent = new ViewFileBlockStructure([
-                            'view_file' => $block->view_file,
-                        ]);
-
-                    \App::make('UpdateBlockInteractor')->run($blockID, $blockStructureContent);
-                }
-            }
-
+            \App::make('DuplicatePageInteractor')->run($pageID);
             return \Redirect::route('back_pages_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
