@@ -103,7 +103,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('DeleteAreaInteractor', function () {
-            return new DeleteAreaInteractor(new EloquentAreaRepository(), new EloquentBlockRepository());
+            return new DeleteAreaInteractor(new EloquentAreaRepository(), $this->app->make('GetBlocksInteractor'), $this->app->make('DeleteBlockInteractor'));
         });
 
 
@@ -151,7 +151,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('DeleteMenuInteractor', function () {
-            return new DeleteMenuInteractor(new EloquentMenuRepository());
+            return new DeleteMenuInteractor(new EloquentMenuRepository(), $this->app->make('GetMenuItemsInteractor'), $this->app->make('DeleteMenuItemInteractor'));
         });
 
 
@@ -217,7 +217,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('DeletePageInteractor', function () {
-            return new DeletePageInteractor(new EloquentPageRepository(), $this->app->make('GetAreasInteractor'), $this->app->make('GetBlocksInteractor'), $this->app->make('DeleteAreaInteractor'), $this->app->make('DeleteBlockInteractor'));
+            return new DeletePageInteractor(new EloquentPageRepository(), $this->app->make('GetAreasInteractor'),$this->app->make('DeleteAreaInteractor'));
         });
 
         $this->app->bind('DuplicatePageInteractor', function () {
