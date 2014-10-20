@@ -4,6 +4,12 @@ use Illuminate\Support\ServiceProvider;
 
 use CreateUserCommand;
 
+use CMS\Interactors\Articles\CreateArticleInteractor;
+use CMS\Interactors\Articles\DeleteArticleInteractor;
+use CMS\Interactors\Articles\GetArticleInteractor;
+use CMS\Interactors\Articles\GetArticlesInteractor;
+use CMS\Interactors\Articles\UpdateArticleInteractor;
+
 use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Interactors\Pages\GetPagesInteractor;
 use CMS\Interactors\Pages\CreatePageInteractor;
@@ -43,6 +49,7 @@ use CMS\Interactors\Users\UpdateUserInteractor;
 use CMS\Interactors\Users\DeleteUserInteractor;
 
 use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
+use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentBlockRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
@@ -222,6 +229,28 @@ class WCMSLaravelServiceProvider extends ServiceProvider
 
         $this->app->bind('DuplicatePageInteractor', function () {
             return new DuplicatePageInteractor(new EloquentPageRepository(), $this->app->make('GetAreasInteractor'), $this->app->make('GetBlocksInteractor'), $this->app->make('CreatePageInteractor'), $this->app->make('CreateAreaInteractor'), $this->app->make('CreateBlockInteractor'), $this->app->make('UpdateBlockInteractor'));
+        });
+
+
+        //Articles
+        $this->app->bind('GetArticleInteractor', function () {
+            return new GetArticleInteractor(new EloquentArticleRepository());
+        });
+
+        $this->app->bind('GetArticlesInteractor', function () {
+            return new GetArticlesInteractor(new EloquentArticleRepository());
+        });
+
+        $this->app->bind('CreateArticleInteractor', function () {
+            return new CreateArticleInteractor(new EloquentArticleRepository());
+        });
+
+        $this->app->bind('UpdateArticleInteractor', function () {
+            return new UpdateArticleInteractor(new EloquentArticleRepository());
+        });
+
+        $this->app->bind('DeleteArticleInteractor', function () {
+            return new DeleteArticleInteractor(new EloquentArticleRepository());
         });
     }
 
