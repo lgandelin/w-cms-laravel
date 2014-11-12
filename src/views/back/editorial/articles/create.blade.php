@@ -42,7 +42,14 @@
                 <textarea rows="10" class="form-control ckeditor" id="text" name="text">{{{ $article->text or ''}}}</textarea>
             </div>
 
-            <input type="hidden" name="author_id" value="1" />
+            <div class="form-group">
+                <label for="text">{{ trans('w-cms-laravel::articles.publication_date') }}</label>
+                <input autocomplete="off" type="text" class="form-control" id="publication_date" name="publication_date" placeholder="{{ trans('w-cms-laravel::articles.publication_date') }}" />
+            </div>
+
+            @if ($user)
+            <input type="hidden" name="author_id" value="{{ $user->id }}" />
+            @endif
 
             <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
             <a class="btn btn-default" href="{{ route('back_articles_index') }}" title="{{ trans('w-cms-laravel::header.articles') }}">{{ trans('w-cms-laravel::generic.cancel') }}</a>

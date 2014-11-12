@@ -26,7 +26,7 @@
         <form role="form" action="{{ route('back_articles_update') }}" method="post">
             <div class="form-group">
                 <label for="title">{{ trans('w-cms-laravel::articles.title') }}</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="{{ trans('w-cms-laravel::articles.title') }}" value="{{ $article->title }}" />
+                <input autocomplete="off" type="text" class="form-control" id="title" name="title" placeholder="{{ trans('w-cms-laravel::articles.title') }}" value="{{ $article->title }}" />
             </div>
 
             <div class="form-group">
@@ -39,7 +39,10 @@
                 <textarea class="form-control ckeditor" id="text" name="text">{{{ $article->text or ''}}}</textarea>
             </div>
 
-            <input type="hidden" name="author_id" value="1" />
+            <div class="form-group">
+                <label for="text">{{ trans('w-cms-laravel::articles.publication_date') }}</label>
+                <input autocomplete="off" type="text" class="form-control" id="publication_date" name="publication_date" placeholder="{{ trans('w-cms-laravel::articles.publication_date') }}" value="{{ date('d/m/Y H:i', strtotime($article->publication_date)) }}" />
+            </div>
 
             <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
             <a class="btn btn-default" href="{{ route('back_articles_index') }}" title="{{ trans('w-cms-laravel::header.articles') }}">{{ trans('w-cms-laravel::generic.cancel') }}</a>

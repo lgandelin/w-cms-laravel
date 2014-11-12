@@ -32,6 +32,9 @@ class IndexController extends Controller {
 
                         if ($block instanceof ArticleBlockStructure && $block->article_id) {
                             $block->article = \App::make('GetArticleInteractor')->getArticleByID($block->article_id, true);
+
+                            if ($block->article->author_id)
+                                $block->article->author = \App::make('GetUserInteractor')->getUserByID($block->article->author_id, true);
                         }
 
                         $area->blocks[]= $block;

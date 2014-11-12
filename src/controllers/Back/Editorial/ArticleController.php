@@ -22,11 +22,13 @@ class ArticleController extends AdminController
 
     public function store()
     {
+        $publicationDate = \DateTime::createFromFormat('d/m/Y H:i', \Input::get('publication_date'));
         $articleStructure = new ArticleStructure([
             'title' => \Input::get('title'),
             'summary' => \Input::get('summary'),
             'text' => \Input::get('text'),
             'author_id' => \Input::get('author_id'),
+            'publication_date' => $publicationDate->format('Y-m-d H:i:s'),
         ]);
 
         try {
@@ -55,11 +57,13 @@ class ArticleController extends AdminController
     public function update()
     {
         $articleID = \Input::get('ID');
+        $publicationDate = \DateTime::createFromFormat('d/m/Y H:i', \Input::get('publication_date'));
         $articleStructure = new ArticleStructure([
             'title' => \Input::get('title'),
             'summary' => \Input::get('summary'),
             'text' => \Input::get('text'),
             'author_id' => \Input::get('author_id'),
+            'publication_date' => $publicationDate->format('Y-m-d H:i:s'),
         ]);
 
         try {

@@ -42,6 +42,7 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         $contentModel->summary = $content->getSummary();
         $contentModel->text = $content->getText();
         $contentModel->author_id = $content->getAuthorID();
+        $contentModel->publication_date = $content->getPublicationDate();
 
         return $contentModel->save();
     }
@@ -53,6 +54,7 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         $contentModel->summary = $content->getSummary();
         $contentModel->text = $content->getText();
         $contentModel->author_id = $content->getAuthorID();
+        $contentModel->publication_date = $content->getPublicationDate();
 
         return $contentModel->save();
     }
@@ -72,6 +74,7 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         $content->setSummary($contentModel->summary);
         $content->setText($contentModel->text);
         $content->setAuthorID($contentModel->author_id);
+        $content->setPublicationDate($contentModel->publication_date);
 
         return $content;
     }

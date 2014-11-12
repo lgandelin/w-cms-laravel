@@ -52,6 +52,9 @@
                                             @include($block->view_file)
                                         @elseif ($block->type == 'article' && $block->article)
                                             {{ $block->article->text }}
+                                            <p>Author : @if ($block->article->author){{ $block->article->author->first_name }} {{ $block->article->author->last_name }}@endif</p>
+
+                                            @if ($block->article->publication_date) <p>Date de publication : {{ date('d/m/Y H\hi', strtotime($block->article->publication_date)) }}</p> @endif
                                         @endif
                                     </div>
                                 @endif

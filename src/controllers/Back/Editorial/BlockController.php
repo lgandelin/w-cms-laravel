@@ -48,24 +48,24 @@ class BlockController extends AdminController
     {
         $blockID = \Input::get('ID');
 
-        if ($menuID = \Input::get('menu_id'))
+        if (\Input::exists('menu_id'))
             $blockStructure = new MenuBlockStructure([
-                'menu_id' => $menuID,
+                'menu_id' => (\Input::get('menu_id')) ? \Input::get('menu_id') : null,
                 'type' => 'menu'
             ]);
-        elseif ($html = \Input::get('html'))
+        elseif (\Input::exists('html'))
             $blockStructure = new HTMLBlockStructure([
-                'html' => $html,
+                'html' => (\Input::get('html')) ? \Input::get('html') : null,
                 'type' => 'html'
             ]);
-        elseif ($viewFile = \Input::get('view_file'))
+        elseif (\Input::exists('view_file'))
             $blockStructure = new ViewFileBlockStructure([
-                'view_file' => $viewFile,
+                'view_file' => (\Input::get('view_file')) ? \Input::get('view_file') : null,
                 'type' => 'view_file'
             ]);
-        elseif ($articleID = \Input::get('article_id'))
+        elseif (\Input::exists('article_id'))
             $blockStructure = new ArticleBlockStructure([
-                'article' => $articleID,
+                'article' => (\Input::get('article_id')) ? \Input::get('article_id') : null,
                 'type' => 'article'
             ]);
 

@@ -18,6 +18,7 @@ class CreateContentsTable extends Migration {
             $table->text('summary')->nullable();
             $table->text('text')->nullable();
             $table->integer('author_id')->nullable();
+            $table->dateTime('publication_date')->nullable();
             $table->timestamps();
         });
 	}
