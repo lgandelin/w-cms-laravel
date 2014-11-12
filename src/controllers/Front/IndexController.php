@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Front;
 
+use CMS\Structures\Blocks\ArticleBlockStructure;
 use Illuminate\Routing\Controller;
 
 use CMS\Structures\Blocks\MenuBlockStructure;
@@ -28,6 +29,11 @@ class IndexController extends Controller {
 
                             $block->menu->items =$menuItems;
                         }
+
+                        if ($block instanceof ArticleBlockStructure && $block->article_id) {
+                            $block->article = \App::make('GetArticleInteractor')->getArticleByID($block->article_id, true);
+                        }
+
                         $area->blocks[]= $block;
                     }
                     $page->areas[]= $area;

@@ -88,13 +88,17 @@ $(document).ready(function() {
             menu_id = $('.block[data-id="' + block_id + '"] .menu_id').val();
         } else if (block.attr('data-type') == 'view_file') {
             var view_file = $('.block[data-id="' + block_id + '"] .view_file').val();
+        } else if (block.attr('data-type') == 'article') {
+            var article_id = $('.block[data-id="' + block_id + '"] .article_id').val();
+            alert(article_id);
         }
 
         var data = {
             'ID': block_id,
             'html': html,
             'menu_id': menu_id,
-            'view_file': view_file
+            'view_file': view_file,
+            'article_id': article_id
         };
 
         var button = $(this);

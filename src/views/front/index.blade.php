@@ -50,6 +50,8 @@
                                             </nav>
                                         @elseif ($block->type == 'view_file' && $block->view_file != '')
                                             @include($block->view_file)
+                                        @elseif ($block->type == 'article' && $block->article)
+                                            {{ $block->article->text }}
                                         @endif
                                     </div>
                                 @endif

@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
+use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\BlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
@@ -61,6 +62,11 @@ class BlockController extends AdminController
             $blockStructure = new ViewFileBlockStructure([
                 'view_file' => $viewFile,
                 'type' => 'view_file'
+            ]);
+        elseif ($articleID = \Input::get('article_id'))
+            $blockStructure = new ArticleBlockStructure([
+                'article' => $articleID,
+                'type' => 'article'
             ]);
 
         try {
