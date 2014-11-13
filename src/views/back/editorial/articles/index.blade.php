@@ -52,6 +52,8 @@
         @endif
 
         <a class="btn btn-primary" href="{{ route('back_articles_create') }}" title="{{ trans('w-cms-laravel::generic.create') }}">{{ trans('w-cms-laravel::generic.create') }}</a>
+
+        <a class="btn btn-success" href="{{ route('back_article_categories_index') }}" title="{{ trans('w-cms-laravel::article_categories.article_categories') }}">{{ trans('w-cms-laravel::article_categories.article_categories') }}</a>
     </div>
 </div>
 

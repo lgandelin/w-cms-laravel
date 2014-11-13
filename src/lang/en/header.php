@@ -16,6 +16,8 @@ return array(
     'languages' => 'Languages',
     'articles' => 'Articles',
     'articles_edit' => 'Edit an article',
+    'article_categories' => 'Article categories',
+    'article_categories_edit' => 'Edit a category',
     'menus' => 'Menus',
     'menus_edit' => 'Edit a menu',
     'welcome' => 'Welcome',

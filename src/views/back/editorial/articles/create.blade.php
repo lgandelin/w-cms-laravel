@@ -44,7 +44,7 @@
 
             <div class="form-group">
                 <label for="text">{{ trans('w-cms-laravel::articles.publication_date') }}</label>
-                <input autocomplete="off" type="text" class="form-control" id="publication_date" name="publication_date" placeholder="{{ trans('w-cms-laravel::articles.publication_date') }}" />
+                <input autocomplete="off" type="text" class="form-control" id="publication_date" name="publication_date" placeholder="{{ trans('w-cms-laravel::articles.publication_date') }}" value="{{ date('d/m/Y H:i') }}" />
             </div>
 
             @if ($user)

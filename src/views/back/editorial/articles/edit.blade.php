@@ -31,7 +31,7 @@
 
             <div class="form-group">
                 <label for="summary">{{ trans('w-cms-laravel::articles.summary') }}</label>
-                <textarea class="form-control ckeditor" id="summary" name="summary">{{{ $article->summary or ''}}}</textarea>
+                <textarea class="form-control" id="summary" name="summary" rows="5">{{{ $article->summary or ''}}}</textarea>
             </div>
 
             <div class="form-group">

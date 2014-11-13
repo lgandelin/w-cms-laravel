@@ -38,7 +38,7 @@
                                 <li><a href="{{ route('back_editorial') }}"><span class="icon glyphicon glyphicon-pencil"></span>{{ trans('w-cms-laravel::header.editorial') }}</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{{ route('back_pages_index') }}"><span class="icon glyphicon glyphicon glyphicon-list-alt"></span>{{ trans('w-cms-laravel::header.pages') }}</a></li>
-                                <li><a href="{{ route('back_pages_index') }}"><span class="icon glyphicon glyphicon glyphicon-file"></span>{{ trans('w-cms-laravel::header.articles') }}</a></li>
+                                <li><a href="{{ route('back_articles_index') }}"><span class="icon glyphicon glyphicon glyphicon-file"></span>{{ trans('w-cms-laravel::header.articles') }}</a></li>
                                 <li><a href="{{ route('back_menus_index') }}"><span class="icon glyphicon glyphicon glyphicon-align-justify"></span>{{ trans('w-cms-laravel::header.menus') }}</a></li>
                             </ul>
                         </li>

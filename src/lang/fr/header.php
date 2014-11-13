@@ -16,7 +16,9 @@ return array(
     'languages' => 'Languages',
     'articles' => 'Articles',
     'articles_edit' => 'Editer un article',
-    'menus' => 'Gestion des menus',
+    'article_categories' => 'Catégories d\'articles',
+    'article_categories_edit' => 'Editer une catégorie',
+    'menus' => 'Menus',
     'menus_edit' => 'Editer un menu',
     'welcome' => 'Bienvenue',
     'logout' => 'Déconnexion'

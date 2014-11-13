@@ -1,5 +1,10 @@
 <?php namespace Webaccess\WCMSLaravel;
 
+use CMS\Interactors\ArticleCategories\CreateArticleCategoryInteractor;
+use CMS\Interactors\ArticleCategories\DeleteArticleCategoryInteractor;
+use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
+use CMS\Interactors\ArticleCategories\GetArticleCategoryInteractor;
+use CMS\Interactors\ArticleCategories\UpdateArticleCategoryInteractor;
 use Illuminate\Support\ServiceProvider;
 
 use CreateUserCommand;
@@ -49,6 +54,7 @@ use CMS\Interactors\Users\UpdateUserInteractor;
 use CMS\Interactors\Users\DeleteUserInteractor;
 
 use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
+use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentBlockRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
@@ -251,6 +257,28 @@ class WCMSLaravelServiceProvider extends ServiceProvider
 
         $this->app->bind('DeleteArticleInteractor', function () {
             return new DeleteArticleInteractor(new EloquentArticleRepository());
+        });
+
+
+        //Article categories
+        $this->app->bind('GetArticleCategoryInteractor', function () {
+            return new GetArticleCategoryInteractor(new EloquentArticleCategoryRepository());
+        });
+
+        $this->app->bind('GetArticleCategoriesInteractor', function () {
+            return new GetArticleCategoriesInteractor(new EloquentArticleCategoryRepository());
+        });
+
+        $this->app->bind('CreateArticleCategoryInteractor', function () {
+            return new CreateArticleCategoryInteractor(new EloquentArticleCategoryRepository());
+        });
+
+        $this->app->bind('UpdateArticleCategoryInteractor', function () {
+            return new UpdateArticleCategoryInteractor(new EloquentArticleCategoryRepository());
+        });
+
+        $this->app->bind('DeleteArticleCategoryInteractor', function () {
+            return new DeleteArticleCategoryInteractor(new EloquentArticleCategoryRepository());
         });
     }
 

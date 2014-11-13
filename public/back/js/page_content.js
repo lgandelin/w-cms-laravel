@@ -87,10 +87,9 @@ $(document).ready(function() {
         } else if (block.attr('data-type') == 'menu') {
             menu_id = $('.block[data-id="' + block_id + '"] .menu_id').val();
         } else if (block.attr('data-type') == 'view_file') {
-            var view_file = $('.block[data-id="' + block_id + '"] .view_file').val();
+            view_file = $('.block[data-id="' + block_id + '"] .view_file').val();
         } else if (block.attr('data-type') == 'article') {
-            var article_id = $('.block[data-id="' + block_id + '"] .article_id').val();
-            alert(article_id);
+            article_id = $('.block[data-id="' + block_id + '"] .article_id').val();
         }
 
         var data = {

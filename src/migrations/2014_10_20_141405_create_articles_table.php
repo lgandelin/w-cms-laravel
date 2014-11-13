@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContentsTable extends Migration {
+class CreateArticlesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -30,7 +30,7 @@ class CreateContentsTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('contents');
+        Schema::drop('articles');
 	}
 
 }

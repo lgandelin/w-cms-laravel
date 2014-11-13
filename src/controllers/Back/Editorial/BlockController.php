@@ -65,7 +65,7 @@ class BlockController extends AdminController
             ]);
         elseif (\Input::exists('article_id'))
             $blockStructure = new ArticleBlockStructure([
-                'article' => (\Input::get('article_id')) ? \Input::get('article_id') : null,
+                'article_id' => (\Input::get('article_id')) ? \Input::get('article_id') : null,
                 'type' => 'article'
             ]);
 
