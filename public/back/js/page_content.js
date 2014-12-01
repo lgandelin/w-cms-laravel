@@ -79,11 +79,13 @@ $(document).ready(function() {
         var block_id = $(this).attr('data-id');
         var block = $('.block[data-id="' + block_id + '"]');
         
+        var html, menu_id, view_file, article_id;
+
         if (block.attr('data-type') == 'html') {
             var textarea_id = $('.block[data-id="' + block_id + '"] textarea').attr('id');
-            var html = CKEDITOR.instances[textarea_id].getData();    
+            html = CKEDITOR.instances[textarea_id].getData();    
         } else if (block.attr('data-type') == 'menu') {
-            var menu_id = $('.block[data-id="' + block_id + '"] .menu_id').val();
+            menu_id = $('.block[data-id="' + block_id + '"] .menu_id').val();
         } else if (block.attr('data-type') == 'view_file') {
             var view_file = $('.block[data-id="' + block_id + '"] .view_file').val();
         }

@@ -18,23 +18,51 @@
   text-align: center;
   margin-right: 5rem;
 }
+/* line 22, ../sass/style.scss */
+.shortcuts li .icon {
+  font-size: 35px;
+  display: block;
+  margin-bottom: 10px;
+  padding: 20px;
+  border: 2px solid #ccc;
+  background: #eee;
+  border-radius: 5px;
+}
+/* line 34, ../sass/style.scss */
+.shortcuts li a:hover {
+  text-decoration: none;
+}
+/* line 38, ../sass/style.scss */
+.shortcuts li a {
+  display: block;
+}
+/* line 44, ../sass/style.scss */
+.shortcuts li:hover .icon {
+  background: #ddd;
+  border-color: #2A6496;
+}
 
-/* line 24, ../sass/style.scss */
+/* line 53, ../sass/style.scss */
+.nav .icon {
+  margin-right: 10px;
+}
+
+/* line 58, ../sass/style.scss */
 .page-header {
   margin-bottom: 5rem;
 }
 
-/* line 28, ../sass/style.scss */
+/* line 62, ../sass/style.scss */
 .form-inline {
   margin-bottom: 1rem;
 }
 
-/* line 32, ../sass/style.scss */
+/* line 66, ../sass/style.scss */
 .tab-navigation {
   margin-bottom: 3rem;
 }
 
-/* line 36, ../sass/style.scss */
+/* line 70, ../sass/style.scss */
 .glyphicon:hover {
   color: #2a6496;
 }

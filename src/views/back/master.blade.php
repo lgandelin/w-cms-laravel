@@ -26,11 +26,42 @@
 	            </div>
 	            <div class="navbar-collapse collapse">
 	                <ul class="nav navbar-nav navbar-right">
+
+                        <!-- DASHBOARD -->
 	                    <li><a href="{{ route('back') }}">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
-	                    <li><a href="{{ route('back_editorial') }}">{{ trans('w-cms-laravel::header.editorial') }}</a></li>
+                        <!-- DASHBOARD -->
+
+                        <!-- EDITORIAL -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('w-cms-laravel::header.editorial') }} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('back_editorial') }}"><span class="icon glyphicon glyphicon-pencil"></span>{{ trans('w-cms-laravel::header.editorial') }}</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{{ route('back_pages_index') }}"><span class="icon glyphicon glyphicon glyphicon-list-alt"></span>{{ trans('w-cms-laravel::header.pages') }}</a></li>
+                                <li><a href="{{ route('back_pages_index') }}"><span class="icon glyphicon glyphicon glyphicon-file"></span>{{ trans('w-cms-laravel::header.articles') }}</a></li>
+                                <li><a href="{{ route('back_menus_index') }}"><span class="icon glyphicon glyphicon glyphicon-align-justify"></span>{{ trans('w-cms-laravel::header.menus') }}</a></li>
+                            </ul>
+                        </li>
+                        <!-- EDITORIAL -->
+
+                        <!-- STRUCTURE -->
 	                    <li><a href="#">{{ trans('w-cms-laravel::header.structure') }}</a></li>
-	                    <li><a href="{{ route('back_general') }}">{{ trans('w-cms-laravel::header.general') }}</a></li>
+                        <!-- STRUCTURE -->
+
+                        <!-- GENERAL -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('w-cms-laravel::header.general') }} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('back_general') }}"><span class="icon glyphicon glyphicon glyphicon-cog"></span>{{ trans('w-cms-laravel::header.general') }}</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{{ route('back_users_index') }}"><span class="icon glyphicon glyphicon glyphicon-user"></span>{{ trans('w-cms-laravel::header.users') }}</a></li>
+                            </ul>
+                        </li>
+                        <!-- GENERAL -->
+
+                        <!-- ADMINISTRATION -->
 	                    <li><a href="#">{{ trans('w-cms-laravel::header.administration') }}</a></li>
+                        <!-- ADMINISTRATION -->
 	                </ul>
 	            </div>
 	        </div>

@@ -18,6 +18,40 @@ $blue: #2A6496;
 		display: inline-block;
 		text-align: center;
 		margin-right: 5rem;
+
+		.icon {
+			font-size: 35px;
+			display: block;
+			margin-bottom: 10px;
+			padding: 20px;
+
+			border: 2px solid #ccc;
+			background: #eee;
+
+			border-radius: 5px;	
+		}
+
+		a:hover {
+			text-decoration: none;
+		}
+
+		a {
+			display: block;
+		}
+	}
+
+	li:hover {
+		.icon {
+			background: #ddd;
+
+			border-color: #2A6496;
+		}
+	}
+}
+
+.nav {
+	.icon {
+		margin-right: 10px;
 	}
 }
 

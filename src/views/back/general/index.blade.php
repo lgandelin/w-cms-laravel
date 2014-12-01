@@ -19,21 +19,21 @@
             <ul class="shortcuts">
                 <li>
                     <a href="{{ route('back_users_index') }}">
-                          <img class="thumbnail" src="http://placehold.it/150x150/8BB58E/FFFFFF" />
+                        <span class="icon glyphicon glyphicon glyphicon-user"></span>
                           {{ trans('w-cms-laravel::header.users') }} 
                       </a>
                   </li>
 
                 <li>
                     <a href="{{ route('back_users_index') }}">
-                        <img class="thumbnail" src="http://placehold.it/150x150/F2192C/FFFFFF" />
+                        <span class="icon glyphicon glyphicon glyphicon-lock"></span>
                         {{ trans('w-cms-laravel::header.roles') }}
                     </a>
                 </li>
                 
                 <li>
                     <a href="{{ route('back_users_index') }}">
-                        <img class="thumbnail" src="http://placehold.it/150x150/F2192C/FFFFFF" />
+                        <span class="icon glyphicon glyphicon glyphicon-flag"></span>
                         {{ trans('w-cms-laravel::header.languages') }}
                     </a>
                 </li>
