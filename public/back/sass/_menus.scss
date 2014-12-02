@@ -20,6 +20,10 @@
 
 			min-height: 40px;
 			line-height: 40px;
+
+			.menu_item_label {
+				cursor: pointer;
+			}
 		}
 
 		.menu-item-delete, .menu-item-update, .menu-item-move, .menu-item-display {
