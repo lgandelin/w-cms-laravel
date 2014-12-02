@@ -11,4 +11,9 @@ class Article extends \Eloquent {
     {
         return $this->hasOne('Webaccess\WCMSLaravel\Models\User');
     }
+
+    public function category()
+    {
+        return $this->hasOne('Webaccess\WCMSLaravel\Models\ArticleCategory');
+    }
 }

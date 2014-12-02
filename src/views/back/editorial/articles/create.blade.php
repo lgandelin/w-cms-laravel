@@ -33,8 +33,20 @@
             </div>
 
             <div class="form-group">
+                <label for="identifier">{{ trans('w-cms-laravel::articles.article_category') }}</label>
+                <select class="form-control" autocomplete="off" name="category_id">
+                    <option value="">{{ trans('w-cms-laravel::articles.choose_article_category') }}</option>
+                    @if (isset($article_categories))
+                    @foreach ($article_categories as $category)
+                    <option value="{{ $category->ID }}" @if (isset($article->category_id) && $article->category_id == $category->ID) selected="selected" @endif>{{ $category->name }}</option>
+                    @endforeach
+                    @endif
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="summary">{{ trans('w-cms-laravel::articles.summary') }}</label>
-                <textarea class="form-control ckeditor" id="summary" name="summary">{{{ $article->summary or ''}}}</textarea>
+                <textarea class="form-control" id="summary" name="summary" rows="5">{{{ $article->summary or ''}}}</textarea>
             </div>
 
             <div class="form-group">

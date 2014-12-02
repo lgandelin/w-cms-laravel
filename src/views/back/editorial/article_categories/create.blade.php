@@ -30,7 +30,7 @@
 
             <div class="form-group">
                 <label for="description">{{ trans('w-cms-laravel::article_categories.description') }}</label>
-                <textarea class="form-control ckeditor" id="description" name="description">{{{ $article->description or ''}}}</textarea>
+                <textarea class="form-control" id="description" name="description" rows="5">{{{ $article->description or ''}}}</textarea>
             </div>
 
             <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />

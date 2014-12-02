@@ -8,74 +8,79 @@ use Webaccess\WCMSLaravel\Models\Article as ArticleModel;
 
 class EloquentArticleRepository implements ArticleRepositoryInterface
 {
-    public function findByID($contentID)
+    public function findByID($articleID)
     {
-        if ($contentModel = ArticleModel::find($contentID))
-            return self::createArticleFromModel($contentModel);
+        if ($articleModel = ArticleModel::find($articleID))
+            return self::createArticleFromModel($articleModel);
 
         return false;
     }
 
-    public function findByTitle($contentTitle)
+    public function findByTitle($articleTitle)
     {
-        if ($contentModel = ArticleModel::where('title', '=', $contentTitle)->first())
-            return self::createArticleFromModel($contentModel);
+        if ($articleModel = ArticleModel::where('title', '=', $articleTitle)->first())
+            return self::createArticleFromModel($articleModel);
 
         return false;
     }
 
     public function findAll()
     {
-        $contentModels = ArticleModel::get();
+        $articleModels = ArticleModel::get();
 
-        $contents = [];
-        foreach ($contentModels as $contentModel)
-            $contents[]= self::createArticleFromModel($contentModel);
+        $articles = [];
+        foreach ($articleModels as $articleModel)
+            $articles[]= self::createArticleFromModel($articleModel);
 
-        return $contents;
+        return $articles;
     }
 
-    public function createArticle(Article $content)
+    public function createArticle(Article $article)
     {
-        $contentModel = new ArticleModel();
-        $contentModel->title = $content->getTitle();
-        $contentModel->summary = $content->getSummary();
-        $contentModel->text = $content->getText();
-        $contentModel->author_id = $content->getAuthorID();
-        $contentModel->publication_date = $content->getPublicationDate();
+        $articleModel = new ArticleModel();
+        $articleModel->title = $article->getTitle();
+        $articleModel->summary = $article->getSummary();
+        $articleModel->text = $article->getText();
+        $articleModel->category_id = $article->getCategoryID();
+        $articleModel->author_id = $article->getAuthorID();
+        $articleModel->publication_date = $article->getPublicationDate();
 
-        return $contentModel->save();
+        $articleModel->save();
+
+        return $articleModel->id;
     }
 
-    public function updateArticle(Article $content)
+    public function updateArticle(Article $article)
     {
-        $contentModel = ArticleModel::find($content->getID());
-        $contentModel->title = $content->getTitle();
-        $contentModel->summary = $content->getSummary();
-        $contentModel->text = $content->getText();
-        $contentModel->author_id = $content->getAuthorID();
-        $contentModel->publication_date = $content->getPublicationDate();
+        $articleModel = ArticleModel::find($article->getID());
+        $articleModel->title = $article->getTitle();
+        $articleModel->summary = $article->getSummary();
+        $articleModel->text = $article->getText();
+        $articleModel->category_id = $article->getCategoryID();
+        $articleModel->author_id = $article->getAuthorID();
+        $articleModel->publication_date = $article->getPublicationDate();
 
-        return $contentModel->save();
+        return $articleModel->save();
     }
 
-    public function deleteArticle($contentID)
+    public function deleteArticle($articleID)
     {
-        $contentModel = ArticleModel::where('id', '=', $contentID)->first();
+        $articleModel = ArticleModel::where('id', '=', $articleID)->first();
 
-        return $contentModel->delete();
+        return $articleModel->delete();
     }
 
-    private static function createArticleFromModel(ArticleModel $contentModel)
+    private static function createArticleFromModel(ArticleModel $articleModel)
     {
-        $content = new Article();
-        $content->setID($contentModel->id);
-        $content->setTitle($contentModel->title);
-        $content->setSummary($contentModel->summary);
-        $content->setText($contentModel->text);
-        $content->setAuthorID($contentModel->author_id);
-        $content->setPublicationDate($contentModel->publication_date);
+        $article = new Article();
+        $article->setID($articleModel->id);
+        $article->setTitle($articleModel->title);
+        $article->setSummary($articleModel->summary);
+        $article->setText($articleModel->text);
+        $article->setCategoryID($articleModel->category_id);
+        $article->setAuthorID($articleModel->author_id);
+        $article->setPublicationDate($articleModel->publication_date);
 
-        return $content;
+        return $article;
     }
 }

@@ -42,7 +42,7 @@ class ArticleCategoryController extends AdminController
     {
         try {
             $this->layout = \View::make('w-cms-laravel::back.editorial.article_categories.edit', [
-                'article_category' => \App::make('GetArticleCategoryInteractor')->getArticleCategoryByID($articleCategoryID, true)
+                'article_category' => \App::make('GetArticleCategoryInteractor')->getArticleCategoryByID($articleCategoryID, true),
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());

@@ -8,57 +8,59 @@ use Webaccess\WCMSLaravel\Models\ArticleCategory as ArticleCategoryModel;
 
 class EloquentArticleCategoryRepository implements ArticleCategoryRepositoryInterface
 {
-    public function findByID($contentID)
+    public function findByID($articleCategoryID)
     {
-        if ($contentModel = ArticleCategoryModel::find($contentID))
-            return self::createArticleCategoryFromModel($contentModel);
+        if ($articleCategoryModel = ArticleCategoryModel::find($articleCategoryID))
+            return self::createArticleCategoryFromModel($articleCategoryModel);
 
         return false;
     }
 
     public function findAll()
     {
-        $contentModels = ArticleCategoryModel::get();
+        $articleCategoryModels = ArticleCategoryModel::get();
 
-        $contents = [];
-        foreach ($contentModels as $contentModel)
-            $contents[]= self::createArticleCategoryFromModel($contentModel);
+        $articleCategorys = [];
+        foreach ($articleCategoryModels as $articleCategoryModel)
+            $articleCategorys[]= self::createArticleCategoryFromModel($articleCategoryModel);
 
-        return $contents;
+        return $articleCategorys;
     }
 
-    public function createArticleCategory(ArticleCategory $content)
+    public function createArticleCategory(ArticleCategory $articleCategory)
     {
-        $contentModel = new ArticleCategoryModel();
-        $contentModel->name = $content->getName();
-        $contentModel->description = $content->getDescription();
+        $articleCategoryModel = new ArticleCategoryModel();
+        $articleCategoryModel->name = $articleCategory->getName();
+        $articleCategoryModel->description = $articleCategory->getDescription();
 
-        return $contentModel->save();
+        $articleCategoryModel->save();
+
+        return $articleCategoryModel->id;
     }
 
-    public function updateArticleCategory(ArticleCategory $content)
+    public function updateArticleCategory(ArticleCategory $articleCategory)
     {
-        $contentModel = ArticleCategoryModel::find($content->getID());
-        $contentModel->name = $content->getName();
-        $contentModel->description = $content->getDescription();
+        $articleCategoryModel = ArticleCategoryModel::find($articleCategory->getID());
+        $articleCategoryModel->name = $articleCategory->getName();
+        $articleCategoryModel->description = $articleCategory->getDescription();
 
-        return $contentModel->save();
+        return $articleCategoryModel->save();
     }
 
-    public function deleteArticleCategory($contentID)
+    public function deleteArticleCategory($articleCategoryID)
     {
-        $contentModel = ArticleCategoryModel::where('id', '=', $contentID)->first();
+        $articleCategoryModel = ArticleCategoryModel::where('id', '=', $articleCategoryID)->first();
 
-        return $contentModel->delete();
+        return $articleCategoryModel->delete();
     }
 
-    private static function createArticleCategoryFromModel(ArticleCategoryModel $contentModel)
+    private static function createArticleCategoryFromModel(ArticleCategoryModel $articleCategoryModel)
     {
-        $content = new ArticleCategory();
-        $content->setID($contentModel->id);
-        $content->setName($contentModel->name);
-        $content->setDescription($contentModel->description);
+        $articleCategory = new ArticleCategory();
+        $articleCategory->setID($articleCategoryModel->id);
+        $articleCategory->setName($articleCategoryModel->name);
+        $articleCategory->setDescription($articleCategoryModel->description);
 
-        return $content;
+        return $articleCategory;
     }
 }
