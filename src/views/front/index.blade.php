@@ -50,7 +50,7 @@
                                             </nav>
                                         @elseif ($block->type == 'view_file' && $block->view_file != '')
                                             @include($block->view_file)
-                                        @elseif ($block->type == 'article' && $block->article)
+                                        @elseif ($block->type == 'article' && isset($block->article))
                                             <h2>{{ $block->article->title }}</h2>
                                             {{ $block->article->text }}
                                             {{--
