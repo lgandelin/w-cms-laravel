@@ -29,13 +29,12 @@
         @if (isset($page->areas))
         @foreach ($page->areas as $area)
         <div class="area" data-id="{{ $area->ID }}">
-            <span class="title"><span class="area_name">{{ $area->name }}</span></span>
+            <span class="title"><span class="area_name">{{ $area->name }}</span><span class="glyphicon glyphicon-chevron-up opening-status"></span></span>
 
             <div class="content">
                 @foreach ($area->blocks as $block)
                 <div class="block" data-id="{{ $block->ID }}" data-type="{{ $block->type }}">
-                    <span class="title"><span class="block_name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span></span>
-
+                    <span class="title"><span class="block_name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span><span class="glyphicon glyphicon-chevron-down opening-status"></span></span>
                     <div class="content">
                         @if ($block->type == 'html')
                         <textarea class="ckeditor" id="editor{{ $block->ID }}" name="editor{{ $block->ID }}">{{ $block->html }}</textarea>

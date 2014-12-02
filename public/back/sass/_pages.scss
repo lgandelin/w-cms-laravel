@@ -37,6 +37,10 @@
 					text-transform: uppercase;
 				}
 			}
+
+			.opening-status {
+				float: right;
+			}
 		}
 	}
 
@@ -99,7 +103,7 @@
 		.area-name, .block-name {
 			cursor: pointer;
 		}
-		
+
 		.sortable-placeholder {
 			.area_color, .block_color {
 				border: 1px solid $blue !important;

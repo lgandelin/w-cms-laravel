@@ -123,11 +123,13 @@ $(document).ready(function() {
 
     });
 
-    $('body').on('click', '.area > .title, .block > .title', function() {
+     $('body').on('click', '.area > .title, .block > .title', function() {
         $(this).next().toggle();
+        $(this).find('> .opening-status').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
     });
 
     $('body').on('click', '.page-content-close-block', function() {
         $(this).closest('.content').hide();
+        $(this).closest('.block').find('.opening-status').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
     });
 });
