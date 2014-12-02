@@ -12,6 +12,7 @@ $(document).ready(function() {
     $('body').on('click', '.area-create-block', function() {
         $('.block-form .btn-valid').attr('data-area-id', $(this).attr('data-id')).attr('data-action', 'create');
         $('.area-form').hide();
+        $('.block-form .name, .block-form .width, .block-form .height, .block-form .class, .block-form .type').val('');
         $('.block-form').show();
     });
 
