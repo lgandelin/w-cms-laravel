@@ -132,8 +132,32 @@ $(document).ready(function() {
                         block.find('.block-name').text(input_data.name);
                         block.find('.type').text('(' + input_data.type.toUpperCase() + ')');
 
-                        //Update block in "Content" tab
+                        //Update block in "Content" tab                            
                         $('#content .block[data-id="' + block_id + '"]').find('.block_name').text(input_data.name);
+                        $('#content .block[data-id="' + block_id + '"]').find('.type').text('(' + input_data.type + ')');
+
+                        if ($('#content .block[data-id="' + block_id + '"]').attr('data-type') != input_data.type) {
+                            $('#content .block[data-id="' + block_id + '"]').attr('data-type', input_data.type.toLowerCase());
+
+                            var block_content = '';
+                            if (input_data.type == 'html')
+                                block_content += '<textarea class="ckeditor" id="editor' + input_data.ID + '" name="editor' + input_data.ID + '"></textarea>';
+                            else if (input_data.type == 'menu')
+                                block_content += $('#select_menu_template').html();
+                            else if (input_data.type == 'view_file')
+                                block_content += $('#view_file_template').html();
+                            else if (input_data.type == 'article')
+                                block_content += $('#select_article_template').html();
+
+                            block_content += '<div class="submit_wrapper"><input data-id="' + input_data.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + input_data.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
+                            
+                            $('#content .block[data-id="' + block_id + '"] .content').html(block_content);
+
+                            if (input_data.type == 'html')
+                                CKEDITOR.replace( 'editor' + input_data.ID);
+
+                        }
+
                     } else {
                         
                     }
