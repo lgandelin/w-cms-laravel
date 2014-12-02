@@ -12,6 +12,7 @@ $(document).ready(function() {
     $('body').on('click', '.page-content-create-area', function() {
         $('.area-form .btn-valid').attr('data-page-id', $(this).attr('data-id')).attr('data-action', 'create');
         $('.block-form').hide();
+        $('.area-form .name, .area-form .width, .area-form .height, .area-form .class').val('');
         $('.area-form').show();
     });
 
@@ -74,7 +75,7 @@ $(document).ready(function() {
                         $('.area-form .class').val('');
 
                         //Create area in "Structure" tab
-                        var area_content = '<div id="a-'+ data.area.ID + '" data-width="' + data.area.width + '" data-id="' + data.area.ID + '" class="area col-xs-' + data.area.width + '" data-display="0"><div class="area_color"><span class="title"><span class="area_name">' + data.area.name + '</span> <span class="area_width">[<span class="width_value">' + data.area.width + '</span>]</span><span data-id="' + data.area.ID + '" class="area-delete glyphicon glyphicon-remove"></span><span data-id="' + data.area.ID + '" class="area-move glyphicon glyphicon-move"></span><span data-id="' + data.area.ID + '" class="area-display area-hidden glyphicon glyphicon-eye-open"></span><span data-id="' + data.area.ID + '" class="area-update glyphicon glyphicon-pencil"></span><span data-id="' + data.area.ID + '" class="area-create-block glyphicon glyphicon-plus"></span></span></div></div>';
+                        var area_content = '<div id="a-'+ data.area.ID + '" data-width="' + data.area.width + '" data-id="' + data.area.ID + '" class="area col-xs-' + data.area.width + '" data-display="0"><div class="area_color"><span class="title"><span class="area-name">' + data.area.name + '</span> <span class="area_width">[<span class="width_value">' + data.area.width + '</span>]</span><span data-id="' + data.area.ID + '" class="area-delete glyphicon glyphicon-remove"></span><span data-id="' + data.area.ID + '" class="area-move glyphicon glyphicon-move"></span><span data-id="' + data.area.ID + '" class="area-display area-hidden glyphicon glyphicon-eye-open"></span><span data-id="' + data.area.ID + '" class="area-update glyphicon glyphicon-pencil"></span><span data-id="' + data.area.ID + '" class="area-create-block glyphicon glyphicon-plus"></span></span></div></div>';
                         $('#structure > .areas-wrapper').append(area_content);
                         init_area_sortable();
                         init_block_sortable();
@@ -116,7 +117,7 @@ $(document).ready(function() {
                         area.removeClass().addClass('area col-xs-' + input_data.width);
                         area.attr('data-width', input_data.width);
                         area.find('.area_width .width_value').text(input_data.width);
-                        area.find('.area_name').text(input_data.name);
+                        area.find('.area-name').text(input_data.name);
 
                         //Update area in "Content" tab
                         $('#content .area[data-id="' + area_id + '"]').find('.area_name').text(input_data.name);
@@ -202,7 +203,7 @@ function init_area_sortable() {
             var height = ui.item.height();
             placeholder.addClass('col-xs-' + width).html('<div class="area_color" style="height:' + height + 'px"></div>');
         },
-        handle: '.area-move',
+        handle: '.area-move, .area-name',
         update: function (event, ui) {
             var data = $(this).sortable('toArray');
 
@@ -216,6 +217,6 @@ function init_area_sortable() {
                 url: route_areas_update_order
             });
         },
-        tolerance: 'intersect'
+        tolerance: 'pointer'
     });
 }

@@ -79,20 +79,25 @@ $(document).ready(function() {
         var block_id = $(this).attr('data-id');
         var block = $('.block[data-id="' + block_id + '"]');
         
+        var html, menu_id, view_file, article_id;
+
         if (block.attr('data-type') == 'html') {
             var textarea_id = $('.block[data-id="' + block_id + '"] textarea').attr('id');
-            var html = CKEDITOR.instances[textarea_id].getData();    
+            html = CKEDITOR.instances[textarea_id].getData();    
         } else if (block.attr('data-type') == 'menu') {
-            var menu_id = $('.block[data-id="' + block_id + '"] .menu_id').val();
+            menu_id = $('.block[data-id="' + block_id + '"] .menu_id').val();
         } else if (block.attr('data-type') == 'view_file') {
-            var view_file = $('.block[data-id="' + block_id + '"] .view_file').val();
+            view_file = $('.block[data-id="' + block_id + '"] .view_file').val();
+        } else if (block.attr('data-type') == 'article') {
+            article_id = $('.block[data-id="' + block_id + '"] .article_id').val();
         }
 
         var data = {
             'ID': block_id,
             'html': html,
             'menu_id': menu_id,
-            'view_file': view_file
+            'view_file': view_file,
+            'article_id': article_id
         };
 
         var button = $(this);
@@ -118,11 +123,13 @@ $(document).ready(function() {
 
     });
 
-    $('body').on('click', '.area > .title, .block > .title', function() {
+     $('body').on('click', '.area > .title, .block > .title', function() {
         $(this).next().toggle();
+        $(this).find('> .opening-status').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
     });
 
     $('body').on('click', '.page-content-close-block', function() {
         $(this).closest('.content').hide();
+        $(this).closest('.block').find('.opening-status').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
     });
 });

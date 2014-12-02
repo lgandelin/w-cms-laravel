@@ -39,6 +39,21 @@ Route::post('/admin/editorial/blocks/delete', array('as' => 'back_blocks_delete'
 Route::post('/admin/editorial/blocks/update_order', array('as' => 'back_blocks_update_order', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\BlockController@update_order'));
 Route::post('/admin/editorial/blocks/display', array('as' => 'back_blocks_display', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\BlockController@display'));
 
+//BACK > EDITORIAL > ARTICLES
+Route::get('/admin/editorial/articles', array('as' => 'back_articles_index', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleController@index'));
+Route::get('/admin/editorial/articles/create', array('as' => 'back_articles_create', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleController@create'));
+Route::post('/admin/editorial/articles/store', array('as' => 'back_articles_store', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleController@store'));
+Route::get('/admin/editorial/articles/edit/{articleID}', array('as' => 'back_articles_edit', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleController@edit'));
+Route::post('/admin/editorial/articles/update', array('as' => 'back_articles_update', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleController@update'));
+Route::get('/admin/editorial/articles/delete/{articleID}', array('as' => 'back_articles_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleController@delete'));
+
+Route::get('/admin/editorial/articles/categories', array('as' => 'back_article_categories_index', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleCategoryController@index'));
+Route::get('/admin/editorial/articles/categories/create', array('as' => 'back_article_categories_create', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleCategoryController@create'));
+Route::post('/admin/editorial/articles/categories/store', array('as' => 'back_article_categories_store', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleCategoryController@store'));
+Route::get('/admin/editorial/articles/categories/edit/{articleCategoryID}', array('as' => 'back_article_categories_edit', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleCategoryController@edit'));
+Route::post('/admin/editorial/articles/categories/update', array('as' => 'back_article_categories_update', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleCategoryController@update'));
+Route::get('/admin/editorial/articles/categories/delete/{articleCategoryID}', array('as' => 'back_article_categories_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\ArticleCategoryController@delete'));
+
 //BACK > EDITORIAL > MENUS
 Route::get('/admin/editorial/menus', array('as' => 'back_menus_index', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@index'));
 Route::get('/admin/editorial/menus/create', array('as' => 'back_menus_create', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MenuController@create'));

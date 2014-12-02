@@ -44,7 +44,6 @@ class PageController extends AdminController
 		try {
             $page = \App::make('GetPageInteractor')->getPageByID($pageID, true);
             $areas = \App::make('GetAreasInteractor')->getAll($pageID, true);
-            $menus = \App::make('GetMenusInteractor')->getAll(true);
 
             if ($areas) {
                 foreach ($areas as $area) {
@@ -55,7 +54,8 @@ class PageController extends AdminController
 
 		    $this->layout = \View::make('w-cms-laravel::back.editorial.pages.edit', [
 		        'page' => $page,
-                'menus' => $menus
+                'menus' => \App::make('GetMenusInteractor')->getAll(true),
+                'articles' => \App::make('GetArticlesInteractor')->getAll(true),
 		    ]);
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());

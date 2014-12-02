@@ -69,6 +69,20 @@
                         </div>
                     </div>
 
+                    <div style="display:none;" id="select_article_template">
+                        <div class="form-group">
+                            <label for="identifier">{{ trans('w-cms-laravel::pages.block_article') }}</label>
+                            <select class="article_id form-control" autocomplete="off">
+                                <option value="">{{ trans('w-cms-laravel::pages.choose_article') }}</option>
+                                @if (isset($articles))
+                                @foreach ($articles as $article)
+                                <option value="{{ $article->ID }}">{{ $article->title }}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
 
 			@else

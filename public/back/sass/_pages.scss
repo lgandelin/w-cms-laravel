@@ -37,6 +37,10 @@
 					text-transform: uppercase;
 				}
 			}
+
+			.opening-status {
+				float: right;
+			}
 		}
 	}
 
@@ -94,6 +98,10 @@
 			.area-hidden, .block-hidden {
 				color: #ccc;
 			}
+		}
+
+		.area-name, .block-name {
+			cursor: pointer;
 		}
 
 		.sortable-placeholder {

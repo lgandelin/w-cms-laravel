@@ -28,11 +28,13 @@ return array(
     'block_class' => 'Classe CSS',
     'block_menu' => 'Menu',
     'block_view_file' => 'Fichier "View"',
+    'block_article' => 'Article',
 
     'no_page_created_yet' => 'Aucune page créée',
    	'not_found' => 'Page non trouvée',
     'new_page' => 'Nouvelle page',
     'add_area' => 'Ajouter une zone',
 
-    'choose_menu' => 'Choisir un menu'
+    'choose_menu' => 'Choisir un menu',
+    'choose_article' => 'Choisir un article'
 );
