@@ -158,7 +158,11 @@
 .pages-interface #structure .area .area-hidden, .pages-interface #structure .area .block-hidden {
   color: #ccc;
 }
-/* line 100, ../sass/_pages.scss */
+/* line 99, ../sass/_pages.scss */
+.pages-interface #structure .area-name, .pages-interface #structure .block-name {
+  cursor: pointer;
+}
+/* line 104, ../sass/_pages.scss */
 .pages-interface #structure .sortable-placeholder .area_color, .pages-interface #structure .sortable-placeholder .block_color {
   border: 1px solid #2a6496 !important;
   background: #8AB4D8 !important;
@@ -166,11 +170,11 @@
   line-height: 43px;
   overflow: hidden;
 }
-/* line 109, ../sass/_pages.scss */
+/* line 113, ../sass/_pages.scss */
 .pages-interface #structure .block-form, .pages-interface #structure .area-form {
   display: none;
 }
-/* line 112, ../sass/_pages.scss */
+/* line 116, ../sass/_pages.scss */
 .pages-interface #structure .block-form .submit_wrapper, .pages-interface #structure .area-form .submit_wrapper {
   margin-bottom: 20px;
 }

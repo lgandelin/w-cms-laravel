@@ -9,7 +9,7 @@
         <div id="a-{{ $area->ID }}" data-id="{{ $area->ID }}" class="area col-xs-{{ $area->width }}" data-width="{{ $area->width }}" data-display="{{ $area->display }}">
             <div class="area_color">
                 <span class="title">
-                    <span class="area_name">{{ $area->name }}</span> <span class="area_width">[<span class="width_value">{{ $area->width }}</span>]</span>
+                    <span class="area-name">{{ $area->name }}</span> <span class="area_width">[<span class="width_value">{{ $area->width }}</span>]</span>
                     <span data-id="{{ $area->ID }}" class="area-delete glyphicon glyphicon-remove"></span>
                     <span data-id="{{ $area->ID }}" class="area-move glyphicon glyphicon-move"></span>
                     <span data-id="{{ $area->ID }}" class="area-display @if ($area->display == 0) area-hidden @endif glyphicon glyphicon-eye-open"></span>
@@ -21,7 +21,7 @@
                 <div id="b-{{ $block->ID }}" data-id="{{ $block->ID }}" class="block col-xs-{{ $block->width}}" data-width="{{ $block->width }}" data-display="{{ $block->display }}">
                     <div class="block_color">
                         <span class="title">
-                            <span class="name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span> [<span class="width_value">{{ $block->width }}</span>]
+                            <span class="block-name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span> [<span class="width_value">{{ $block->width }}</span>]
 
                             <span data-id="{{ $block->ID }}" class="block-delete glyphicon glyphicon-remove"></span>
                             <span data-id="{{ $block->ID }}" class="block-move glyphicon glyphicon-move"></span>
