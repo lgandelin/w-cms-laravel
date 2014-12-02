@@ -71,7 +71,7 @@ $(document).ready(function() {
                         button.val('Submit');
 
                         //Create block in "Structure" tab
-                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + '" data-display="0"><div class="block_color"><span class="title"><span class="name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display block-hidden glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-pencil"></span></span></div></div>';
+                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + '" data-display="0"><div class="block_color"><span class="title"><span class="block-name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display block-hidden glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-pencil"></span></span></div></div>';
                         $('#structure .area[data-id="' + input_data.area_id + '"] .area_color').append(block_content);
                         init_block_sortable();
 
@@ -128,7 +128,7 @@ $(document).ready(function() {
                         //Update block in "Structure" tab
                         block.removeClass().addClass('block col-xs-' + input_data.width);
                         block.find('.width_value').text(input_data.width);
-                        block.find('.name').text(input_data.name);
+                        block.find('.block-name').text(input_data.name);
                         block.find('.type').text('(' + input_data.type.toUpperCase() + ')');
 
                         //Update block in "Content" tab
@@ -216,7 +216,7 @@ function init_block_sortable() {
             placeholder.html('<div class="block_color"></div>');
         },
         connectWith: '.area_color',
-        handle: '.block-move',
+        handle: '.block-move, .block-name',
         stop: function (event, ui) {
             var block_id = ui.item.attr('data-id');
             var area = ui.item.closest('.area_color');
@@ -233,6 +233,6 @@ function init_block_sortable() {
                 url: route_blocks_update_order
             });
         },
-        tolerance: 'intersect'
+        tolerance: 'pointer'
     });
 }
