@@ -130,6 +130,7 @@ $(document).ready(function() {
 
                         //Update block in "Structure" tab
                         block.removeClass().addClass('block col-xs-' + input_data.width);
+                        block.attr('data-width', input_data.width);
                         block.find('.width_value').text(input_data.width);
                         block.find('.block-name').text(input_data.name);
                         block.find('.type').text('(' + input_data.type.toUpperCase() + ')');
