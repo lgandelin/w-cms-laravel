@@ -3,6 +3,7 @@
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
 use CMS\Structures\Blocks\ArticleBlockStructure;
+use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\BlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
@@ -67,6 +68,13 @@ class BlockController extends AdminController
             $blockStructure = new ArticleBlockStructure([
                 'article_id' => (\Input::get('article_id')) ? \Input::get('article_id') : null,
                 'type' => 'article'
+            ]);
+        elseif (\Input::exists('article_list_category_id') || \Input::exists('article_list_order') || \Input::exists('article_list_number'))
+            $blockStructure = new ArticleListBlockStructure([
+                'article_list_category_id' => (\Input::get('article_list_category_id')) ? \Input::get('article_list_category_id') : null,
+                'article_list_order' => (\Input::get('article_list_order')) ? \Input::get('article_list_order') : null,
+                'article_list_number' => (\Input::get('article_list_number')) ? \Input::get('article_list_number') : null,
+                'type' => 'article_list'
             ]);
 
         try {

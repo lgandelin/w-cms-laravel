@@ -122,6 +122,7 @@
                 <option value="menu">Menu</option>
                 <option value="view_file">View file</option>
                 <option value="article">Article</option>
+                <option value="article_list">Article list</option>
             </select>
         </div>
         <!-- Type -->

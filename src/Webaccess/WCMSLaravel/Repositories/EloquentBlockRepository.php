@@ -4,6 +4,7 @@ namespace Webaccess\WCMSLaravel\Repositories;
 
 use CMS\Entities\Block;
 use CMS\Entities\Blocks\ArticleBlock;
+use CMS\Entities\Blocks\ArticleListBlock;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Entities\Blocks\MenuBlock;
 use CMS\Entities\Blocks\ViewFileBlock;
@@ -73,6 +74,11 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         if ($blockModel->type == 'menu') $blockModel->menu_id = $block->getMenuID();
         if ($blockModel->type == 'view_file') $blockModel->view_file = $block->getViewFile();
         if ($blockModel->type == 'article') $blockModel->article_id = $block->getArticleID();
+        if ($blockModel->type == 'article_list') {
+            $blockModel->article_list_category_id = $block->getArticleListCategoryID();
+            $blockModel->article_list_order = $block->getArticleListOrder();
+            $blockModel->article_list_number = $block->getArticleListNumber();
+        }
 
         return $blockModel->save();
     }
@@ -106,6 +112,11 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         } elseif ($blockModel->type == 'article') {
             $block = new ArticleBlock();
             $block->setArticleID($blockModel->article_id);
+        } elseif ($blockModel->type == 'article_list') {
+            $block = new ArticleListBlock();
+            $block->setArticleListCategoryID($blockModel->article_list_category_id);
+            $block->setArticleListOrder($blockModel->article_list_order);
+            $block->setArticleListNumber($blockModel->article_list_number);
         } else
             $block = new Block();
 

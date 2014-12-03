@@ -57,6 +57,16 @@
                                             <p>Author : @if ($block->article->author){{ $block->article->author->first_name }} {{ $block->article->author->last_name }}@endif</p>
                                             @if ($block->article->publication_date) <p>Date de publication : {{ date('d/m/Y H\hi', strtotime($block->article->publication_date)) }}</p> @endif
                                             --}}
+                                        @elseif ($block->type == 'article_list')
+                                            <ul>
+                                                @foreach ($block->articles as $article)
+                                                    <li>
+                                                        <h4>{{ $article->title }}</h4>
+                                                        <p>{{ $article->summary }}</p>
+                                                        <a href="#">En savoir plus</a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
                                         @endif
                                     </div>
                                 @endif

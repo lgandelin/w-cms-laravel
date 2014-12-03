@@ -56,6 +56,7 @@ class PageController extends AdminController
 		        'page' => $page,
                 'menus' => \App::make('GetMenusInteractor')->getAll(true),
                 'articles' => \App::make('GetArticlesInteractor')->getAll(true),
+                'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
 		    ]);
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());

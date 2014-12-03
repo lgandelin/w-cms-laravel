@@ -8,5 +8,7 @@ return array(
     'duplicate' => 'Duplicate',
     'submit' => 'Submit',
     'cancel' => 'Cancel',
-    'close' => 'Close'
+    'close' => 'Close',
+    'ascending' => 'Ascending',
+    'descending' => 'Descending',
 );
