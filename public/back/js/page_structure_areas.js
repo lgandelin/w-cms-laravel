@@ -3,26 +3,25 @@ $(document).ready(function() {
 	//Drag and drop initialization
     init_area_sortable();
 
-    //Close area form
-    $('.area-form .btn-close').on( "click", function() {
-        $('.area-form').hide();
-    });
-
     //Create area
     $('body').on('click', '.page-content-create-area', function() {
-        $('.area-form .btn-valid').attr('data-page-id', $(this).attr('data-id')).attr('data-action', 'create');
-        $('.block-form').hide();
-        $('.area-form .name, .area-form .width, .area-form .height, .area-form .class').val('');
-        $('.area-form').show();
+        var modal = $('#area-infos-modal');
+        $(modal).find('.btn-valid').attr('data-page-id', $(this).attr('data-id')).attr('data-action', 'create');
+
+        $(modal).find('.name').val('');
+        $(modal).find('.width').val('');
+        $(modal).find('.height').val('');
+        $(modal).find('.class').val('');
+
+        $(modal).modal('show');
     });
 
     //Update area
     $('body').on('click', '.area-update', function() {
-        var area_id = $(this).attr('data-id');
-        $('.area-form .btn-valid').attr('data-id', area_id).attr('data-action', 'update');
-        $('.block-form').hide();
-        
-        var area = $('.area[data-id="' + area_id + '"]');
+        var area_id = $(this).data('id');
+
+        var modal = $('#area-infos-modal');
+        $(modal).find('.btn-valid').attr('data-id', area_id).attr('data-action', 'update');
 
         $.ajax({
             type: "GET",
@@ -31,12 +30,12 @@ $(document).ready(function() {
                 data = JSON.parse(data);
 
                 if (data.success) {
-                    $('.area-form .name').val(data.area.name);
-                    $('.area-form .width').val(data.area.width);
-                    $('.area-form .height').val(data.area.height);
-                    $('.area-form .class').val(data.area.class);
-
-                    $('.area-form').show();
+                    $(modal).find('.name').val(data.area.name);
+                    $(modal).find('.width').val(data.area.width);
+                    $(modal).find('.height').val(data.area.height);
+                    $(modal).find('.class').val(data.area.class);
+                    
+                    $(modal).modal('show');
                 } else {
                     
                 }
@@ -45,13 +44,13 @@ $(document).ready(function() {
     });
 
     //Valid area
-    $('body').on('click', '.area-form .btn-valid', function() {
+    $('body').on('click', '#area-infos-modal .btn-valid', function() {
         if ($(this).attr('data-action') == 'create') {
             var input_data = {
-                'name': $('.area-form .name').val(),
-                'width': $('.area-form .width').val(),
-                'height': $('.area-form .height').val(),
-                'class': $('.area-form .class').val(),
+                'name': $('#area-infos-modal .name').val(),
+                'width': $('#area-infos-modal .width').val(),
+                'height': $('#area-infos-modal .height').val(),
+                'class': $('#area-infos-modal .class').val(),
                 'page_id': $(this).attr('data-page-id')
             };
 
@@ -68,12 +67,6 @@ $(document).ready(function() {
                     if (data.success) {
                         button.val('Submit');
 
-                        $('.area-form').hide();
-                        $('.area-form .name').val('');
-                        $('.area-form .width').val('');
-                        $('.area-form .height').val('');
-                        $('.area-form .class').val('');
-
                         //Create area in "Structure" tab
                         var area_content = '<div id="a-'+ data.area.ID + '" data-width="' + data.area.width + '" data-id="' + data.area.ID + '" class="area col-xs-' + data.area.width + '" data-display="0"><div class="area_color"><span class="title"><span class="area-name">' + data.area.name + '</span> <span class="area_width">[<span class="width_value">' + data.area.width + '</span>]</span><span data-id="' + data.area.ID + '" class="area-delete glyphicon glyphicon-remove"></span><span data-id="' + data.area.ID + '" class="area-move glyphicon glyphicon-move"></span><span data-id="' + data.area.ID + '" class="area-display area-hidden glyphicon glyphicon-eye-open"></span><span data-id="' + data.area.ID + '" class="area-update glyphicon glyphicon-pencil"></span><span data-id="' + data.area.ID + '" class="area-create-block glyphicon glyphicon-plus"></span></span></div></div>';
                         $('#structure > .areas-wrapper').append(area_content);
@@ -83,6 +76,9 @@ $(document).ready(function() {
                         //Create area in "Content" tab
                         var area_content = '<div class="area" data-id="' + data.area.ID + '"><span class="title"><span class="area_name">' + data.area.name + '</span></span><div class="content"></div></div>';
                         $('#content .form-group:last-child').append(area_content);
+
+                        //Close the modal
+                        $('#area-infos-modal').modal('hide');
                     } else {
                         
                     }
@@ -94,9 +90,9 @@ $(document).ready(function() {
 
             var input_data = {
                 'ID': area_id,
-                'name': $('.area-form .name').val(),
-                'width': $('.area-form .width').val(),
-                'class': $('.area-form .class').val()
+                'name': $('#area-infos-modal .name').val(),
+                'width': $('#area-infos-modal .width').val(),
+                'class': $('#area-infos-modal .class').val()
             };
 
             var button = $(this);
@@ -111,7 +107,6 @@ $(document).ready(function() {
 
                     if (data.success) {
                         button.val('Submit');
-                        $('.area-form').hide();
 
                         //Update area in "Structure" tab
                         area.removeClass().addClass('area col-xs-' + input_data.width);
@@ -121,6 +116,9 @@ $(document).ready(function() {
 
                         //Update area in "Content" tab
                         $('#content .area[data-id="' + area_id + '"]').find('.area_name').text(input_data.name);
+
+                        //Close the modal
+                        $('#area-infos-modal').modal('hide');
                     } else {
                         
                     }
