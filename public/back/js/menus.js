@@ -175,7 +175,7 @@ function init_menu_items_sortable() {
     $( ".menu-items-wrapper" ).sortable({
         placeholder: 'sortable-placeholder menu_item',
         items: '.menu_item',
-        handle: '.menu-item-move',
+        handle: '.menu-item-move, .menu_item_label',
         update: function (event, ui) {
             var data = $(this).sortable('toArray');
 
@@ -189,7 +189,7 @@ function init_menu_items_sortable() {
                 url: route_menu_items_update_order
             });
         },
-        tolerance: 'intersect'
+        tolerance: 'pointer'
     });
 }
 

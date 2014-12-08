@@ -50,13 +50,23 @@
                                             </nav>
                                         @elseif ($block->type == 'view_file' && $block->view_file != '')
                                             @include($block->view_file)
-                                        @elseif ($block->type == 'article' && $block->article)
+                                        @elseif ($block->type == 'article' && isset($block->article))
                                             <h2>{{ $block->article->title }}</h2>
                                             {{ $block->article->text }}
                                             {{--
                                             <p>Author : @if ($block->article->author){{ $block->article->author->first_name }} {{ $block->article->author->last_name }}@endif</p>
                                             @if ($block->article->publication_date) <p>Date de publication : {{ date('d/m/Y H\hi', strtotime($block->article->publication_date)) }}</p> @endif
                                             --}}
+                                        @elseif ($block->type == 'article_list')
+                                            <ul>
+                                                @foreach ($block->articles as $article)
+                                                    <li>
+                                                        <h4>{{ $article->title }}</h4>
+                                                        <p>{{ $article->summary }}</p>
+                                                        <a href="#">En savoir plus</a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
                                         @endif
                                     </div>
                                 @endif

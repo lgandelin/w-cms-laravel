@@ -38,8 +38,8 @@
                 <tr>
                     <td>{{{ $article->ID or ''}}}</td>
                     <td>{{ $article->title }}</td>
-                    <td>@if ($article->category){{ $article->category->name }} @endif</td>
-                    <td>@if ($article->author){{ $article->author->first_name }} {{ $article->author->last_name }}@endif</td>
+                    <td>@if (isset($article->category)){{ $article->category->name }} @endif</td>
+                    <td>@if (isset($article->author)){{ $article->author->first_name }} {{ $article->author->last_name }}@endif</td>
                     <td>
                         <a class="btn btn-default" href="{{ route('back_articles_edit', array($article->ID)) }}" title="{{ $article->title }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
                         <a class="btn btn-danger" href="{{ route('back_articles_delete', array($article->ID)) }}" title="{{ $article->title }}">{{ trans('w-cms-laravel::generic.delete') }}</a>

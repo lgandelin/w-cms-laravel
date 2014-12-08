@@ -205,22 +205,26 @@
   min-height: 40px;
   line-height: 40px;
 }
-/* line 25, ../sass/_menus.scss */
+/* line 24, ../sass/_menus.scss */
+.menus-interface .menu_item .title .menu_item_label {
+  cursor: pointer;
+}
+/* line 29, ../sass/_menus.scss */
 .menus-interface .menu_item .menu-item-delete, .menus-interface .menu_item .menu-item-update, .menus-interface .menu_item .menu-item-move, .menus-interface .menu_item .menu-item-display {
   cursor: pointer;
   float: right;
   margin: 5px 5px 0 0;
 }
-/* line 32, ../sass/_menus.scss */
+/* line 36, ../sass/_menus.scss */
 .menus-interface .menu-item-form {
   width: 60%;
   float: left;
 }
-/* line 37, ../sass/_menus.scss */
+/* line 41, ../sass/_menus.scss */
 .menus-interface .menu-item-hidden {
   color: #ccc;
 }
-/* line 41, ../sass/_menus.scss */
+/* line 45, ../sass/_menus.scss */
 .menus-interface .sortable-placeholder {
   border: 1px solid #2a6496 !important;
   background: #8AB4D8 !important;

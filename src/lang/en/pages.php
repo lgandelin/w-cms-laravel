@@ -28,11 +28,15 @@ return array(
     'block_class' => 'CSS class',
     'block_menu' => 'Menu',
     'block_view_file' => 'View file',
+    'block_article_list_category' => 'Article category',
+    'block_article_list_number' => 'Number of articles',
+    'block_article_list_order' => 'Order',
 
     'no_page_created_yet' => 'No page created yet',
     'not_found' => 'Page not found',
     'new_page' => 'New page',
     'add_area' => 'Add an area',
 
-    'choose_menu' => 'Choose a menu'
+    'choose_menu' => 'Choose a menu',
+    'choose_article_list_category' => 'Choose an article category'
 );

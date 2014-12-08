@@ -3,24 +3,25 @@ $(document).ready(function() {
     //Drag and drop initialization
     init_block_sortable();
 
-    //Close block form
-    $('.block-form .btn-close').on( "click", function() {
-        $('.block-form').hide();
-    });
-    
     //Create block
     $('body').on('click', '.area-create-block', function() {
-        $('.block-form .btn-valid').attr('data-area-id', $(this).attr('data-id')).attr('data-action', 'create');
-        $('.area-form').hide();
-        $('.block-form .name, .block-form .width, .block-form .height, .block-form .class, .block-form .type').val('');
-        $('.block-form').show();
+        var modal = $('#block-infos-modal');
+        $(modal).find('.btn-valid').attr('data-area-id', $(this).attr('data-id')).attr('data-action', 'create');
+
+        $(modal).find('.name').val('');
+        $(modal).find('.width').val('');
+        $(modal).find('.height').val('');
+        $(modal).find('.class').val('');
+        $(modal).find('.type').val('');
+
+        $(modal).modal('show');
     });
 
     //Update block
     $('body').on('click', '.block-update', function() {
         var block_id = $(this).attr('data-id');
-        $('.block-form .btn-valid').attr('data-id', block_id).attr('data-action', 'update');
-        $('.area-form').hide();
+        var modal = $('#block-infos-modal');
+        $(modal).find('.btn-valid').attr('data-id', block_id).attr('data-action', 'update');
         
         var block = $('.block[data-id="' + block_id + '"]');
 
@@ -31,13 +32,13 @@ $(document).ready(function() {
                 data = JSON.parse(data);
 
                 if (data.success) {
-                    $('.block-form .name').val(data.block.name);
-                    $('.block-form .width').val(data.block.width);
-                    $('.block-form .height').val(data.block.height);
-                    $('.block-form .class').val(data.block.class);
-                    $('.block-form .type').val(data.block.type);
+                    $(modal).find('.name').val(data.block.name);
+                    $(modal).find('.width').val(data.block.width);
+                    $(modal).find('.height').val(data.block.height);
+                    $(modal).find('.class').val(data.block.class);
+                    $(modal).find('.type').val(data.block.type);
 
-                    $('.block-form').show();
+                    $(modal).modal('show');
                 } else {
                     
                 }
@@ -46,15 +47,15 @@ $(document).ready(function() {
     });
 
     //Valid block
-    $('body').on('click', '.block-form .btn-valid', function() {
+    $('body').on('click', '#block-infos-modal .btn-valid', function() {
 
         if ($(this).attr('data-action') == 'create') {
             var input_data = {
-                'name': $('.block-form .name').val(),
-                'width': $('.block-form .width').val(),
-                'height': $('.block-form .height').val(),
-                'type': $('.block-form .type').val(),
-                'class': $('.block-form .class').val(),
+                'name': $('#block-infos-modal .name').val(),
+                'width': $('#block-infos-modal .width').val(),
+                'height': $('#block-infos-modal .height').val(),
+                'type': $('#block-infos-modal .type').val(),
+                'class': $('#block-infos-modal .class').val(),
                 'area_id': $(this).attr('data-area-id')
             };
 
@@ -87,6 +88,8 @@ $(document).ready(function() {
                             block_content += $('#view_file_template').html();
                         else if (data.block.type == 'article')
                             block_content += $('#select_article_template').html();
+                        else if (data.block.type == 'article_list')
+                            block_content += $('#article_category_template').html();
 
                         block_content += '<div class="submit_wrapper"><input data-id="' + data.block.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + data.block.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                         $('#content .area[data-id="' + input_data.area_id + '"] > .content').append(block_content);
@@ -94,6 +97,7 @@ $(document).ready(function() {
                         if (data.block.type == 'html')
                             CKEDITOR.replace( 'editor' + data.block.ID);
 
+                        $('#block-infos-modal').modal('hide');
                     } else {
                         
                     }
@@ -105,11 +109,11 @@ $(document).ready(function() {
 
             var input_data = {
                 'ID': block_id,
-                'name': $('.block-form .name').val(),
-                'width': $('.block-form .width').val(),
-                'height': $('.block-form .height').val(),
-                'type': $('.block-form .type').val(),
-                'class': $('.block-form .class').val()
+                'name': $('#block-infos-modal .name').val(),
+                'width': $('#block-infos-modal .width').val(),
+                'height': $('#block-infos-modal .height').val(),
+                'type': $('#block-infos-modal .type').val(),
+                'class': $('#block-infos-modal .class').val()
             };
 
             var button = $(this);
@@ -124,10 +128,10 @@ $(document).ready(function() {
 
                     if (data.success) {
                         button.val('Submit');
-                        $('.block-form').hide();
 
                         //Update block in "Structure" tab
                         block.removeClass().addClass('block col-xs-' + input_data.width);
+                        block.attr('data-width', input_data.width);
                         block.find('.width_value').text(input_data.width);
                         block.find('.block-name').text(input_data.name);
                         block.find('.type').text('(' + input_data.type.toUpperCase() + ')');
@@ -155,8 +159,9 @@ $(document).ready(function() {
 
                             if (input_data.type == 'html')
                                 CKEDITOR.replace( 'editor' + input_data.ID);
-
                         }
+                        
+                        $('#block-infos-modal').modal('hide');
 
                     } else {
                         

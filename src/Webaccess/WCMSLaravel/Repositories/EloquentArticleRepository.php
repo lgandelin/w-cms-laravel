@@ -24,6 +24,24 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         return false;
     }
 
+    public function findByCategoryID($categoryID, $number = null, $order = 'desc')
+    {
+        $query = ArticleModel::where('category_id', '=', $categoryID);
+        if ($number) {
+            $query->take($number);
+        }
+
+        $query->orderBy('publication_date', $order);
+
+        $articleModels = $query->get();
+
+        $articles = [];
+        foreach ($articleModels as $articleModel)
+            $articles[]= self::createArticleFromModel($articleModel);
+
+        return $articles;
+    }
+
     public function findAll()
     {
         $articleModels = ArticleModel::get();

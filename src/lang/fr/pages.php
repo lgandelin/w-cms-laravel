@@ -29,6 +29,9 @@ return array(
     'block_menu' => 'Menu',
     'block_view_file' => 'Fichier "View"',
     'block_article' => 'Article',
+    'block_article_list_category' => 'Categorie d\'articles',
+    'block_article_list_number' => 'Nombre d\'articles',
+    'block_article_list_order' => 'Ordre',
 
     'no_page_created_yet' => 'Aucune page créée',
    	'not_found' => 'Page non trouvée',
@@ -36,5 +39,6 @@ return array(
     'add_area' => 'Ajouter une zone',
 
     'choose_menu' => 'Choisir un menu',
-    'choose_article' => 'Choisir un article'
+    'choose_article' => 'Choisir un article',
+    'choose_article_list_category' => 'Choisir une catégorie d\'articles'
 );
