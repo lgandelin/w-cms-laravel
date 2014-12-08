@@ -36,12 +36,20 @@ class IndexController extends Controller {
 
                             if ($block->article->author_id)
                                 $block->article->author = \App::make('GetUserInteractor')->getUserByID($block->article->author_id, true);
+
+                            if ($block->article->page_id)
+                                $block->article->page = \App::make('GetPageInteractor')->getPageByID($block->article->page_id, true);
                         }
 
                         elseif ($block instanceof ArticleListBlockStructure) {
                             $block->articles = array();
                             if ($block->article_list_category_id) {
                                 $block->articles = \App::make('GetArticlesInteractor')->getByCategoryID($block->article_list_category_id, $block->article_list_number, $block->article_list_order, true);
+
+                                foreach ($block->articles as $article) {
+                                    if ($article->page_id)
+                                        $article->page = \App::make('GetPageInteractor')->getPageByID($article->page_id, true);
+                                }
                             }
                         }
 

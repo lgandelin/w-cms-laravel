@@ -32,17 +32,32 @@
                 <input type="text" class="form-control" id="title" name="title" placeholder="{{ trans('w-cms-laravel::articles.title') }}" value="{{{ $article->title or '' }}}" />
             </div>
 
-            <div class="form-group">
-                <label for="identifier">{{ trans('w-cms-laravel::articles.article_category') }}</label>
-                <select class="form-control" autocomplete="off" name="category_id">
-                    <option value="">{{ trans('w-cms-laravel::articles.choose_article_category') }}</option>
-                    @if (isset($article_categories))
-                    @foreach ($article_categories as $category)
-                    <option value="{{ $category->ID }}" @if (isset($article->category_id) && $article->category_id == $category->ID) selected="selected" @endif>{{ $category->name }}</option>
-                    @endforeach
-                    @endif
-                </select>
-            </div>
+            <div class="row">
+                <div class="form-group col-xs-6">
+                    <label for="identifier">{{ trans('w-cms-laravel::articles.article_category') }}</label>
+                    <select class="form-control" autocomplete="off" name="category_id">
+                        <option value="">{{ trans('w-cms-laravel::articles.choose_article_category') }}</option>
+                        @if (isset($article_categories))
+                        @foreach ($article_categories as $category)
+                        <option value="{{ $category->ID }}">{{ $category->name }}</option>
+                        @endforeach
+                        @endif
+                    </select>
+                </div>
+
+                <div class="form-group col-xs-6">
+                    <label for="page_id" style="display: block">{{ trans('w-cms-laravel::articles.article_page_associated') }}</label>
+
+                    <select class="form-control" autocomplete="off" name="page_id" style="float: left; width: 50%">
+                        <option value="">{{ trans('w-cms-laravel::articles.choose_page') }}</option>
+                        @if (isset($pages))
+                        @foreach ($pages as $page)
+                        <option value="{{ $page->ID }}">{{ $page->name }}</option>
+                        @endforeach
+                        @endif
+                    </select>
+                    <a class="btn btn-default" href="{{ route('back_pages_create') }}" style="float: left; margin-left: 10px">{{ trans('w-cms-laravel::articles.article_create_page_associated') }}</a>
+                </div>
 
             <div class="form-group">
                 <label for="summary">{{ trans('w-cms-laravel::articles.summary') }}</label>

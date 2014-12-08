@@ -87,7 +87,7 @@
                         <div class="form-group">
                             <label for="identifier">{{ trans('w-cms-laravel::pages.block_article_list_category') }}</label>
                             <select class="article_list_category_id form-control" autocomplete="off">
-                                <option value="">{{ trans('w-cms-laravel::pages.choose_article') }}</option>
+                                <option value="">{{ trans('w-cms-laravel::pages.choose_article_list_category') }}</option>
                                 @if (isset($article_categories))
                                     @foreach ($article_categories as $category)
                                     <option value="{{ $category->ID }}">{{ $category->name }}</option>
@@ -103,8 +103,8 @@
 
                         <div class="form-group">
                             <label>{{ trans('w-cms-laravel::pages.block_article_list_order') }}</label>
-                            <input type="radio" value="asc" class="article_list_order_asc" autocomplete="off" /> {{ trans('w-cms-laravel::generic.ascending') }}
-                            <input type="radio" value="desc" class="article_list_order_desc" checked autocomplete="off" /> {{ trans('w-cms-laravel::generic.descending') }}
+                            <input type="radio" value="asc" class="article_list_order_asc" name="article_list_order" autocomplete="off" /> {{ trans('w-cms-laravel::generic.ascending') }}
+                            <input type="radio" value="desc" class="article_list_order_desc" name="article_list_order" checked autocomplete="off" /> {{ trans('w-cms-laravel::generic.descending') }}
                         </div>
 
                     </div>

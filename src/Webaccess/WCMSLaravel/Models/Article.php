@@ -5,7 +5,7 @@ namespace Webaccess\WCMSLaravel\Models;
 class Article extends \Eloquent {
 
     protected $table = 'articles';
-    protected $fillable = array('title', 'summary', 'text');
+    protected $fillable = array('title', 'summary', 'text', 'page_id');
 
     public function author()
     {

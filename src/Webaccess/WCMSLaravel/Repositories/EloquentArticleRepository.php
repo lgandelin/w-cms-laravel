@@ -61,6 +61,7 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         $articleModel->text = $article->getText();
         $articleModel->category_id = $article->getCategoryID();
         $articleModel->author_id = $article->getAuthorID();
+        $articleModel->page_id = $article->getPageID();
         $articleModel->publication_date = $article->getPublicationDate();
 
         $articleModel->save();
@@ -76,6 +77,7 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         $articleModel->text = $article->getText();
         $articleModel->category_id = $article->getCategoryID();
         $articleModel->author_id = $article->getAuthorID();
+        $articleModel->page_id = $article->getPageID();
         $articleModel->publication_date = $article->getPublicationDate();
 
         return $articleModel->save();
@@ -97,6 +99,7 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         $article->setText($articleModel->text);
         $article->setCategoryID($articleModel->category_id);
         $article->setAuthorID($articleModel->author_id);
+        $article->setPageID($articleModel->page_id);
         $article->setPublicationDate($articleModel->publication_date);
 
         return $article;
