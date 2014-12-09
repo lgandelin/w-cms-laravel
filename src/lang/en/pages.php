@@ -38,5 +38,6 @@ return array(
     'add_area' => 'Add an area',
 
     'choose_menu' => 'Choose a menu',
-    'choose_article_list_category' => 'Choose an article category'
+    'choose_article_list_category' => 'Choose an article category',
+    'choose_global_block' => 'Choose a global block'
 );

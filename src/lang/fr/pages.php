@@ -40,5 +40,6 @@ return array(
 
     'choose_menu' => 'Choisir un menu',
     'choose_article' => 'Choisir un article',
-    'choose_article_list_category' => 'Choisir une catégorie d\'articles'
+    'choose_article_list_category' => 'Choisir une catégorie d\'articles',
+    'choose_global_block' => 'Choisir un bloc global'
 );

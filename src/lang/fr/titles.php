@@ -19,5 +19,9 @@ return array(
 	'users' => 'Utilisateurs',
 	'users_create' => 'Créer un utilisateur',
 	'users_edit' => 'Editer un utilisateur',
-	'general' => 'General'
+    'blocks' => 'Blocs',
+    'blocks_create' => 'Créer un bloc',
+    'blocks_edit' => 'Editer un bloc',
+	'general' => 'General',
+    'structure' => 'Structure',
 );
