@@ -29,16 +29,36 @@
                 <input autocomplete="off" type="text" class="form-control" id="title" name="title" placeholder="{{ trans('w-cms-laravel::articles.title') }}" value="{{ $article->title }}" />
             </div>
 
-            <div class="form-group">
-                <label for="identifier">{{ trans('w-cms-laravel::articles.article_category') }}</label>
-                <select class="form-control" autocomplete="off" name="category_id">
-                    <option value="">{{ trans('w-cms-laravel::articles.choose_article_category') }}</option>
-                    @if (isset($article_categories))
-                    @foreach ($article_categories as $category)
-                    <option value="{{ $category->ID }}" @if (isset($article->category_id) && $article->category_id == $category->ID) selected="selected" @endif>{{ $category->name }}</option>
-                    @endforeach
+            <div class="row">
+                <div class="form-group col-xs-6">
+                    <label for="category_id">{{ trans('w-cms-laravel::articles.article_category') }}</label>
+                    <select class="form-control" autocomplete="off" name="category_id">
+                        <option value="">{{ trans('w-cms-laravel::articles.choose_article_category') }}</option>
+                        @if (isset($article_categories))
+                        @foreach ($article_categories as $category)
+                        <option value="{{ $category->ID }}" @if (isset($article->category_id) && $article->category_id == $category->ID) selected="selected" @endif>{{ $category->name }}</option>
+                        @endforeach
+                        @endif
+                    </select>
+                </div>
+
+                <div class="form-group col-xs-6">
+                    <label for="page_id" style="display: block">{{ trans('w-cms-laravel::articles.article_page_associated') }}</label>
+
+                    <select class="form-control" autocomplete="off" name="page_id" style="float: left; width: 50%">
+                        <option value="">{{ trans('w-cms-laravel::articles.choose_page') }}</option>
+                        @if (isset($pages))
+                        @foreach ($pages as $page)
+                        <option value="{{ $page->ID }}" @if (isset($article->page_id) && $article->page_id == $page->ID) selected="selected" @endif>{{ $page->name }}</option>
+                        @endforeach
+                        @endif
+                    </select>
+                    @if (isset($article->page_id) && $article->page_id)
+                        <a class="btn btn-default" href="{{ route('back_pages_edit', array('pageID' => $article->page_id)) }}" style="float: left; margin-left: 10px">{{ trans('w-cms-laravel::articles.article_go_to_page_associated') }}</a>
+                    @else
+                        <a class="btn btn-default" href="{{ route('back_pages_create') }}" style="float: left; margin-left: 10px">{{ trans('w-cms-laravel::articles.article_create_page_associated') }}</a>
                     @endif
-                </select>
+                </div>
             </div>
 
             <div class="form-group">

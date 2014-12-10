@@ -20,6 +20,9 @@ return array(
     'article_categories_edit' => 'Editer une catégorie',
     'menus' => 'Menus',
     'menus_edit' => 'Editer un menu',
+    'templates' => 'Gabarits',
+    'blocks' => 'Blocs globaux',
+    'blocks_edit' => 'Editer un bloc',
     'welcome' => 'Bienvenue',
     'logout' => 'Déconnexion'
 );

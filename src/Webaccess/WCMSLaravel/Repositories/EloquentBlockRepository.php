@@ -6,6 +6,7 @@ use CMS\Entities\Block;
 use CMS\Entities\Blocks\ArticleBlock;
 use CMS\Entities\Blocks\ArticleListBlock;
 use CMS\Entities\Blocks\HTMLBlock;
+use CMS\Entities\Blocks\GlobalBlock;
 use CMS\Entities\Blocks\MenuBlock;
 use CMS\Entities\Blocks\ViewFileBlock;
 use CMS\Repositories\BlockRepositoryInterface;
@@ -24,6 +25,17 @@ class EloquentBlockRepository implements BlockRepositoryInterface
     public function findByAreaID($areaID)
     {
         $blocksModel = BlockModel::where('area_id', '=', $areaID)->orderBy('order', 'asc')->get();
+
+        $blocks = [];
+        foreach ($blocksModel as $i => $blockModel)
+            $blocks[]= self::createBlockFromModel($blockModel);
+
+        return $blocks;
+    }
+
+    public function findGlobalBlocks()
+    {
+        $blocksModel = BlockModel::where('is_global', '=', true)->get();
 
         $blocks = [];
         foreach ($blocksModel as $i => $blockModel)
@@ -54,6 +66,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->type = $block->getType();
         $blockModel->area_id = $block->getAreaID();
         $blockModel->display = $block->getDisplay();
+        $blockModel->is_global = $block->getIsGlobal();
 
         $blockModel->save();
 
@@ -70,6 +83,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->order = $block->getOrder();
         $blockModel->area_id = $block->getAreaID();
         $blockModel->display = $block->getDisplay();
+        $blockModel->is_global = $block->getIsGlobal();
         if ($blockModel->type == 'html') $blockModel->html = $block->getHTML();
         if ($blockModel->type == 'menu') $blockModel->menu_id = $block->getMenuID();
         if ($blockModel->type == 'view_file') $blockModel->view_file = $block->getViewFile();
@@ -79,6 +93,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
             $blockModel->article_list_order = $block->getArticleListOrder();
             $blockModel->article_list_number = $block->getArticleListNumber();
         }
+        if ($blockModel->type == 'global') $blockModel->block_reference_id = $block->getBlockReferenceID();
 
         return $blockModel->save();
     }
@@ -117,6 +132,9 @@ class EloquentBlockRepository implements BlockRepositoryInterface
             $block->setArticleListCategoryID($blockModel->article_list_category_id);
             $block->setArticleListOrder($blockModel->article_list_order);
             $block->setArticleListNumber($blockModel->article_list_number);
+        } elseif ($blockModel->type == 'global') {
+            $block = new GlobalBlock();
+            $block->setBlockReferenceID($blockModel->block_reference_id);
         } else
             $block = new Block();
 
@@ -129,6 +147,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $block->setType($blockModel->type);
         $block->setAreaID($blockModel->area_id);
         $block->setDisplay($blockModel->display);
+        $block->setIsGlobal($blockModel->is_global);
         
         return $block;
     }

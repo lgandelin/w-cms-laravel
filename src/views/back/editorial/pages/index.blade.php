@@ -39,7 +39,7 @@
 							<td>{{{ $page->ID or ''}}}</td>
 							<td>{{ $page->name }}</td>
 							<td>{{ $page->identifier }}</td>
-							<td>{{ $page->uri }}</td>
+							<td><a href="{{ route('front_page_index', array($page->uri)) }}" target="_blank" title="{{ $page->name }}">{{ $page->uri }}</a></td>
 							<td>
 								<a class="btn btn-default" href="{{ route('back_pages_edit', array($page->ID)) }}" title="{{ $page->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
 								<a class="btn btn-default" href="{{ route('back_pages_duplicate', array($page->ID)) }}" title="{{ $page->name }}">{{ trans('w-cms-laravel::generic.duplicate') }}</a>

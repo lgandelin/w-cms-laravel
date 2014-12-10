@@ -73,7 +73,7 @@ $(document).ready(function() {
                         button.val('Submit');
 
                         //Create block in "Structure" tab
-                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + '" data-display="0"><div class="block_color"><span class="title"><span class="block-name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display block-hidden glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-pencil"></span></span></div></div>';
+                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + '" data-display="0" data-width="' + data.block.width + '"><div class="block_color"><span class="title"><span class="block-name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display block-hidden glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-pencil"></span></span></div></div>';
                         $('#structure .area[data-id="' + input_data.area_id + '"] .area_color').append(block_content);
                         init_block_sortable();
 
@@ -90,6 +90,8 @@ $(document).ready(function() {
                             block_content += $('#select_article_template').html();
                         else if (data.block.type == 'article_list')
                             block_content += $('#article_category_template').html();
+                        else if (data.block.type == 'global')
+                            block_content += $('#global_blocks_template').html();
 
                         block_content += '<div class="submit_wrapper"><input data-id="' + data.block.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + data.block.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                         $('#content .area[data-id="' + input_data.area_id + '"] > .content').append(block_content);
@@ -152,6 +154,10 @@ $(document).ready(function() {
                                 block_content += $('#view_file_template').html();
                             else if (input_data.type == 'article')
                                 block_content += $('#select_article_template').html();
+                            else if (input_data.type == 'article_list')
+                                block_content += $('#article_category_template').html();
+                            else if (input_data.type == 'global')
+                                block_content += $('#global_blocks_template').html();
 
                             block_content += '<div class="submit_wrapper"><input data-id="' + input_data.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + input_data.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                             

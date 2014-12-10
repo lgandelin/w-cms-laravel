@@ -90,6 +90,18 @@
                                 <input type="radio" value="asc" name="article_list_order-{{ $block->ID }}" class="article_list_order_asc" @if ($block->article_list_order == 'asc')checked @endif autocomplete="off" /> {{ trans('w-cms-laravel::generic.ascending') }}
                                 <input type="radio" value="desc" name="article_list_order-{{ $block->ID }}" class="article_list_order_desc" @if ($block->article_list_order == 'desc')checked @endif autocomplete="off" /> {{ trans('w-cms-laravel::generic.descending') }}
                             </div>
+                        @elseif ($block->type == 'global')
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::blocks.global_block') }}</label>
+                                <select class="article_id form-control" autocomplete="off">
+                                    <option value="">{{ trans('w-cms-laravel::pages.choose_global_block') }}</option>
+                                    @if (isset($global_blocks))
+                                    @foreach ($global_blocks as $global_block)
+                                    <option value="{{ $global_block->ID }}" @if (isset($block->block_reference_id) && $block->block_reference_id == $global_block->ID) selected="selected" @endif>{{ $global_block->name }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                            </div>
                         @endif
 
                         <!-- Save -->

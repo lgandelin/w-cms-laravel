@@ -133,12 +133,13 @@
                     <div class="form-group">
                         <label>{{ trans('w-cms-laravel::pages.block_type') }}</label>
                         <select class="type form-control" autocomplete="off">
-                            <option value="">Choose a type</option>
-                            <option value="html">HTML</option>
-                            <option value="menu">Menu</option>
-                            <option value="view_file">View file</option>
-                            <option value="article">Article</option>
-                            <option value="article_list">Article list</option>
+                            <option value="">{{ trans('w-cms-laravel::blocks.choose_block_type') }}</option>
+                            <option value="html">{{ trans('w-cms-laravel::blocks.html_block') }}</option>
+                            <option value="menu">{{ trans('w-cms-laravel::blocks.navigation_block') }}</option>
+                            <option value="view_file">{{ trans('w-cms-laravel::blocks.view_block') }}</option>
+                            <option value="article">{{ trans('w-cms-laravel::blocks.article_block') }}</option>
+                            <option value="article_list">{{ trans('w-cms-laravel::blocks.article_list_block') }}</option>
+                            <option value="global">{{ trans('w-cms-laravel::blocks.global_block') }}</option>
                         </select>
                     </div>
                     <!-- Type -->

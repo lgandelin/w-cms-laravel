@@ -47,7 +47,7 @@ class PageController extends AdminController
 
             if ($areas) {
                 foreach ($areas as $area) {
-                    $area->blocks = \App::make('GetBlocksInteractor')->getAll($area->ID, true);
+                    $area->blocks = \App::make('GetBlocksInteractor')->getAllByAreaID($area->ID, true);
                     $page->areas[]= $area;
                 }
             }
@@ -57,6 +57,7 @@ class PageController extends AdminController
                 'menus' => \App::make('GetMenusInteractor')->getAll(true),
                 'articles' => \App::make('GetArticlesInteractor')->getAll(true),
                 'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
+                'global_blocks' => \App::make('GetBlocksInteractor')->getGlobalBlocks(true),
 		    ]);
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());

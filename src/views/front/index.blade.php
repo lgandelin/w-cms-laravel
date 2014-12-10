@@ -63,7 +63,7 @@
                                                     <li>
                                                         <h4>{{ $article->title }}</h4>
                                                         <p>{{ $article->summary }}</p>
-                                                        <a href="#">En savoir plus</a>
+                                                        @if (isset($article->page))<a href="{{ route('front_page_index', array($article->page->uri)) }}">En savoir plus</a>@endif
                                                     </li>
                                                 @endforeach
                                             </ul>

@@ -82,5 +82,17 @@ Route::get('/admin/general/users/edit/{id}', array('as' => 'back_users_edit', 'u
 Route::post('/admin/general/users/update', array('as' => 'back_users_update', 'uses' => 'Webaccess\WCMSLaravel\Back\General\UserController@update'));
 Route::get('/admin/general/users/delete/{id}', array('as' => 'back_users_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\General\UserController@delete'));
 
+//BACK > STRUCTURE
+Route::get('/admin/structure', array('as' => 'back_structure', 'uses' => 'Webaccess\WCMSLaravel\Back\Structure\StructureController@index'));
+
+//BACK > STRUCTURE > BLOCKS
+
+Route::get('/admin/structure/blocks', array('as' => 'back_global_blocks_index', 'uses' => 'Webaccess\WCMSLaravel\Back\Structure\BlockController@index'));
+Route::get('/admin/structure/blocks/create', array('as' => 'back_global_blocks_create', 'uses' => 'Webaccess\WCMSLaravel\Back\Structure\BlockController@create'));
+Route::post('/admin/structure/blocks/store', array('as' => 'back_global_blocks_store', 'uses' => 'Webaccess\WCMSLaravel\Back\Structure\BlockController@store'));
+Route::get('/admin/structure/blocks/edit/{id}', array('as' => 'back_global_blocks_edit', 'uses' => 'Webaccess\WCMSLaravel\Back\Structure\BlockController@edit'));
+Route::post('/admin/structure/blocks/update', array('as' => 'back_global_blocks_update', 'uses' => 'Webaccess\WCMSLaravel\Back\Structure\BlockController@update'));
+Route::get('/admin/structure/blocks/delete/{id}', array('as' => 'back_global_blocks_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Structure\BlockController@delete'));
+
 //FRONT
 Route::get('{uri?}', array('as' => 'front_page_index', 'uses' => 'Webaccess\WCMSLaravel\Front\IndexController@index'));

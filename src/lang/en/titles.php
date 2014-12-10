@@ -19,5 +19,9 @@ return array(
     'menus' => 'Menus',
     'menus_create' => 'Create a menu',
     'menus_edit' => 'Edit a menu',
+    'blocks' => 'Blocks',
+    'blocks_create' => 'Create a block',
+    'blocks_edit' => 'Edit a block',
     'general' => 'General',
+    'structure' => 'Structure',
 );
