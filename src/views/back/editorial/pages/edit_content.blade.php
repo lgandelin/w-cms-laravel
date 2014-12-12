@@ -93,7 +93,7 @@
                         @elseif ($block->type == 'global')
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::blocks.global_block') }}</label>
-                                <select class="article_id form-control" autocomplete="off">
+                                <select class="block_reference_id form-control" autocomplete="off">
                                     <option value="">{{ trans('w-cms-laravel::pages.choose_global_block') }}</option>
                                     @if (isset($global_blocks))
                                     @foreach ($global_blocks as $global_block)

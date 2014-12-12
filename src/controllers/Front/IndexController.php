@@ -60,14 +60,11 @@ class IndexController extends Controller {
         }
 
         elseif ($block instanceof ArticleListBlockStructure) {
-           $block->articles = array();
-            if ($block->article_list_category_id) {
-                $block->articles = \App::make('GetArticlesInteractor')->getByCategoryID($block->article_list_category_id, $block->article_list_number, $block->article_list_order, true);
-
-                foreach ($block->articles as $article) {
-                    if ($article->page_id)
-                        $article->page = \App::make('GetPageInteractor')->getPageByID($article->page_id, true);
-                }
+            $block->articles = array();
+            $block->articles = \App::make('GetArticlesInteractor')->getAll(true, $block->article_list_category_id, $block->article_list_number, $block->article_list_order);
+            foreach ($block->articles as $article) {
+                if ($article->page_id)
+                    $article->page = \App::make('GetPageInteractor')->getPageByID($article->page_id, true);
             }
         } else if ($block instanceof GlobalBlockStructure) {
 
