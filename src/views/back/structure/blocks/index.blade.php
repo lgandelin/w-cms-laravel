@@ -10,9 +10,9 @@
     <div class="row main">
 
         <ol class="breadcrumb">
-            <li><a href="#">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
             <li><a href="{{ route('back') }}">{{ trans('w-cms-laravel::header.dashboard') }}</a></li>
             <li><a href="{{ route('back_structure') }}">{{ trans('w-cms-laravel::header.structure') }}</a></li>
+            <li><a href="{{ route('back_global_blocks_index') }}">{{ trans('w-cms-laravel::header.blocks') }}</a></li>
         </ol>
 
         <h1 class="page-header">{{ trans('w-cms-laravel::header.blocks') }}</h1>
