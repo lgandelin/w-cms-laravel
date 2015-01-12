@@ -112,7 +112,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('UpdateAreaInteractor', function () {
-            return new UpdateAreaInteractor(new EloquentAreaRepository());
+            return new UpdateAreaInteractor(new EloquentAreaRepository(), $this->app->make('GetAreasInteractor'));
         });
 
         $this->app->bind('DeleteAreaInteractor', function () {
@@ -134,7 +134,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('UpdateBlockInteractor', function () {
-            return new UpdateBlockInteractor(new EloquentBlockRepository());
+            return new UpdateBlockInteractor(new EloquentBlockRepository(), $this->app->make('GetBlocksInteractor'));
         });
 
         $this->app->bind('DeleteBlockInteractor', function () {

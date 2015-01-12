@@ -27,7 +27,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blocksModel = BlockModel::where('area_id', '=', $areaID)->orderBy('order', 'asc')->get();
 
         $blocks = [];
-        foreach ($blocksModel as $i => $blockModel)
+        foreach ($blocksModel as $blockModel)
             $blocks[]= self::createBlockFromModel($blockModel);
 
         return $blocks;
@@ -38,7 +38,18 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blocksModel = BlockModel::where('is_global', '=', true)->get();
 
         $blocks = [];
-        foreach ($blocksModel as $i => $blockModel)
+        foreach ($blocksModel as $blockModel)
+            $blocks[]= self::createBlockFromModel($blockModel);
+
+        return $blocks;
+    }
+
+    public function findChildBlocks($blockID)
+    {
+        $blocksModel = BlockModel::where('master_block_id', '=', $blockID)->get();
+
+        $blocks = [];
+        foreach ($blocksModel as $blockModel)
             $blocks[]= self::createBlockFromModel($blockModel);
 
         return $blocks;
@@ -67,6 +78,8 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->area_id = $block->getAreaID();
         $blockModel->display = $block->getDisplay();
         $blockModel->is_global = $block->getIsGlobal();
+        $blockModel->master_block_id = $block->getMasterBlockID();
+        $blockModel->is_master = $block->getIsMaster();
 
         $blockModel->save();
 
@@ -84,6 +97,8 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->area_id = $block->getAreaID();
         $blockModel->display = $block->getDisplay();
         $blockModel->is_global = $block->getIsGlobal();
+        $blockModel->master_block_id = $block->getMasterBlockID();
+        $blockModel->is_master = $block->getIsMaster();
         if ($blockModel->type == 'html') $blockModel->html = $block->getHTML();
         if ($blockModel->type == 'menu') $blockModel->menu_id = $block->getMenuID();
         if ($blockModel->type == 'view_file') $blockModel->view_file = $block->getViewFile();
@@ -148,7 +163,9 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $block->setAreaID($blockModel->area_id);
         $block->setDisplay($blockModel->display);
         $block->setIsGlobal($blockModel->is_global);
-        
+        $block->setMasterBlockID($blockModel->master_block_id);
+        $block->setIsMaster($blockModel->is_master);
+
         return $block;
     }
 } 
