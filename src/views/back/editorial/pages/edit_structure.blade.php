@@ -7,26 +7,33 @@
         @if (isset($page->areas))
         @foreach ($page->areas as $area)
         <div id="a-{{ $area->ID }}" data-id="{{ $area->ID }}" class="area col-xs-{{ $area->width }}" data-width="{{ $area->width }}" data-display="{{ $area->display }}">
-            <div class="area_color">
+            <div class="area_color @if ($area->master_area_id) child-area @endif">
                 <span class="title">
                     <span class="area-name">{{ $area->name }}</span> <span class="area_width">[<span class="width_value">{{ $area->width }}</span>]</span>
-                    <span data-id="{{ $area->ID }}" class="area-delete glyphicon glyphicon-remove"></span>
-                    <span data-id="{{ $area->ID }}" class="area-move glyphicon glyphicon-move"></span>
-                    <span data-id="{{ $area->ID }}" class="area-display @if ($area->display == 0) area-hidden @endif glyphicon glyphicon-eye-open"></span>
-                    <span data-id="{{ $area->ID }}" class="area-update glyphicon glyphicon-pencil"></span>
-                    <span data-id="{{ $area->ID }}" class="area-create-block glyphicon glyphicon-plus"></span>
+                    @if (!$area->master_area_id)
+                        <span data-id="{{ $area->ID }}" class="area-delete glyphicon glyphicon-remove"></span>
+                        <span data-id="{{ $area->ID }}" class="area-move glyphicon glyphicon-move"></span>
+                        <span data-id="{{ $area->ID }}" class="area-display @if ($area->display == 0) area-hidden @endif glyphicon glyphicon-eye-open"></span>
+                        <span data-id="{{ $area->ID }}" class="area-update glyphicon glyphicon-pencil"></span>
+                        <span data-id="{{ $area->ID }}" class="area-create-block glyphicon glyphicon-plus"></span>
+                    @else
+                        <span class="glyphicon glyphicon-exclamation-sign disabled"></span>
+                    @endif
                 </span>
 
                 @foreach ($area->blocks as $block)
                 <div id="b-{{ $block->ID }}" data-id="{{ $block->ID }}" class="block col-xs-{{ $block->width}}" data-width="{{ $block->width }}" data-display="{{ $block->display }}">
-                    <div class="block_color">
+                    <div class="block_color @if ($block->master_block_id) child-block @endif">
                         <span class="title">
                             <span class="block-name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span> [<span class="width_value">{{ $block->width }}</span>]
-
-                            <span data-id="{{ $block->ID }}" class="block-delete glyphicon glyphicon-remove"></span>
-                            <span data-id="{{ $block->ID }}" class="block-move glyphicon glyphicon-move"></span>
-                            <span data-id="{{ $block->ID }}" class="block-display @if (!$block->display) block-hidden @endif glyphicon glyphicon-eye-open"></span>
-                            <span data-id="{{ $block->ID }}" class="block-update glyphicon glyphicon-pencil"></span>
+                            @if (!$block->master_block_id)
+                                <span data-id="{{ $block->ID }}" class="block-delete glyphicon glyphicon-remove"></span>
+                                <span data-id="{{ $block->ID }}" class="block-move glyphicon glyphicon-move"></span>
+                                <span data-id="{{ $block->ID }}" class="block-display @if (!$block->display) block-hidden @endif glyphicon glyphicon-eye-open"></span>
+                                <span data-id="{{ $block->ID }}" class="block-update glyphicon glyphicon-pencil"></span>
+                            @else
+                                <span class="glyphicon glyphicon-exclamation-sign disabled"></span>
+                            @endif
                         </span>
                     </div>
                 </div>

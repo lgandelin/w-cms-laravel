@@ -201,6 +201,7 @@ function init_area_sortable() {
             var height = ui.item.height();
             placeholder.addClass('col-xs-' + width).html('<div class="area_color" style="height:' + height + 'px"></div>');
         },
+        cancel: '.child-area',
         handle: '.area-move, .area-name',
         update: function (event, ui) {
             var data = $(this).sortable('toArray');

@@ -71,6 +71,21 @@
 				margin: 5px 5px 0 0;
 			}
 
+			.child-area {
+				background: rgba(#aaa, 5/10);
+				border: 1px solid #F8857D;
+
+				.area-name {
+					cursor: default;
+				}
+
+				.disabled {
+					float: right;
+					color: #F8857D;
+					margin: 5px 5px 0 0;
+				}
+			}
+
 			.block {
 				padding: 10px;
 
@@ -93,15 +108,24 @@
 					float: right;
 					margin: 5px 5px 0 0;
 				}
+
+				.child-block {
+					background: rgba(#aaa, 5/10);
+					border: 1px solid #F8857D;
+
+					.block-name {
+						cursor: default;
+					}
+				}
 			}
 
 			.area-hidden, .block-hidden {
 				color: #ccc;
 			}
-		}
 
-		.area-name, .block-name {
-			cursor: pointer;
+			.area-name, .block-name {
+				cursor: pointer;
+			}
 		}
 
 		.sortable-placeholder {

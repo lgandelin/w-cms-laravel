@@ -251,6 +251,7 @@ function init_block_sortable() {
             placeholder.addClass('col-xs-' + width);
             placeholder.html('<div class="block_color"></div>');
         },
+        cancel: '.child-block',
         connectWith: '.area_color',
         handle: '.block-move, .block-name',
         stop: function (event, ui) {
