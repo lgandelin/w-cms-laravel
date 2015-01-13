@@ -42,6 +42,18 @@
 				    <input type="text" class="form-control" id="uri" name="uri" placeholder="{{ trans('w-cms-laravel::pages.uri') }}" value="{{{ $page->uri or '' }}}" />
 				</div>
 
+                <div class="form-group">
+                    <label for="master_page_id">{{ trans('w-cms-laravel::pages.master_page') }}</label>
+                    <select name="master_page_id" class="form-control" autocomplete="off">
+                        <option value="">{{ trans('w-cms-laravel::pages.choose_master_page') }}</option>
+                        @if (isset($master_pages))
+                            @foreach ($master_pages as $master_page)
+                                <option value="{{ $master_page->ID }}">{{ $master_page->name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                
 				<input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
 				<a class="btn btn-default" href="{{ route('back_pages_index') }}" title="{{ trans('w-cms-laravel::header.pages') }}">{{ trans('w-cms-laravel::generic.cancel') }}</a>
 			</form>

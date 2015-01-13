@@ -14,6 +14,7 @@ return array(
     'meta_title' => 'Meta title',
     'meta_description' => 'Meta description',
     'meta_keywords' => 'Meta keywords',
+    'master_page' => 'Master page',
 
     'area_name' => 'Name',
     'area_width' => 'Width',
@@ -39,5 +40,6 @@ return array(
 
     'choose_menu' => 'Choose a menu',
     'choose_article_list_category' => 'Choose an article category',
-    'choose_global_block' => 'Choose a global block'
+    'choose_global_block' => 'Choose a global block',
+    'choose_master_page' => 'Choose a master page'
 );
