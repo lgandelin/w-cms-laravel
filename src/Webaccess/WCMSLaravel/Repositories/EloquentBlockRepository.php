@@ -80,6 +80,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->is_global = $block->getIsGlobal();
         $blockModel->master_block_id = $block->getMasterBlockID();
         $blockModel->is_master = $block->getIsMaster();
+        $blockModel->is_ghost = $block->getIsGhost();
 
         $blockModel->save();
 
@@ -99,6 +100,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->is_global = $block->getIsGlobal();
         $blockModel->master_block_id = $block->getMasterBlockID();
         $blockModel->is_master = $block->getIsMaster();
+        $blockModel->is_ghost = $block->getIsGhost();
         if ($blockModel->type == 'html') $blockModel->html = $block->getHTML();
         if ($blockModel->type == 'menu') $blockModel->menu_id = $block->getMenuID();
         if ($blockModel->type == 'view_file') $blockModel->view_file = $block->getViewFile();
@@ -165,6 +167,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $block->setIsGlobal($blockModel->is_global);
         $block->setMasterBlockID($blockModel->master_block_id);
         $block->setIsMaster($blockModel->is_master);
+        $block->setIsGhost($blockModel->is_ghost);
 
         return $block;
     }

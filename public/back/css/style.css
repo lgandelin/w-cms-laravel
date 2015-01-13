@@ -106,91 +106,115 @@
   text-transform: uppercase;
 }
 /* line 41, ../sass/_pages.scss */
+.pages-interface #content .area .child-block {
+  background: rgba(170, 170, 170, 0.5);
+  border: 1px solid #F8857D;
+}
+/* line 45, ../sass/_pages.scss */
+.pages-interface #content .area .child-block .title {
+  cursor: default;
+}
+/* line 50, ../sass/_pages.scss */
 .pages-interface #content .area .opening-status {
   float: right;
 }
-/* line 49, ../sass/_pages.scss */
+/* line 55, ../sass/_pages.scss */
+.pages-interface #content .child-area {
+  background: rgba(170, 170, 170, 0.5);
+  border: 1px solid #F8857D;
+}
+/* line 59, ../sass/_pages.scss */
+.pages-interface #content .child-area > .title {
+  cursor: default;
+}
+/* line 63, ../sass/_pages.scss */
+.pages-interface #content .child-area .disabled {
+  float: right;
+  color: #F8857D;
+  margin: 5px 5px 0 0;
+}
+/* line 73, ../sass/_pages.scss */
 .pages-interface #structure .title {
   font-weight: bold;
   display: block;
   min-height: 40px;
   line-height: 40px;
 }
-/* line 57, ../sass/_pages.scss */
+/* line 81, ../sass/_pages.scss */
 .pages-interface #structure .area {
   text-align: center;
   padding: 10px;
 }
-/* line 61, ../sass/_pages.scss */
+/* line 85, ../sass/_pages.scss */
 .pages-interface #structure .area .area_color {
   overflow: hidden;
   min-height: 104px;
   background: #eee;
   border: 1px solid #ccc;
 }
-/* line 68, ../sass/_pages.scss */
+/* line 92, ../sass/_pages.scss */
 .pages-interface #structure .area .area-delete, .pages-interface #structure .area .area-update, .pages-interface #structure .area .area-create-block, .pages-interface #structure .area .area-move, .pages-interface #structure .area .area-display {
   cursor: pointer;
   float: right;
   margin: 5px 5px 0 0;
 }
-/* line 74, ../sass/_pages.scss */
+/* line 98, ../sass/_pages.scss */
 .pages-interface #structure .area .child-area {
   background: rgba(170, 170, 170, 0.5);
   border: 1px solid #F8857D;
 }
-/* line 78, ../sass/_pages.scss */
+/* line 102, ../sass/_pages.scss */
 .pages-interface #structure .area .child-area .area-name {
   cursor: default;
 }
-/* line 82, ../sass/_pages.scss */
+/* line 106, ../sass/_pages.scss */
 .pages-interface #structure .area .child-area .disabled {
   float: right;
   color: #F8857D;
   margin: 5px 5px 0 0;
 }
-/* line 89, ../sass/_pages.scss */
+/* line 113, ../sass/_pages.scss */
 .pages-interface #structure .area .block {
   padding: 10px;
 }
-/* line 92, ../sass/_pages.scss */
+/* line 116, ../sass/_pages.scss */
 .pages-interface #structure .area .block .block_color {
   background: #fdfdfd;
   border: 1px solid #ddd;
 }
-/* line 97, ../sass/_pages.scss */
+/* line 121, ../sass/_pages.scss */
 .pages-interface #structure .area .block .submit_wrapper {
   margin: 20px 0;
 }
-/* line 101, ../sass/_pages.scss */
+/* line 125, ../sass/_pages.scss */
 .pages-interface #structure .area .block .type {
   font-weight: normal;
   text-transform: uppercase;
 }
-/* line 106, ../sass/_pages.scss */
+/* line 130, ../sass/_pages.scss */
 .pages-interface #structure .area .block .block-delete, .pages-interface #structure .area .block .block-update, .pages-interface #structure .area .block .block-move, .pages-interface #structure .area .block .block-display {
   cursor: pointer;
   float: right;
   margin: 5px 5px 0 0;
 }
-/* line 112, ../sass/_pages.scss */
+/* line 136, ../sass/_pages.scss */
 .pages-interface #structure .area .block .child-block {
   background: rgba(170, 170, 170, 0.5);
   border: 1px solid #F8857D;
 }
-/* line 116, ../sass/_pages.scss */
+/* line 140, ../sass/_pages.scss */
 .pages-interface #structure .area .block .child-block .block-name {
   cursor: default;
 }
-/* line 122, ../sass/_pages.scss */
+/* line 146, ../sass/_pages.scss */
 .pages-interface #structure .area .area-hidden, .pages-interface #structure .area .block-hidden {
   color: #ccc;
 }
-/* line 126, ../sass/_pages.scss */
+/* line 150, ../sass/_pages.scss */
 .pages-interface #structure .area .area-name, .pages-interface #structure .area .block-name {
   cursor: pointer;
 }
-/* line 132, ../sass/_pages.scss */
+/* line 156, ../sass/_pages.scss */
 .pages-interface #structure .sortable-placeholder .area_color, .pages-interface #structure .sortable-placeholder .block_color {
   border: 1px solid #2a6496 !important;
   background: #8AB4D8 !important;
@@ -198,11 +222,11 @@
   line-height: 43px;
   overflow: hidden;
 }
-/* line 141, ../sass/_pages.scss */
+/* line 165, ../sass/_pages.scss */
 .pages-interface #structure .block-form, .pages-interface #structure .area-form {
   display: none;
 }
-/* line 144, ../sass/_pages.scss */
+/* line 168, ../sass/_pages.scss */
 .pages-interface #structure .block-form .submit_wrapper, .pages-interface #structure .area-form .submit_wrapper {
   margin-bottom: 20px;
 }

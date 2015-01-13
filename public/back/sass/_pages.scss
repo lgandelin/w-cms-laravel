@@ -1,5 +1,5 @@
 .pages-interface {
-	
+
 	#content {
 		.title {
 			cursor: pointer;
@@ -38,8 +38,32 @@
 				}
 			}
 
+			.child-block {
+				background: rgba(#aaa, 5/10);
+				border: 1px solid #F8857D;
+
+				.title {
+					cursor: default;
+				}
+			}
+
 			.opening-status {
 				float: right;
+			}
+		}
+
+		.child-area {
+			background: rgba(#aaa, 5/10);
+			border: 1px solid #F8857D;
+
+			> .title {
+				cursor: default;
+			}
+
+			.disabled {
+				float: right;
+				color: #F8857D;
+				margin: 5px 5px 0 0;
 			}
 		}
 	}

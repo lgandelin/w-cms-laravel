@@ -3,6 +3,7 @@
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
 use CMS\Structures\ArticleStructure;
+use CMS\Structures\Blocks\ArticleBlockStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
 class ArticleController extends AdminController
@@ -88,6 +89,24 @@ class ArticleController extends AdminController
 
         try {
             \App::make('UpdateArticleInteractor')->run($articleID, $articleStructure);
+
+            if (\Input::get('create_associated_page')) {
+
+                $masterPageID = \Config::get('w-cms-laravel::article_master_page_id');
+
+                $pageStructure = \App::make('GetPageInteractor')->getPageByID($masterPageID, true);
+                $pageStructure->name = \Input::get('title');
+                $slug = strtolower(str_replace(' ', '-', \Input::get('title')));
+                $pageStructure->uri = '/' . $slug;
+                $pageStructure->identifier = $slug;
+                $pageStructure->is_master = 0;
+                $pageStructure->master_page_id = $masterPageID;
+
+                $articleStructure = new ArticleBlockStructure([
+                    'article_id' => $articleID
+                ]);
+                \App::make('CreatePageFromMasterInteractor')->run($pageStructure, $articleStructure);
+            }
             return \Redirect::route('back_articles_index');
         } catch (\Exception $e) {
             $this->layout = \View::make('w-cms-laravel::back.editorial.articles.edit', [
