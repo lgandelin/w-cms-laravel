@@ -18,13 +18,6 @@
 
         <ul class="shortcuts">
             <li>
-                <a href="#">
-                    <span class="icon glyphicon glyphicon-list-alt"></span>
-                    {{ trans('w-cms-laravel::header.templates') }}
-                </a>
-            </li>
-
-            <li>
                 <a href="{{ route('back_global_blocks_index') }}">
                     <span class="icon glyphicon glyphicon-th"></span>
                     {{ trans('w-cms-laravel::header.blocks') }}

@@ -20,7 +20,6 @@ return array(
     'article_categories_edit' => 'Edit a category',
     'menus' => 'Menus',
     'menus_edit' => 'Edit a menu',
-    'templates' => 'Templates',
     'blocks' => 'Global blocks',
     'blocks_edit' => 'Edit a block',
     'welcome' => 'Welcome',

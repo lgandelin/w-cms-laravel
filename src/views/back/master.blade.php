@@ -50,7 +50,6 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ route('back_structure') }}"><span class="icon glyphicon glyphicon-tower"></span>{{ trans('w-cms-laravel::header.structure') }}</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#"><span class="icon glyphicon glyphicon-list-alt"></span>{{ trans('w-cms-laravel::header.templates') }}</a></li>
                                 <li><a href="{{ route('back_global_blocks_index') }}"><span class="icon glyphicon glyphicon-th"></span>{{ trans('w-cms-laravel::header.blocks') }}</a></li>
                             </ul>
                         </li>
