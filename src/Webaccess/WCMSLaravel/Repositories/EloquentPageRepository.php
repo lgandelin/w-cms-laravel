@@ -55,6 +55,17 @@ class EloquentPageRepository implements PageRepositoryInterface {
         return $pages;
     }
 
+    public function findChildPages($pageID)
+    {
+        $pageModels = PageModel::where('master_page_id', '=', $pageID)->get();
+
+        $pages = [];
+        foreach ($pageModels as $pageModel)
+            $pages[]= self::createPageFromModel($pageModel);
+
+        return $pages;
+    }
+
 	public function createPage(Page $page)
 	{
 		$pageModel = new PageModel();

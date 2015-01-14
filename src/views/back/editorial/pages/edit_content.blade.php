@@ -16,14 +16,12 @@
     <!-- Identifier -->
 
     <!-- Is master -->
-    @if (!$page->master_page_id)
-        <div class="form-group">
-            <label for="is_master">{{ trans('w-cms-laravel::pages.master_page') }}</label>
-            <br/>
-            Non <input type="radio" name="is_master" value="0" @if(!$page->is_master) checked @endif autocomplete="off" />
-            Oui <input type="radio" name="is_master" value="1" @if($page->is_master) checked @endif autocomplete="off" />
-        </div>
-    @endif
+    <div class="form-group">
+        <label for="is_master">{{ trans('w-cms-laravel::pages.master_page') }}</label>
+        <br/>
+        Non <input type="radio" name="is_master" value="0" @if(!$page->is_master) checked @endif autocomplete="off" />
+        Oui <input type="radio" name="is_master" value="1" @if($page->is_master) checked @endif autocomplete="off" />
+    </div>
     <!-- Is master -->
 
     <!-- Save -->

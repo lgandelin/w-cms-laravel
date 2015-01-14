@@ -33,6 +33,7 @@ class BlockController extends AdminController
             'type' => \Input::get('type'),
             'class' => \Input::get('class'),
             'order' => 999,
+            'is_master' => \Input::get('is_master'),
             'area_id' => \Input::get('area_id'),
         ]);
 
@@ -100,7 +101,8 @@ class BlockController extends AdminController
             'width' => \Input::get('width'),
             'height' => \Input::get('height'),
             'type' => \Input::get('type'),
-            'class' => \Input::get('class')
+            'class' => \Input::get('class'),
+            'is_master' => \Input::get('is_master'),
         ]);
 
         try {

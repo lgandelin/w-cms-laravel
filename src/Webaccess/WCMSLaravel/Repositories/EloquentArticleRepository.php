@@ -24,6 +24,17 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         return false;
     }
 
+    public function findByPageID($pageID)
+    {
+        $articleModels = ArticleModel::where('page_id', '=', $pageID)->get();
+
+        $articles = [];
+        foreach ($articleModels as $articleModel)
+            $articles[]= self::createArticleFromModel($articleModel);
+
+        return $articles;
+    }
+
     public function findAll($categoryID = null, $number = null, $order = 'desc')
     {
         if ($categoryID)

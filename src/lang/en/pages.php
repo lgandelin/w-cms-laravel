@@ -41,5 +41,7 @@ return array(
     'choose_menu' => 'Choose a menu',
     'choose_article_list_category' => 'Choose an article category',
     'choose_global_block' => 'Choose a global block',
-    'choose_master_page' => 'Choose a master page'
+    'choose_master_page' => 'Choose a master page',
+
+    'is_master' => 'Master',
 );

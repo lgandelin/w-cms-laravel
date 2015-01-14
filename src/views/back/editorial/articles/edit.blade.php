@@ -42,18 +42,29 @@
                     </select>
                 </div>
 
-                <div class="form-group col-xs-6">
-                    <label for="page_id" style="display: block">{{ trans('w-cms-laravel::articles.article_page_associated') }}</label>
+                @if (!$article->page_id)
+                    <div class="form-group col-xs-6">
+                        <label for="page_id">{{ trans('w-cms-laravel::articles.article_page_associated') }}</label>
 
-                    <select class="form-control" autocomplete="off" name="page_id">
-                        <option value="">{{ trans('w-cms-laravel::articles.choose_page') }}</option>
-                        @if (isset($pages))
-                        @foreach ($pages as $page)
-                        <option value="{{ $page->ID }}" @if (isset($article->page_id) && $article->page_id == $page->ID) selected="selected" @endif>{{ $page->name }}</option>
-                        @endforeach
-                        @endif
-                    </select>
-                </div>
+                        <select class="form-control" autocomplete="off" name="page_id">
+                            <option value="">{{ trans('w-cms-laravel::articles.choose_page') }}</option>
+                            @if (isset($master_pages))
+                                @foreach ($master_pages as $page)
+                                    <option value="{{ $page->ID }}" @if (isset($article->page_id) && $article->page_id == $page->ID) selected="selected" @endif>{{ $page->name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        <input type="hidden" name="create_associated_page" value="1" />
+                    </div>
+                @else
+                    <div class="form-group col-xs-6">
+                        <br/>
+                        <a href="{{ route('back_pages_edit', array('id' => $article->page_id)) }}">{{ trans('w-cms-laravel::articles.article_go_to_page_associated') }}</a>
+
+                        <input type="hidden" name="page_id" value="{{ $article->page_id }}" />
+                        <input type="hidden" name="create_associated_page" value="0" />
+                    </div>
+                @endif
             </div>
 
             <div class="form-group">
@@ -69,12 +80,6 @@
             <div class="form-group">
                 <label for="text">{{ trans('w-cms-laravel::articles.publication_date') }}</label>
                 <input autocomplete="off" type="text" class="form-control" id="publication_date" name="publication_date" placeholder="{{ trans('w-cms-laravel::articles.publication_date') }}" value="{{ date('d/m/Y H:i', strtotime($article->publication_date)) }}" />
-            </div>
-
-            <div class="form-group">
-                <label for="create_associated_page">{{ trans('w-cms-laravel::articles.create_associated_page') }}</label><br/>
-                Non <input type="radio" name="create_associated_page" value="0"/>
-                Oui <input type="radio" name="create_associated_page" value="1" checked />
             </div>
 
             <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />

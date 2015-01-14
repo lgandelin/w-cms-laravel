@@ -37,6 +37,7 @@ $(document).ready(function() {
                     $(modal).find('.height').val(data.block.height);
                     $(modal).find('.class').val(data.block.class);
                     $(modal).find('.type').val(data.block.type);
+                    $(modal).find('#block_is_master_' + data.block.is_master).attr('checked', 'checked');
 
                     $(modal).modal('show');
                 } else {
@@ -56,6 +57,7 @@ $(document).ready(function() {
                 'height': $('#block-infos-modal .height').val(),
                 'type': $('#block-infos-modal .type').val(),
                 'class': $('#block-infos-modal .class').val(),
+                'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
                 'area_id': $(this).attr('data-area-id')
             };
 
@@ -90,8 +92,6 @@ $(document).ready(function() {
                             block_content += $('#select_article_template').html();
                         else if (data.block.type == 'article_list')
                             block_content += $('#article_category_template').html();
-                        else if (data.block.type == 'global')
-                            block_content += $('#global_blocks_template').html();
 
                         block_content += '<div class="submit_wrapper"><input data-id="' + data.block.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + data.block.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                         $('#content .area[data-id="' + input_data.area_id + '"] > .content').append(block_content);
@@ -115,7 +115,8 @@ $(document).ready(function() {
                 'width': $('#block-infos-modal .width').val(),
                 'height': $('#block-infos-modal .height').val(),
                 'type': $('#block-infos-modal .type').val(),
-                'class': $('#block-infos-modal .class').val()
+                'class': $('#block-infos-modal .class').val(),
+                'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val()
             };
 
             var button = $(this);
@@ -156,8 +157,6 @@ $(document).ready(function() {
                                 block_content += $('#select_article_template').html();
                             else if (input_data.type == 'article_list')
                                 block_content += $('#article_category_template').html();
-                            else if (input_data.type == 'global')
-                                block_content += $('#global_blocks_template').html();
 
                             block_content += '<div class="submit_wrapper"><input data-id="' + input_data.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + input_data.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                             

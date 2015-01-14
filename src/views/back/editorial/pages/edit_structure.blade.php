@@ -90,6 +90,15 @@
                     </div>
                     <!-- Class-->
 
+                    <!-- Is master -->
+                    <div class="form-group">
+                        <label for="is_master">{{ trans('w-cms-laravel::pages.is_master') }}</label>
+                        <br/>
+                        Non <input type="radio" id="area_is_master_0" name="area_is_master" value="0" @if(!$area->is_master) checked @endif autocomplete="off" />
+                        Oui <input type="radio" id="area_is_master_1" name="area_is_master" value="1" @if($area->is_master) checked @endif autocomplete="off" />
+                    </div>
+                    <!-- Is master -->
+
                     <input type="hidden" class="page-id" value="{{ $page->ID }}" />
                 </div>
 
@@ -157,6 +166,15 @@
                         <input type="text" class="form-control class" placeholder="{{ trans('w-cms-laravel::pages.block_class') }}" autocomplete="off" />
                     </div>
                     <!-- Class-->
+
+                    <!-- Is master -->
+                    <div class="form-group">
+                        <label for="is_master">{{ trans('w-cms-laravel::pages.is_master') }}</label>
+                        <br/>
+                        Non <input type="radio" id="block_is_master_0" name="block_is_master" value="0" @if(!$block->is_master) checked @endif autocomplete="off" />
+                        Oui <input type="radio" id="block_is_master_1" name="block_is_master" value="1" @if($block->is_master) checked @endif autocomplete="off" />
+                    </div>
+                    <!-- Is master -->
 
                     <input type="hidden" class="area_id" />
                 </div>

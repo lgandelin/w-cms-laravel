@@ -61,6 +61,7 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
         $areaModel->order = $area->getOrder();
         $areaModel->page_id = $area->getPageID();
         $areaModel->display = $area->getDisplay();
+        $areaModel->is_master = $area->getIsMaster();
         $areaModel->master_area_id = $area->getMasterAreaID();
 
         $areaModel->save();
