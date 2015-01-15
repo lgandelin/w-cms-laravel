@@ -3,6 +3,7 @@
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
 use CMS\Structures\ArticleStructure;
+use CMS\Structures\Blocks\ArticleBlockStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
 class ArticleController extends AdminController
@@ -17,6 +18,10 @@ class ArticleController extends AdminController
 
             if ($article->category_id) {
                 $article->category = \App::make('GetArticleCategoryInteractor')->getArticleCategoryByID($article->category_id, true);
+            }
+
+            if ($article->page_id) {
+                $article->page = \App::make('GetPageInteractor')->getPageByID($article->page_id, true);
             }
         }
 
@@ -64,7 +69,7 @@ class ArticleController extends AdminController
             $this->layout = \View::make('w-cms-laravel::back.editorial.articles.edit', [
                 'article' => \App::make('GetArticleInteractor')->getArticleByID($articleID, true),
                 'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
-                'pages' => \App::make('GetPagesInteractor')->getAll(true)
+                'master_pages' => \App::make('GetPagesInteractor')->getMasterPages(true),
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
@@ -88,6 +93,22 @@ class ArticleController extends AdminController
 
         try {
             \App::make('UpdateArticleInteractor')->run($articleID, $articleStructure);
+
+            //Create associated page
+            if (\Input::get('create_associated_page') && \Input::get('page_id')) {
+                $pageStructure = \App::make('GetPageInfoFromMasterInteractor')->getPageStructure(\Input::get('page_id'), \Input::get('title'));
+
+                //Replace "ghost" block with the article block
+                $articleStructure = new ArticleBlockStructure([
+                    'article_id' => $articleID
+                ]);
+                $pageID = \App::make('CreatePageFromMasterInteractor')->run($pageStructure, $articleStructure);
+
+                $articleStructure = new ArticleStructure([
+                    'page_id' => $pageID
+                ]);
+                \App::make('UpdateArticleInteractor')->run($articleID, $articleStructure);
+            }
             return \Redirect::route('back_articles_index');
         } catch (\Exception $e) {
             $this->layout = \View::make('w-cms-laravel::back.editorial.articles.edit', [

@@ -17,7 +17,9 @@ class PageController extends AdminController
 
 	public function create()
 	{
-		$this->layout = \View::make('w-cms-laravel::back.editorial.pages.create');
+		$this->layout = \View::make('w-cms-laravel::back.editorial.pages.create', [
+            'master_pages' => \App::make('GetPagesInteractor')->getMasterPages(true),
+        ]);
 	}
 
 	public function store()
@@ -26,10 +28,16 @@ class PageController extends AdminController
 		    'name' => \Input::get('name'),
 		    'uri' => \Input::get('uri'),
 		    'identifier' => \Input::get('identifier'),
+            'master_page_id' => \Input::get('master_page_id'),
+            'is_master' => \Input::get('is_master')
 		]);
 		
 		try {
-            $pageID = \App::make('CreatePageInteractor')->run($pageStructure);
+            if ($pageStructure->master_page_id)
+                $pageID = \App::make('CreatePageFromMasterInteractor')->run($pageStructure);
+            else
+                $pageID = \App::make('CreatePageInteractor')->run($pageStructure);
+
 			return \Redirect::route('back_pages_edit', array('pageID' => $pageID));
 		} catch (\Exception $e) {
 			$this->layout = \View::make('w-cms-laravel::back.editorial.pages.create', [
@@ -71,6 +79,7 @@ class PageController extends AdminController
         $pageStructure = new PageStructure([
             'name' => \Input::get('name'),
             'identifier' => \Input::get('identifier'),
+            'is_master' => \Input::get('is_master'),
         ]);
 
         try {

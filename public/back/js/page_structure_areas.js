@@ -34,6 +34,7 @@ $(document).ready(function() {
                     $(modal).find('.width').val(data.area.width);
                     $(modal).find('.height').val(data.area.height);
                     $(modal).find('.class').val(data.area.class);
+                    $(modal).find('#area_is_master_' + data.area.is_master).attr('checked', 'checked');
                     
                     $(modal).modal('show');
                 } else {
@@ -51,6 +52,7 @@ $(document).ready(function() {
                 'width': $('#area-infos-modal .width').val(),
                 'height': $('#area-infos-modal .height').val(),
                 'class': $('#area-infos-modal .class').val(),
+                'is_master': $('#area-infos-modal input[name="area_is_master"]:checked').val(),
                 'page_id': $(this).attr('data-page-id')
             };
 
@@ -92,7 +94,8 @@ $(document).ready(function() {
                 'ID': area_id,
                 'name': $('#area-infos-modal .name').val(),
                 'width': $('#area-infos-modal .width').val(),
-                'class': $('#area-infos-modal .class').val()
+                'class': $('#area-infos-modal .class').val(),
+                'is_master': $('#area-infos-modal input[name="area_is_master"]:checked').val()
             };
 
             var button = $(this);
@@ -201,6 +204,7 @@ function init_area_sortable() {
             var height = ui.item.height();
             placeholder.addClass('col-xs-' + width).html('<div class="area_color" style="height:' + height + 'px"></div>');
         },
+        cancel: '.child-area',
         handle: '.area-move, .area-name',
         update: function (event, ui) {
             var data = $(this).sortable('toArray');

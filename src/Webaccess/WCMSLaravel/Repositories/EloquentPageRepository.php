@@ -44,6 +44,28 @@ class EloquentPageRepository implements PageRepositoryInterface {
 		return $pages;
 	}
 
+    public function findMasterPages()
+    {
+        $pageModels = PageModel::where('is_master', '=', 1)->get();
+
+        $pages = [];
+        foreach ($pageModels as $pageModel)
+            $pages[]= self::createPageFromModel($pageModel);
+
+        return $pages;
+    }
+
+    public function findChildPages($pageID)
+    {
+        $pageModels = PageModel::where('master_page_id', '=', $pageID)->get();
+
+        $pages = [];
+        foreach ($pageModels as $pageModel)
+            $pages[]= self::createPageFromModel($pageModel);
+
+        return $pages;
+    }
+
 	public function createPage(Page $page)
 	{
 		$pageModel = new PageModel();
@@ -53,6 +75,8 @@ class EloquentPageRepository implements PageRepositoryInterface {
 		$pageModel->meta_title = $page->getMetaTitle();
 		$pageModel->meta_description = $page->getMetaDescription();
 		$pageModel->meta_keywords = $page->getMetaKeywords();
+		$pageModel->is_master = $page->getIsMaster();
+        $pageModel->master_page_id = $page->getMasterPageID();
 
 		$pageModel->save();
 
@@ -68,6 +92,8 @@ class EloquentPageRepository implements PageRepositoryInterface {
         $pageModel->meta_title = $page->getMetaTitle();
         $pageModel->meta_description = $page->getMetaDescription();
         $pageModel->meta_keywords = $page->getMetaKeywords();
+        $pageModel->is_master = $page->getIsMaster();
+        $pageModel->master_page_id = $page->getMasterPageID();
 
 		return $pageModel->save();
 	}
@@ -89,6 +115,8 @@ class EloquentPageRepository implements PageRepositoryInterface {
         $page->setMetaTitle($pageModel->meta_title);
         $page->setMetaDescription($pageModel->meta_description);
         $page->setMetaKeywords($pageModel->meta_keywords);
+        $page->setIsMaster($pageModel->is_master);
+        $page->setMasterPageID($pageModel->master_page_id);
 
         return $page;
     }

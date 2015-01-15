@@ -15,6 +15,15 @@
     </div>
     <!-- Identifier -->
 
+    <!-- Is master -->
+    <div class="form-group">
+        <label for="is_master">{{ trans('w-cms-laravel::pages.master_page') }}</label>
+        <br/>
+        Non <input type="radio" name="is_master" value="0" @if(!$page->is_master) checked @endif autocomplete="off" />
+        Oui <input type="radio" name="is_master" value="1" @if($page->is_master) checked @endif autocomplete="off" />
+    </div>
+    <!-- Is master -->
+
     <!-- Save -->
     <div class="form-group">
         <input type="button" data-id="{{ $page->ID }}" class="page-content-save-infos btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
@@ -28,13 +37,28 @@
 
         @if (isset($page->areas))
         @foreach ($page->areas as $area)
-        <div class="area" data-id="{{ $area->ID }}">
-            <span class="title"><span class="area_name">{{ $area->name }}</span><span class="glyphicon glyphicon-chevron-up opening-status"></span></span>
+        <div class="area @if ($area->master_area_id) child-area @endif" data-id="{{ $area->ID }}">
+            <span class="title">
+                <span class="area_name">{{ $area->name }}</span>
+
+                @if ($area->master_area_id)
+                    <span class="glyphicon glyphicon-exclamation-sign disabled"></span>
+                @else
+                    <span class="glyphicon glyphicon-chevron-up opening-status"></span>
+                @endif
+            </span>
 
             <div class="content">
                 @foreach ($area->blocks as $block)
-                <div class="block" data-id="{{ $block->ID }}" data-type="{{ $block->type }}">
-                    <span class="title"><span class="block_name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span><span class="glyphicon glyphicon-chevron-down opening-status"></span></span>
+                <div class="block @if ($block->master_block_id) child-block @endif" data-id="{{ $block->ID }}" data-type="{{ $block->type }}">
+                    <span class="title">
+                        <span class="block_name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span>
+                        @if ($block->master_block_id)
+                            <span class="glyphicon glyphicon-exclamation-sign disabled"></span>
+                        @else
+                            <span class="glyphicon glyphicon-chevron-down opening-status"></span>
+                        @endif
+                    </span>
                     <div class="content">
                         @if ($block->type == 'html')
                             <textarea class="ckeditor" id="editor{{ $block->ID }}" name="editor{{ $block->ID }}">{{ $block->html }}</textarea>
