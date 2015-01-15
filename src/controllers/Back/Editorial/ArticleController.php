@@ -96,15 +96,9 @@ class ArticleController extends AdminController
 
             //Create associated page
             if (\Input::get('create_associated_page') && \Input::get('page_id')) {
-                $masterPageID = \Input::get('page_id');
-                $pageStructure = \App::make('GetPageInteractor')->getPageByID($masterPageID, true);
-                $pageStructure->name = \Input::get('title');
-                $slug = strtolower(str_replace(' ', '-', \Input::get('title')));
-                $pageStructure->uri = '/' . $slug;
-                $pageStructure->identifier = $slug;
-                $pageStructure->is_master = 0;
-                $pageStructure->master_page_id = $masterPageID;
+                $pageStructure = \App::make('GetPageInfoFromMasterInteractor')->getPageStructure(\Input::get('page_id'), \Input::get('title'));
 
+                //Replace "ghost" block with the article block
                 $articleStructure = new ArticleBlockStructure([
                     'article_id' => $articleID
                 ]);

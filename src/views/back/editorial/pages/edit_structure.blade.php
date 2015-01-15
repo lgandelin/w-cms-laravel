@@ -94,8 +94,8 @@
                     <div class="form-group">
                         <label for="is_master">{{ trans('w-cms-laravel::pages.is_master') }}</label>
                         <br/>
-                        Non <input type="radio" id="area_is_master_0" name="area_is_master" value="0" @if(!$area->is_master) checked @endif autocomplete="off" />
-                        Oui <input type="radio" id="area_is_master_1" name="area_is_master" value="1" @if($area->is_master) checked @endif autocomplete="off" />
+                        Non <input type="radio" id="area_is_master_0" name="area_is_master" value="0" autocomplete="off" />
+                        Oui <input type="radio" id="area_is_master_1" name="area_is_master" value="1" autocomplete="off" />
                     </div>
                     <!-- Is master -->
 

@@ -45,20 +45,6 @@
                     </select>
                 </div>
 
-                <div class="form-group col-xs-6">
-                    <label for="page_id" style="display: block">{{ trans('w-cms-laravel::articles.article_page_associated') }}</label>
-
-                    <select class="form-control" autocomplete="off" name="page_id" style="float: left; width: 50%">
-                        <option value="">{{ trans('w-cms-laravel::articles.choose_page') }}</option>
-                        @if (isset($pages))
-                        @foreach ($pages as $page)
-                        <option value="{{ $page->ID }}">{{ $page->name }}</option>
-                        @endforeach
-                        @endif
-                    </select>
-                    <a class="btn btn-default" href="{{ route('back_pages_create') }}" style="float: left; margin-left: 10px">{{ trans('w-cms-laravel::articles.article_create_page_associated') }}</a>
-                </div>
-
             <div class="form-group">
                 <label for="summary">{{ trans('w-cms-laravel::articles.summary') }}</label>
                 <textarea class="form-control" id="summary" name="summary" rows="5">{{{ $article->summary or ''}}}</textarea>

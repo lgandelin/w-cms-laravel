@@ -1,13 +1,7 @@
-<?php namespace Webaccess\WCMSLaravel;
+<?php
 
-use CMS\Interactors\Areas\DuplicateAreaInteractor;
-use CMS\Interactors\ArticleCategories\CreateArticleCategoryInteractor;
-use CMS\Interactors\ArticleCategories\DeleteArticleCategoryInteractor;
-use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
-use CMS\Interactors\ArticleCategories\GetArticleCategoryInteractor;
-use CMS\Interactors\ArticleCategories\UpdateArticleCategoryInteractor;
-use CMS\Interactors\Blocks\DuplicateBlockInteractor;
-use CMS\Interactors\Pages\CreatePageFromMasterInteractor;
+namespace Webaccess\WCMSLaravel;
+
 use Illuminate\Support\ServiceProvider;
 
 use CreateUserCommand;
@@ -18,16 +12,25 @@ use CMS\Interactors\Articles\GetArticleInteractor;
 use CMS\Interactors\Articles\GetArticlesInteractor;
 use CMS\Interactors\Articles\UpdateArticleInteractor;
 
+use CMS\Interactors\ArticleCategories\CreateArticleCategoryInteractor;
+use CMS\Interactors\ArticleCategories\DeleteArticleCategoryInteractor;
+use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
+use CMS\Interactors\ArticleCategories\GetArticleCategoryInteractor;
+use CMS\Interactors\ArticleCategories\UpdateArticleCategoryInteractor;
+
 use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Interactors\Pages\GetPagesInteractor;
 use CMS\Interactors\Pages\CreatePageInteractor;
 use CMS\Interactors\Pages\UpdatePageInteractor;
 use CMS\Interactors\Pages\DeletePageInteractor;
 use CMS\Interactors\Pages\DuplicatePageInteractor;
+use CMS\Interactors\Pages\CreatePageFromMasterInteractor;
+use CMS\Interactors\Pages\GetPageInfoFromMasterInteractor;
 
 use CMS\Interactors\Areas\GetAreaInteractor;
 use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Areas\CreateAreaInteractor;
+use CMS\Interactors\Areas\DuplicateAreaInteractor;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
 use CMS\Interactors\Areas\DeleteAreaInteractor;
 
@@ -36,6 +39,7 @@ use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;
+use CMS\Interactors\Blocks\DuplicateBlockInteractor;
 
 use CMS\Interactors\Menus\GetMenuInteractor;
 use CMS\Interactors\Menus\GetMenusInteractor;
@@ -102,15 +106,15 @@ class WCMSLaravelServiceProvider extends ServiceProvider
     public function register()
     {
         //Areas
-        $this->app->bind('GetAreaInteractor', function () {
+        $this->app->bind('GetAreaInteractor', function() {
             return new GetAreaInteractor(new EloquentAreaRepository());
         });
 
-        $this->app->bind('GetAreasInteractor', function () {
+        $this->app->bind('GetAreasInteractor', function() {
             return new GetAreasInteractor(new EloquentAreaRepository());
         });
 
-        $this->app->bind('CreateAreaInteractor', function () {
+        $this->app->bind('CreateAreaInteractor', function() {
             return new CreateAreaInteractor(
                 new EloquentAreaRepository(),
                 $this->app->make('GetPagesInteractor'),
@@ -118,14 +122,14 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind('UpdateAreaInteractor', function () {
+        $this->app->bind('UpdateAreaInteractor', function() {
             return new UpdateAreaInteractor(
                 new EloquentAreaRepository(),
                 $this->app->make('GetAreasInteractor')
             );
         });
 
-        $this->app->bind('DeleteAreaInteractor', function () {
+        $this->app->bind('DeleteAreaInteractor', function() {
             return new DeleteAreaInteractor(
                 new EloquentAreaRepository(),
                 $this->app->make('GetBlocksInteractor'),
@@ -133,7 +137,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind('DuplicateAreaInteractor', function () {
+        $this->app->bind('DuplicateAreaInteractor', function() {
             return new DuplicateAreaInteractor(
                 $this->app->make('CreateAreaInteractor'),
                 $this->app->make('UpdateAreaInteractor')
@@ -142,15 +146,15 @@ class WCMSLaravelServiceProvider extends ServiceProvider
 
 
         //Blocks
-        $this->app->bind('GetBlockInteractor', function () {
+        $this->app->bind('GetBlockInteractor', function() {
             return new GetBlockInteractor(new EloquentBlockRepository());
         });
 
-        $this->app->bind('GetBlocksInteractor', function () {
+        $this->app->bind('GetBlocksInteractor', function() {
             return new GetBlocksInteractor(new EloquentBlockRepository());
         });
 
-        $this->app->bind('CreateBlockInteractor', function () {
+        $this->app->bind('CreateBlockInteractor', function() {
             return new CreateBlockInteractor(
                 new EloquentBlockRepository(),
                 $this->app->make('GetAreasInteractor'),
@@ -158,18 +162,18 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind('UpdateBlockInteractor', function () {
+        $this->app->bind('UpdateBlockInteractor', function() {
             return new UpdateBlockInteractor(
                 new EloquentBlockRepository(),
                 $this->app->make('GetBlocksInteractor')
             );
         });
 
-        $this->app->bind('DeleteBlockInteractor', function () {
+        $this->app->bind('DeleteBlockInteractor', function() {
             return new DeleteBlockInteractor(new EloquentBlockRepository());
         });
 
-        $this->app->bind('DuplicateBlockInteractor', function () {
+        $this->app->bind('DuplicateBlockInteractor', function() {
             return new DuplicateBlockInteractor(
                 $this->app->make('CreateBlockInteractor'),
                 $this->app->make('UpdateBlockInteractor')
@@ -178,23 +182,23 @@ class WCMSLaravelServiceProvider extends ServiceProvider
 
 
         //Menus
-        $this->app->bind('CreateMenuInteractor', function () {
+        $this->app->bind('CreateMenuInteractor', function() {
             return new CreateMenuInteractor(new EloquentMenuRepository());
         });
 
-        $this->app->bind('GetMenuInteractor', function () {
+        $this->app->bind('GetMenuInteractor', function() {
             return new GetMenuInteractor(new EloquentMenuRepository());
         });
 
-        $this->app->bind('GetMenusInteractor', function () {
+        $this->app->bind('GetMenusInteractor', function() {
             return new GetMenusInteractor(new EloquentMenuRepository());
         });
 
-        $this->app->bind('UpdateMenuInteractor', function () {
+        $this->app->bind('UpdateMenuInteractor', function() {
             return new UpdateMenuInteractor(new EloquentMenuRepository());
         });
 
-        $this->app->bind('DuplicateMenuInteractor', function () {
+        $this->app->bind('DuplicateMenuInteractor', function() {
             return new DuplicateMenuInteractor(
                 new EloquentMenuRepository(),
                 $this->app->make('CreateMenuInteractor'),
@@ -203,7 +207,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind('DeleteMenuInteractor', function () {
+        $this->app->bind('DeleteMenuInteractor', function() {
             return new DeleteMenuInteractor(
                 new EloquentMenuRepository(),
                 $this->app->make('GetMenuItemsInteractor'),
@@ -213,63 +217,63 @@ class WCMSLaravelServiceProvider extends ServiceProvider
 
 
         //Menu items
-        $this->app->bind('GetMenuItemInteractor', function () {
+        $this->app->bind('GetMenuItemInteractor', function() {
             return new GetMenuItemInteractor(new EloquentMenuItemRepository());
         });
 
-        $this->app->bind('GetMenuItemsInteractor', function () {
+        $this->app->bind('GetMenuItemsInteractor', function() {
             return new GetMenuItemsInteractor(new EloquentMenuItemRepository());
         });
 
-        $this->app->bind('CreateMenuItemInteractor', function () {
+        $this->app->bind('CreateMenuItemInteractor', function() {
             return new CreateMenuItemInteractor(new EloquentMenuItemRepository());
         });
 
-        $this->app->bind('UpdateMenuItemInteractor', function () {
+        $this->app->bind('UpdateMenuItemInteractor', function() {
             return new UpdateMenuItemInteractor(new EloquentMenuItemRepository());
         });
 
-        $this->app->bind('DeleteMenuItemInteractor', function () {
+        $this->app->bind('DeleteMenuItemInteractor', function() {
             return new DeleteMenuItemInteractor(new EloquentMenuItemRepository());
         });
 
 
         //Users
-        $this->app->bind('GetUserInteractor', function () {
+        $this->app->bind('GetUserInteractor', function() {
             return new GetUserInteractor(new EloquentUserRepository());
         });
 
-        $this->app->bind('GetUsersInteractor', function () {
+        $this->app->bind('GetUsersInteractor', function() {
             return new GetUsersInteractor(new EloquentUserRepository());
         });
 
-        $this->app->bind('CreateUserInteractor', function () {
+        $this->app->bind('CreateUserInteractor', function() {
             return new CreateUserInteractor(new EloquentUserRepository());
         });
 
-        $this->app->bind('UpdateUserInteractor', function () {
+        $this->app->bind('UpdateUserInteractor', function() {
             return new UpdateUserInteractor(new EloquentUserRepository());
         });
 
-        $this->app->bind('DeleteUserInteractor', function () {
+        $this->app->bind('DeleteUserInteractor', function() {
             return new DeleteUserInteractor(new EloquentUserRepository());
         });
 
 
         //Pages
-        $this->app->bind('GetPageInteractor', function () {
+        $this->app->bind('GetPageInteractor', function() {
             return new GetPageInteractor(new EloquentPageRepository());
         });
 
-        $this->app->bind('GetPagesInteractor', function () {
+        $this->app->bind('GetPagesInteractor', function() {
             return new GetPagesInteractor(new EloquentPageRepository());
         });
 
-        $this->app->bind('CreatePageInteractor', function () {
+        $this->app->bind('CreatePageInteractor', function() {
             return new CreatePageInteractor(new EloquentPageRepository());
         });
 
-        $this->app->bind('CreatePageFromMasterInteractor', function () {
+        $this->app->bind('CreatePageFromMasterInteractor', function() {
             return new CreatePageFromMasterInteractor(
                 new EloquentPageRepository(),
                 $this->app->make('CreatePageInteractor'),
@@ -281,8 +285,12 @@ class WCMSLaravelServiceProvider extends ServiceProvider
                 $this->app->make('DuplicateBlockInteractor')
             );
         });
+        
+        $this->app->bind('GetPageInfoFromMasterInteractor', function() {
+            return new GetPageInfoFromMasterInteractor($this->app->make('GetPageInteractor'));
+        });
 
-        $this->app->bind('UpdatePageInteractor', function () {
+        $this->app->bind('UpdatePageInteractor', function() {
             return new UpdatePageInteractor(
                 new EloquentPageRepository(),
                 $this->app->make('GetAreasInteractor'),
@@ -292,8 +300,9 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind('DeletePageInteractor', function () {
-            return new DeletePageInteractor(new EloquentPageRepository(),
+        $this->app->bind('DeletePageInteractor', function() {
+            return new DeletePageInteractor(
+                new EloquentPageRepository(),
                 $this->app->make('GetAreasInteractor'),
                 $this->app->make('DeleteAreaInteractor'),
                 $this->app->make('GetArticlesInteractor'),
@@ -301,7 +310,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind('DuplicatePageInteractor', function () {
+        $this->app->bind('DuplicatePageInteractor', function() {
             return new DuplicatePageInteractor(
                 new EloquentPageRepository(),
                 $this->app->make('GetAreasInteractor'),
@@ -314,45 +323,45 @@ class WCMSLaravelServiceProvider extends ServiceProvider
 
 
         //Articles
-        $this->app->bind('GetArticleInteractor', function () {
+        $this->app->bind('GetArticleInteractor', function() {
             return new GetArticleInteractor(new EloquentArticleRepository());
         });
 
-        $this->app->bind('GetArticlesInteractor', function () {
+        $this->app->bind('GetArticlesInteractor', function() {
             return new GetArticlesInteractor(new EloquentArticleRepository());
         });
 
-        $this->app->bind('CreateArticleInteractor', function () {
+        $this->app->bind('CreateArticleInteractor', function() {
             return new CreateArticleInteractor(new EloquentArticleRepository());
         });
 
-        $this->app->bind('UpdateArticleInteractor', function () {
+        $this->app->bind('UpdateArticleInteractor', function() {
             return new UpdateArticleInteractor(new EloquentArticleRepository());
         });
 
-        $this->app->bind('DeleteArticleInteractor', function () {
+        $this->app->bind('DeleteArticleInteractor', function() {
             return new DeleteArticleInteractor(new EloquentArticleRepository());
         });
 
 
         //Article categories
-        $this->app->bind('GetArticleCategoryInteractor', function () {
+        $this->app->bind('GetArticleCategoryInteractor', function() {
             return new GetArticleCategoryInteractor(new EloquentArticleCategoryRepository());
         });
 
-        $this->app->bind('GetArticleCategoriesInteractor', function () {
+        $this->app->bind('GetArticleCategoriesInteractor', function() {
             return new GetArticleCategoriesInteractor(new EloquentArticleCategoryRepository());
         });
 
-        $this->app->bind('CreateArticleCategoryInteractor', function () {
+        $this->app->bind('CreateArticleCategoryInteractor', function() {
             return new CreateArticleCategoryInteractor(new EloquentArticleCategoryRepository());
         });
 
-        $this->app->bind('UpdateArticleCategoryInteractor', function () {
+        $this->app->bind('UpdateArticleCategoryInteractor', function() {
             return new UpdateArticleCategoryInteractor(new EloquentArticleCategoryRepository());
         });
 
-        $this->app->bind('DeleteArticleCategoryInteractor', function () {
+        $this->app->bind('DeleteArticleCategoryInteractor', function() {
             return new DeleteArticleCategoryInteractor(new EloquentArticleCategoryRepository());
         });
     }
