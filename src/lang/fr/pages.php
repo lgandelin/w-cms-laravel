@@ -46,4 +46,5 @@ return array(
     'choose_master_page' => 'Choisir une master page',
 
     'is_master' => 'Maître',
+    'is_ghost' => 'Fantôme',
 );

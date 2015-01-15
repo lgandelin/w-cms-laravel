@@ -31,13 +31,20 @@ $(document).ready(function() {
             success: function(data) {
                 data = JSON.parse(data);
 
+                var is_master = (data.block.is_master) ? data.block.is_master : 0;
+                var is_ghost = (data.block.is_ghost) ? data.block.is_ghost : 0;
+
+                $('input[name="block_is_master"]').prop('checked', false);
+                $('input[name="block_is_ghost"]').prop('checked', false);
+
                 if (data.success) {
                     $(modal).find('.name').val(data.block.name);
                     $(modal).find('.width').val(data.block.width);
                     $(modal).find('.height').val(data.block.height);
                     $(modal).find('.class').val(data.block.class);
                     $(modal).find('.type').val(data.block.type);
-                    $(modal).find('#block_is_master_' + data.block.is_master).attr('checked', 'checked');
+                    $(modal).find('#block_is_master_' + is_master).prop('checked', true);
+                    $(modal).find('#block_is_ghost_' + is_ghost).prop('checked', true);
 
                     $(modal).modal('show');
                 } else {
@@ -58,6 +65,7 @@ $(document).ready(function() {
                 'type': $('#block-infos-modal .type').val(),
                 'class': $('#block-infos-modal .class').val(),
                 'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
+                'is_ghost': $('#block-infos-modal input[name="block_is_ghost"]:checked').val(),
                 'area_id': $(this).attr('data-area-id')
             };
 
@@ -116,7 +124,8 @@ $(document).ready(function() {
                 'height': $('#block-infos-modal .height').val(),
                 'type': $('#block-infos-modal .type').val(),
                 'class': $('#block-infos-modal .class').val(),
-                'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val()
+                'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
+                'is_ghost': $('#block-infos-modal input[name="block_is_ghost"]:checked').val()
             };
 
             var button = $(this);

@@ -44,4 +44,5 @@ return array(
     'choose_master_page' => 'Choose a master page',
 
     'is_master' => 'Master',
+    'is_ghost' => 'Ghost',
 );

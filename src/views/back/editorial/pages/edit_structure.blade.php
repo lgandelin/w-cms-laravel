@@ -171,10 +171,19 @@
                     <div class="form-group">
                         <label for="is_master">{{ trans('w-cms-laravel::pages.is_master') }}</label>
                         <br/>
-                        Non <input type="radio" id="block_is_master_0" name="block_is_master" value="0" @if(!$block->is_master) checked @endif autocomplete="off" />
-                        Oui <input type="radio" id="block_is_master_1" name="block_is_master" value="1" @if($block->is_master) checked @endif autocomplete="off" />
+                        Non <input type="radio" id="block_is_master_0" name="block_is_master" value="0" autocomplete="off" />
+                        Oui <input type="radio" id="block_is_master_1" name="block_is_master" value="1" autocomplete="off" />
                     </div>
                     <!-- Is master -->
+
+                    <!-- Is ghost -->
+                    <div class="form-group">
+                        <label for="is_ghost">{{ trans('w-cms-laravel::pages.is_ghost') }}</label>
+                        <br/>
+                        Non <input type="radio" id="block_is_ghost_0" name="block_is_ghost" value="0" autocomplete="off" />
+                        Oui <input type="radio" id="block_is_ghost_1" name="block_is_ghost" value="1" autocomplete="off" />
+                    </div>
+                    <!-- Is ghost -->
 
                     <input type="hidden" class="area_id" />
                 </div>
