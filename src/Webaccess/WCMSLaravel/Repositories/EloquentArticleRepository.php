@@ -24,16 +24,9 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         return false;
     }
 
-    public function findByCategoryID($categoryID, $number = null, $order = 'desc')
+    public function findByPageID($pageID)
     {
-        $query = ArticleModel::where('category_id', '=', $categoryID);
-        if ($number) {
-            $query->take($number);
-        }
-
-        $query->orderBy('publication_date', $order);
-
-        $articleModels = $query->get();
+        $articleModels = ArticleModel::where('page_id', '=', $pageID)->get();
 
         $articles = [];
         foreach ($articleModels as $articleModel)
@@ -42,9 +35,20 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         return $articles;
     }
 
-    public function findAll()
+    public function findAll($categoryID = null, $number = null, $order = 'desc')
     {
-        $articleModels = ArticleModel::get();
+        if ($categoryID)
+            $query = ArticleModel::where('category_id', '=', $categoryID);
+        else
+            $query = ArticleModel::whereRaw('1=1');
+
+        if ($number) {
+            $query->take($number);
+        }
+
+        $query->orderBy('publication_date', $order);
+
+        $articleModels = $query->get();
 
         $articles = [];
         foreach ($articleModels as $articleModel)

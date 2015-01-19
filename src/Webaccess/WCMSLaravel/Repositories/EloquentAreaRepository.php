@@ -40,6 +40,17 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
         return $areas;
     }
 
+    public function findChildAreas($areaID)
+    {
+        $areasModel = AreaModel::where('master_area_id', '=', $areaID)->get();
+
+        $areas = [];
+        foreach ($areasModel as $areaModel)
+            $areas[]= self::createAreaFromModel($areaModel);
+
+        return $areas;
+    }
+
     public function createArea(Area $area)
     {
         $areaModel = new AreaModel();
@@ -50,6 +61,8 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
         $areaModel->order = $area->getOrder();
         $areaModel->page_id = $area->getPageID();
         $areaModel->display = $area->getDisplay();
+        $areaModel->is_master = $area->getIsMaster();
+        $areaModel->master_area_id = $area->getMasterAreaID();
 
         $areaModel->save();
 
@@ -65,6 +78,8 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
         $areaModel->order = $area->getOrder();
         $areaModel->class = $area->getClass();
         $areaModel->display = $area->getDisplay();
+        $areaModel->is_master = $area->getIsMaster();
+        $areaModel->master_area_id = $area->getMasterAreaID();
 
         return $areaModel->save();
     }
@@ -87,7 +102,9 @@ class EloquentAreaRepository implements AreaRepositoryInterface {
         $area->setOrder($areaModel->order);
         $area->setPageID($areaModel->page_id);
         $area->setDisplay($areaModel->display);
-        
+        $area->setIsMaster($areaModel->is_master);
+        $area->setMasterAreaID($areaModel->master_area_id);
+
         return $area;
     }
 

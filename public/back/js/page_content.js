@@ -5,11 +5,13 @@ $(document).ready(function() {
         var page_id = $(this).attr('data-id');
         var name = $('#name').val();
         var identifier = $('#identifier').val();
+        var is_master = $('input[name="is_master"]:checked').val();
 
         var data = {
             'ID': page_id,
             'name': name,
-            'identifier': identifier
+            'identifier': identifier,
+            'is_master': is_master
         };
 
         var button = $(this);
@@ -136,7 +138,7 @@ $(document).ready(function() {
 
     });
 
-     $('body').on('click', '.area > .title, .block > .title', function() {
+     $('body').on('click', '.area:not(.child-area) > .title, .block:not(.child-block) > .title', function() {
         $(this).next().toggle();
         $(this).find('> .opening-status').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
     });

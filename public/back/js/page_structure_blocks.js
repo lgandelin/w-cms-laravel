@@ -31,12 +31,20 @@ $(document).ready(function() {
             success: function(data) {
                 data = JSON.parse(data);
 
+                var is_master = (data.block.is_master) ? data.block.is_master : 0;
+                var is_ghost = (data.block.is_ghost) ? data.block.is_ghost : 0;
+
+                $('input[name="block_is_master"]').prop('checked', false);
+                $('input[name="block_is_ghost"]').prop('checked', false);
+
                 if (data.success) {
                     $(modal).find('.name').val(data.block.name);
                     $(modal).find('.width').val(data.block.width);
                     $(modal).find('.height').val(data.block.height);
                     $(modal).find('.class').val(data.block.class);
                     $(modal).find('.type').val(data.block.type);
+                    $(modal).find('#block_is_master_' + is_master).prop('checked', true);
+                    $(modal).find('#block_is_ghost_' + is_ghost).prop('checked', true);
 
                     $(modal).modal('show');
                 } else {
@@ -56,6 +64,8 @@ $(document).ready(function() {
                 'height': $('#block-infos-modal .height').val(),
                 'type': $('#block-infos-modal .type').val(),
                 'class': $('#block-infos-modal .class').val(),
+                'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
+                'is_ghost': $('#block-infos-modal input[name="block_is_ghost"]:checked').val(),
                 'area_id': $(this).attr('data-area-id')
             };
 
@@ -90,8 +100,6 @@ $(document).ready(function() {
                             block_content += $('#select_article_template').html();
                         else if (data.block.type == 'article_list')
                             block_content += $('#article_category_template').html();
-                        else if (data.block.type == 'global')
-                            block_content += $('#global_blocks_template').html();
 
                         block_content += '<div class="submit_wrapper"><input data-id="' + data.block.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + data.block.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                         $('#content .area[data-id="' + input_data.area_id + '"] > .content').append(block_content);
@@ -115,7 +123,9 @@ $(document).ready(function() {
                 'width': $('#block-infos-modal .width').val(),
                 'height': $('#block-infos-modal .height').val(),
                 'type': $('#block-infos-modal .type').val(),
-                'class': $('#block-infos-modal .class').val()
+                'class': $('#block-infos-modal .class').val(),
+                'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
+                'is_ghost': $('#block-infos-modal input[name="block_is_ghost"]:checked').val()
             };
 
             var button = $(this);
@@ -156,8 +166,6 @@ $(document).ready(function() {
                                 block_content += $('#select_article_template').html();
                             else if (input_data.type == 'article_list')
                                 block_content += $('#article_category_template').html();
-                            else if (input_data.type == 'global')
-                                block_content += $('#global_blocks_template').html();
 
                             block_content += '<div class="submit_wrapper"><input data-id="' + input_data.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + input_data.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                             
@@ -251,6 +259,7 @@ function init_block_sortable() {
             placeholder.addClass('col-xs-' + width);
             placeholder.html('<div class="block_color"></div>');
         },
+        cancel: '.child-block',
         connectWith: '.area_color',
         handle: '.block-move, .block-name',
         stop: function (event, ui) {

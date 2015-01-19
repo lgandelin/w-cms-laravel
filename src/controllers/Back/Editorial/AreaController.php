@@ -26,6 +26,7 @@ class AreaController extends AdminController
             'height' => \Input::get('height'),
             'class' => \Input::get('class'),
             'order' => 999,
+            'is_master' => \Input::get('is_master'),
             'page_id' => \Input::get('page_id'),
         ]);
 
@@ -48,6 +49,7 @@ class AreaController extends AdminController
             'width' => \Input::get('width'),
             'height' => \Input::get('height'),
             'class' => \Input::get('class'),
+            'is_master' => \Input::get('is_master'),
         ]);
 
         try {

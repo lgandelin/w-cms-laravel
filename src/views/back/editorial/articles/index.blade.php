@@ -30,6 +30,7 @@
                     <th>{{ trans('w-cms-laravel::articles.title') }}</th>
                     <th>{{ trans('w-cms-laravel::articles.category') }}</th>
                     <th>{{ trans('w-cms-laravel::articles.author') }}</th>
+                    <th>{{ trans('w-cms-laravel::articles.article_page_associated') }}</th>
                     <th>{{ trans('w-cms-laravel::generic.action') }}</th>
                 </tr>
                 </thead>
@@ -40,6 +41,7 @@
                     <td>{{ $article->title }}</td>
                     <td>@if (isset($article->category)){{ $article->category->name }} @endif</td>
                     <td>@if (isset($article->author)){{ $article->author->first_name }} {{ $article->author->last_name }}@endif</td>
+                    <td>@if (isset($article->page))<a target="_blank" href="{{ route('front_page_index', array('uri' => $article->page->uri)) }}">{{ $article->page->name }}</a>@endif</td>
                     <td>
                         <a class="btn btn-default" href="{{ route('back_articles_edit', array($article->ID)) }}" title="{{ $article->title }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
                         <a class="btn btn-danger" href="{{ route('back_articles_delete', array($article->ID)) }}" title="{{ $article->title }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
@@ -50,7 +52,7 @@
             </table>
         </div>
         @else
-        {{ trans('w-cms-laravel::articles.no_article_created_yet') }}
+            {{ trans('w-cms-laravel::articles.no_article_created_yet') }}
         @endif
 
         <a class="btn btn-primary" href="{{ route('back_articles_create') }}" title="{{ trans('w-cms-laravel::generic.create') }}">{{ trans('w-cms-laravel::generic.create') }}</a>
