@@ -24,4 +24,5 @@ return array(
     'blocks_edit' => 'Edit a block',
     'general' => 'General',
     'structure' => 'Structure',
+    'medias' => 'Medias',
 );

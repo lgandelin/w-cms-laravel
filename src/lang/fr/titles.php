@@ -24,4 +24,5 @@ return array(
     'blocks_edit' => 'Editer un bloc',
 	'general' => 'General',
     'structure' => 'Structure',
+    'medias' => 'Médias',
 );

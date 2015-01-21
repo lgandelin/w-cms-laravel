@@ -5,6 +5,11 @@ namespace Webaccess\WCMSLaravel;
 use CMS\Events\EventInterface;
 use CMS\Events\EventManagerInterface;
 use CMS\Events\Events;
+use CMS\Interactors\Medias\CreateMediaInteractor;
+use CMS\Interactors\Medias\DeleteMediaInteractor;
+use CMS\Interactors\Medias\GetMediaInteractor;
+use CMS\Interactors\Medias\GetMediasInteractor;
+use CMS\Interactors\Medias\UpdateMediaInteractor;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
@@ -70,6 +75,7 @@ use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentBlockRepository;
+use Webaccess\WCMSLaravel\Repositories\EloquentMediaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMenuItemRepository;
@@ -255,6 +261,28 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             return new DeleteMenuItemInteractor(new EloquentMenuItemRepository());
         });
 
+
+        //Medias
+        $this->app->bind('CreateMediaInteractor', function() {
+            return new CreateMediaInteractor(new EloquentMediaRepository());
+        });
+
+        $this->app->bind('GetMediaInteractor', function() {
+            return new GetMediaInteractor(new EloquentMediaRepository());
+        });
+
+        $this->app->bind('GetMediasInteractor', function() {
+            return new GetMediasInteractor(new EloquentMediaRepository());
+        });
+
+        $this->app->bind('UpdateMediaInteractor', function() {
+            return new UpdateMediaInteractor(new EloquentMediaRepository());
+        });
+
+        $this->app->bind('DeleteMediaInteractor', function() {
+            return new DeleteMediaInteractor(new EloquentMediaRepository());
+        });
+        
 
         //Users
         $this->app->bind('GetUserInteractor', function() {
