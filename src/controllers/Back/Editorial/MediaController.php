@@ -22,17 +22,19 @@ class MediaController extends AdminController
 
     public function store()
     {
-        $path = (\Input::file('image')) ? time() . '.jpg' : null;
+        $fileName = \Input::file('image')->getClientOriginalName();
         $mediaStructure = new MediaStructure([
             'name' => \Input::get('name'),
-            'path' => $path
+            'path' => $fileName,
         ]);
 
         try {
             $mediaID = \App::make('CreateMediaInteractor')->run($mediaStructure);
 
             //Upload image
-            \Input::file('image')->move('/var/www/cms-app/public/img/uploads/', $path);
+            if (\Input::file('image')) {
+                \Input::file('image')->move(public_path() . '/img/uploads/' . $mediaID . '/', $fileName);
+            }
 
             return \Redirect::route('back_medias_edit', array('mediaID' => $mediaID));
         } catch (\Exception $e) {
@@ -60,10 +62,10 @@ class MediaController extends AdminController
     public function update()
     {
         $mediaID = \Input::get('ID');
-        $path = (\Input::file('image')) ? $mediaID . '_' . time() . '.jpg' : null;
+        $fileName = \Input::file('image')->getClientOriginalName();
         $mediaStructure = new MediaStructure([
             'name' => \Input::get('name'),
-            'path' => $path
+            'path' => $fileName
         ]);
 
         try {
@@ -71,7 +73,8 @@ class MediaController extends AdminController
 
             //Upload new image
             if (\Input::file('image')) {
-                \Input::file('image')->move('/var/www/cms-app/public/img/uploads/', $path);
+                array_map('unlink', glob(public_path() . '/img/uploads/' . $mediaID . '/*'));
+                \Input::file('image')->move(public_path() . '/img/uploads/' . $mediaID . '/', $fileName);
             }
 
             return \Redirect::route('back_medias_index');

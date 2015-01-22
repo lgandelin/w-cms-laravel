@@ -30,11 +30,18 @@
                         {{ trans('w-cms-laravel::header.articles') }}
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="{{ route('back_menus_index') }}">
                         <span class="icon glyphicon glyphicon glyphicon-align-justify"></span>
                         {{ trans('w-cms-laravel::header.menus') }}
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('back_medias_index') }}">
+                        <span class="icon glyphicon glyphicon glyphicon-picture"></span>
+                        {{ trans('w-cms-laravel::header.medias') }}
                     </a>
                 </li>
             </ul>

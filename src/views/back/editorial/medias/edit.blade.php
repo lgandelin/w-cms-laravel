@@ -37,7 +37,7 @@
             <div class="form-group">
                 <label for="">{{ trans('w-cms-laravel::medias.thumbnail') }}</label>
                 <span class="media-thumbnail thumbnail">
-                    <img src="{{ asset('img/uploads/' . $media->path) }}" />
+                    <img src="{{ asset('img/uploads/' . $media->ID . '/' . $media->path) }}" />
                 </span>
             </div>
 

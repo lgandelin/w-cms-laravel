@@ -293,38 +293,52 @@
   list-style: none;
   float: left;
   margin: 20px 20px 0 0;
+  position: relative;
 }
-/* line 13, ../sass/_medias.scss */
+/* line 14, ../sass/_medias.scss */
 .medias-list li .media-name {
   display: block;
   margin: 5px 0;
   text-align: center;
   font-weight: bold;
 }
+/* line 22, ../sass/_medias.scss */
+.medias-list li .media-delete {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  color: white;
+}
+/* line 35, ../sass/_medias.scss */
+.medias-list li:hover .media-delete {
+  display: block;
+}
 
-/* line 25, ../sass/_medias.scss */
+/* line 43, ../sass/_medias.scss */
 .media-edit .media-thumbnail {
   width: 400px;
   height: auto;
 }
-/* line 30, ../sass/_medias.scss */
+/* line 48, ../sass/_medias.scss */
 .media-edit .media-name {
   width: 400px;
 }
-/* line 34, ../sass/_medias.scss */
+/* line 52, ../sass/_medias.scss */
 .media-edit .media-path {
   width: 250px;
   display: inline-block;
   vertical-align: middle;
 }
-/* line 40, ../sass/_medias.scss */
+/* line 58, ../sass/_medias.scss */
 .media-edit .btn-file {
   display: inline-block;
   vertical-align: middle;
   position: relative;
   overflow: hidden;
 }
-/* line 47, ../sass/_medias.scss */
+/* line 65, ../sass/_medias.scss */
 .media-edit .btn-file input[type=file] {
   position: absolute;
   top: 0;
