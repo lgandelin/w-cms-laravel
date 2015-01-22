@@ -5,6 +5,7 @@ namespace Webaccess\WCMSLaravel\Back\Structure;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
+use CMS\Structures\Blocks\MediaBlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\ViewFileBlockStructure;
 use CMS\Structures\BlockStructure;
@@ -26,6 +27,7 @@ class BlockController extends AdminController
             'menus' => \App::make('GetMenusInteractor')->getAll(true),
             'articles' => \App::make('GetArticlesInteractor')->getAll(true),
             'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
+            'medias' => \App::make('GetMediasInteractor')->getAll(true),
         ]);
     }
 
@@ -65,6 +67,11 @@ class BlockController extends AdminController
                     'article_list_number' => (\Input::get('article_list_number')) ? \Input::get('article_list_number') : null,
                     'type' => 'article_list'
                 ]);
+            elseif (\Input::exists('media_id'))
+                $blockStructure = new MediaBlockStructure([
+                    'media_id' => (\Input::get('media_id')) ? \Input::get('media_id') : null,
+                    'type' => 'media'
+                ]);
 
             $blockStructure->is_global = true;
 
@@ -90,6 +97,7 @@ class BlockController extends AdminController
                 'menus' => \App::make('GetMenusInteractor')->getAll(true),
                 'articles' => \App::make('GetArticlesInteractor')->getAll(true),
                 'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
+                'medias' => \App::make('GetMediasInteractor')->getAll(true),
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
@@ -128,6 +136,11 @@ class BlockController extends AdminController
                 'article_list_order' => (\Input::get('article_list_order')) ? \Input::get('article_list_order') : null,
                 'article_list_number' => (\Input::get('article_list_number')) ? \Input::get('article_list_number') : null,
                 'type' => 'article_list'
+            ]);
+        elseif (\Input::exists('media_id'))
+            $blockStructure = new MediaBlockStructure([
+                'media_id' => (\Input::get('media_id')) ? \Input::get('media_id') : null,
+                'type' => 'media'
             ]);
 
         $blockStructure->ID = $blockID;

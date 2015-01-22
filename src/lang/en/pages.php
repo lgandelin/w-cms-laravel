@@ -32,6 +32,7 @@ return array(
     'block_article_list_category' => 'Article category',
     'block_article_list_number' => 'Number of articles',
     'block_article_list_order' => 'Order',
+    'block_media' => 'Media',
 
     'no_page_created_yet' => 'No page created yet',
     'not_found' => 'Page not found',

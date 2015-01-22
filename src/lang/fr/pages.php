@@ -33,6 +33,7 @@ return array(
     'block_article_list_category' => 'Categorie d\'articles',
     'block_article_list_number' => 'Nombre d\'articles',
     'block_article_list_order' => 'Ordre',
+    'block_media' => 'Média',
 
     'no_page_created_yet' => 'Aucune page créée',
    	'not_found' => 'Page non trouvée',
