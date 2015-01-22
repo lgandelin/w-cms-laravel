@@ -58,11 +58,12 @@
                                             @if ($block->article->publication_date) <p>Date de publication : {{ date('d/m/Y H\hi', strtotime($block->article->publication_date)) }}</p> @endif
                                             --}}
                                         @elseif ($block->type == 'article_list')
-                                            <ul>
+                                            <ul style="list-style: none; padding-left: 0">
                                                 @foreach ($block->articles as $article)
                                                     <li>
                                                         <h4>{{ $article->title }}</h4>
                                                         <p>{{ $article->summary }}</p>
+                                                        @if (isset($article->media)) <img src="{{ asset('img/uploads/' . $article->media->ID . '/' . $article->media->path) }}" alt="{{ $article->media->alt }}" @if ($article->media->title) title="{{ $article->media->title }}" @endif style="display: article; max-width: 100%; height: auto" /> @endif
                                                         @if (isset($article->page))<a href="{{ route('front_page_index', array($article->page->uri)) }}">En savoir plus</a>@endif
                                                     </li>
                                                 @endforeach

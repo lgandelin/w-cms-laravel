@@ -66,6 +66,9 @@ class IndexController extends Controller {
             foreach ($block->articles as $article) {
                 if ($article->page_id)
                     $article->page = \App::make('GetPageInteractor')->getPageByID($article->page_id, true);
+
+                if ($article->media_id)
+                    $article->media = \App::make('GetMediaInteractor')->getMediaByID($article->media_id, true);
             }
         }
         

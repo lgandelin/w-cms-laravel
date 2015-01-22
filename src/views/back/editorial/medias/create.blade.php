@@ -44,12 +44,12 @@
 
             <div class="form-group">
                 <label for="alt">{{ trans('w-cms-laravel::medias.alt') }}</label>
-                <input autocomplete="off" type="text" class="form-control media-alt" id="alt" name="alt" placeholder="{{ trans('w-cms-laravel::medias.alt') }}" value="{{ $media->alt }}" />
+                <input autocomplete="off" type="text" class="form-control media-alt" id="alt" name="alt" placeholder="{{ trans('w-cms-laravel::medias.alt') }}" value="" />
             </div>
 
             <div class="form-group">
                 <label for="title">{{ trans('w-cms-laravel::medias.title') }}</label>
-                <input autocomplete="off" type="text" class="form-control media-title" id="title" name="title" placeholder="{{ trans('w-cms-laravel::medias.title') }}" value="{{ $media->title }}" />
+                <input autocomplete="off" type="text" class="form-control media-title" id="title" name="title" placeholder="{{ trans('w-cms-laravel::medias.title') }}" value="" />
             </div>
 
             <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
