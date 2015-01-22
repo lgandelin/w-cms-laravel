@@ -111,6 +111,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
             $blockModel->article_list_number = $block->getArticleListNumber();
         }
         if ($blockModel->type == 'global') $blockModel->block_reference_id = $block->getBlockReferenceID();
+        if ($blockModel->type == 'media') $blockModel->media_id = $block->getMediaID();
 
         return $blockModel->save();
     }

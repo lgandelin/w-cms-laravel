@@ -123,6 +123,20 @@
                             </select>
                         </div>
                     </div>
+
+                    <div style="display:none;" id="select_media_template">
+                        <div class="form-group">
+                            <label for="media_id">{{ trans('w-cms-laravel::pages.block_media') }}</label>
+                            <select class="media_id form-control" autocomplete="off">
+                                <option value="">{{ trans('w-cms-laravel::pages.choose_media') }}</option>
+                                @if (isset($medias))
+                                @foreach ($medias as $media)
+                                <option value="{{ $media->ID }}">{{ $media->name }}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
 			@else

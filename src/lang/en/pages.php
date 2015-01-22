@@ -42,6 +42,7 @@ return array(
     'choose_article_list_category' => 'Choose an article category',
     'choose_global_block' => 'Choose a global block',
     'choose_master_page' => 'Choose a master page',
+    'choose_media' => 'Choose a media',
 
     'is_master' => 'Master',
     'is_ghost' => 'Ghost',

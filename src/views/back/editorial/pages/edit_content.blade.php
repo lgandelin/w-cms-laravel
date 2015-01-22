@@ -126,6 +126,18 @@
                                     @endif
                                 </select>
                             </div>
+                        @elseif ($block->type == 'media')
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::blocks.media_block') }}</label>
+                                <select class="media_id form-control" autocomplete="off">
+                                    <option value="">{{ trans('w-cms-laravel::pages.choose_media') }}</option>
+                                    @if (isset($medias))
+                                    @foreach ($medias as $media)
+                                    <option value="{{ $media->ID }}" @if (isset($block->media_id) && $block->media_id == $media->ID) selected="selected" @endif>{{ $media->name }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                            </div>
                         @endif
 
                         <!-- Save -->

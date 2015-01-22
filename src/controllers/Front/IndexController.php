@@ -5,6 +5,7 @@ namespace Webaccess\WCMSLaravel\Front;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\GlobalBlockStructure;
+use CMS\Structures\Blocks\MediaBlockStructure;
 use Illuminate\Routing\Controller;
 
 use CMS\Structures\Blocks\MenuBlockStructure;
@@ -66,7 +67,9 @@ class IndexController extends Controller {
                 if ($article->page_id)
                     $article->page = \App::make('GetPageInteractor')->getPageByID($article->page_id, true);
             }
-        } else if ($block instanceof GlobalBlockStructure) {
+        }
+        
+        else if ($block instanceof GlobalBlockStructure) {
 
             if ($block->block_reference_id !== null) {
                 $oldBlock = $block;
@@ -81,6 +84,10 @@ class IndexController extends Controller {
                 $block->width  = $oldBlock->width;
                 $block->height = $oldBlock->height;
             }
+        }
+        
+        else if ($block instanceof MediaBlockStructure && $block->media_id) {
+            $block->media = \App::make('GetMediaInteractor')->getMediaByID($block->media_id, true);
         }
 
         return $block;

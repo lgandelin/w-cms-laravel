@@ -44,6 +44,7 @@ return array(
     'choose_article_list_category' => 'Choisir une catégorie d\'articles',
     'choose_global_block' => 'Choisir un bloc global',
     'choose_master_page' => 'Choisir une master page',
+    'choose_media' => 'Choisir un média',
 
     'is_master' => 'Maître',
     'is_ghost' => 'Fantôme',

@@ -13,6 +13,8 @@ $(document).ready(function() {
             block_content += $('#select_article_template').html();
         else if ($(this).val() == 'article_list')
             block_content += $('#article_category_template').html();
+        else if ($(this).val() == 'media')
+            block_content += $('#select_media_template').html();
 
 		$('.content').empty().append(block_content);
 		
