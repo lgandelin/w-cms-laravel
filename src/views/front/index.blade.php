@@ -68,7 +68,7 @@
                                                 @endforeach
                                             </ul>
                                         @elseif ($block->type == 'media' && isset($block->media))
-                                            <img src="{{ asset('img/uploads/' . $block->media->ID . '/' . $block->media->path) }}" alt="{{ $block->media->name }}" style="display: block; max-width: 100%; height: auto" />
+                                            <img src="{{ asset('img/uploads/' . $block->media->ID . '/' . $block->media->path) }}" alt="{{ $block->media->alt }}" @if ($block->media->title) title="{{ $block->media->title }}" @endif style="display: block; max-width: 100%; height: auto" />
                                         @endif
                                     </div>
                                 @endif

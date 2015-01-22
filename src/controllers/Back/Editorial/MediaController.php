@@ -26,6 +26,8 @@ class MediaController extends AdminController
         $mediaStructure = new MediaStructure([
             'name' => \Input::get('name'),
             'path' => $fileName,
+            'alt' => \Input::get('alt'),
+            'title' => \Input::get('title'),
         ]);
 
         try {
@@ -62,10 +64,12 @@ class MediaController extends AdminController
     public function update()
     {
         $mediaID = \Input::get('ID');
-        $fileName = \Input::file('image')->getClientOriginalName();
+        $fileName = (\Input::file('image')) ? \Input::file('image')->getClientOriginalName() : null;
         $mediaStructure = new MediaStructure([
             'name' => \Input::get('name'),
-            'path' => $fileName
+            'path' => $fileName,
+            'alt' => \Input::get('alt'),
+            'title' => \Input::get('title'),
         ]);
 
         try {
