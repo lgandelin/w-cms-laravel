@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
+use CMS\Structures\Blocks\MediaBlockStructure;
 use CMS\Structures\PageStructure;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
@@ -56,6 +57,12 @@ class PageController extends AdminController
             if ($areas) {
                 foreach ($areas as $area) {
                     $area->blocks = \App::make('GetBlocksInteractor')->getAllByAreaID($area->ID, true);
+                    foreach ($area->blocks as $i => $block) {
+                        if ($block instanceof MediaBlockStructure && $block->media_id) {
+                            $block->media = \App::make('GetMediaInteractor')->getMediaByID($block->media_id, true);
+                        }
+                        $area->blocks[$i]= $block;
+                    }
                     $page->areas[]= $area;
                 }
             }
