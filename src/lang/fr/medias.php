@@ -6,5 +6,6 @@ return array(
     'thumbnail' => 'Miniature',
     'alt' => 'Balise Alt',
     'title' => 'Balise Title',
-    'no_media_created_yet' => 'Aucun média créé'
+    'no_media_created_yet' => 'Aucun média créé',
+    'crop' => 'Redimensionner'
 );

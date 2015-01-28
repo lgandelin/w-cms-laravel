@@ -39,11 +39,16 @@
 }
 
 .media-edit {
-
 	.media-thumbnail {
-		width: 400px;
-		height: auto;
-	}
+		width: 600px;
+
+		margin-bottom: 20px;
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+	}	
 
 	.media-name {
 		width: 400px;

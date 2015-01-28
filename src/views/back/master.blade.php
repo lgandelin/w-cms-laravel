@@ -5,7 +5,7 @@
 		{{ HTML::style('packages/webaccess/w-cms-laravel/back/vendor/bootstrap/css/bootstrap.min.css') }}
 		{{ HTML::style('packages/webaccess/w-cms-laravel/back/vendor/bootstrap/css/bootstrap-theme.min.css') }}
 		{{ HTML::style('packages/webaccess/w-cms-laravel/back/css/style.css') }}
-
+        @yield('stylesheets')
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>

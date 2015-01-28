@@ -64,7 +64,7 @@ class MediaController extends AdminController
     public function update()
     {
         $mediaID = \Input::get('ID');
-        $fileName = (\Input::file('image')) ? \Input::file('image')->getClientOriginalName() : null;
+        $fileName = $mediaID . '.jpg';
         $mediaStructure = new MediaStructure([
             'name' => \Input::get('name'),
             'path' => $fileName,
@@ -102,7 +102,8 @@ class MediaController extends AdminController
     public function upload()
     {
         $mediaID = \Input::get('ID');
-        $fileName = (\Input::file('image')) ? \Input::file('image')->getClientOriginalName() : null;
+
+        $fileName = $mediaID . '.jpg';
 
         if (\Input::file('image')) {
             array_map('unlink', glob(public_path() . '/img/uploads/' . $mediaID . '/*'));

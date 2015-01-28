@@ -316,29 +316,34 @@
   display: block;
 }
 
-/* line 43, ../sass/_medias.scss */
+/* line 42, ../sass/_medias.scss */
 .media-edit .media-thumbnail {
-  width: 400px;
+  width: 600px;
+  margin-bottom: 20px;
+}
+/* line 47, ../sass/_medias.scss */
+.media-edit .media-thumbnail img {
+  max-width: 100%;
   height: auto;
 }
-/* line 48, ../sass/_medias.scss */
+/* line 53, ../sass/_medias.scss */
 .media-edit .media-name {
   width: 400px;
 }
-/* line 52, ../sass/_medias.scss */
+/* line 57, ../sass/_medias.scss */
 .media-edit .media-path {
   width: 250px;
   display: inline-block;
   vertical-align: middle;
 }
-/* line 58, ../sass/_medias.scss */
+/* line 63, ../sass/_medias.scss */
 .media-edit .btn-file {
   display: inline-block;
   vertical-align: middle;
   position: relative;
   overflow: hidden;
 }
-/* line 65, ../sass/_medias.scss */
+/* line 70, ../sass/_medias.scss */
 .media-edit .btn-file input[type=file] {
   position: absolute;
   top: 0;
