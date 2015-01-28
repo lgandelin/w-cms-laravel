@@ -81,7 +81,7 @@ $(document).ready(function() {
         var block_id = $(this).attr('data-id');
         var block = $('.block[data-id="' + block_id + '"]');
         
-        var html, menu_id, view_file, article_id, article_list_category_id, article_list_order, article_list_number, block_reference_id, media_id;
+        var html, menu_id, view_file, article_id, article_list_category_id, article_list_order, article_list_number, block_reference_id, media_id, media_link;
 
         if (block.attr('data-type') == 'html') {
             var textarea_id = $('.block[data-id="' + block_id + '"] textarea').attr('id');
@@ -103,6 +103,7 @@ $(document).ready(function() {
             block_reference_id = $('.block[data-id="' + block_id + '"] .block_reference_id').val();
         } else if (block.attr('data-type') == 'media') {
             media_id = $('.block[data-id="' + block_id + '"] .media_id').val();
+            media_link = $('.block[data-id="' + block_id + '"] .media_link').val();
         }
 
         var data = {
@@ -116,6 +117,7 @@ $(document).ready(function() {
             'article_list_number': article_list_number,
             'block_reference_id': block_reference_id,
             'media_id': media_id,
+            'media_link': media_link,
         };
 
         var button = $(this);

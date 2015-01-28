@@ -7,6 +7,7 @@ use CMS\Entities\Blocks\ArticleBlock;
 use CMS\Entities\Blocks\ArticleListBlock;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Entities\Blocks\GlobalBlock;
+use CMS\Entities\Blocks\MediaBlock;
 use CMS\Entities\Blocks\MenuBlock;
 use CMS\Entities\Blocks\ViewFileBlock;
 use CMS\Repositories\BlockRepositoryInterface;
@@ -111,7 +112,10 @@ class EloquentBlockRepository implements BlockRepositoryInterface
             $blockModel->article_list_number = $block->getArticleListNumber();
         }
         if ($blockModel->type == 'global') $blockModel->block_reference_id = $block->getBlockReferenceID();
-        if ($blockModel->type == 'media') $blockModel->media_id = $block->getMediaID();
+        if ($blockModel->type == 'media') {
+            $blockModel->media_id = $block->getMediaID();
+            $blockModel->media_link = $block->getMediaLink();
+        }
 
         return $blockModel->save();
     }
@@ -153,6 +157,10 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         } elseif ($blockModel->type == 'global') {
             $block = new GlobalBlock();
             $block->setBlockReferenceID($blockModel->block_reference_id);
+        } elseif ($blockModel->type == 'media') {
+            $block = new MediaBlock();
+            $block->setMediaID($blockModel->media_id);
+            $block->setMediaLink($blockModel->media_link);
         } else {
             throw new \Exception('Block type not found');
         }

@@ -70,6 +70,7 @@ class BlockController extends AdminController
             elseif (\Input::exists('media_id'))
                 $blockStructure = new MediaBlockStructure([
                     'media_id' => (\Input::get('media_id')) ? \Input::get('media_id') : null,
+                    'media_link' => (\Input::get('media_link')) ? \Input::get('media_link') : null,
                     'type' => 'media'
                 ]);
 
@@ -140,6 +141,7 @@ class BlockController extends AdminController
         elseif (\Input::exists('media_id'))
             $blockStructure = new MediaBlockStructure([
                 'media_id' => (\Input::get('media_id')) ? \Input::get('media_id') : null,
+                'media_link' => (\Input::get('media_link')) ? \Input::get('media_link') : null,
                 'type' => 'media'
             ]);
 

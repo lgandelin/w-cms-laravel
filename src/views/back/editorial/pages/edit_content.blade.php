@@ -138,6 +138,11 @@
                                     @endif
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_media_link') }}</label>
+                                <input type="text" class="form-control media_link" placeholder="{{ trans('w-cms-laravel::pages.block_media_link') }}" value="{{ $block->media_link }}" autocomplete="off" />
+                            </div>
                         @endif
 
                         <!-- Save -->
