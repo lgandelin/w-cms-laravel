@@ -81,7 +81,7 @@ class MediaController extends AdminController
                 \Input::file('image')->move(public_path() . '/img/uploads/' . $mediaID . '/', $fileName);
             }
 
-            return \Redirect::route('back_medias_index');
+            return \Redirect::route('back_medias_edit', array('ID' => $mediaID));
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
             return \Redirect::route('back_medias_index');
@@ -97,5 +97,18 @@ class MediaController extends AdminController
             \Session::flash('error', $e->getMessage());
             return \Redirect::route('back_medias_index');
         }
+    }
+
+    public function upload()
+    {
+        $mediaID = \Input::get('ID');
+        $fileName = (\Input::file('image')) ? \Input::file('image')->getClientOriginalName() : null;
+
+        if (\Input::file('image')) {
+            array_map('unlink', glob(public_path() . '/img/uploads/' . $mediaID . '/*'));
+            \Input::file('image')->move(public_path() . '/img/uploads/' . $mediaID . '/', $fileName);
+        }
+
+        return \Response::json(array('image' => asset('img/uploads/' . $mediaID . '/' . $fileName)));
     }
 }

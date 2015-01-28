@@ -77,6 +77,8 @@ Route::post('/admin/editorial/medias/update', array('as' => 'back_medias_update'
 Route::get('/admin/editorial/medias/delete/{mediaID}', array('as' => 'back_medias_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaController@delete'));
 Route::get('/admin/editorial/medias/duplicate/{mediaID}', array('as' => 'back_medias_duplicate', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaController@duplicate'));
 
+Route::post('/admin/editorial/medias/upload', array('as' => 'back_medias_upload', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaController@upload'));
+
 
 //BACK > GENERAL
 Route::get('/admin/general', array('as' => 'back_general', 'uses' => 'Webaccess\WCMSLaravel\Back\General\GeneralController@index'));

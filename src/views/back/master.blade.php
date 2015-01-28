@@ -106,6 +106,8 @@
             var route_menu_items_update_order = "{{ route('back_menu_items_update_order') }}";
             var route_menu_items_display = "{{ route('back_menu_items_display') }}";
             var route_menu_items_delete = "{{ route('back_menu_items_delete') }}";
+
+            var route_media_upload = "{{ route('back_medias_upload') }}";
         </script>
 
 		@yield('javascripts')

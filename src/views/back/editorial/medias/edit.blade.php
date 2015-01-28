@@ -8,6 +8,10 @@
 {{ trans('w-cms-laravel::header.medias_edit') }} > {{ $media->name }}
 @stop
 
+@section('javascripts')
+{{ HTML::script('packages/webaccess/w-cms-laravel/back/js/medias.js') }}
+@stop
+
 @section('content')
 
 <div class="container-fluid media-edit">
