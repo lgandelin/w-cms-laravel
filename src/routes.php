@@ -79,6 +79,14 @@ Route::get('/admin/editorial/medias/duplicate/{mediaID}', array('as' => 'back_me
 
 Route::post('/admin/editorial/medias/upload', array('as' => 'back_medias_upload', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaController@upload'));
 
+//BACK > EDITORIAL > MEDIA FORMATS
+Route::get('/admin/editorial/media_formats', array('as' => 'back_media_formats_index', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaFormatController@index'));
+Route::get('/admin/editorial/media_formats/create', array('as' => 'back_media_formats_create', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaFormatController@create'));
+Route::post('/admin/editorial/media_formats/store', array('as' => 'back_media_formats_store', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaFormatController@store'));
+Route::get('/admin/editorial/media_formats/edit/{media_formatID}', array('as' => 'back_media_formats_edit', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaFormatController@edit'));
+Route::post('/admin/editorial/media_formats/update', array('as' => 'back_media_formats_update', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaFormatController@update'));
+Route::get('/admin/editorial/media_formats/delete/{media_formatID}', array('as' => 'back_media_formats_delete', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaFormatController@delete'));
+
 
 //BACK > GENERAL
 Route::get('/admin/general', array('as' => 'back_general', 'uses' => 'Webaccess\WCMSLaravel\Back\General\GeneralController@index'));

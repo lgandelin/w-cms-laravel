@@ -2,18 +2,11 @@
 
 namespace Webaccess\WCMSLaravel;
 
-use CMS\Events\EventInterface;
-use CMS\Events\EventManagerInterface;
-use CMS\Events\Events;
-use CMS\Interactors\Medias\CreateMediaInteractor;
-use CMS\Interactors\Medias\DeleteMediaInteractor;
-use CMS\Interactors\Medias\GetMediaInteractor;
-use CMS\Interactors\Medias\GetMediasInteractor;
-use CMS\Interactors\Medias\UpdateMediaInteractor;
-use Illuminate\Support\Facades\Event;
+
 use Illuminate\Support\ServiceProvider;
 
 use CreateUserCommand;
+use CMS\Events\Events;
 
 use CMS\Interactors\Articles\CreateArticleInteractor;
 use CMS\Interactors\Articles\DeleteArticleInteractor;
@@ -63,6 +56,18 @@ use CMS\Interactors\MenuItems\CreateMenuItemInteractor;
 use CMS\Interactors\MenuItems\UpdateMenuItemInteractor;
 use CMS\Interactors\MenuItems\DeleteMenuItemInteractor;
 
+use CMS\Interactors\Medias\CreateMediaInteractor;
+use CMS\Interactors\Medias\DeleteMediaInteractor;
+use CMS\Interactors\Medias\GetMediaInteractor;
+use CMS\Interactors\Medias\GetMediasInteractor;
+use CMS\Interactors\Medias\UpdateMediaInteractor;
+
+use CMS\Interactors\MediaFormats\CreateMediaFormatInteractor;
+use CMS\Interactors\MediaFormats\DeleteMediaFormatInteractor;
+use CMS\Interactors\MediaFormats\GetMediaFormatInteractor;
+use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use CMS\Interactors\MediaFormats\UpdateMediaFormatInteractor;
+
 use CMS\Interactors\Users\GetUserInteractor;
 use CMS\Interactors\Users\GetUsersInteractor;
 use CMS\Interactors\Users\CreateUserInteractor;
@@ -75,6 +80,7 @@ use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentBlockRepository;
+use Webaccess\WCMSLaravel\Repositories\EloquentMediaFormatRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMediaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
@@ -281,6 +287,28 @@ class WCMSLaravelServiceProvider extends ServiceProvider
 
         $this->app->bind('DeleteMediaInteractor', function() {
             return new DeleteMediaInteractor(new EloquentMediaRepository());
+        });
+
+
+        //MediaFormats
+        $this->app->bind('CreateMediaFormatInteractor', function() {
+            return new CreateMediaFormatInteractor(new EloquentMediaFormatRepository());
+        });
+
+        $this->app->bind('GetMediaFormatInteractor', function() {
+            return new GetMediaFormatInteractor(new EloquentMediaFormatRepository());
+        });
+
+        $this->app->bind('GetMediaFormatsInteractor', function() {
+            return new GetMediaFormatsInteractor(new EloquentMediaFormatRepository());
+        });
+
+        $this->app->bind('UpdateMediaFormatInteractor', function() {
+            return new UpdateMediaFormatInteractor(new EloquentMediaFormatRepository());
+        });
+
+        $this->app->bind('DeleteMediaFormatInteractor', function() {
+            return new DeleteMediaFormatInteractor(new EloquentMediaFormatRepository());
         });
         
 
