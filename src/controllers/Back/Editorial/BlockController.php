@@ -88,6 +88,7 @@ class BlockController extends AdminController
             $blockStructure = new MediaBlockStructure([
                 'media_id' => (\Input::get('media_id')) ? \Input::get('media_id') : null,
                 'media_link' => (\Input::get('media_link')) ? \Input::get('media_link') : null,
+                'media_format_id' => (\Input::get('media_format_id')) ? \Input::get('media_format_id') : null,
                 'type' => 'media'
             ]);
 

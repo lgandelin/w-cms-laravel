@@ -3,6 +3,7 @@
 namespace Webaccess\WCMSLaravel;
 
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 use CreateUserCommand;
@@ -447,7 +448,9 @@ class WCMSLaravelServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array();
+        return array(
+            'Intervention\Image\ImageServiceProvider'
+        );
     }
 
 }

@@ -74,6 +74,7 @@ class PageController extends AdminController
                 'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
                 'global_blocks' => \App::make('GetBlocksInteractor')->getGlobalBlocks(true),
                 'medias' => \App::make('GetMediasInteractor')->getAll(true),
+                'media_formats' => \App::make('GetMediaFormatsInteractor')->getAll(true)
 		    ]);
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());

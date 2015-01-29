@@ -91,6 +91,11 @@ class IndexController extends Controller {
         
         else if ($block instanceof MediaBlockStructure && $block->media_id) {
             $block->media = \App::make('GetMediaInteractor')->getMediaByID($block->media_id, true);
+
+            if ($block->media_format_id) {
+                $mediaFormat = \App::make('GetMediaFormatInteractor')->getMediaFormatByID($block->media_format_id, true);
+                $block->media->path = preg_replace('/' . $block->media_id . '/', $block->media_id . '_' . $mediaFormat->width . '_' . $mediaFormat->height, $block->media->path);
+            }
         }
 
         return $block;

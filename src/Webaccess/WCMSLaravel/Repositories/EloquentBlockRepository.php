@@ -115,6 +115,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         if ($blockModel->type == 'media') {
             $blockModel->media_id = $block->getMediaID();
             $blockModel->media_link = $block->getMediaLink();
+            $blockModel->media_format_id = $block->getMediaFormatID();
         }
 
         return $blockModel->save();
@@ -161,6 +162,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
             $block = new MediaBlock();
             $block->setMediaID($blockModel->media_id);
             $block->setMediaLink($blockModel->media_link);
+            $block->setMediaFormatID($blockModel->media_format_id);
         } else {
             throw new \Exception('Block type not found');
         }

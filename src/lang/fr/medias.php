@@ -7,5 +7,6 @@ return array(
     'alt' => 'Balise Alt',
     'title' => 'Balise Title',
     'no_media_created_yet' => 'Aucun média créé',
-    'crop' => 'Redimensionner'
+    'crop' => 'Redimensionner',
+    'media_formats' => 'Média formats'
 );

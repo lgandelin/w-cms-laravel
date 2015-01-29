@@ -3,6 +3,7 @@
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
 use CMS\Structures\MediaStructure;
+use Intervention\Image\ImageManager;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
 class MediaController extends AdminController
@@ -118,6 +119,19 @@ class MediaController extends AdminController
             if (\Input::file('image')) {
                 array_map('unlink', glob(public_path() . '/img/uploads/' . $mediaID . '/*'));
                 \Input::file('image')->move(public_path() . '/img/uploads/' . $mediaID . '/', $fileName);
+
+                //Upload image foreach media format
+                $mediaFormats = \App::make('GetMediaFormatsInteractor')->getAll(true);
+                if (is_array($mediaFormats) && sizeof($mediaFormats) > 0) {
+                    foreach ($mediaFormats as $mediaFormat) {
+
+                        $manager = new ImageManager();
+                        $image = $manager->make(public_path() . '/img/uploads/' . $mediaID . '/' . $fileName)->resize($mediaFormat->width, $mediaFormat->height);
+
+                        $newFileName = preg_replace('/' . $mediaID . '/', $mediaID . '_' . $mediaFormat->width . '_' . $mediaFormat->height, $fileName);
+                        $image->save(public_path() . '/img/uploads/' . $mediaID . '/' . $newFileName);
+                    }
+                }
             }
 
             return \Response::json(array('image' => asset('img/uploads/' . $mediaID . '/' . $fileName)));
