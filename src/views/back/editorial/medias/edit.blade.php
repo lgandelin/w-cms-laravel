@@ -44,15 +44,10 @@
                     <input autocomplete="off" type="text" class="form-control media-name" id="name" name="name" placeholder="{{ trans('w-cms-laravel::medias.name') }}" value="{{ $media->name }}" />
                 </div>
 
-
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label for="path">{{ trans('w-cms-laravel::medias.path') }}</label>
                     <input autocomplete="off" type="text" class="form-control media-path" id="path" name="path" placeholder="{{ trans('w-cms-laravel::medias.path') }}" value="{{ $media->path }}" width="50%" />
-
-                    <span class="btn  btn-primary btn-file">
-                        {{ trans('w-cms-laravel::generic.browse') }} <input type="file" name="image">
-                    </span>
-                </div>
+                </div>-->
 
                 <div class="form-group">
                     <label for="alt">{{ trans('w-cms-laravel::medias.alt') }}</label>
@@ -76,6 +71,9 @@
                     <div class="media-thumbnail">
                         <img src="{{ asset('img/uploads/' . $media->ID . '/' . $media->path) }}" />
                     </div>
+                    <span class="btn  btn-primary btn-file">
+                        {{ trans('w-cms-laravel::generic.browse') }} <input type="file" name="image">
+                    </span>
                     <input type="button" class="btn btn-primary" value="{{ trans('w-cms-laravel::medias.crop') }}" id="btn-activate-crop" />
                     <input type="button" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" id="btn-valid-crop" />
                 </div>

@@ -20,7 +20,7 @@ $(document).ready(function() {
 	});
 
 	$('#btn-valid-crop').click(function() {
-		var url = $image.cropper("getDataURL", "image/jpeg", 0.65);
+		var url = $image.cropper("getDataURL");
 		var image_id = $('input[name="ID"]').val();
 		var image_file = dataURItoBlob(url);
 		
