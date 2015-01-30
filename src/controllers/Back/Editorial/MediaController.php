@@ -3,6 +3,7 @@
 namespace Webaccess\WCMSLaravel\Back\Editorial;
 
 use CMS\Structures\MediaStructure;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use Webaccess\WCMSLaravel\Back\AdminController;
 
@@ -26,7 +27,7 @@ class MediaController extends AdminController
         $fileName = \Input::file('image')->getClientOriginalName();
         $mediaStructure = new MediaStructure([
             'name' => \Input::get('name'),
-            'path' => $fileName,
+            'file_name' => $fileName,
             'alt' => \Input::get('alt'),
             'title' => \Input::get('title'),
         ]);
@@ -66,22 +67,52 @@ class MediaController extends AdminController
     public function update()
     {
         $mediaID = \Input::get('ID');
-        $type = preg_replace('/image\//', '', \Input::file('image')->getMimeType());
-        $fileName = $mediaID . '.' . $type;
+        $fileName = \Input::get('file_name');
+
+        if (!$fileName && \Input::file('image')) {
+            $type = preg_replace('/image\//', '', \Input::file('image')->getMimeType());
+            $fileName = $mediaID . '.' . $type;
+        }
+
+        $oldMedia = \App::make('GetMediaInteractor')->getMediaByID($mediaID, true);
+
         $mediaStructure = new MediaStructure([
             'name' => \Input::get('name'),
-            'path' => $fileName,
+            'file_name' => $fileName,
             'alt' => \Input::get('alt'),
             'title' => \Input::get('title'),
         ]);
 
         try {
+
             \App::make('UpdateMediaInteractor')->run($mediaID, $mediaStructure);
+
+            $folder = public_path() . '/img/uploads/' . $mediaID . '/';
+
+            if ($fileName != $oldMedia->file_name) {
+                File::move($folder . $oldMedia->file_name, $folder . $fileName);
+                array_map('unlink', glob($folder . '/*_' . $oldMedia->file_name));
+            }
 
             //Upload new image
             if (\Input::file('image')) {
-                array_map('unlink', glob(public_path() . '/img/uploads/' . $mediaID . '/*'));
-                \Input::file('image')->move(public_path() . '/img/uploads/' . $mediaID . '/', $fileName);
+                array_map('unlink', glob($folder . '/*'));
+                \Input::file('image')->move($folder, $fileName);
+            }
+
+            //Upload image foreach media format
+            $mediaFormats = \App::make('GetMediaFormatsInteractor')->getAll(true);
+            if (is_array($mediaFormats) && sizeof($mediaFormats) > 0) {
+                foreach ($mediaFormats as $mediaFormat) {
+
+                    $manager = new ImageManager();
+                    $image = $manager->make($folder . $fileName)->resize($mediaFormat->width, $mediaFormat->height, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+
+                    $newFileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName;
+                    $image->save($folder . $newFileName);
+                }
             }
 
             return \Redirect::route('back_medias_edit', array('ID' => $mediaID));
@@ -105,40 +136,29 @@ class MediaController extends AdminController
     public function upload()
     {
         $mediaID = \Input::get('ID');
-        $type = preg_replace('/image\//', '', \Input::file('image')->getMimeType());
-        $fileName = $mediaID . '.' . $type;
+        $fileName = \Input::file('image')->getClientOriginalName();
 
         $mediaStructure = new MediaStructure([
-            'path' => $fileName,
+            'file_name' => $fileName,
         ]);
 
         try {
             \App::make('UpdateMediaInteractor')->run($mediaID, $mediaStructure);
 
+            $folder = public_path() . '/img/uploads/' . $mediaID . '/';
+
             //Upload new image
             if (\Input::file('image')) {
-                array_map('unlink', glob(public_path() . '/img/uploads/' . $mediaID . '/*'));
-                \Input::file('image')->move(public_path() . '/img/uploads/' . $mediaID . '/', $fileName);
-
-                //Upload image foreach media format
-                $mediaFormats = \App::make('GetMediaFormatsInteractor')->getAll(true);
-                if (is_array($mediaFormats) && sizeof($mediaFormats) > 0) {
-                    foreach ($mediaFormats as $mediaFormat) {
-
-                        $manager = new ImageManager();
-                        $image = $manager->make(public_path() . '/img/uploads/' . $mediaID . '/' . $fileName)->resize($mediaFormat->width, $mediaFormat->height);
-
-                        $newFileName = preg_replace('/' . $mediaID . '/', $mediaID . '_' . $mediaFormat->width . '_' . $mediaFormat->height, $fileName);
-                        $image->save(public_path() . '/img/uploads/' . $mediaID . '/' . $newFileName);
-                    }
-                }
+                array_map('unlink', glob($folder . '*'));
+                \Input::file('image')->move($folder, $fileName);
             }
 
-            return \Response::json(array('image' => asset('img/uploads/' . $mediaID . '/' . $fileName)));
+            return \Response::json(array('image' => asset('img/uploads/' . $mediaID . '/' . $fileName), 'file_name' => $fileName));
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
             return false;
         }
-
     }
+
+
 }

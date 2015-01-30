@@ -94,7 +94,7 @@ class IndexController extends Controller {
 
             if ($block->media_format_id) {
                 $mediaFormat = \App::make('GetMediaFormatInteractor')->getMediaFormatByID($block->media_format_id, true);
-                $block->media->path = preg_replace('/' . $block->media_id . '/', $block->media_id . '_' . $mediaFormat->width . '_' . $mediaFormat->height, $block->media->path);
+                $block->media->file_name = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $block->media->file_name;
             }
         }
 

@@ -63,14 +63,14 @@
                                                     <li>
                                                         <h4>{{ $article->title }}</h4>
                                                         <p>{{ $article->summary }}</p>
-                                                        @if (isset($article->media)) <img src="{{ asset('img/uploads/' . $article->media->ID . '/' . $article->media->path) }}" alt="{{ $article->media->alt }}" @if ($article->media->title) title="{{ $article->media->title }}" @endif style="display: article; max-width: 100%; height: auto" /> @endif
+                                                        @if (isset($article->media)) <img src="{{ asset('img/uploads/' . $article->media->ID . '/' . $article->media->file_name) }}" alt="{{ $article->media->alt }}" @if ($article->media->title) title="{{ $article->media->title }}" @endif style="display: article; max-width: 100%; height: auto" /> @endif
                                                         @if (isset($article->page))<a href="{{ route('front_page_index', array($article->page->uri)) }}">En savoir plus</a>@endif
                                                     </li>
                                                 @endforeach
                                             </ul>
                                         @elseif ($block->type == 'media' && isset($block->media))
                                             @if ($block->media_link)<a href="{{ $block->media_link }}">@endif
-                                            <img src="{{ asset('img/uploads/' . $block->media->ID . '/' . $block->media->path) }}" alt="{{ $block->media->alt }}" @if ($block->media->title) title="{{ $block->media->title }}" @endif style="display: block; max-width: 100%; height: auto" />
+                                            <img src="{{ asset('img/uploads/' . $block->media->ID . '/' . $block->media->file_name) }}" alt="{{ $block->media->alt }}" @if ($block->media->title) title="{{ $block->media->title }}" @endif style="display: block; max-width: 100%; height: auto" />
                                             @if ($block->media_link)</a>@endif
                                         @endif
                                     </div>

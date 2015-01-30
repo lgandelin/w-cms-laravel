@@ -31,7 +31,7 @@ class EloquentMediaRepository implements MediaRepositoryInterface
     {
         $mediaModel = new MediaModel();
         $mediaModel->name = $media->getName();
-        $mediaModel->path = $media->getPath();
+        $mediaModel->file_name = $media->getFileName();
         $mediaModel->alt = $media->getAlt();
         $mediaModel->title = $media->getTitle();
 
@@ -44,7 +44,7 @@ class EloquentMediaRepository implements MediaRepositoryInterface
     {
         $mediaModel = MediaModel::find($media->getID());
         $mediaModel->name = $media->getName();
-        $mediaModel->path = $media->getPath();
+        $mediaModel->file_name = $media->getFileName();
         $mediaModel->alt = $media->getAlt();
         $mediaModel->title = $media->getTitle();
 
@@ -63,7 +63,7 @@ class EloquentMediaRepository implements MediaRepositoryInterface
         $media = new Media();
         $media->setID($mediaModel->id);
         $media->setName($mediaModel->name);
-        $media->setPath($mediaModel->path);
+        $media->setFileName($mediaModel->file_name);
         $media->setAlt($mediaModel->alt);
         $media->setTitle($mediaModel->title);
 

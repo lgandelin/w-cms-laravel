@@ -104,6 +104,7 @@ $(document).ready(function() {
         } else if (block.attr('data-type') == 'media') {
             media_id = $('.block[data-id="' + block_id + '"] .media_id').val();
             media_link = $('.block[data-id="' + block_id + '"] .media_link').val();
+            media_format_id = $('.block[data-id="' + block_id + '"] .media_format_id').val();
         }
 
         var data = {
@@ -118,6 +119,7 @@ $(document).ready(function() {
             'block_reference_id': block_reference_id,
             'media_id': media_id,
             'media_link': media_link,
+            'media_format_id': media_format_id,
         };
 
         var button = $(this);

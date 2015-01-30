@@ -45,6 +45,7 @@ function upload_image(image_id, image_url) {
 	    {
 			$('.media-thumbnail img').remove();
 			$('.media-thumbnail').append($('<img>',{src:data.image + '?' + new Date().getTime()}));
+			$('#file_name').val(data.file_name);
 	    }	        
    });
 }

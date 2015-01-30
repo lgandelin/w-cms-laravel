@@ -15,7 +15,7 @@ class CreateMediasTable extends Migration {
         Schema::create('medias', function($table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->string('path')->nullable();
+            $table->string('file_name')->nullable();
             $table->timestamps();
         });
 	}
