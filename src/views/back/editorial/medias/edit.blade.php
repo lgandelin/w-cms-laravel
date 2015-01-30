@@ -58,6 +58,27 @@
                 <a class="btn btn-default" href="{{ route('back_medias_index') }}" name="{{ trans('w-cms-laravel::header.medias') }}">{{ trans('w-cms-laravel::generic.cancel') }}</a>
 
                 <input type="hidden" name="ID" value="{{ $media->ID }}" />
+
+
+                <!-- FORMATS -->
+                <div>
+                    <h2>Formats</h2>
+                    @foreach ($media_formats as $media_format)
+                    <div class="form-group media-format" data-media-format-id="{{ $media_format->ID }}" data-width="{{ $media_format->width }}" data-height="{{ $media_format->height }}">
+                        <label for="">{{ $media_format->name }} ({{ $media_format->width }} x {{ $media_format->height }})</label>
+                        <div class="media-format-image">
+                            <img src="{{ asset('img/uploads/' . $media->ID . '/' . $media_format->width . '_' . $media_format->height . '_' . $media->file_name) }}?date={{ time() }}" />
+                        </div>
+
+                        <div style="margin-top: 20px; margin-bottom: 50px">
+                            <input type="button" class="btn btn-primary btn-activate-crop" value="{{ trans('w-cms-laravel::medias.crop') }}" />
+                        </div>
+
+                    </div>
+                    @endforeach
+                </div>
+                <!-- FORMATS -->
+
             </div>
 
             <div class="col-lg-6">
@@ -76,19 +97,35 @@
                     <input autocomplete="off" type="text" class="form-control" id="file_name" name="file_name" placeholder="{{ trans('w-cms-laravel::medias.file_name') }}" value="{{ $media->file_name }}" />
                 </div>
 
-                {{--
-                <span class="btn  btn-primary btn-file">
-                    {{ trans('w-cms-laravel::generic.browse') }} <input type="file" name="image">
-                </span>
-                <input type="button" class="btn btn-primary" value="{{ trans('w-cms-laravel::medias.crop') }}" id="btn-activate-crop" />
-                <input type="button" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" id="btn-valid-crop" />
-
-                <label for="dataWidth">Width :</label> <input id="dataWidth" autocomplete="off" style="border:none" />
-                <label for="dataHeight">Height :</label> <input id="dataHeight" autocomplete="off" style="border:none" />
-                --}}
-
             </div>
         </form>
+
+
+        <!-- CROP MEDIA MODAL-->
+        <div class="modal fade" id="crop-medias-modal" tabindex="-1" role="dialog" aria-labelledby="area-infos" aria-hidden="true">
+            <div class="modal-dialog modal-full">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="area-infos">Redimensionner média</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div style="position: relative">
+                            <img class="media-image-to-crop" style="max-width:100%; display: block;" src="{{ asset('img/uploads/' . $media->ID . '/' . $media->file_name) }}?date={{ time() }}" />
+                        </div>
+                        <span>Largeur :</span> <input id="dataWidth" autocomplete="off" style="border:none; width: 50px" /> px
+                        <span>Hauteur :</span> <input id="dataHeight" autocomplete="off" style="border:none; width: 50px" /> px
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-success btn-valid-crop" value="{{ trans('w-cms-laravel::generic.submit') }}" />
+                        <input type="button" class="btn-close btn btn-default" data-dismiss="modal" value="{{ trans('w-cms-laravel::generic.close') }}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CROP MEDIA MODAL -->
 
         @else
         {{ trans('w-cms-laravel::medias.not_found') }}

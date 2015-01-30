@@ -323,35 +323,44 @@
   display: block;
 }
 
-/* line 42, ../sass/_medias.scss */
+/* line 41, ../sass/_medias.scss */
+.modal-full {
+  width: 65%;
+}
+
+/* line 46, ../sass/_medias.scss */
 .media-edit .media-thumbnail {
   width: 500px;
   margin-bottom: 20px;
 }
-/* line 47, ../sass/_medias.scss */
+/* line 51, ../sass/_medias.scss */
 .media-edit .media-thumbnail img {
-  display: block;
   max-width: 100%;
   height: auto;
 }
-/* line 54, ../sass/_medias.scss */
+/* line 57, ../sass/_medias.scss */
 .media-edit .media-name {
   width: 400px;
 }
-/* line 58, ../sass/_medias.scss */
+/* line 61, ../sass/_medias.scss */
 .media-edit .media-path {
   width: 250px;
   display: inline-block;
   vertical-align: middle;
 }
-/* line 64, ../sass/_medias.scss */
+/* line 69, ../sass/_medias.scss */
+.media-edit .media-format .media-format-image img {
+  max-width: 100%;
+  display: block;
+}
+/* line 76, ../sass/_medias.scss */
 .media-edit .btn-file {
   display: inline-block;
   vertical-align: middle;
   position: relative;
   overflow: hidden;
 }
-/* line 71, ../sass/_medias.scss */
+/* line 83, ../sass/_medias.scss */
 .media-edit .btn-file input[type=file] {
   position: absolute;
   top: 0;

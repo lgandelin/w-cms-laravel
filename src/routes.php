@@ -78,6 +78,7 @@ Route::get('/admin/editorial/medias/delete/{mediaID}', array('as' => 'back_media
 Route::get('/admin/editorial/medias/duplicate/{mediaID}', array('as' => 'back_medias_duplicate', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaController@duplicate'));
 
 Route::post('/admin/editorial/medias/upload', array('as' => 'back_medias_upload', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaController@upload'));
+Route::post('/admin/editorial/medias/crop', array('as' => 'back_medias_crop', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaController@crop'));
 
 //BACK > EDITORIAL > MEDIA FORMATS
 Route::get('/admin/editorial/media_formats', array('as' => 'back_media_formats_index', 'uses' => 'Webaccess\WCMSLaravel\Back\Editorial\MediaFormatController@index'));

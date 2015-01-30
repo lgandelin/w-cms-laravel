@@ -38,6 +38,10 @@
 	}
 }
 
+.modal-full {
+    width: 65%;
+}
+
 .media-edit {
 	.media-thumbnail {
 		width: 500px;
@@ -58,6 +62,15 @@
 		width: 250px;
 		display: inline-block;
 		vertical-align: middle;
+	}
+
+	.media-format {
+		.media-format-image {
+			img {
+				max-width:100%;
+				display: block;
+			}
+		}
 	}
 
 	.btn-file {

@@ -126,12 +126,12 @@
                                     @endif
                                 </select>
                             </div>
-                        @elseif ($block->type == 'media')
+                        @elseif ($block->type == 'media' && isset($block->media))
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::blocks.media_block') }}</label>
 
                                 <div class="thumbnail" style="width:200px; margin-bottom: 15px">
-                                    <img style="max-width: 100%; display:block" src="{{ asset('img/uploads/' . $block->media->ID . '/' . $block->media->path) }}" />
+                                    <img style="max-width: 100%; display:block" src="{{ asset('img/uploads/' . $block->media->ID . '/' . $block->media->file_name) }}" />
                                     <span class="media-name" style="margin-top: 5px; display: block;">{{ $block->media->name }}</span>
                                 </div>
 
@@ -192,8 +192,8 @@
                     <ul style="display:table">
                         @foreach ($medias as $media)
                         <li style="display: table-cell; padding-right: 20px; vertical-align: middle; text-align: center">
-                            <a href="#" class="thumbnail popup-media-id" data-id="{{ $media->ID }}" data-name="{{ $media->name }}" data-src="{{ asset('img/uploads/' . $media->ID . '/' . $media->path) }}">
-                                <img src="{{ asset('img/uploads/' . $media->ID . '/' . $media->path) }}" width="175" alt="{{ $media->name }}" />
+                            <a href="#" class="thumbnail popup-media-id" data-id="{{ $media->ID }}" data-name="{{ $media->name }}" data-src="{{ asset('img/uploads/' . $media->ID . '/' . $media->file_name) }}">
+                                <img src="{{ asset('img/uploads/' . $media->ID . '/' . $media->file_name) }}" width="175" alt="{{ $media->name }}" />
                                 <span class="media-name" style="font-weight: bold;">{{ $media->name }}
                             </a>
                         </li>
