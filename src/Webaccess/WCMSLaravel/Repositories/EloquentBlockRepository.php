@@ -152,8 +152,9 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         } elseif ($blockModel->type == 'global') {
             $block = new GlobalBlock();
             $block->setBlockReferenceID($blockModel->block_reference_id);
-        } else
-            $block = new Block();
+        } else {
+            throw new \Exception('Block type not found');
+        }
 
         $block->setID($blockModel->id);
         $block->setName($blockModel->name);
