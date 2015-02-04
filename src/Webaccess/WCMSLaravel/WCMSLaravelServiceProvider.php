@@ -2,6 +2,10 @@
 
 namespace Webaccess\WCMSLaravel;
 
+use CMS\Events\EventInterface;
+use CMS\Events\EventManagerInterface;
+use CMS\Events\Events;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 use CreateUserCommand;
@@ -60,6 +64,8 @@ use CMS\Interactors\Users\CreateUserInteractor;
 use CMS\Interactors\Users\UpdateUserInteractor;
 use CMS\Interactors\Users\DeleteUserInteractor;
 
+use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
+use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
 use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
@@ -105,6 +111,13 @@ class WCMSLaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('EventDispatcher', function() {
+            $eventDispatcher = new CMSLaravelEventManager();
+            $eventDispatcher->addListener(Events::DELETE_AREA, array(new DeleteAreaListener(), 'onDeleteArea'));
+
+            return $eventDispatcher;
+        });
+
         //Areas
         $this->app->bind('GetAreaInteractor', function() {
             return new GetAreaInteractor(new EloquentAreaRepository());
@@ -117,8 +130,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         $this->app->bind('CreateAreaInteractor', function() {
             return new CreateAreaInteractor(
                 new EloquentAreaRepository(),
-                $this->app->make('GetPagesInteractor'),
-                $this->app->make('GetPageInteractor')
+                $this->app->make('GetPagesInteractor')
             );
         });
 
@@ -130,11 +142,15 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('DeleteAreaInteractor', function() {
-            return new DeleteAreaInteractor(
+            $interactor = new DeleteAreaInteractor(
                 new EloquentAreaRepository(),
+                $this->app->make('GetAreasInteractor'),
                 $this->app->make('GetBlocksInteractor'),
                 $this->app->make('DeleteBlockInteractor')
             );
+            $interactor->setEventManager($this->app->make('EventDispatcher'));
+
+            return $interactor;
         });
 
         $this->app->bind('DuplicateAreaInteractor', function() {
@@ -157,8 +173,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         $this->app->bind('CreateBlockInteractor', function() {
             return new CreateBlockInteractor(
                 new EloquentBlockRepository(),
-                $this->app->make('GetAreasInteractor'),
-                $this->app->make('GetAreaInteractor')
+                $this->app->make('GetAreasInteractor')
             );
         });
 
@@ -170,7 +185,10 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('DeleteBlockInteractor', function() {
-            return new DeleteBlockInteractor(new EloquentBlockRepository());
+            return new DeleteBlockInteractor(
+                new EloquentBlockRepository(),
+                $this->app->make('GetBlocksInteractor')
+            );
         });
 
         $this->app->bind('DuplicateBlockInteractor', function() {
