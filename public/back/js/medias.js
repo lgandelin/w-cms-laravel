@@ -2,10 +2,10 @@ $(document).ready(function() {
 
 	$("input").on('change', (function(e) {
 		var files = e.target.files;
-		var image_id = $('input[name="ID"]').val();
+		var media_id = $('input[name="ID"]').val();
 		var image_file = files[0];
 
-		upload_image(image_id, image_file);
+		upload_image(media_id, image_file);
 	}));
 
 	$('.btn-activate-crop').click(function() {
@@ -41,7 +41,7 @@ $(document).ready(function() {
 		var modal = $('#crop-medias-modal');
 		$(modal).modal('hide');
 
-		var image_id = $('input[name="ID"]').val();
+		var media_id = $('input[name="ID"]').val();
 
 		var $image = $('.media-image-to-crop');
 
@@ -49,7 +49,7 @@ $(document).ready(function() {
 
 		$image.cropper("destroy");
 
-		data.ID = image_id;
+		data.ID = media_id;
 		data.media_format_id = media_format_id;
 
 		$.ajax({
@@ -67,9 +67,9 @@ $(document).ready(function() {
 	});	
 });
 
-function upload_image(image_id, image_url) {
+function upload_image(media_id, image_url) {
 	var data = new FormData();
-	data.append('ID', image_id);
+	data.append('ID', media_id);
     data.append('image', image_url);
 
 	$.ajax({

@@ -126,15 +126,15 @@
 
                     <div style="display:none;" id="select_media_template">
                         <div class="form-group">
-                            <label for="media_id">{{ trans('w-cms-laravel::pages.block_media') }}</label>
-                            <select class="media_id form-control" autocomplete="off">
-                                <option value="">{{ trans('w-cms-laravel::pages.choose_media') }}</option>
-                                @if (isset($medias))
-                                @foreach ($medias as $media)
-                                <option value="{{ $media->ID }}">{{ $media->name }}</option>
-                                @endforeach
-                                @endif
-                            </select>
+                            <label>{{ trans('w-cms-laravel::blocks.media_block') }}</label>
+
+                            <div class="thumbnail" style="width:200px; margin-bottom: 15px">
+                                <img style="max-width: 100%; display:block" src="" />
+                                <span class="media-name" style="margin-top: 5px; display: block;"></span>
+                            </div>
+
+                            <input type="button" class="btn btn-primary open-medias-modal" value="{{ trans('w-cms-laravel::generic.browse') }}" data-id="" />
+                            <input class="media_id" type="hidden" value="" />
                         </div>
 
                         <div class="form-group">

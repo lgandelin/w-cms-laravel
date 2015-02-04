@@ -24,22 +24,14 @@ class MediaController extends AdminController
 
     public function store()
     {
-        $fileName = \Input::file('image')->getClientOriginalName();
         $mediaStructure = new MediaStructure([
             'name' => \Input::get('name'),
-            'file_name' => $fileName,
             'alt' => \Input::get('alt'),
             'title' => \Input::get('title'),
         ]);
 
         try {
             $mediaID = \App::make('CreateMediaInteractor')->run($mediaStructure);
-
-            //Upload image
-            if (\Input::file('image')) {
-                $fileName = $mediaID . '.jpg';
-                \Input::file('image')->move(public_path() . '/img/uploads/' . $mediaID . '/', $fileName);
-            }
 
             return \Redirect::route('back_medias_edit', array('mediaID' => $mediaID));
         } catch (\Exception $e) {

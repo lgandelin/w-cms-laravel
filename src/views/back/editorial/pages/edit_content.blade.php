@@ -126,16 +126,16 @@
                                     @endif
                                 </select>
                             </div>
-                        @elseif ($block->type == 'media' && isset($block->media))
+                        @elseif ($block->type == 'media')
                             <div class="form-group">
                                 <label>{{ trans('w-cms-laravel::blocks.media_block') }}</label>
 
                                 <div class="thumbnail" style="width:200px; margin-bottom: 15px">
-                                    <img style="max-width: 100%; display:block" src="{{ asset('img/uploads/' . $block->media->ID . '/' . $block->media->file_name) }}" />
-                                    <span class="media-name" style="margin-top: 5px; display: block;">{{ $block->media->name }}</span>
+                                    <img style="max-width: 100%; display:block" src="@if (isset($block->media)){{ asset('img/uploads/' . $block->media->ID . '/' . $block->media->file_name) }} @endif" />
+                                    <span class="media-name" style="margin-top: 5px; display: block;">@if (isset($block->media)){{ $block->media->name }}@endif</span>
                                 </div>
 
-                                <input type="button" class="btn btn-primary open-medias-modal" value="{{ trans('w-cms-laravel::generic.browse') }}" data-id="{{ $block->ID }}" />
+                                <input type="button" class="btn btn-primary open-medias-modal" value="{{ trans('w-cms-laravel::generic.browse') }}" />
                                 <input class="media_id" type="hidden" value="{{ $block->media_id }}" />
                             </div>
 
@@ -189,9 +189,9 @@
 
             <div class="modal-body">
                 @if (isset($medias))
-                    <ul style="display:table">
+                    <ul style="overflow: hidden; display: block; padding-left: 10px">
                         @foreach ($medias as $media)
-                        <li style="display: table-cell; padding-right: 20px; vertical-align: middle; text-align: center">
+                        <li style="display: inline-block; padding-right: 20px; vertical-align: middle; text-align: center">
                             <a href="#" class="thumbnail popup-media-id" data-id="{{ $media->ID }}" data-name="{{ $media->name }}" data-src="{{ asset('img/uploads/' . $media->ID . '/' . $media->file_name) }}">
                                 <img src="{{ asset('img/uploads/' . $media->ID . '/' . $media->file_name) }}" width="175" alt="{{ $media->name }}" />
                                 <span class="media-name" style="font-weight: bold;">{{ $media->name }}

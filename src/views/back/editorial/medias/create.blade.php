@@ -33,15 +33,6 @@
                 <input autocomplete="off" type="text" class="form-control media-name" id="name" name="name" placeholder="{{ trans('w-cms-laravel::medias.name') }}" value="" />
             </div>
 
-            <!--<div class="form-group">
-                <label for="path">{{ trans('w-cms-laravel::medias.path') }}</label>
-                <input autocomplete="off" type="text" class="form-control media-path" id="path" name="path" placeholder="{{ trans('w-cms-laravel::medias.path') }}" value="" width="50%" />
-
-                <span class="btn  btn-primary btn-file">
-                    {{ trans('w-cms-laravel::generic.browse') }} <input type="file" name="image">
-                </span>
-            </div>-->
-
             <div class="form-group">
                 <label for="alt">{{ trans('w-cms-laravel::medias.alt') }}</label>
                 <input autocomplete="off" type="text" class="form-control media-alt" id="alt" name="alt" placeholder="{{ trans('w-cms-laravel::medias.alt') }}" value="" />

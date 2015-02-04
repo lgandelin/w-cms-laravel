@@ -158,7 +158,8 @@ $(document).ready(function() {
     //Medias modal
     $('body').on('click', '.open-medias-modal', function() {
         var modal = $('#medias-modal');
-        modal.attr('data-block-id', $(this).attr('data-id'));
+        var block_id = $(this).closest('.block').attr('data-id');
+        modal.attr('data-block-id', block_id);
         modal.attr('data-name', $(this).attr('data-name'));
         modal.attr('data-src', $(this).attr('data-src'));
         $(modal).modal('show');
@@ -176,7 +177,6 @@ $(document).ready(function() {
         block.find('.media_id').val(media_id);
         block.find('.media-name').text(media_name);
         block.find('.thumbnail img').attr('src', media_src);
-
         $('#medias-modal').modal('hide');
     });
 });
