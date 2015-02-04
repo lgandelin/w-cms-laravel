@@ -13,7 +13,7 @@ class UpdateMediasTableForAltTitle extends Migration {
 	public function up()
 	{
         Schema::table('medias', function($table) {
-            $table->string('alt')->after('path')->nullable();
+            $table->string('alt')->after('file_name')->nullable();
             $table->string('title')->after('alt')->nullable();
         });
 	}
