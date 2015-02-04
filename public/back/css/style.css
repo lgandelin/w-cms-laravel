@@ -376,3 +376,11 @@
   cursor: inherit;
   display: block;
 }
+
+/* line 2, ../sass/_blocks.scss */
+.thumbnail .media-name {
+  text-align: center;
+  display: block;
+  margin-top: 5px;
+  font-weight: bold;
+}
