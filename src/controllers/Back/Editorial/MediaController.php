@@ -173,7 +173,9 @@ class MediaController extends AdminController
         $newFileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName;
 
         //Delete old image
-        unlink($this->getMediaFolder($mediaID) . $newFileName);
+        if (file_exists($this->getMediaFolder($mediaID) . $newFileName)) {
+            unlink($this->getMediaFolder($mediaID) . $newFileName);
+        }
 
         $manager = new ImageManager();
         $image = $manager->make($this->getMediaFolder($mediaID) . $fileName);
