@@ -13,6 +13,7 @@ return array(
     'article_block' => 'Article block',
     'article_list_block' => 'Article list block',
     'global_block' => 'Global block',
+    'media_block' => 'Media block',
 
     'no_block_created_yet' => 'No block created yet'
 );

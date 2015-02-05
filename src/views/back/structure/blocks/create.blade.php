@@ -46,6 +46,7 @@
                     <option value="view_file">{{ trans('w-cms-laravel::blocks.view_block') }}</option>
                     <option value="article">{{ trans('w-cms-laravel::blocks.article_block') }}</option>
                     <option value="article_list">{{ trans('w-cms-laravel::blocks.article_list_block') }}</option>
+                    <option value="media">{{ trans('w-cms-laravel::blocks.media_block') }}</option>
                 </select>
             </div>
             <!-- Type -->
@@ -128,6 +129,26 @@
         </div>
 
     </div>
+
+    <div style="display:none;" id="select_media_template">
+        <div class="form-group">
+            <label for="media_id">{{ trans('w-cms-laravel::pages.block_media') }}</label>
+            <select class="form-control" autocomplete="off" name="media_id">
+                <option value="">{{ trans('w-cms-laravel::pages.choose_media') }}</option>
+                @if (isset($medias))
+                    @foreach ($medias as $media)
+                    <option value="{{ $media->ID }}">{{ $media->name }}</option>
+                    @endforeach
+                @endif
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>{{ trans('w-cms-laravel::pages.block_media_link') }}</label>
+            <input type="text" class="form-control" name="media_link" placeholder="{{ trans('w-cms-laravel::pages.block_media_link') }}" value="" autocomplete="off" />
+        </div>
+    </div>
+
 </div>
 
 @stop

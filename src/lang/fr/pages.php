@@ -33,6 +33,9 @@ return array(
     'block_article_list_category' => 'Categorie d\'articles',
     'block_article_list_number' => 'Nombre d\'articles',
     'block_article_list_order' => 'Ordre',
+    'block_media' => 'Média',
+    'block_media_link' => 'Lien sur média',
+    'block_media_format ' => 'Format de média',
 
     'no_page_created_yet' => 'Aucune page créée',
    	'not_found' => 'Page non trouvée',
@@ -44,6 +47,8 @@ return array(
     'choose_article_list_category' => 'Choisir une catégorie d\'articles',
     'choose_global_block' => 'Choisir un bloc global',
     'choose_master_page' => 'Choisir une master page',
+    'choose_media' => 'Choisir un média',
+    'choose_media_format' => 'Choisir un format de média',
 
     'is_master' => 'Maître',
     'is_ghost' => 'Fantôme',

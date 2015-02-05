@@ -133,88 +133,95 @@
   color: #F8857D;
   margin: 5px 5px 0 0;
 }
-/* line 73, ../sass/_pages.scss */
+/* line 72, ../sass/_pages.scss */
+.pages-interface #content .thumbnail .media-name {
+  text-align: center;
+  display: block;
+  margin-top: 5px;
+  font-weight: bold;
+}
+/* line 83, ../sass/_pages.scss */
 .pages-interface #structure .title {
   font-weight: bold;
   display: block;
   min-height: 40px;
   line-height: 40px;
 }
-/* line 81, ../sass/_pages.scss */
+/* line 91, ../sass/_pages.scss */
 .pages-interface #structure .area {
   text-align: center;
   padding: 10px;
 }
-/* line 85, ../sass/_pages.scss */
+/* line 95, ../sass/_pages.scss */
 .pages-interface #structure .area .area_color {
   overflow: hidden;
   min-height: 104px;
   background: #eee;
   border: 1px solid #ccc;
 }
-/* line 92, ../sass/_pages.scss */
+/* line 102, ../sass/_pages.scss */
 .pages-interface #structure .area .area-delete, .pages-interface #structure .area .area-update, .pages-interface #structure .area .area-create-block, .pages-interface #structure .area .area-move, .pages-interface #structure .area .area-display {
   cursor: pointer;
   float: right;
   margin: 5px 5px 0 0;
 }
-/* line 98, ../sass/_pages.scss */
+/* line 108, ../sass/_pages.scss */
 .pages-interface #structure .area .child-area {
   background: rgba(170, 170, 170, 0.5);
   border: 1px solid #F8857D;
 }
-/* line 102, ../sass/_pages.scss */
+/* line 112, ../sass/_pages.scss */
 .pages-interface #structure .area .child-area .area-name {
   cursor: default;
 }
-/* line 106, ../sass/_pages.scss */
+/* line 116, ../sass/_pages.scss */
 .pages-interface #structure .area .child-area .disabled {
   float: right;
   color: #F8857D;
   margin: 5px 5px 0 0;
 }
-/* line 113, ../sass/_pages.scss */
+/* line 123, ../sass/_pages.scss */
 .pages-interface #structure .area .block {
   padding: 10px;
 }
-/* line 116, ../sass/_pages.scss */
+/* line 126, ../sass/_pages.scss */
 .pages-interface #structure .area .block .block_color {
   background: #fdfdfd;
   border: 1px solid #ddd;
 }
-/* line 121, ../sass/_pages.scss */
+/* line 131, ../sass/_pages.scss */
 .pages-interface #structure .area .block .submit_wrapper {
   margin: 20px 0;
 }
-/* line 125, ../sass/_pages.scss */
+/* line 135, ../sass/_pages.scss */
 .pages-interface #structure .area .block .type {
   font-weight: normal;
   text-transform: uppercase;
 }
-/* line 130, ../sass/_pages.scss */
+/* line 140, ../sass/_pages.scss */
 .pages-interface #structure .area .block .block-delete, .pages-interface #structure .area .block .block-update, .pages-interface #structure .area .block .block-move, .pages-interface #structure .area .block .block-display {
   cursor: pointer;
   float: right;
   margin: 5px 5px 0 0;
 }
-/* line 136, ../sass/_pages.scss */
+/* line 146, ../sass/_pages.scss */
 .pages-interface #structure .area .block .child-block {
   background: rgba(170, 170, 170, 0.5);
   border: 1px solid #F8857D;
 }
-/* line 140, ../sass/_pages.scss */
+/* line 150, ../sass/_pages.scss */
 .pages-interface #structure .area .block .child-block .block-name {
   cursor: default;
 }
-/* line 146, ../sass/_pages.scss */
+/* line 156, ../sass/_pages.scss */
 .pages-interface #structure .area .area-hidden, .pages-interface #structure .area .block-hidden {
   color: #ccc;
 }
-/* line 150, ../sass/_pages.scss */
+/* line 160, ../sass/_pages.scss */
 .pages-interface #structure .area .area-name, .pages-interface #structure .area .block-name {
   cursor: pointer;
 }
-/* line 156, ../sass/_pages.scss */
+/* line 166, ../sass/_pages.scss */
 .pages-interface #structure .sortable-placeholder .area_color, .pages-interface #structure .sortable-placeholder .block_color {
   border: 1px solid #2a6496 !important;
   background: #8AB4D8 !important;
@@ -222,11 +229,11 @@
   line-height: 43px;
   overflow: hidden;
 }
-/* line 165, ../sass/_pages.scss */
+/* line 175, ../sass/_pages.scss */
 .pages-interface #structure .block-form, .pages-interface #structure .area-form {
   display: none;
 }
-/* line 168, ../sass/_pages.scss */
+/* line 178, ../sass/_pages.scss */
 .pages-interface #structure .block-form .submit_wrapper, .pages-interface #structure .area-form .submit_wrapper {
   margin-bottom: 20px;
 }
@@ -279,4 +286,101 @@
   height: 43px;
   line-height: 43px;
   overflow: hidden;
+}
+
+/* line 1, ../sass/_medias.scss */
+.medias-list {
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+/* line 6, ../sass/_medias.scss */
+.medias-list li {
+  width: 200px;
+  height: auto;
+  list-style: none;
+  float: left;
+  margin: 20px 20px 0 0;
+  position: relative;
+}
+/* line 14, ../sass/_medias.scss */
+.medias-list li .media-name {
+  display: block;
+  margin: 5px 0;
+  text-align: center;
+  font-weight: bold;
+}
+/* line 22, ../sass/_medias.scss */
+.medias-list li .media-delete {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  color: white;
+}
+/* line 35, ../sass/_medias.scss */
+.medias-list li:hover .media-delete {
+  display: block;
+}
+
+/* line 41, ../sass/_medias.scss */
+.modal-full {
+  width: 65%;
+}
+
+/* line 46, ../sass/_medias.scss */
+.media-edit .media-thumbnail {
+  width: 500px;
+  margin-bottom: 20px;
+}
+/* line 51, ../sass/_medias.scss */
+.media-edit .media-thumbnail img {
+  max-width: 100%;
+  height: auto;
+}
+/* line 57, ../sass/_medias.scss */
+.media-edit .media-name {
+  width: 400px;
+}
+/* line 61, ../sass/_medias.scss */
+.media-edit .media-path {
+  width: 250px;
+  display: inline-block;
+  vertical-align: middle;
+}
+/* line 69, ../sass/_medias.scss */
+.media-edit .media-format .media-format-image img {
+  max-width: 100%;
+  display: block;
+}
+/* line 76, ../sass/_medias.scss */
+.media-edit .btn-file {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  overflow: hidden;
+}
+/* line 83, ../sass/_medias.scss */
+.media-edit .btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+/* line 2, ../sass/_blocks.scss */
+.thumbnail .media-name {
+  text-align: center;
+  display: block;
+  margin-top: 5px;
+  font-weight: bold;
 }

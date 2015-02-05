@@ -23,6 +23,7 @@ class ArticleController extends AdminController
             if ($article->page_id) {
                 $article->page = \App::make('GetPageInteractor')->getPageByID($article->page_id, true);
             }
+
         }
 
         $this->layout = \View::make('w-cms-laravel::back.editorial.articles.index', [
@@ -35,7 +36,8 @@ class ArticleController extends AdminController
     {
         $this->layout = \View::make('w-cms-laravel::back.editorial.articles.create', [
             'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
-            'pages' => \App::make('GetPagesInteractor')->getAll(true)
+            'pages' => \App::make('GetPagesInteractor')->getAll(true),
+            'medias' => \App::make('GetMediasInteractor')->getAll(true),
         ]);
     }
 
@@ -49,6 +51,7 @@ class ArticleController extends AdminController
             'category_id' => \Input::get('category_id'),
             'author_id' => \Input::get('author_id'),
             'page_id' => \Input::get('page_id'),
+            'media_id' => \Input::get('media_id'),
             'publication_date' => $publicationDate->format('Y-m-d H:i:s'),
         ]);
 
@@ -70,6 +73,7 @@ class ArticleController extends AdminController
                 'article' => \App::make('GetArticleInteractor')->getArticleByID($articleID, true),
                 'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
                 'master_pages' => \App::make('GetPagesInteractor')->getMasterPages(true),
+                'medias' => \App::make('GetMediasInteractor')->getAll(true),
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
@@ -88,9 +92,9 @@ class ArticleController extends AdminController
             'category_id' => \Input::get('category_id'),
             'author_id' => \Input::get('author_id'),
             'page_id' => \Input::get('page_id'),
+            'media_id' => \Input::get('media_id'),
             'publication_date' => $publicationDate->format('Y-m-d H:i:s'),
         ]);
-
         try {
             \App::make('UpdateArticleInteractor')->run($articleID, $articleStructure);
 

@@ -156,6 +156,7 @@
                             <option value="article">{{ trans('w-cms-laravel::blocks.article_block') }}</option>
                             <option value="article_list">{{ trans('w-cms-laravel::blocks.article_list_block') }}</option>
                             <option value="global">{{ trans('w-cms-laravel::blocks.global_block') }}</option>
+                            <option value="media">{{ trans('w-cms-laravel::blocks.media_block') }}</option>
                         </select>
                     </div>
                     <!-- Type -->

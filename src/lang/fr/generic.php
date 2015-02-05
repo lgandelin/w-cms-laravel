@@ -9,6 +9,7 @@ return array(
     'submit' => 'Valider',
     'cancel' => 'Annuler',
     'close' => 'Fermer',
+    'browse' => 'Parcourir',
     'ascending' => 'Ascendant',
     'descending' => 'Descendant',
 );

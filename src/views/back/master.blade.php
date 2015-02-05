@@ -5,7 +5,7 @@
 		{{ HTML::style('packages/webaccess/w-cms-laravel/back/vendor/bootstrap/css/bootstrap.min.css') }}
 		{{ HTML::style('packages/webaccess/w-cms-laravel/back/vendor/bootstrap/css/bootstrap-theme.min.css') }}
 		{{ HTML::style('packages/webaccess/w-cms-laravel/back/css/style.css') }}
-
+        @yield('stylesheets')
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
@@ -40,6 +40,7 @@
                                 <li><a href="{{ route('back_pages_index') }}"><span class="icon glyphicon glyphicon-file"></span>{{ trans('w-cms-laravel::header.pages') }}</a></li>
                                 <li><a href="{{ route('back_articles_index') }}"><span class="icon glyphicon glyphicon-font"></span>{{ trans('w-cms-laravel::header.articles') }}</a></li>
                                 <li><a href="{{ route('back_menus_index') }}"><span class="icon glyphicon glyphicon-align-justify"></span>{{ trans('w-cms-laravel::header.menus') }}</a></li>
+                                <li><a href="{{ route('back_medias_index') }}"><span class="icon glyphicon glyphicon-picture"></span>{{ trans('w-cms-laravel::header.medias') }}</a></li>
                             </ul>
                         </li>
                         <!-- EDITORIAL -->
@@ -105,6 +106,9 @@
             var route_menu_items_update_order = "{{ route('back_menu_items_update_order') }}";
             var route_menu_items_display = "{{ route('back_menu_items_display') }}";
             var route_menu_items_delete = "{{ route('back_menu_items_delete') }}";
+
+            var route_media_upload = "{{ route('back_medias_upload') }}";
+            var route_media_crop = "{{ route('back_medias_crop') }}";
         </script>
 
 		@yield('javascripts')

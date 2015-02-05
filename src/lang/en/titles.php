@@ -24,4 +24,8 @@ return array(
     'blocks_edit' => 'Edit a block',
     'general' => 'General',
     'structure' => 'Structure',
+    'medias' => 'Medias',
+    'media_formats' => 'Media formats',
+    'media_formats_create' => 'Create a media format',
+    'media_formats_edit' => 'Edit a media format',
 );

@@ -126,6 +126,35 @@
                                     @endif
                                 </select>
                             </div>
+                        @elseif ($block->type == 'media')
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::blocks.media_block') }}</label>
+
+                                <div class="thumbnail" style="width:200px; margin-bottom: 15px">
+                                    <img style="max-width: 100%; display:block" src="@if (isset($block->media)){{ asset('img/uploads/' . $block->media->ID . '/' . $block->media->file_name) }} @endif" />
+                                    <span class="media-name" style="margin-top: 5px; display: block;">@if (isset($block->media)){{ $block->media->name }}@endif</span>
+                                </div>
+
+                                <input type="button" class="btn btn-primary open-medias-modal" value="{{ trans('w-cms-laravel::generic.browse') }}" />
+                                <input class="media_id" type="hidden" value="{{ $block->media_id }}" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="media_format_id">{{ trans('w-cms-laravel::pages.block_media_format') }}</label>
+                                <select class="media_format_id form-control" autocomplete="off">
+                                    <option value="">{{ trans('w-cms-laravel::pages.choose_media_format') }}</option>
+                                    @if (isset($media_formats))
+                                    @foreach ($media_formats as $media_format)
+                                    <option value="{{ $media_format->ID }}" @if (isset($block->media_format_id) && $block->media_format_id == $media_format->ID) selected="selected" @endif>{{ $media_format->name }} ({{ $media_format->width }} x {{ $media_format->height}})</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ trans('w-cms-laravel::pages.block_media_link') }}</label>
+                                <input type="text" class="form-control media_link" placeholder="{{ trans('w-cms-laravel::pages.block_media_link') }}" value="{{ $block->media_link }}" autocomplete="off" />
+                            </div>
                         @endif
 
                         <!-- Save -->
@@ -146,3 +175,37 @@
     <!-- Blocks content -->
 </div>
 <!-- CONTENT -->
+
+
+
+<!-- MEDIAS MODAL -->
+<div class="modal fade" id="medias-modal" tabindex="-1" role="dialog" aria-labelledby="medias" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="area-infos">Medias</h4>
+            </div>
+
+            <div class="modal-body">
+                @if (isset($medias))
+                    <ul style="overflow: hidden; display: block; padding-left: 10px">
+                        @foreach ($medias as $media)
+                        <li style="display: inline-block; padding-right: 20px; vertical-align: middle; text-align: center">
+                            <a href="#" class="thumbnail popup-media-id" data-id="{{ $media->ID }}" data-name="{{ $media->name }}" data-src="{{ asset('img/uploads/' . $media->ID . '/' . $media->file_name) }}">
+                                <img src="{{ asset('img/uploads/' . $media->ID . '/' . $media->file_name) }}" width="175" alt="{{ $media->name }}" />
+                                <span class="media-name" style="font-weight: bold;">{{ $media->name }}
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
+            <div class="modal-footer">
+                <input type="button" class="btn-close btn btn-default" data-dismiss="modal" value="{{ trans('w-cms-laravel::generic.close') }}" />
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MEDIAS MODAL -->

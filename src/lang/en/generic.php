@@ -9,6 +9,7 @@ return array(
     'submit' => 'Submit',
     'cancel' => 'Cancel',
     'close' => 'Close',
+    'browse' => 'Browse',
     'ascending' => 'Ascending',
     'descending' => 'Descending',
 );

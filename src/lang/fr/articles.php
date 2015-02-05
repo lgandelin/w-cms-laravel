@@ -8,6 +8,7 @@ return array(
     'category' => 'Catégorie',
     'author' => 'Auteur',
     'article_category' => 'Catégorie d\'articles',
+    'media' => 'Média',
     'publication_date' => 'Date de publication',
     'choose_article_category' => 'Choisir une catégorie d\'articles',
     'article_page_associated' => 'Page associée',

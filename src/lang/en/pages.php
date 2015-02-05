@@ -32,6 +32,9 @@ return array(
     'block_article_list_category' => 'Article category',
     'block_article_list_number' => 'Number of articles',
     'block_article_list_order' => 'Order',
+    'block_media' => 'Media',
+    'block_media_link' => 'Media link',
+    'block_media_format' => 'Media format',
 
     'no_page_created_yet' => 'No page created yet',
     'not_found' => 'Page not found',
@@ -42,6 +45,8 @@ return array(
     'choose_article_list_category' => 'Choose an article category',
     'choose_global_block' => 'Choose a global block',
     'choose_master_page' => 'Choose a master page',
+    'choose_media' => 'Choose a media',
+    'choose_media_format' => 'Choose a media format',
 
     'is_master' => 'Master',
     'is_ghost' => 'Ghost',

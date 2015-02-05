@@ -5,6 +5,7 @@ namespace Webaccess\WCMSLaravel\Back\Editorial;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\GlobalBlockStructure;
+use CMS\Structures\Blocks\MediaBlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\Blocks\ViewFileBlockStructure;
@@ -82,6 +83,13 @@ class BlockController extends AdminController
             $blockStructure = new GlobalBlockStructure([
                 'block_reference_id' => (\Input::get('block_reference_id')) ? \Input::get('block_reference_id') : null,
                 'type' => 'global'
+            ]);
+        elseif (\Input::exists('media_id'))
+            $blockStructure = new MediaBlockStructure([
+                'media_id' => (\Input::get('media_id')) ? \Input::get('media_id') : null,
+                'media_link' => (\Input::get('media_link')) ? \Input::get('media_link') : null,
+                'media_format_id' => (\Input::get('media_format_id')) ? \Input::get('media_format_id') : null,
+                'type' => 'media'
             ]);
 
         try {
