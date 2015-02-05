@@ -78,6 +78,18 @@
             </div>
 
             <div class="form-group">
+                <label>{{ trans('w-cms-laravel::articles.media') }}</label>
+                <select name="media_id" class="media_id form-control" autocomplete="off">
+                    <option value="">{{ trans('w-cms-laravel::pages.choose_media') }}</option>
+                    @if (isset($medias))
+                    @foreach ($medias as $media)
+                    <option value="{{ $media->ID }}" @if (isset($article->media_id) && $article->media_id == $media->ID) selected="selected" @endif>{{ $media->name }}</option>
+                    @endforeach
+                    @endif
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="text">{{ trans('w-cms-laravel::articles.publication_date') }}</label>
                 <input autocomplete="off" type="text" class="form-control" id="publication_date" name="publication_date" placeholder="{{ trans('w-cms-laravel::articles.publication_date') }}" value="{{ date('d/m/Y H:i', strtotime($article->publication_date)) }}" />
             </div>

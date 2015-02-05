@@ -23,9 +23,8 @@
                     {{ trans('w-cms-laravel::header.blocks') }}
                 </a>
             </li>
+        </ul>
     </div>
-
-</div>
 </div>
 
 @stop
