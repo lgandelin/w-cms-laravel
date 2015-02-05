@@ -18,8 +18,8 @@
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "4.2.*",
-        "intervention/image": "dev-master",
-        "webaccess/w-cms-core": "0.6.1"
+        "intervention/image": "2.1.1",
+        "webaccess/w-cms-core": "0.7.0"
     },
     "autoload": {
         "classmap": [
