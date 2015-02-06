@@ -251,6 +251,17 @@ $(document).ready(function() {
             }
         });
     });
+
+    //Go to content block
+    $('body').on('click', '.block-go-to-content', function() {
+        var block_id = $(this).attr('data-id');
+        $('a[href="#content"]').click();
+
+        var block_selector = '#content .block[data-id="' + block_id + '"]';
+        $(block_selector).find('.title').trigger('click');
+        
+        scrollTo(block_selector);
+    });
 });
 
 function init_block_sortable() {
@@ -284,4 +295,10 @@ function init_block_sortable() {
         },
         tolerance: 'pointer'
     });
+}
+
+function scrollTo(selector) {
+    $('html, body').animate({
+        scrollTop: $(selector).offset().top
+    }, 500);
 }

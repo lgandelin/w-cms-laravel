@@ -199,7 +199,7 @@
   text-transform: uppercase;
 }
 /* line 140, ../sass/_pages.scss */
-.pages-interface #structure .area .block .block-delete, .pages-interface #structure .area .block .block-update, .pages-interface #structure .area .block .block-move, .pages-interface #structure .area .block .block-display {
+.pages-interface #structure .area .block .block-delete, .pages-interface #structure .area .block .block-update, .pages-interface #structure .area .block .block-move, .pages-interface #structure .area .block .block-display, .pages-interface #structure .area .block .block-go-to-content {
   cursor: pointer;
   float: right;
   margin: 5px 5px 0 0;
