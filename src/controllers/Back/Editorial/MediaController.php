@@ -77,7 +77,6 @@ class MediaController extends AdminController
         ]);
 
         try {
-
             \App::make('UpdateMediaInteractor')->run($mediaID, $mediaStructure);
 
             //Rename file
@@ -120,6 +119,7 @@ class MediaController extends AdminController
         ]);
 
         $mediaFormatsImages = array();
+
         try {
             \App::make('UpdateMediaInteractor')->run($mediaID, $mediaStructure);
 
@@ -134,10 +134,15 @@ class MediaController extends AdminController
                     foreach ($mediaFormats as $mediaFormat) {
 
                         $manager = new ImageManager();
-                        $image = $manager->make($this->getMediaFolder($mediaID) . $fileName)->resize($mediaFormat->width, $mediaFormat->height);
+                        $image = $manager->make($this->getMediaFolder($mediaID) . $fileName);
+
+                        if ($image->width() >= $mediaFormat->width) {
+                            $image->resize($mediaFormat->width, $mediaFormat->height);
+                        }
 
                         $newFileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName;
                         $image->save($this->getMediaFolder($mediaID) . $newFileName);
+
 
                         $mediaFormatsImages[]= array('media_format_id' => $mediaFormat->ID, 'image' => asset('img/uploads/' . $mediaID . '/' . $newFileName));
                     }
