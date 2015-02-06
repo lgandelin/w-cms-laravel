@@ -77,7 +77,6 @@ class MediaController extends AdminController
         ]);
 
         try {
-
             \App::make('UpdateMediaInteractor')->run($mediaID, $mediaStructure);
 
             //Rename file
@@ -103,6 +102,10 @@ class MediaController extends AdminController
     {
         try {
             \App::make('DeleteMediaInteractor')->run($mediaID);
+
+            array_map('unlink', glob($this->getMediaFolder($mediaID) . '*'));
+            rmdir($this->getMediaFolder($mediaID));
+
             return \Redirect::route('back_medias_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
@@ -120,6 +123,7 @@ class MediaController extends AdminController
         ]);
 
         $mediaFormatsImages = array();
+
         try {
             \App::make('UpdateMediaInteractor')->run($mediaID, $mediaStructure);
 
@@ -134,10 +138,15 @@ class MediaController extends AdminController
                     foreach ($mediaFormats as $mediaFormat) {
 
                         $manager = new ImageManager();
-                        $image = $manager->make($this->getMediaFolder($mediaID) . $fileName)->resize($mediaFormat->width, $mediaFormat->height);
+                        $image = $manager->make($this->getMediaFolder($mediaID) . $fileName);
+
+                        if ($image->width() >= $mediaFormat->width) {
+                            $image->resize($mediaFormat->width, $mediaFormat->height);
+                        }
 
                         $newFileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName;
                         $image->save($this->getMediaFolder($mediaID) . $newFileName);
+
 
                         $mediaFormatsImages[]= array('media_format_id' => $mediaFormat->ID, 'image' => asset('img/uploads/' . $mediaID . '/' . $newFileName));
                     }
@@ -173,7 +182,9 @@ class MediaController extends AdminController
         $newFileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName;
 
         //Delete old image
-        unlink($this->getMediaFolder($mediaID) . $newFileName);
+        if (file_exists($this->getMediaFolder($mediaID) . $newFileName)) {
+            unlink($this->getMediaFolder($mediaID) . $newFileName);
+        }
 
         $manager = new ImageManager();
         $image = $manager->make($this->getMediaFolder($mediaID) . $fileName);

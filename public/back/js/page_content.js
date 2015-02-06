@@ -81,7 +81,7 @@ $(document).ready(function() {
         var block_id = $(this).attr('data-id');
         var block = $('.block[data-id="' + block_id + '"]');
         
-        var html, menu_id, view_file, article_id, article_list_category_id, article_list_order, article_list_number, block_reference_id, media_id, media_link;
+        var html, menu_id, view_file, article_id, article_list_category_id, article_list_order, article_list_number, block_reference_id, media_id, media_link, media_format_id;
 
         if (block.attr('data-type') == 'html') {
             var textarea_id = $('.block[data-id="' + block_id + '"] textarea').attr('id');

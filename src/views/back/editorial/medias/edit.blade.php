@@ -111,8 +111,8 @@
                     </div>
 
                     <div class="modal-body">
-                        <div style="position: relative">
-                            <img class="media-image-to-crop" style="max-width:100%; display: block;" src="{{ asset('img/uploads/' . $media->ID . '/' . $media->file_name) }}?date={{ time() }}" />
+                        <div class="cropper-container">
+                            <img class="media-image-to-crop" src="{{ asset('img/uploads/' . $media->ID . '/' . $media->file_name) }}?date={{ time() }}" />
                         </div>
                         <span>Largeur :</span> <input id="dataWidth" autocomplete="off" style="border:none; width: 50px" /> px
                         <span>Hauteur :</span> <input id="dataHeight" autocomplete="off" style="border:none; width: 50px" /> px

@@ -8,7 +8,7 @@ $(document).ready(function() {
 		upload_image(media_id, image_file);
 	}));
 
-	$('.btn-activate-crop').click(function() {
+	$('.media-edit').on('click', '.btn-activate-crop', function() {
 
 		var modal = $('#crop-medias-modal');
 		$(modal).modal('show');
@@ -33,11 +33,10 @@ $(document).ready(function() {
 		});
 	});
 
-	$('.btn-valid-crop').click(function() {
-
+	$('.media-edit').on('click', '.btn-valid-crop', function() {
 		var media_format_id = $(this).attr('data-media-format-id');
 		var media_format = $('.media-format[data-media-format-id="' + media_format_id + '"]');
-		//$(media_format).find('.btn-activate-crop').show();
+		
 		var modal = $('#crop-medias-modal');
 		$(modal).modal('hide');
 
@@ -84,6 +83,15 @@ function upload_image(media_id, image_url) {
 			$('.media-thumbnail img').remove();
 			$('.media-thumbnail').append($('<img>',{src:data.image + '?' + new Date().getTime()}));
 			$('#file_name').val(data.file_name);
+
+			var $image = $('.media-image-to-crop');
+			$image.cropper("destroy");
+			
+			$('.cropper-container img').remove();
+			$('.cropper-container').append($('<img>',{src:data.image + '?' + new Date().getTime()}).addClass('media-image-to-crop'));
+
+			var $image = $('.media-image-to-crop');
+
 			for(var i in data.media_format_images) {
 				var media_format = data.media_format_images[i];
 				var media_format_div = $('.media-format[data-media-format-id="' + media_format.media_format_id + '"]');
