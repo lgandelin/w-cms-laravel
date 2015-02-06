@@ -102,6 +102,10 @@ class MediaController extends AdminController
     {
         try {
             \App::make('DeleteMediaInteractor')->run($mediaID);
+
+            array_map('unlink', glob($this->getMediaFolder($mediaID) . '*'));
+            rmdir($this->getMediaFolder($mediaID));
+
             return \Redirect::route('back_medias_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
