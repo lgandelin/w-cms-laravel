@@ -84,6 +84,9 @@ function upload_image(media_id, image_url) {
 			$('.media-thumbnail').append($('<img>',{src:data.image + '?' + new Date().getTime()}));
 			$('#file_name').val(data.file_name);
 
+			var $image = $('.media-image-to-crop');
+			$image.cropper("destroy");
+			
 			$('.cropper-container img').remove();
 			$('.cropper-container').append($('<img>',{src:data.image + '?' + new Date().getTime()}).addClass('media-image-to-crop'));
 
