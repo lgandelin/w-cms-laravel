@@ -2,12 +2,7 @@
 
 namespace Webaccess\WCMSLaravel;
 
-
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-
-use CreateUserCommand;
-use CMS\Events\Events;
 
 use CMS\Interactors\Articles\CreateArticleInteractor;
 use CMS\Interactors\Articles\DeleteArticleInteractor;
@@ -75,55 +70,74 @@ use CMS\Interactors\Users\CreateUserInteractor;
 use CMS\Interactors\Users\UpdateUserInteractor;
 use CMS\Interactors\Users\DeleteUserInteractor;
 
-use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
-use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
+use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
+
 use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentBlockRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMediaFormatRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMediaRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMenuItemRepository;
+use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
+use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentUserRepository;
 
-class WCMSLaravelServiceProvider extends ServiceProvider
-{
+class WCMSLaravelServiceProvider extends ServiceProvider {
 
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
-
-    /**
-     * Bootstrap the application events.
+     * Bootstrap the application services.
      *
      * @return void
      */
     public function boot()
     {
-        $this->package('webaccess/w-cms-laravel');
-        include(__DIR__ . '/../../routes.php');
+        include(__DIR__ . '/Http/routes.php');
 
-        $this->app->bind('CreateUserCommand', function($app) {
-            return new CreateUserCommand();
-        });
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'w-cms-laravel');
 
-        $this->commands(array(
-            'CreateUserCommand'
-        ));
+        $this->loadViewsFrom(__DIR__. ' /../../resources/views', 'w-cms-laravel');
+
+        $this->publishes([
+            __DIR__.'/../../resources/views/back' => base_path('resources/views/vendor/w-cms-laravel/back'),
+        ], 'back_views');
+
+        $this->publishes([
+            __DIR__.'/../../views/front' => base_path('resources/views/vendor/w-cms-laravel/front'),
+        ], 'front_views');
+
+        $this->publishes([
+            __DIR__. '/../../config/config.php' => config_path('vendor/w-cms-laravel.php')
+        ], 'config');
+
+        $this->publishes([
+            __DIR__.'/../../database/migrations/' => base_path('/database/migrations')
+        ], 'migrations');
+
+        $this->publishes([
+            __DIR__.'/../../public/back' => base_path('/public/vendor/w-cms-laravel/back')
+        ], 'back_assets');
+
+        $this->publishes([
+            __DIR__.'/../../public/front' => base_path('/public/vendor/w-cms-laravel/front')
+        ], 'front_assets');
     }
 
     /**
-     * Register the service provider.
+     * Register the application services.
      *
      * @return void
      */
     public function register()
     {
+        $this->app->bind('CreateUserCommand', function() {
+            return new CreateUserCommand();
+        });
+
+        $this->commands(
+            array('CreateUserCommand')
+        );
+
         $this->app->bind('EventDispatcher', function() {
             $eventDispatcher = new CMSLaravelEventManager();
             $eventDispatcher->addListener(Events::DELETE_AREA, array(new DeleteAreaListener(), 'onDeleteArea'));
@@ -311,7 +325,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
         $this->app->bind('DeleteMediaFormatInteractor', function() {
             return new DeleteMediaFormatInteractor(new EloquentMediaFormatRepository());
         });
-        
+
 
         //Users
         $this->app->bind('GetUserInteractor', function() {
@@ -360,7 +374,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider
                 $this->app->make('DuplicateBlockInteractor')
             );
         });
-        
+
         $this->app->bind('GetPageInfoFromMasterInteractor', function() {
             return new GetPageInfoFromMasterInteractor($this->app->make('GetPageInteractor'));
         });
@@ -440,17 +454,4 @@ class WCMSLaravelServiceProvider extends ServiceProvider
             return new DeleteArticleCategoryInteractor(new EloquentArticleCategoryRepository());
         });
     }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return array(
-            'Intervention\Image\ImageServiceProvider'
-        );
-    }
-
 }

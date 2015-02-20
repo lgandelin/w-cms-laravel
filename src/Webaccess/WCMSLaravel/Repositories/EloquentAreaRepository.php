@@ -6,7 +6,6 @@ use CMS\Entities\Area;
 use CMS\Structures\AreaStructure;
 use CMS\Repositories\AreaRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Area as AreaModel;
-use Webaccess\WCMSLaravel\Models\Page as PageModel;
 
 class EloquentAreaRepository implements AreaRepositoryInterface {
 
