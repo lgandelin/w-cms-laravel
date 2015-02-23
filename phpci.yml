@@ -1,0 +1,29 @@
+build_settings:
+    clone_depth: 1 # depth of 1 is a shallow clone, remove this line to clone entire repo
+    ignore:
+        - "vendor"
+        - "tests"
+
+setup:
+    shell:
+        - "cp /var/www/phpci/test-cms/behat.yml %BUILD_PATH%/behat.yml"
+
+    composer:
+        action: "install"
+
+test:
+    php_mess_detector:
+        rules:
+            - "codesize"
+            - "unusedcode"
+            - "cleancode"
+            - "design"
+        allowed_warnings: -1
+        zero_config: true
+    php_code_sniffer:
+        standard: "PSR2"
+        allowed_warnings: -1
+        zero_config: true
+    behat: ~
+
+complete:
