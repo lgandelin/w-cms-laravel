@@ -103,7 +103,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         ], 'back_views');
 
         $this->publishes([
-            __DIR__.'/../../views/front' => base_path('resources/views/vendor/w-cms-laravel/front'),
+            __DIR__.'/../../resources/views/front' => base_path('resources/views/vendor/w-cms-laravel/front'),
         ], 'front_views');
 
         $this->publishes([
