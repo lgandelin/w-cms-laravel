@@ -5,7 +5,7 @@
 		{!! HTML::style('vendor/w-cms-laravel/front/vendor/bootstrap/css/bootstrap.css') !!}
 		{!! HTML::style('vendor/w-cms-laravel/front/vendor/bootstrap/css/bootstrap-theme.css') !!}
         {!! HTML::style('vendor/w-cms-laravel/front/css/style.css') !!}
-
+        @yield('styles')
 		@yield('meta_description')
 		@yield('meta_keywords')
 	</head>
@@ -13,5 +13,6 @@
         <div class="container">
             @yield('content')
         </div>
+        @yield('scripts')
     </body>
 </html>
