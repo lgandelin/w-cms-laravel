@@ -28,4 +28,5 @@ return array(
     'media_formats' => 'Formats de médias',
     'media_formats_create' => 'Créer un format de media',
     'media_formats_edit' => 'Editer un format de media',
+    'langs' => 'Langues',
 );

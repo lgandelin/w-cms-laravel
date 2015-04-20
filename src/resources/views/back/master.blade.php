@@ -63,6 +63,7 @@
                                 <li><a href="{{ route('back_general') }}"><span class="icon glyphicon glyphicon-cog"></span>{{ trans('w-cms-laravel::header.general') }}</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{{ route('back_users_index') }}"><span class="icon glyphicon glyphicon-user"></span>{{ trans('w-cms-laravel::header.users') }}</a></li>
+                                <li><a href="{{ route('back_langs_index') }}"><span class="icon glyphicon glyphicon-flag"></span>{{ trans('w-cms-laravel::header.langs') }}</a></li>
                             </ul>
                         </li>
                         <!-- GENERAL -->

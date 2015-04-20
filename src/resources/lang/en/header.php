@@ -13,7 +13,6 @@ return array(
     'users_create' => 'Create a user',
     'users_edit' => 'Edit a user',
     'roles' => 'Permissions',
-    'languages' => 'Languages',
     'articles' => 'Articles',
     'medias' => 'Medias',
     'medias_create' => 'Create a media',
@@ -28,6 +27,9 @@ return array(
     'menus_edit' => 'Edit a menu',
     'blocks' => 'Global blocks',
     'blocks_edit' => 'Edit a block',
+    'langs' => 'Langs',
+    'lang_create' => 'Create a lang',
+    'lang_edit' => 'Edit a lang',
     'welcome' => 'Welcome',
     'logout' => 'Logout'
 );
