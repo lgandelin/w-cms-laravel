@@ -9,6 +9,8 @@ class LangController extends AdminController
 {
     public function index()
     {
+        if (!\Session::get('lang_id')) \Session::put('lang_id', 1); //DEFAULT LANG
+
         return view('w-cms-laravel::back.general.langs.index', [
             'langs' => \App::make('GetLangsInteractor')->getAll(true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
@@ -80,5 +82,12 @@ class LangController extends AdminController
             \Session::flash('error', $e->getMessage());
             return \Redirect::route('back_langs_index');
         }
+    }
+
+    public function change($langID)
+    {
+        \Session::put('lang_id', $langID);
+
+        return \Redirect::to(\URL::previous());
     }
 }

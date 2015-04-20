@@ -33,9 +33,12 @@ class EloquentPageRepository implements PageRepositoryInterface {
 		return false;
 	}
 
-	public function findAll()
+	public function findAll($langID = null)
 	{
-		$pageModels = PageModel::get();
+        $pageModels = PageModel::get();
+        if ($langID) {
+            $pageModels = PageModel::where('lang_id', '=', $langID)->get();
+        }
 
 		$pages = [];
 		foreach ($pageModels as $pageModel)
@@ -72,6 +75,7 @@ class EloquentPageRepository implements PageRepositoryInterface {
 		$pageModel->name = $page->getName();
 		$pageModel->identifier = $page->getIdentifier();
 		$pageModel->uri = $page->getURI();
+		$pageModel->lang_id = $page->getLangID();
 		$pageModel->meta_title = $page->getMetaTitle();
 		$pageModel->meta_description = $page->getMetaDescription();
 		$pageModel->meta_keywords = $page->getMetaKeywords();

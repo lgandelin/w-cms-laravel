@@ -16,5 +16,11 @@ class AdminController extends Controller
 
         //Global variables
         \View::share('user', \Auth::user());
+        \View::share('langs', \App::make('GetLangsInteractor')->getAll(true));
+    }
+
+    public function getLangID()
+    {
+        return \Session::get('lang_id');
     }
 }

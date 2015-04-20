@@ -14,6 +14,8 @@ class IndexController extends Controller {
 
 	public function index($uri = null)
 	{
+        if ($uri == '/') $uri = '';
+
 		try {
             $page = \App::make('GetPageInteractor')->getPageByUri('/' . $uri, true);
             $areas = \App::make('GetAreasInteractor')->getAll($page->ID, true);

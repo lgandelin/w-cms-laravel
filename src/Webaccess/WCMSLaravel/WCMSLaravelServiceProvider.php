@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel;
 
+use CMS\Events\Events;
 use CMS\Interactors\Langs\CreateLangInteractor;
 use CMS\Interactors\Langs\DeleteLangInteractor;
 use CMS\Interactors\Langs\GetLangInteractor;
@@ -76,7 +77,8 @@ use CMS\Interactors\Users\UpdateUserInteractor;
 use CMS\Interactors\Users\DeleteUserInteractor;
 
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
-
+use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
+use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
 use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;

@@ -29,4 +29,6 @@ return array(
     'media_formats_create' => 'Create a media format',
     'media_formats_edit' => 'Edit a media format',
     'langs' => 'Langs',
+    'lang_create' => 'Create a lang',
+    'lang_edit' => 'Edit a lang',
 );

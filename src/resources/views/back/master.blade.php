@@ -24,6 +24,15 @@
 	                    </ul>
 	                @endif
 	            </div>
+
+                <div class="nav-bar-collapse pull-left" style="margin-left:30%">
+                    <ul class="nav navbar-nav">
+                        @foreach ($langs as $lang)
+                            <li @if (Session::get('lang_id') == $lang->ID)class="active" @endif><a href="{{ route('back_lang_change', ['lang_id' => $lang->ID]) }}">{{ $lang->name }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+
 	            <div class="navbar-collapse collapse">
 	                <ul class="nav navbar-nav navbar-right">
 
