@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateLangsTableAddCode extends Migration {
+class UpdateMenusTableAddLangId extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,8 +12,8 @@ class UpdateLangsTableAddCode extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('langs', function($table) {
-            $table->string('code')->after('prefix')->nullable();
+        Schema::table('menus', function($table) {
+            $table->integer('lang_id')->after('identifier')->nullable();
         });
 	}
 
@@ -24,8 +24,8 @@ class UpdateLangsTableAddCode extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('langs', function($table) {
-            $table->dropColumn('text');
+        Schema::table('menus', function($table) {
+            $table->dropColumn('lang_id');
         });
 	}
 

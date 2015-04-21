@@ -124,6 +124,7 @@ class EloquentPageRepository implements PageRepositoryInterface {
         $page->setName($pageModel->name);
         $page->setIdentifier($pageModel->identifier);
         $page->setURI($pageModel->uri);
+        $page->setLangID($pageModel->lang_id);
         $page->setMetaTitle($pageModel->meta_title);
         $page->setMetaDescription($pageModel->meta_description);
         $page->setMetaKeywords($pageModel->meta_keywords);

@@ -10,7 +10,7 @@ class ArticleCategoryController extends AdminController
     public function index()
     {
         return view('w-cms-laravel::back.editorial.article_categories.index', [
-            'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
+            'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll($this->getLangID(), true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
@@ -25,6 +25,7 @@ class ArticleCategoryController extends AdminController
         $articleCategoryStructure = new ArticleCategoryStructure([
             'name' => \Input::get('name'),
             'description' => \Input::get('description'),
+            'lang_id' => $this->getLangID(),
         ]);
 
         try {

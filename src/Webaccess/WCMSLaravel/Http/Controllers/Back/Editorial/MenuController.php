@@ -10,7 +10,7 @@ class MenuController extends AdminController
     public function index()
     {
         return view('w-cms-laravel::back.editorial.menus.index', [
-            'menus' => \App::make('GetMenusInteractor')->getAll(true),
+            'menus' => \App::make('GetMenusInteractor')->getAll($this->getLangID(), true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
@@ -25,6 +25,7 @@ class MenuController extends AdminController
         $menuStructure = new MenuStructure([
             'identifier' => \Input::get('identifier'),
             'name' => \Input::get('name'),
+            'lang_id' => $this->getLangID()
         ]);
         
         try {

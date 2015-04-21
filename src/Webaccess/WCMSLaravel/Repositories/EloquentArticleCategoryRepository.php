@@ -16,9 +16,12 @@ class EloquentArticleCategoryRepository implements ArticleCategoryRepositoryInte
         return false;
     }
 
-    public function findAll()
+    public function findAll($langID = null)
     {
         $articleCategoryModels = ArticleCategoryModel::get();
+        if ($langID) {
+            $articleCategoryModels = ArticleCategoryModel::where('lang_id', '=', $langID)->get();
+        }
 
         $articleCategorys = [];
         foreach ($articleCategoryModels as $articleCategoryModel)
@@ -32,6 +35,7 @@ class EloquentArticleCategoryRepository implements ArticleCategoryRepositoryInte
         $articleCategoryModel = new ArticleCategoryModel();
         $articleCategoryModel->name = $articleCategory->getName();
         $articleCategoryModel->description = $articleCategory->getDescription();
+        $articleCategoryModel->lang_id = $articleCategory->getLangID();
 
         $articleCategoryModel->save();
 
@@ -60,6 +64,7 @@ class EloquentArticleCategoryRepository implements ArticleCategoryRepositoryInte
         $articleCategory->setID($articleCategoryModel->id);
         $articleCategory->setName($articleCategoryModel->name);
         $articleCategory->setDescription($articleCategoryModel->description);
+        $articleCategory->setLangID($articleCategoryModel->lang_id);
 
         return $articleCategory;
     }
