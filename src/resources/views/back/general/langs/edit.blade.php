@@ -37,6 +37,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="code">{{ trans('w-cms-laravel::langs.code') }}</label>
+                    <input type="text" class="form-control" id="code" name="code" placeholder="{{ trans('w-cms-laravel::langs.code') }}" value="{{ $lang->code }}" />
+                </div>
+
+                <div class="form-group">
                     <label for="is_default">{{ trans('w-cms-laravel::langs.is_default') }}</label>
                     Yes <input type="radio" id="is_default" name="is_default" value="1" @if($lang->is_default)checked="checked" @endif />
                     No <input type="radio" id="is_default" name="is_default" value="0" @if(!$lang->is_default)checked="checked" @endif />

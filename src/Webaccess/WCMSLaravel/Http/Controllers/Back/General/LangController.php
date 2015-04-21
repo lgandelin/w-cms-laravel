@@ -9,8 +9,6 @@ class LangController extends AdminController
 {
     public function index()
     {
-        if (!\Session::get('lang_id')) \Session::put('lang_id', 1); //DEFAULT LANG
-
         return view('w-cms-laravel::back.general.langs.index', [
             'langs' => \App::make('GetLangsInteractor')->getAll(true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
@@ -27,6 +25,7 @@ class LangController extends AdminController
         $langStructure = new LangStructure([
             'name' => \Input::get('name'),
             'prefix' => \Input::get('prefix'),
+            'code' => \Input::get('code'),
             'is_default' => \Input::get('is_default'),
         ]);
         
@@ -59,6 +58,7 @@ class LangController extends AdminController
         $langStructure = new LangStructure([
             'name' => \Input::get('name'),
             'prefix' => \Input::get('prefix'),
+            'code' => \Input::get('code'),
             'is_default' => \Input::get('is_default'),
         ]);
 

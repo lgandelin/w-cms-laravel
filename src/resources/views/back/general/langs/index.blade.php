@@ -29,6 +29,7 @@
                     <th>#</th>
                     <th>{{ trans('w-cms-laravel::langs.name') }}</th>
                     <th>{{ trans('w-cms-laravel::langs.prefix') }}</th>
+                    <th>{{ trans('w-cms-laravel::langs.code') }}</th>
                     <th>{{ trans('w-cms-laravel::langs.is_default') }}</th>
                     <th>{{ trans('w-cms-laravel::generic.action') }}</th>
                 </tr>
@@ -39,6 +40,7 @@
                     <td>{{{ $lang->ID or ''}}}</td>
                     <td>{{ $lang->name }}</td>
                     <td>{{ $lang->prefix }}</td>
+                    <td>{{ $lang->code }}</td>
                     <td>{{ $lang->is_default }}</td>
                     <td>
                         <a class="btn btn-default" href="{{ route('back_langs_edit', array($lang->ID)) }}" title="{{ $lang->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>

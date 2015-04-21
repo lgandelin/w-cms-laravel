@@ -25,9 +25,17 @@ class EloquentPageRepository implements PageRepositoryInterface {
 		return false;
 	}
 
-	public function findByUri($pageURI)
+    public function findByUri($pageURI)
+    {
+        if ($pageModel = PageModel::where('uri', '=', $pageURI)->first())
+            return self::createPageFromModel($pageModel);
+
+        return false;
+    }
+
+	public function findByUriAndLangID($pageURI, $langID)
 	{
-		if ($pageModel = PageModel::where('uri', '=', $pageURI)->first())
+		if ($pageModel = PageModel::where('uri', '=', $pageURI)->where('lang_id', '=', $langID)->first())
             return self::createPageFromModel($pageModel);
 
 		return false;

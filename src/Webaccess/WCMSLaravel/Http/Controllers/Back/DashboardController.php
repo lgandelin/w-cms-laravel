@@ -30,6 +30,7 @@ class DashboardController extends AdminController
     public function logout()
     {
         \Auth::logout();
+        \Session::flush();
         return \Redirect::intended('admin/login');
     }
 }

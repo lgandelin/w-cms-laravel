@@ -25,9 +25,10 @@ class PageController extends AdminController
 
 	public function store()
 	{
+        $lang = \App::make('GetLangInteractor')->getLangByID($this->getLangID(), true);
         $pageStructure = new PageStructure([
 		    'name' => \Input::get('name'),
-		    'uri' => \Input::get('uri'),
+		    'uri' => $lang->prefix . \Input::get('uri'),
 		    'lang_id' => $this->getLangID(),
 		    'identifier' => \Input::get('identifier'),
             'master_page_id' => \Input::get('master_page_id'),
