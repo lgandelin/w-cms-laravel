@@ -2,10 +2,6 @@
 composer.phar
 composer.lock
 .DS_Store
-tests/*
-!tests/acceptance
-!tests/_pages
-!tests/_utils
-codeception.yml
 *.scssc
 .idea
+behat.yml

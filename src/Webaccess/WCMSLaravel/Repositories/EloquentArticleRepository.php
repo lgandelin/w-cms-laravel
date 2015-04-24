@@ -35,12 +35,16 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         return $articles;
     }
 
-    public function findAll($categoryID = null, $number = null, $order = 'desc')
+    public function findAll($langID = null, $categoryID = null, $number = null, $order = 'desc')
     {
         if ($categoryID)
             $query = ArticleModel::where('category_id', '=', $categoryID);
         else
             $query = ArticleModel::whereRaw('1=1');
+
+        if ($langID) {
+            $query->where('lang_id', '=', $langID);
+        }
 
         if ($number) {
             $query->take($number);
@@ -63,12 +67,12 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         $articleModel->title = $article->getTitle();
         $articleModel->summary = $article->getSummary();
         $articleModel->text = $article->getText();
+        $articleModel->lang_id = $article->getLangID();
         $articleModel->category_id = $article->getCategoryID();
         $articleModel->author_id = $article->getAuthorID();
         $articleModel->page_id = $article->getPageID();
         $articleModel->media_id = $article->getMediaID();
         $articleModel->publication_date = $article->getPublicationDate();
-
         $articleModel->save();
 
         return $articleModel->id;
@@ -103,6 +107,7 @@ class EloquentArticleRepository implements ArticleRepositoryInterface
         $article->setTitle($articleModel->title);
         $article->setSummary($articleModel->summary);
         $article->setText($articleModel->text);
+        $article->setLangID($articleModel->lang_id);
         $article->setCategoryID($articleModel->category_id);
         $article->setAuthorID($articleModel->author_id);
         $article->setPageID($articleModel->page_id);
