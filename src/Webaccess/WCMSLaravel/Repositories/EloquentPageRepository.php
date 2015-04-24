@@ -25,17 +25,28 @@ class EloquentPageRepository implements PageRepositoryInterface {
 		return false;
 	}
 
-	public function findByUri($pageURI)
+    public function findByUri($pageURI)
+    {
+        if ($pageModel = PageModel::where('uri', '=', $pageURI)->first())
+            return self::createPageFromModel($pageModel);
+
+        return false;
+    }
+
+	public function findByUriAndLangID($pageURI, $langID)
 	{
-		if ($pageModel = PageModel::where('uri', '=', $pageURI)->first())
+		if ($pageModel = PageModel::where('uri', '=', $pageURI)->where('lang_id', '=', $langID)->first())
             return self::createPageFromModel($pageModel);
 
 		return false;
 	}
 
-	public function findAll()
+	public function findAll($langID = null)
 	{
-		$pageModels = PageModel::get();
+        $pageModels = PageModel::get();
+        if ($langID) {
+            $pageModels = PageModel::where('lang_id', '=', $langID)->get();
+        }
 
 		$pages = [];
 		foreach ($pageModels as $pageModel)
@@ -72,6 +83,7 @@ class EloquentPageRepository implements PageRepositoryInterface {
 		$pageModel->name = $page->getName();
 		$pageModel->identifier = $page->getIdentifier();
 		$pageModel->uri = $page->getURI();
+		$pageModel->lang_id = $page->getLangID();
 		$pageModel->meta_title = $page->getMetaTitle();
 		$pageModel->meta_description = $page->getMetaDescription();
 		$pageModel->meta_keywords = $page->getMetaKeywords();
@@ -112,6 +124,7 @@ class EloquentPageRepository implements PageRepositoryInterface {
         $page->setName($pageModel->name);
         $page->setIdentifier($pageModel->identifier);
         $page->setURI($pageModel->uri);
+        $page->setLangID($pageModel->lang_id);
         $page->setMetaTitle($pageModel->meta_title);
         $page->setMetaDescription($pageModel->meta_description);
         $page->setMetaKeywords($pageModel->meta_keywords);

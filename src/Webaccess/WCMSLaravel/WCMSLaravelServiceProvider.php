@@ -2,6 +2,12 @@
 
 namespace Webaccess\WCMSLaravel;
 
+use CMS\Events\Events;
+use CMS\Interactors\Langs\CreateLangInteractor;
+use CMS\Interactors\Langs\DeleteLangInteractor;
+use CMS\Interactors\Langs\GetLangInteractor;
+use CMS\Interactors\Langs\GetLangsInteractor;
+use CMS\Interactors\Langs\UpdateLangInteractor;
 use Illuminate\Support\ServiceProvider;
 
 use CMS\Interactors\Articles\CreateArticleInteractor;
@@ -71,11 +77,13 @@ use CMS\Interactors\Users\UpdateUserInteractor;
 use CMS\Interactors\Users\DeleteUserInteractor;
 
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
-
+use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
+use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
 use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentBlockRepository;
+use Webaccess\WCMSLaravel\Repositories\EloquentLangRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMediaFormatRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMediaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMenuItemRepository;
@@ -452,6 +460,28 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
 
         $this->app->bind('DeleteArticleCategoryInteractor', function() {
             return new DeleteArticleCategoryInteractor(new EloquentArticleCategoryRepository());
+        });
+
+
+        //Langs
+        $this->app->bind('CreateLangInteractor', function() {
+            return new CreateLangInteractor(new EloquentLangRepository());
+        });
+
+        $this->app->bind('GetLangInteractor', function() {
+            return new GetLangInteractor(new EloquentLangRepository());
+        });
+
+        $this->app->bind('GetLangsInteractor', function() {
+            return new GetLangsInteractor(new EloquentLangRepository());
+        });
+
+        $this->app->bind('UpdateLangInteractor', function() {
+            return new UpdateLangInteractor(new EloquentLangRepository());
+        });
+
+        $this->app->bind('DeleteLangInteractor', function() {
+            return new DeleteLangInteractor(new EloquentLangRepository());
         });
     }
 }

@@ -1,3 +1,7 @@
+a {
+    outline: 0 !important;
+}
+
 /* line 1, ../sass/style.scss */
 *, *:before, *:after {
   -moz-box-sizing: border-box;

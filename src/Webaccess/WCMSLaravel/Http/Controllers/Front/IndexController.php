@@ -14,8 +14,11 @@ class IndexController extends Controller {
 
 	public function index($uri = null)
 	{
+        if ($uri != '/') $uri = '/' . $uri;
+        list($langID, $uri) = $this->extractLangFromURI($uri);
+
 		try {
-            $page = \App::make('GetPageInteractor')->getPageByUri('/' . $uri, true);
+            $page = \App::make('GetPageInteractor')->getPageByUri($uri, $langID, true);
             $areas = \App::make('GetAreasInteractor')->getAll($page->ID, true);
 
             if ($areas) {
@@ -99,5 +102,32 @@ class IndexController extends Controller {
         }
 
         return $block;
+    }
+
+    private function getLangID()
+    {
+        if (!\Session::has('lang_id')) {
+            \Session::put('lang_id', \App::make('GetLangInteractor')->getDefaultLangID());
+        }
+
+        return \Session::get('lang_id');
+    }
+
+    private function extractLangFromURI($uri)
+    {
+        $langID = \App::make('GetLangInteractor')->getDefaultLangID();
+        foreach (\App::make('GetLangsInteractor')->getAll(true) as $lang) {
+            if (preg_match('#' . $lang->prefix . '#', $uri, $matches)) {
+                if ($lang->prefix == $uri) {
+                    $uri = $lang->prefix . '/';
+                }
+
+                if (count($matches) > 0) {
+                    $langID = $lang->ID;
+                }
+            }
+        }
+
+        return [$langID, $uri];
     }
 }

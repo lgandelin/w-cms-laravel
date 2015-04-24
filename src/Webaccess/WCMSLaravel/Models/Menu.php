@@ -5,7 +5,7 @@ namespace Webaccess\WCMSLaravel\Models;
 class Menu extends \Eloquent {
 
     protected $table = 'menus';
-    protected $fillable = array('name', 'identifier');
+    protected $fillable = array('name', 'identifier', 'lang_id');
 
     public function items()
     {

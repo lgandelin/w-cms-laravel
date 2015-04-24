@@ -32,9 +32,9 @@
                 </li>
                 
                 <li>
-                    <a href="{{ route('back_users_index') }}">
+                    <a href="{{ route('back_langs_index') }}">
                         <span class="icon glyphicon glyphicon glyphicon-flag"></span>
-                        {{ trans('w-cms-laravel::header.languages') }}
+                        {{ trans('w-cms-laravel::header.langs') }}
                     </a>
                 </li>
             </div>

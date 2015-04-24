@@ -93,13 +93,22 @@ Route::get('/admin/editorial/media_formats/delete/{media_formatID}', array('as' 
 Route::get('/admin/general', array('as' => 'back_general', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\GeneralController@index'));
 
 //BACK > GENERAL > USERS
-
 Route::get('/admin/general/users', array('as' => 'back_users_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\UserController@index'));
 Route::get('/admin/general/users/create', array('as' => 'back_users_create', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\UserController@create'));
 Route::post('/admin/general/users/store', array('as' => 'back_users_store', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\UserController@store'));
 Route::get('/admin/general/users/edit/{id}', array('as' => 'back_users_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\UserController@edit'));
 Route::post('/admin/general/users/update', array('as' => 'back_users_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\UserController@update'));
 Route::get('/admin/general/users/delete/{id}', array('as' => 'back_users_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\UserController@delete'));
+
+//BACK > GENERAL > LANGS
+Route::get('/admin/general/langs', array('as' => 'back_langs_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\LangController@index'));
+Route::get('/admin/general/langs/create', array('as' => 'back_langs_create', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\LangController@create'));
+Route::post('/admin/general/langs/store', array('as' => 'back_langs_store', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\LangController@store'));
+Route::get('/admin/general/langs/edit/{id}', array('as' => 'back_langs_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\LangController@edit'));
+Route::post('/admin/general/langs/update', array('as' => 'back_langs_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\LangController@update'));
+Route::get('/admin/general/langs/delete/{id}', array('as' => 'back_langs_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\LangController@delete'));
+Route::get('/admin/general/langs/change/{id}', array('as' => 'back_lang_change', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\General\LangController@change'));
+
 
 //BACK > STRUCTURE
 Route::get('/admin/structure', array('as' => 'back_structure', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\StructureController@index'));
@@ -114,4 +123,7 @@ Route::post('/admin/structure/blocks/update', array('as' => 'back_global_blocks_
 Route::get('/admin/structure/blocks/delete/{id}', array('as' => 'back_global_blocks_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@delete'));
 
 //FRONT
-Route::get('{uri?}', array('as' => 'front_page_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Front\IndexController@index'));
+Route::get('{uri?}', [
+    'as' => 'front_page_index',
+    'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Front\IndexController@index'
+])->where('uri', '(.*)');

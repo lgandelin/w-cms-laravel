@@ -24,6 +24,19 @@
 	                    </ul>
 	                @endif
 	            </div>
+
+                <div class="nav-bar-collapse pull-left" style="margin-left:30%">
+                    <ul class="nav navbar-nav">
+                        @foreach ($langs as $lang)
+                            <li @if (Session::get('lang_id') == $lang->ID)class="active" @endif>
+                                <a href="{{ route('back_lang_change', ['lang_id' => $lang->ID]) }}">
+                                    <img src="{{ asset('img/back/flags/' . $lang->code . '.png') }}" width="33" height="25" />
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
 	            <div class="navbar-collapse collapse">
 	                <ul class="nav navbar-nav navbar-right">
 
@@ -63,6 +76,7 @@
                                 <li><a href="{{ route('back_general') }}"><span class="icon glyphicon glyphicon-cog"></span>{{ trans('w-cms-laravel::header.general') }}</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{{ route('back_users_index') }}"><span class="icon glyphicon glyphicon-user"></span>{{ trans('w-cms-laravel::header.users') }}</a></li>
+                                <li><a href="{{ route('back_langs_index') }}"><span class="icon glyphicon glyphicon-flag"></span>{{ trans('w-cms-laravel::header.langs') }}</a></li>
                             </ul>
                         </li>
                         <!-- GENERAL -->

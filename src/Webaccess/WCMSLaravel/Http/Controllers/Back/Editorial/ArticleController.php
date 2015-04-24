@@ -10,7 +10,7 @@ class ArticleController extends AdminController
 {
     public function index()
     {
-        $articles = \App::make('GetArticlesInteractor')->getAll(true);
+        $articles = \App::make('GetArticlesInteractor')->getAll($this->getLangID(), true);
         foreach ($articles as $article) {
             if ($article->author_id) {
                 $article->author = \App::make('GetUserInteractor')->getUserByID($article->author_id, true);
@@ -35,7 +35,7 @@ class ArticleController extends AdminController
     public function create()
     {
         return view('w-cms-laravel::back.editorial.articles.create', [
-            'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
+            'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll($this->getLangID(), true),
             'pages' => \App::make('GetPagesInteractor')->getAll(true),
             'medias' => \App::make('GetMediasInteractor')->getAll(true),
         ]);
@@ -48,6 +48,7 @@ class ArticleController extends AdminController
             'title' => \Input::get('title'),
             'summary' => \Input::get('summary'),
             'text' => \Input::get('text'),
+            'lang_id' => $this->getLangID(),
             'category_id' => \Input::get('category_id'),
             'author_id' => \Input::get('author_id'),
             'page_id' => \Input::get('page_id'),
@@ -71,7 +72,7 @@ class ArticleController extends AdminController
         try {
             return view('w-cms-laravel::back.editorial.articles.edit', [
                 'article' => \App::make('GetArticleInteractor')->getArticleByID($articleID, true),
-                'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
+                'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll($this->getLangID(), true),
                 'master_pages' => \App::make('GetPagesInteractor')->getMasterPages(true),
                 'medias' => \App::make('GetMediasInteractor')->getAll(true),
             ]);

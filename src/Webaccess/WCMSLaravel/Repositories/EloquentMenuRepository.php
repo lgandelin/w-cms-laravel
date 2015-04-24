@@ -25,9 +25,12 @@ class EloquentMenuRepository implements MenuRepositoryInterface
         return false;
     }
 
-    public function findAll()
+    public function findAll($langID = null)
     {
         $menuModels = MenuModel::get();
+        if ($langID) {
+            $menuModels = MenuModel::where('lang_id', '=', $langID)->get();
+        }
 
         $menus = [];
         foreach ($menuModels as $menuModel) {
@@ -42,6 +45,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
         $menuModel = new MenuModel();
         $menuModel->name = $menu->getName();
         $menuModel->identifier = $menu->getIdentifier();
+        $menuModel->lang_id = $menu->getLangID();
 
         $menuModel->save();
 
@@ -69,6 +73,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
         $menu = new Menu();
         $menu->setID($menuModel->id);
         $menu->setIdentifier($menuModel->identifier);
+        $menu->setLangID($menuModel->lang_id);
         $menu->setName($menuModel->name);
 
         return $menu;

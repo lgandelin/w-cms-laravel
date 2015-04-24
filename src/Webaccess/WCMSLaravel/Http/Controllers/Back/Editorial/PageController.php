@@ -11,7 +11,7 @@ class PageController extends AdminController
 	public function index()
 	{
 		return view('w-cms-laravel::back.editorial.pages.index', [
-			'pages' => \App::make('GetPagesInteractor')->getAll(true),
+			'pages' => \App::make('GetPagesInteractor')->getAll($this->getLangID(), true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
 		]);
 	}
@@ -25,9 +25,11 @@ class PageController extends AdminController
 
 	public function store()
 	{
+        $lang = \App::make('GetLangInteractor')->getLangByID($this->getLangID(), true);
         $pageStructure = new PageStructure([
 		    'name' => \Input::get('name'),
-		    'uri' => \Input::get('uri'),
+		    'uri' => $lang->prefix . \Input::get('uri'),
+		    'lang_id' => $this->getLangID(),
 		    'identifier' => \Input::get('identifier'),
             'master_page_id' => \Input::get('master_page_id'),
             'is_master' => \Input::get('is_master')
