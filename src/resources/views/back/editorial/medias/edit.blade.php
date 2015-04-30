@@ -67,7 +67,7 @@
                         <div class="form-group media-format" data-media-format-id="{{ $media_format->ID }}" data-width="{{ $media_format->width }}" data-height="{{ $media_format->height }}">
                             <label for="">{{ $media_format->name }} ({{ $media_format->width }} x {{ $media_format->height }})</label>
                             <div class="media-format-image">
-                                <img src="{{ asset('img/uploads/' . $media->ID . '/' . $media_format->width . '_' . $media_format->height . '_' . $media->file_name) }}?date={{ time() }}" />
+                                <img src="{{ asset(env('W_CMS_UPLOADS_FOLDER', 'uploads/') . $media->ID . '/' . $media_format->width . '_' . $media_format->height . '_' . $media->file_name) }}?date={{ time() }}" />
                             </div>
 
                             <div style="margin-top: 20px; margin-bottom: 50px">
@@ -85,7 +85,7 @@
                     <div class="form-group">
                         <label for="">{{ trans('w-cms-laravel::medias.thumbnail') }}</label>
                         <div class="media-thumbnail">
-                            <img src="{{ asset('img/uploads/' . $media->ID . '/' . $media->file_name) }}" />
+                            <img src="{{ asset(env('W_CMS_UPLOADS_FOLDER', 'uploads/') . $media->ID . '/' . $media->file_name) }}" />
                         </div>
                         <span class="btn  btn-primary btn-file">
                             {{ trans('w-cms-laravel::generic.browse') }} <input type="file" name="image">
@@ -113,7 +113,7 @@
 
                         <div class="modal-body">
                             <div class="cropper-container">
-                                <img class="media-image-to-crop" src="{{ asset('img/uploads/' . $media->ID . '/' . $media->file_name) }}?date={{ time() }}" />
+                                <img class="media-image-to-crop" src="{{ asset(env('W_CMS_UPLOADS_FOLDER', 'uploads/') . $media->ID . '/' . $media->file_name) }}?date={{ time() }}" />
                             </div>
                             <span>Largeur :</span> <input id="dataWidth" autocomplete="off" style="border:none; width: 50px" /> px
                             <span>Hauteur :</span> <input id="dataHeight" autocomplete="off" style="border:none; width: 50px" /> px

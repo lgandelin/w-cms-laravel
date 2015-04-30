@@ -148,14 +148,14 @@ class MediaController extends AdminController
                         $image->save($this->getMediaFolder($mediaID) . $newFileName);
 
 
-                        $mediaFormatsImages[]= array('media_format_id' => $mediaFormat->ID, 'image' => asset('img/uploads/' . $mediaID . '/' . $newFileName));
+                        $mediaFormatsImages[]= array('media_format_id' => $mediaFormat->ID, 'image' => asset($this->getUploadsFolder() . $mediaID . '/' . $newFileName));
                     }
                 }
             }
 
             return \Response::json(
                 array(
-                    'image' => asset('img/uploads/' . $mediaID . '/' . $fileName),
+                    'image' => asset($this->getUploadsFolder() . $mediaID . '/' . $fileName),
                     'file_name' => $fileName,
                     'media_format_images' => $mediaFormatsImages
                 )
@@ -196,11 +196,16 @@ class MediaController extends AdminController
             ->resize($mediaFormat->width, $mediaFormat->height)
             ->save($this->getMediaFolder($mediaID) . $newFileName);
 
-        return \Response::json(array('image' => asset('img/uploads/' . $mediaID . '/' . $newFileName), 'file_name' => $newFileName));
+        return \Response::json(array('image' => asset($this->getUploadsFolder() . $mediaID . '/' . $newFileName), 'file_name' => $newFileName));
+    }
+
+    private function getUploadsFolder()
+    {
+        return env('W_CMS_UPLOADS_FOLDER', 'uploads/');
     }
 
     private function getMediaFolder($mediaID)
     {
-        return public_path() . '/img/uploads/' . $mediaID . '/';
+        return public_path() . '/' . $this->getUploadsFolder() . $mediaID . '/';
     }
 }

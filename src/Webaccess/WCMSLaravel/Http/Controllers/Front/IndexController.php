@@ -41,7 +41,7 @@ class IndexController extends Controller {
         }
 
 		return view($this->getTheme() . '::pages.index', [
-			'page' => $page,
+			'page' => $page
 		]);
 	}
 
@@ -138,7 +138,7 @@ class IndexController extends Controller {
 
     private function getTheme()
     {
-        return env('W_CMS_THEME') ? env('W_CMS_THEME') : 'w-cms-base-theme';
+        return env('W_CMS_THEME', 'w-cms-base-theme');
     }
 
     private function setupTheme()
