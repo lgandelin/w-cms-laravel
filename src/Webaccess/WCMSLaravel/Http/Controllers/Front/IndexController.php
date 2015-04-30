@@ -12,6 +12,11 @@ use CMS\Structures\Blocks\MenuBlockStructure;
 
 class IndexController extends Controller {
 
+    public function __construct()
+    {
+        $this->setupTheme();
+    }
+
 	public function index($uri = null)
 	{
         if ($uri != '/') $uri = '/' . $uri;
@@ -35,8 +40,8 @@ class IndexController extends Controller {
             $page = \App::make('GetPageInteractor')->getPageByUri('/404', true);
         }
 
-		return view('w-cms-laravel::front.index', [
-			'current_page' => $page,
+		return view($this->getTheme() . '::pages.index', [
+			'page' => $page,
 		]);
 	}
 
@@ -129,5 +134,16 @@ class IndexController extends Controller {
         }
 
         return [$langID, $uri];
+    }
+
+    private function getTheme()
+    {
+        return env('W_CMS_THEME') ? env('W_CMS_THEME') : 'w-cms-base-theme';
+    }
+
+    private function setupTheme()
+    {
+        \View::addNamespace($this->getTheme(), base_path() . '/themes/' . $this->getTheme() . '/views');
+        \Lang::addNamespace($this->getTheme(), base_path() . '/themes/' . $this->getTheme() . '/langs');
     }
 }
