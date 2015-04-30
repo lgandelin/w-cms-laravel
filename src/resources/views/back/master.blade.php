@@ -30,7 +30,7 @@
                         @foreach ($langs as $lang)
                             <li @if (Session::get('lang_id') == $lang->ID)class="active" @endif>
                                 <a href="{{ route('back_lang_change', ['lang_id' => $lang->ID]) }}">
-                                    <img src="{{ asset('img/back/flags/' . $lang->code . '.png') }}" width="33" height="25" />
+                                    <img src="{{ asset('vendor/w-cms-laravel/back/img/flags/' . $lang->code . '.png') }}" width="33" height="25" />
                                 </a>
                             </li>
                         @endforeach
