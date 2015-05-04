@@ -36,6 +36,7 @@ return array(
     'block_media' => 'Média',
     'block_media_link' => 'Lien sur média',
     'block_media_format ' => 'Format de média',
+    'block_alignment' => 'Alignement',
 
     'no_page_created_yet' => 'Aucune page créée',
    	'not_found' => 'Page non trouvée',

@@ -35,6 +35,7 @@ return array(
     'block_media' => 'Media',
     'block_media_link' => 'Media link',
     'block_media_format' => 'Media format',
+    'block_alignment' => 'Alignment',
 
     'no_page_created_yet' => 'No page created yet',
     'not_found' => 'Page not found',

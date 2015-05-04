@@ -387,3 +387,12 @@ a {
   margin-top: 5px;
   font-weight: bold;
 }
+
+.align-center {
+    display: inline-block;
+    float: none;
+}
+
+.align-right {
+    float: right;
+}

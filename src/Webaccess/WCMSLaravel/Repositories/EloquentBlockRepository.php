@@ -74,6 +74,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->width = $block->getWidth();
         $blockModel->height = $block->getHeight();
         $blockModel->class = $block->getClass();
+        $blockModel->alignment = $block->getAlignment();
         $blockModel->order = $block->getOrder();
         $blockModel->type = $block->getType();
         $blockModel->area_id = $block->getAreaID();
@@ -95,6 +96,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->width = $block->getWidth();
         $blockModel->height = $block->getHeight();
         $blockModel->class = $block->getClass();
+        $blockModel->alignment = $block->getAlignment();
         $blockModel->order = $block->getOrder();
         $blockModel->area_id = $block->getAreaID();
         $blockModel->display = $block->getDisplay();
@@ -172,6 +174,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $block->setWidth($blockModel->width);
         $block->setHeight($blockModel->height);
         $block->setClass($blockModel->class);
+        $block->setAlignment($blockModel->alignment);
         $block->setOrder($blockModel->order);
         $block->setType($blockModel->type);
         $block->setAreaID($blockModel->area_id);
