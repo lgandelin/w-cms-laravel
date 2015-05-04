@@ -143,6 +143,8 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         $loader->alias('Form', 'Illuminate\Html\FormFacade');
         $loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
 
+        $this->app->register('Illuminate\Html\HtmlServiceProvider');
+
         //Commands
         $this->app->bind('CreateUserCommand', function() {
             return new CreateUserCommand();
