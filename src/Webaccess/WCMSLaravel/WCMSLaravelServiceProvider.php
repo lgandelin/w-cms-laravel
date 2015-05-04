@@ -140,6 +140,10 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         });
         $loader->alias('Shortcut', 'Webaccess\WCMSLaravel\Facades\Shortcut');
 
+        $loader->alias('Form', 'Illuminate\Html\FormFacade');
+        $loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
+
+        //Commands
         $this->app->bind('CreateUserCommand', function() {
             return new CreateUserCommand();
         });
