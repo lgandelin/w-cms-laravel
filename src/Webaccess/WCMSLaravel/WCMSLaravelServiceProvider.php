@@ -112,10 +112,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         ], 'back_views');
 
         $this->publishes([
-            __DIR__.'/../../resources/views/front' => base_path('resources/views/vendor/w-cms-laravel/front'),
-        ], 'front_views');
-
-        $this->publishes([
             __DIR__. '/../../config/config.php' => config_path('vendor/w-cms-laravel.php')
         ], 'config');
 
@@ -126,10 +122,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         $this->publishes([
             __DIR__.'/../../public/back' => base_path('/public/vendor/w-cms-laravel/back')
         ], 'back_assets');
-
-        $this->publishes([
-            __DIR__.'/../../public/front' => base_path('/public/vendor/w-cms-laravel/front')
-        ], 'front_assets');
     }
 
     /**
