@@ -26,7 +26,7 @@
                 @foreach ($medias as $media)
                     <li>
                         <a href="{{ route('back_medias_edit', $media->ID) }}" class="thumbnail">
-                            <img src="{{ asset(env('W_CMS_UPLOADS_FOLDER', 'uploads/') . $media->ID . '/' . $media->file_name) }}" width="250" height="250" />
+                            <img src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->file_name) }}" width="250" height="250" />
                             <span class="media-name">{{ $media->name }}</span>
                         </a>
                         <a href="{{ route('back_medias_delete', $media->ID) }}" class="glyphicon glyphicon-remove media-delete"></a>

@@ -78,6 +78,7 @@ use CMS\Interactors\Users\DeleteUserInteractor;
 
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
+use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
 use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
 use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
@@ -138,6 +139,15 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
      */
     public function register()
     {
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+
+        //Facades
+        $this->app->bind('shortcut', function()
+        {
+            return new ShortcutHelper();
+        });
+        $loader->alias('Shortcut', 'Webaccess\WCMSLaravel\Facades\Shortcut');
+
         $this->app->bind('CreateUserCommand', function() {
             return new CreateUserCommand();
         });

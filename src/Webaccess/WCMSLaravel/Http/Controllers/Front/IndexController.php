@@ -2,13 +2,13 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Front;
 
+use Illuminate\Routing\Controller;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\GlobalBlockStructure;
 use CMS\Structures\Blocks\MediaBlockStructure;
-use Illuminate\Routing\Controller;
-
 use CMS\Structures\Blocks\MenuBlockStructure;
+use Webaccess\WCMSLaravel\Facades\Shortcut;
 
 class IndexController extends Controller {
 
@@ -40,7 +40,7 @@ class IndexController extends Controller {
             $page = \App::make('GetPageInteractor')->getPageByUri('/404', true);
         }
 
-		return view($this->getTheme() . '::pages.index', [
+		return view(Shortcut::get_theme() . '::pages.index', [
 			'page' => $page
 		]);
 	}
@@ -109,15 +109,6 @@ class IndexController extends Controller {
         return $block;
     }
 
-    private function getLangID()
-    {
-        if (!\Session::has('lang_id')) {
-            \Session::put('lang_id', \App::make('GetLangInteractor')->getDefaultLangID());
-        }
-
-        return \Session::get('lang_id');
-    }
-
     private function extractLangFromURI($uri)
     {
         $langID = \App::make('GetLangInteractor')->getDefaultLangID();
@@ -136,14 +127,9 @@ class IndexController extends Controller {
         return [$langID, $uri];
     }
 
-    private function getTheme()
-    {
-        return env('W_CMS_THEME', 'w-cms-base-theme');
-    }
-
     private function setupTheme()
     {
-        \View::addNamespace($this->getTheme(), base_path() . '/themes/' . $this->getTheme() . '/views');
-        \Lang::addNamespace($this->getTheme(), base_path() . '/themes/' . $this->getTheme() . '/langs');
+        \View::addNamespace(Shortcut::get_theme(), base_path() . '/themes/' . Shortcut::get_theme() . '/views');
+        \Lang::addNamespace(Shortcut::get_theme(), base_path() . '/themes/' . Shortcut::get_theme() . '/langs');
     }
 }

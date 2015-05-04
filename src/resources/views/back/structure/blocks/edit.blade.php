@@ -123,7 +123,7 @@
                         <label>{{ trans('w-cms-laravel::pages.block_media') }}</label>
 
                         <div class="thumbnail" style="width:200px; margin-bottom: 15px">
-                            <img style="max-width: 100%; display:block" src="@if (isset($block->media)){{ asset(env('W_CMS_UPLOADS_FOLDER', 'uploads/') . $block->media->ID . '/' . $block->media->file_name) }} @endif" />
+                            <img style="max-width: 100%; display:block" src="@if (isset($block->media)){{ asset(Shortcut::get_uploads_folder() . $block->media->ID . '/' . $block->media->file_name) }} @endif" />
                             <span class="media-name" style="margin-top: 5px; display: block;">@if (isset($block->media)){{ $block->media->name }}@endif</span>
                         </div>
 
@@ -270,8 +270,8 @@
                 <ul style="overflow: hidden; display: block; padding-left: 10px">
                     @foreach ($medias as $media)
                     <li style="display: inline-block; padding-right: 20px; vertical-align: middle; text-align: center">
-                        <a href="#" class="thumbnail popup-media-id" data-id="{{ $media->ID }}" data-name="{{ $media->name }}" data-src="{{ asset(env('W_CMS_UPLOADS_FOLDER', 'uploads/') . $media->ID . '/' . $media->file_name) }}">
-                            <img src="{{ asset(env('W_CMS_UPLOADS_FOLDER', 'uploads/') . $media->ID . '/' . $media->file_name) }}" width="175" alt="{{ $media->name }}" />
+                        <a href="#" class="thumbnail popup-media-id" data-id="{{ $media->ID }}" data-name="{{ $media->name }}" data-src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->file_name) }}">
+                            <img src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->file_name) }}" width="175" alt="{{ $media->name }}" />
                                 <span class="media-name" style="font-weight: bold;">{{ $media->name }}
                         </a>
                     </li>

@@ -5,6 +5,7 @@ namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 use CMS\Structures\MediaStructure;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
+use Webaccess\WCMSLaravel\Facades\Shortcut;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class MediaController extends AdminController
@@ -148,14 +149,14 @@ class MediaController extends AdminController
                         $image->save($this->getMediaFolder($mediaID) . $newFileName);
 
 
-                        $mediaFormatsImages[]= array('media_format_id' => $mediaFormat->ID, 'image' => asset($this->getUploadsFolder() . $mediaID . '/' . $newFileName));
+                        $mediaFormatsImages[]= array('media_format_id' => $mediaFormat->ID, 'image' => asset(Shortcut::get_uploads_folder() . $mediaID . '/' . $newFileName));
                     }
                 }
             }
 
             return \Response::json(
                 array(
-                    'image' => asset($this->getUploadsFolder() . $mediaID . '/' . $fileName),
+                    'image' => asset(Shortcut::get_uploads_folder() . $mediaID . '/' . $fileName),
                     'file_name' => $fileName,
                     'media_format_images' => $mediaFormatsImages
                 )
@@ -196,16 +197,11 @@ class MediaController extends AdminController
             ->resize($mediaFormat->width, $mediaFormat->height)
             ->save($this->getMediaFolder($mediaID) . $newFileName);
 
-        return \Response::json(array('image' => asset($this->getUploadsFolder() . $mediaID . '/' . $newFileName), 'file_name' => $newFileName));
-    }
-
-    private function getUploadsFolder()
-    {
-        return env('W_CMS_UPLOADS_FOLDER', 'uploads/');
+        return \Response::json(array('image' => asset(Shortcut::get_uploads_folder() . $mediaID . '/' . $newFileName), 'file_name' => $newFileName));
     }
 
     private function getMediaFolder($mediaID)
     {
-        return public_path() . '/' . $this->getUploadsFolder() . $mediaID . '/';
+        return public_path() . '/' . Shortcut::get_uploads_folder() . $mediaID . '/';
     }
 }
