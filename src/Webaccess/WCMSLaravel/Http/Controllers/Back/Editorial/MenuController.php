@@ -47,7 +47,7 @@ class MenuController extends AdminController
 
             return view('w-cms-laravel::back.editorial.menus.edit', [
                 'menu' => $menu,
-                'pages' => \App::make('GetPagesInteractor')->getAll(true)
+                'pages' => \App::make('GetPagesInteractor')->getAll($this->getLangID(), true)
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
