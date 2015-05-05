@@ -2,6 +2,10 @@ a {
     outline: 0 !important;
 }
 
+label {
+    display: block;
+}
+
 /* line 1, ../sass/style.scss */
 *, *:before, *:after {
   -moz-box-sizing: border-box;

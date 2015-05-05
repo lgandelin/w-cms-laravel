@@ -29,6 +29,7 @@ return array(
     'block_class' => 'CSS class',
     'block_menu' => 'Menu',
     'block_view_file' => 'View file',
+    'block_article' => 'Article',
     'block_article_list_category' => 'Article category',
     'block_article_list_number' => 'Number of articles',
     'block_article_list_order' => 'Order',

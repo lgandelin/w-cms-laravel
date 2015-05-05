@@ -36,6 +36,7 @@ $(document).ready(function() {
 
                 $('input[name="block_is_master"]').prop('checked', false);
                 $('input[name="block_is_ghost"]').prop('checked', false);
+                $('input[name="block_alignment"]').prop('checked', 'left');
 
                 if (data.success) {
                     $(modal).find('.name').val(data.block.name);

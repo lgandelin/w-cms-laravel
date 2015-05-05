@@ -12,4 +12,7 @@ return array(
     'browse' => 'Parcourir',
     'ascending' => 'Ascendant',
     'descending' => 'Descendant',
+    'left' => 'Gauche',
+    'center' => 'Centre',
+    'right' => 'Droite',
 );
