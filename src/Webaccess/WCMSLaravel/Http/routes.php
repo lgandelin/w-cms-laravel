@@ -125,5 +125,5 @@ Route::get('/admin/structure/blocks/delete/{id}', array('as' => 'back_global_blo
 //FRONT
 Route::get('{uri?}', [
     'as' => 'front_page_index',
-    'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Front\IndexController@index'
+    'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Front\FrontController@index'
 ])->where('uri', '(.*)');
