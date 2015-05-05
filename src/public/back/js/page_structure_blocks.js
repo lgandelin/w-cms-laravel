@@ -36,12 +36,14 @@ $(document).ready(function() {
 
                 $('input[name="block_is_master"]').prop('checked', false);
                 $('input[name="block_is_ghost"]').prop('checked', false);
+                $('input[name="block_alignment"]').prop('checked', 'left');
 
                 if (data.success) {
                     $(modal).find('.name').val(data.block.name);
                     $(modal).find('.width').val(data.block.width);
                     $(modal).find('.height').val(data.block.height);
                     $(modal).find('.class').val(data.block.class);
+                    $(modal).find('#block_alignment_' + data.block.alignment).prop('checked', true);
                     $(modal).find('.type').val(data.block.type);
                     $(modal).find('#block_is_master_' + is_master).prop('checked', true);
                     $(modal).find('#block_is_ghost_' + is_ghost).prop('checked', true);
@@ -64,6 +66,7 @@ $(document).ready(function() {
                 'height': $('#block-infos-modal .height').val(),
                 'type': $('#block-infos-modal .type').val(),
                 'class': $('#block-infos-modal .class').val(),
+                'alignment': $('#block-infos-modal input[name="block_alignment"]:checked').val(),
                 'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
                 'is_ghost': $('#block-infos-modal input[name="block_is_ghost"]:checked').val(),
                 'area_id': $(this).attr('data-area-id'),
@@ -84,7 +87,7 @@ $(document).ready(function() {
                         button.val('Submit');
 
                         //Create block in "Structure" tab
-                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + '" data-display="0" data-width="' + data.block.width + '"><div class="block_color"><span class="title"><span class="block-name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display block-hidden glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-pencil"></span></span></div></div>';
+                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + ' align-' + data.block.alignment + '" data-display="1" data-width="' + data.block.width + '"><div class="block_color"><span class="title"><span class="block-name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-cog"></span><span data-id="' + data.block.ID + '" class="block-go-to-content glyphicon glyphicon-pencil"></span></span></div></div>';
                         $('#structure .area[data-id="' + input_data.area_id + '"] .area_color').append(block_content);
                         init_block_sortable();
 
@@ -127,6 +130,7 @@ $(document).ready(function() {
                 'height': $('#block-infos-modal .height').val(),
                 'type': $('#block-infos-modal .type').val(),
                 'class': $('#block-infos-modal .class').val(),
+                'alignment': $('#block-infos-modal input[name="block_alignment"]:checked').val(),
                 'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
                 'is_ghost': $('#block-infos-modal input[name="block_is_ghost"]:checked').val(),
                 '_token': $('input[name="_token"]').val()
@@ -146,7 +150,7 @@ $(document).ready(function() {
                         button.val('Submit');
 
                         //Update block in "Structure" tab
-                        block.removeClass().addClass('block col-xs-' + input_data.width);
+                        block.removeClass().addClass('block col-xs-' + input_data.width + ' align-' + input_data.alignment);
                         block.attr('data-width', input_data.width);
                         block.find('.width_value').text(input_data.width);
                         block.find('.block-name').text(input_data.name);

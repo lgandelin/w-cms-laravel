@@ -5,7 +5,7 @@ namespace Webaccess\WCMSLaravel\Models;
 class Block extends \Eloquent {
 
     protected $table = 'blocks';
-    protected $fillable = array('name', 'width', 'height', 'class', 'type', 'order', 'display', 'is_global', 'master_block_id', 'is_master', 'html', 'menu_id', 'view_file', 'article_id', 'article_list_category_id', 'article_list_order', 'article_list_number', 'block_reference_id', 'media_id', 'media_link', 'media_format_id');
+    protected $fillable = array('name', 'width', 'height', 'class', 'alignment', 'type', 'order', 'display', 'is_global', 'master_block_id', 'is_master', 'html', 'menu_id', 'view_file', 'article_id', 'article_list_category_id', 'article_list_order', 'article_list_number', 'block_reference_id', 'media_id', 'media_link', 'media_format_id');
 
     public function area()
     {

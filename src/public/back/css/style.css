@@ -2,6 +2,10 @@ a {
     outline: 0 !important;
 }
 
+label {
+    display: block;
+}
+
 /* line 1, ../sass/style.scss */
 *, *:before, *:after {
   -moz-box-sizing: border-box;
@@ -386,4 +390,13 @@ a {
   display: block;
   margin-top: 5px;
   font-weight: bold;
+}
+
+.align-center {
+    display: inline-block;
+    float: none;
+}
+
+.align-right {
+    float: right;
 }

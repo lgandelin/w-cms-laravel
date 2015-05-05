@@ -32,10 +32,12 @@ class BlockController extends AdminController
             'height' => \Input::get('height'),
             'type' => \Input::get('type'),
             'class' => \Input::get('class'),
+            'alignment' => \Input::get('alignment'),
             'order' => 999,
             'is_master' => \Input::get('is_master'),
             'is_ghost' => \Input::get('is_ghost'),
             'area_id' => \Input::get('area_id'),
+            'display' => 1
         ]);
 
         try {
@@ -111,6 +113,7 @@ class BlockController extends AdminController
         $blockStructure->height = \Input::get('height');
         $blockStructure->type = \Input::get('type');
         $blockStructure->class = \Input::get('class');
+        $blockStructure->alignment = \Input::get('alignment');
         $blockStructure->is_master = \Input::get('is_master');
         $blockStructure->is_ghost = \Input::get('is_ghost');
 

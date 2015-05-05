@@ -22,7 +22,7 @@
                 </span>
 
                 @foreach ($area->blocks as $block)
-                <div id="b-{{ $block->ID }}" data-id="{{ $block->ID }}" class="block col-xs-{{ $block->width}}" data-width="{{ $block->width }}" data-display="{{ $block->display }}">
+                <div id="b-{{ $block->ID }}" data-id="{{ $block->ID }}" class="block col-xs-{{ $block->width}} align-{{ $block->alignment }}" data-width="{{ $block->width }}" data-display="{{ $block->display }}">
                     <div class="block_color @if ($block->master_block_id) child-block @endif">
                         <span class="title">
                             <span class="block-name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span> [<span class="width_value">{{ $block->width }}</span>]
@@ -92,12 +92,12 @@
                     <!-- Class-->
 
                     <!-- Is master -->
-                    <div class="form-group">
+                    {{--<div class="form-group">
                         <label for="is_master">{{ trans('w-cms-laravel::pages.is_master') }}</label>
                         <br/>
                         Non <input type="radio" id="area_is_master_0" name="area_is_master" value="0" autocomplete="off" />
                         Oui <input type="radio" id="area_is_master_1" name="area_is_master" value="1" autocomplete="off" />
-                    </div>
+                    </div>--}}
                     <!-- Is master -->
 
                     <input type="hidden" class="page-id" value="{{ $page->ID }}" />
@@ -169,8 +169,17 @@
                     </div>
                     <!-- Class-->
 
-                    <!-- Is master -->
+                    <!-- Alignment -->
                     <div class="form-group">
+                        <label>{{ trans('w-cms-laravel::pages.block_alignment') }}</label>
+                        <span class="radio-text" style="display: inline-block">{{ trans('w-cms-laravel::generic.left') }}</span> <input type="radio" id="block_alignment_left" name="block_alignment" value="left" autocomplete="off" />
+                        <span class="radio-text" style="margin-left: 10px; display: inline-block">{{ trans('w-cms-laravel::generic.center') }}</span> <input type="radio" id="block_alignment_center" name="block_alignment" value="center" autocomplete="off" />
+                        <span class="radio-text" style="margin-left: 10px; display: inline-block">{{ trans('w-cms-laravel::generic.right') }}</span> <input type="radio" id="block_alignment_right" name="block_alignment" value="right" autocomplete="off" />
+                    </div>
+                    <!-- Alignment-->
+
+                    <!-- Is master -->
+                    {{--<div class="form-group">
                         <label for="is_master">{{ trans('w-cms-laravel::pages.is_master') }}</label>
                         <br/>
                         Non <input type="radio" id="block_is_master_0" name="block_is_master" value="0" autocomplete="off" />
@@ -184,7 +193,7 @@
                         <br/>
                         Non <input type="radio" id="block_is_ghost_0" name="block_is_ghost" value="0" autocomplete="off" />
                         Oui <input type="radio" id="block_is_ghost_1" name="block_is_ghost" value="1" autocomplete="off" />
-                    </div>
+                    </div>--}}
                     <!-- Is ghost -->
 
                     <input type="hidden" class="area_id" />

@@ -28,7 +28,6 @@
                 <tr>
                     <th>#</th>
                     <th>{{ trans('w-cms-laravel::users.complete_name') }}</th>
-                    <th>{{ trans('w-cms-laravel::users.is_admin') }}</th>
                     <th>{{ trans('w-cms-laravel::generic.action') }}</th>
                 </tr>
                 </thead>
@@ -37,7 +36,6 @@
                 <tr>
                     <td>{{{ $user->ID or ''}}}</td>
                     <td>{{ $user->last_name }} {{ $user->first_name }}</td>
-                    <td>{{ $user->author->is_admin }}</td>
                     <td>
                         <a class="btn btn-default" href="{{ route('back_users_edit', array($user->ID)) }}" title="{{ $user->last_name }} {{ $user->first_name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
                         <a class="btn btn-danger" href="{{ route('back_users_delete', array($user->ID)) }}" title="{{ $user->last_name }} {{ $user->first_name }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
@@ -52,8 +50,6 @@
         @endif
 
         <a class="btn btn-primary" href="{{ route('back_users_create') }}" title="{{ trans('w-cms-laravel::generic.create') }}">{{ trans('w-cms-laravel::generic.create') }}</a>
-
-        <a class="btn btn-success" href="{{ route('back_user_categories_index') }}" title="{{ trans('w-cms-laravel::user_categories.user_categories') }}">{{ trans('w-cms-laravel::user_categories.user_categories') }}</a>
     </div>
 </div>
 

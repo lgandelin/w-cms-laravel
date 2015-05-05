@@ -3,11 +3,13 @@
 namespace Webaccess\WCMSLaravel;
 
 use CMS\Events\Events;
+use CMS\Interactors\Blocks\GetBlockContentInteractor;
 use CMS\Interactors\Langs\CreateLangInteractor;
 use CMS\Interactors\Langs\DeleteLangInteractor;
 use CMS\Interactors\Langs\GetLangInteractor;
 use CMS\Interactors\Langs\GetLangsInteractor;
 use CMS\Interactors\Langs\UpdateLangInteractor;
+use CMS\Interactors\Pages\GetPageContentInteractor;
 use Illuminate\Support\ServiceProvider;
 
 use CMS\Interactors\Articles\CreateArticleInteractor;
@@ -241,6 +243,20 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
             );
         });
 
+        $this->app->bind('GetBlockContentInteractor', function() {
+            return new GetBlockContentInteractor(
+                $this->app->make('GetMenuInteractor'),
+                $this->app->make('GetMenuItemsInteractor'),
+                $this->app->make('GetPageInteractor'),
+                $this->app->make('GetArticleInteractor'),
+                $this->app->make('GetArticlesInteractor'),
+                $this->app->make('GetUserInteractor'),
+                $this->app->make('GetMediaInteractor'),
+                $this->app->make('GetMediaFormatInteractor'),
+                $this->app->make('GetBlockInteractor')
+            );
+        });
+
 
         //Menus
         $this->app->bind('CreateMenuInteractor', function() {
@@ -426,6 +442,16 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
             );
         });
 
+        $this->app->bind('GetPageContentInteractor', function() {
+            return new GetPageContentInteractor(
+                $this->app->make('GetLangInteractor'),
+                $this->app->make('GetPageInteractor'),
+                $this->app->make('GetAreasInteractor'),
+                $this->app->make('GetBlocksInteractor'),
+                $this->app->make('GetBlockContentInteractor')
+            );
+        });
+
 
         //Articles
         $this->app->bind('GetArticleInteractor', function() {
@@ -477,7 +503,10 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         });
 
         $this->app->bind('GetLangInteractor', function() {
-            return new GetLangInteractor(new EloquentLangRepository());
+            return new GetLangInteractor(
+                new EloquentLangRepository(),
+                $this->app->make('GetLangsInteractor')
+            );
         });
 
         $this->app->bind('GetLangsInteractor', function() {

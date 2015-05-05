@@ -20,19 +20,12 @@
         "illuminate/support": "~5.0",
         "illuminate/html": "5.*",
         "intervention/image": "2.1.1",
-        "webaccess/w-cms-core": "0.8.0"
+        "webaccess/w-cms-core": "0.8.1"
     },
     "autoload": {
         "psr-0": {
             "Webaccess\\WCMSLaravel\\": "src/"
         }
     },
-    "minimum-stability": "dev",
-    "require-dev": {
-        "behat/behat": "~3.0@dev",
-        "behat/mink": "~1.6",
-        "behat/mink-selenium2-driver": "~1.2",
-        "behat/mink-extension": "dev-master",
-        "behat/mink-goutte-driver": "~1.1"
-    }
+    "minimum-stability": "dev"
 }
