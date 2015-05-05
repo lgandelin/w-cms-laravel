@@ -37,6 +37,7 @@ class BlockController extends AdminController
             'is_master' => \Input::get('is_master'),
             'is_ghost' => \Input::get('is_ghost'),
             'area_id' => \Input::get('area_id'),
+            'display' => 1
         ]);
 
         try {
