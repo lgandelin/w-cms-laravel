@@ -20,7 +20,7 @@
         "illuminate/support": "~5.0",
         "illuminate/html": "5.*",
         "intervention/image": "2.1.1",
-        "webaccess/w-cms-core": "0.8.0"
+        "webaccess/w-cms-core": "0.8.1"
     },
     "autoload": {
         "psr-0": {
