@@ -9,19 +9,24 @@ class FrontController extends Controller
 {
     public function __construct()
     {
-        \View::addNamespace($this->getTheme(), base_path() . '/themes/' . $this->getTheme() . '/views');
-        \Lang::addNamespace($this->getTheme(), base_path() . '/themes/' . $this->getTheme() . '/langs');
+        $this->loadTheme();
     }
 
     public function index($uri = null)
     {
-        return view($this->getTheme() . '::pages.index', [
+        return view(Shortcut::get_theme() . '::pages.index', [
             'page' => \App::make('GetPageContentInteractor')->run(($uri != '/') ? '/' . $uri : '/')
         ]);
     }
 
-    protected function getTheme()
+    private function loadTheme()
     {
-        return Shortcut::get_theme();
+        $themeFolder = base_path() . '/themes/' . Shortcut::get_theme();
+        if (is_dir($themeFolder)) {
+            \View::addNamespace(Shortcut::get_theme(), $themeFolder . '/views');
+            \Lang::addNamespace(Shortcut::get_theme(), $themeFolder . '/langs');
+        } else {
+            throw new \Exception('The theme folder [' . Shortcut::get_theme() . '] is missing in ' . base_path() . '/themes/');
+        }
     }
-} 
+}
