@@ -81,6 +81,7 @@ use CMS\Interactors\Users\DeleteUserInteractor;
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
+use Webaccess\WCMSLaravel\Helpers\Theme;
 use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
 use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
@@ -124,6 +125,8 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         $this->publishes([
             __DIR__.'/../../public/back' => base_path('/public/vendor/w-cms-laravel/back')
         ], 'back_assets');
+
+        Theme::load();
     }
 
     /**
