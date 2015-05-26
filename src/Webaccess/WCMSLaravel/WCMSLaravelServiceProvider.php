@@ -81,6 +81,7 @@ use CMS\Interactors\Users\DeleteUserInteractor;
 
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
+use Webaccess\WCMSLaravel\Helpers\AdminMenu;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
 use Webaccess\WCMSLaravel\Helpers\Theme;
 use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
@@ -137,6 +138,11 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
      */
     public function register()
     {
+        $this->app->singleton('AdminMenu', function()
+        {
+            return new AdminMenu();
+        });
+
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
 
         //Facades
