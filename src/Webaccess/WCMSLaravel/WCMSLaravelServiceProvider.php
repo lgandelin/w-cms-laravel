@@ -3,7 +3,7 @@
 namespace Webaccess\WCMSLaravel;
 
 use CMS\Events\Events;
-use CMS\Interactors\Blocks\GetBlockContentInteractor;
+
 use CMS\Interactors\Langs\CreateLangInteractor;
 use CMS\Interactors\Langs\DeleteLangInteractor;
 use CMS\Interactors\Langs\GetLangInteractor;
@@ -46,6 +46,7 @@ use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;
 use CMS\Interactors\Blocks\DuplicateBlockInteractor;
+use CMS\Interactors\Blocks\GetBlockContentInteractor;
 
 use CMS\Interactors\Menus\GetMenuInteractor;
 use CMS\Interactors\Menus\GetMenusInteractor;
