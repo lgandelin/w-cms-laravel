@@ -17,8 +17,9 @@ class EloquentBlockRepository implements BlockRepositoryInterface
 {
     public function findByID($blockID)
     {
-        if ($blockModel = BlockModel::find($blockID))
+        if ($blockModel = BlockModel::find($blockID)) {
             return self::createBlockFromModel($blockModel);
+        }
 
         return false;
     }
@@ -85,6 +86,8 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->is_ghost = $block->getIsGhost();
 
         $blockModel->save();
+        $blockable = $block->getBlockable();
+        $blockable->block()->save($blockModel);
 
         return $blockModel->id;
     }
@@ -153,7 +156,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
             $block->setMediaLink($blockModel->media_link);
             $block->setMediaFormatID($blockModel->media_format_id);
         } else {
-            throw new \Exception('Block type not found');
+            $block = $blockModel->blockable->getBlockEntity();
         }
 
         $block->setID($blockModel->id);

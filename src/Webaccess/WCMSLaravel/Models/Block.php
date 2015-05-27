@@ -11,4 +11,9 @@ class Block extends \Eloquent {
     {
         return $this->hasOne('Webaccess\WCMSLaravel\Models\Area');
     }
+
+    public function blockable()
+    {
+        return $this->morphTo();
+    }
 }

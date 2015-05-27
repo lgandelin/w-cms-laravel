@@ -50,15 +50,19 @@
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
-                    <div style="display:none;" id="select_menu_template">
+                    <div style="display:none;" id="html_template">
+                        <textarea class="ckeditor" id="editor-html" name="html"></textarea>
+                    </div>
+
+                    <div style="display:none;" id="menu_template">
                         <div class="form-group">
                             <label for="identifier">{{ trans('w-cms-laravel::pages.block_menu') }}</label>
                             <select class="menu_id form-control" autocomplete="off">
                                 <option value="">{{ trans('w-cms-laravel::pages.choose_menu') }}</option>
                                 @if (isset($menus))
-                                @foreach ($menus as $menu)
-                                <option value="{{ $menu->ID }}">{{ $menu->name }}</option>
-                                @endforeach
+                                    @foreach ($menus as $menu)
+                                        <option value="{{ $menu->ID }}">{{ $menu->name }}</option>
+                                    @endforeach
                                 @endif
                             </select>
                         </div>
@@ -71,15 +75,15 @@
                         </div>
                     </div>
 
-                    <div style="display:none;" id="select_article_template">
+                    <div style="display:none;" id="article_template">
                         <div class="form-group">
                             <label for="identifier">{{ trans('w-cms-laravel::pages.block_article') }}</label>
                             <select class="article_id form-control" autocomplete="off">
                                 <option value="">{{ trans('w-cms-laravel::pages.choose_article') }}</option>
                                 @if (isset($articles))
-                                @foreach ($articles as $article)
-                                <option value="{{ $article->ID }}">{{ $article->title }}</option>
-                                @endforeach
+                                    @foreach ($articles as $article)
+                                        <option value="{{ $article->ID }}">{{ $article->title }}</option>
+                                    @endforeach
                                 @endif
                             </select>
                         </div>
@@ -92,7 +96,7 @@
                                 <option value="">{{ trans('w-cms-laravel::pages.choose_article_list_category') }}</option>
                                 @if (isset($article_categories))
                                     @foreach ($article_categories as $category)
-                                    <option value="{{ $category->ID }}">{{ $category->name }}</option>
+                                        <option value="{{ $category->ID }}">{{ $category->name }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -118,15 +122,15 @@
                             <select class="block_reference_id form-control" autocomplete="off">
                                 <option value="">{{ trans('w-cms-laravel::pages.choose_global_block') }}</option>
                                 @if (isset($global_blocks))
-                                @foreach ($global_blocks as $global_block)
-                                <option value="{{ $global_block->ID }}">{{ $global_block->name }}</option>
-                                @endforeach
+                                    @foreach ($global_blocks as $global_block)
+                                        <option value="{{ $global_block->ID }}">{{ $global_block->name }}</option>
+                                    @endforeach
                                 @endif
                             </select>
                         </div>
                     </div>
 
-                    <div style="display:none;" id="select_media_template">
+                    <div style="display:none;" id="media_template">
                         <div class="form-group">
                             <label>{{ trans('w-cms-laravel::blocks.media_block') }}</label>
 
@@ -144,9 +148,9 @@
                             <select class="media_format_id form-control" autocomplete="off">
                                 <option value="">{{ trans('w-cms-laravel::pages.choose_media_format') }}</option>
                                 @if (isset($media_formats))
-                                @foreach ($media_formats as $media_format)
-                                <option value="{{ $media_format->ID }}">{{ $media_format->name }} ({{ $media_format->width }} x {{ $media_format->height}})</option>
-                                @endforeach
+                                    @foreach ($media_formats as $media_format)
+                                        <option value="{{ $media_format->ID }}">{{ $media_format->name }} ({{ $media_format->width }} x {{ $media_format->height}})</option>
+                                    @endforeach
                                 @endif
                             </select>
                         </div>
