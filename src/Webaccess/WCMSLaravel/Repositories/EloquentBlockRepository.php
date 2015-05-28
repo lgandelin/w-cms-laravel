@@ -86,8 +86,11 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->is_ghost = $block->getIsGhost();
 
         $blockModel->save();
-        $blockable = $block->getBlockable();
-        $blockable->block()->save($blockModel);
+
+        $gallery = \Webaccess\WCMSLaravelGallery\Models\GalleryBlock::create([
+            'gallery_id' => 1
+        ]);
+        $gallery->block()->save($blockModel);
 
         return $blockModel->id;
     }
@@ -156,7 +159,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
             $block->setMediaLink($blockModel->media_link);
             $block->setMediaFormatID($blockModel->media_format_id);
         } else {
-            $block = $blockModel->blockable->getBlockEntity();
+            $block = $blockModel->blockable->getEntity($blockModel);
         }
 
         $block->setID($blockModel->id);
