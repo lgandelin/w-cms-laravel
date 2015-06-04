@@ -2,6 +2,11 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use CMS\Interactors\MediaFormats\CreateMediaFormatInteractor;
+use CMS\Interactors\MediaFormats\DeleteMediaFormatInteractor;
+use CMS\Interactors\MediaFormats\GetMediaFormatInteractor;
+use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use CMS\Interactors\MediaFormats\UpdateMediaFormatInteractor;
 use CMS\Structures\MediaFormatStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
@@ -10,7 +15,7 @@ class MediaFormatController extends AdminController
     public function index()
     {
         return view('w-cms-laravel::back.editorial.media_formats.index', [
-            'media_formats' => \App::make('GetMediaFormatsInteractor')->getAll(true),
+            'media_formats' => (new GetMediaFormatsInteractor())->getAll(true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
@@ -29,7 +34,7 @@ class MediaFormatController extends AdminController
         ]);
 
         try {
-            $mediaFormatID = \App::make('CreateMediaFormatInteractor')->run($mediaFormatStructure);
+            $mediaFormatID = (new CreateMediaFormatInteractor())->run($mediaFormatStructure);
 
             return \Redirect::route('back_media_formats_edit', array('mediaFormatID' => $mediaFormatID));
         } catch (\Exception $e) {
@@ -43,7 +48,7 @@ class MediaFormatController extends AdminController
     public function edit($mediaFormatID)
     {
         try {
-            $mediaFormat = \App::make('GetMediaFormatInteractor')->getMediaFormatByID($mediaFormatID, true);
+            $mediaFormat = (new GetMediaFormatInteractor())->getMediaFormatByID($mediaFormatID, true);
             return view('w-cms-laravel::back.editorial.media_formats.edit', [
                 'media_format' => $mediaFormat,
             ]);
@@ -63,7 +68,7 @@ class MediaFormatController extends AdminController
         ]);
 
         try {
-            \App::make('UpdateMediaFormatInteractor')->run($mediaFormatID, $mediaFormatStructure);
+            (new UpdateMediaFormatInteractor())->run($mediaFormatID, $mediaFormatStructure);
 
             return \Redirect::route('back_media_formats_edit', array('ID' => $mediaFormatID));
         } catch (\Exception $e) {
@@ -75,7 +80,7 @@ class MediaFormatController extends AdminController
     public function delete($mediaFormatID)
     {
         try {
-            \App::make('DeleteMediaFormatInteractor')->run($mediaFormatID);
+            (new DeleteMediaFormatInteractor())->run($mediaFormatID);
             return \Redirect::route('back_media_formats_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());

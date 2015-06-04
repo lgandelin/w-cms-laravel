@@ -2,6 +2,10 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use CMS\Interactors\Blocks\CreateBlockInteractor;
+use CMS\Interactors\Blocks\DeleteBlockInteractor;
+use CMS\Interactors\Blocks\GetBlockInteractor;
+use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\GlobalBlockStructure;
@@ -16,7 +20,7 @@ class BlockController extends AdminController
     public function get_infos($blockID)
     {
         try {
-            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID, true);
+            $block = (new GetBlockInteractor())->getBlockByID($blockID, true);
 
             return json_encode(array('success' => true, 'block' => $block->toArray()));
         } catch (\Exception $e) {
@@ -41,8 +45,8 @@ class BlockController extends AdminController
         ]);
 
         try {
-            $blockID = \App::make('CreateBlockInteractor')->run($blockStructure);
-            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID, true);
+            $blockID = (new CreateBlockInteractor())->run($blockStructure);
+            $block = (new GetBlockInteractor())->getBlockByID($blockID, true);
 
             return json_encode(array('success' => true, 'block' => $block->toArray()));
         } catch (\Exception $e) {
@@ -95,7 +99,7 @@ class BlockController extends AdminController
             ]);
 
         try {
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -105,7 +109,7 @@ class BlockController extends AdminController
     public function update_infos()
     {
         $blockID = \Input::get('ID');
-        $block = \App::make('GetBlockInteractor')->getBlockByID($blockID);
+        $block = (new GetBlockInteractor())->getBlockByID($blockID);
 
         $blockStructure = $block->getStructure();
         $blockStructure->name = \Input::get('name');
@@ -118,7 +122,7 @@ class BlockController extends AdminController
         $blockStructure->is_ghost = \Input::get('is_ghost');
 
         try {
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -129,12 +133,12 @@ class BlockController extends AdminController
     {
         try {
             $blockID = \Input::get('block_id');
-            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID);
+            $block = (new GetBlockInteractor())->getBlockByID($blockID);
 
             $blockStructure = $block->getStructure();
             $blockStructure->area_id = \Input::get('area_id');
 
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
@@ -142,13 +146,13 @@ class BlockController extends AdminController
         $blocks = json_decode(\Input::get('blocks'));
         for ($i = 0; $i < sizeof($blocks); $i++) {
             $blockID = preg_replace('/b-/', '', $blocks[$i]);
-            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID);
+            $block = (new GetBlockInteractor())->getBlockByID($blockID);
 
             $blockStructure = $block->getStructure();
             $blockStructure->order = $i + 1;
 
             try {
-                \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+                (new UpdateBlockInteractor())->run($blockID, $blockStructure);
             } catch (\Exception $e) {
                 return json_encode(array('success' => false, 'error' => $e->getMessage()));
             }
@@ -161,12 +165,12 @@ class BlockController extends AdminController
     {
         try {
             $blockID = \Input::get('ID');
-            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID);
+            $block = (new GetBlockInteractor())->getBlockByID($blockID);
 
             $blockStructure = $block->getStructure();
             $blockStructure->display = \Input::get('display');
 
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -178,7 +182,7 @@ class BlockController extends AdminController
         $blockID = \Input::get('ID');
 
         try {
-            \App::make('DeleteBlockInteractor')->run($blockID);
+            (new DeleteBlockInteractor())->run($blockID);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));

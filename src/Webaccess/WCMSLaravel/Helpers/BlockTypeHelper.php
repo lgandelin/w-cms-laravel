@@ -15,8 +15,16 @@ class BlockTypeHelper
         $this->blockTypes[$blockType['code']]= $blockType;
     }
 
-    public function getContentView($blockTypeCode) {
-        return $this->blockTypes[$blockTypeCode]['content_view'];
+    public function getContentView($code) {
+        return $this->blockTypes[$code]['content_view'];
+    }
+
+    public function getUpdateContentFunction($code) {
+        return $this->blockTypes[$code]['update_content_function'];
+    }
+
+    public function getEntityFromModelFunction($code) {
+        return $this->blockTypes[$code]['get_entity_from_model_function'];
     }
 
     public function getBlockTypes()

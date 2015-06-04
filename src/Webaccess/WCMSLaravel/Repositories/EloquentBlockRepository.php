@@ -11,7 +11,10 @@ use CMS\Entities\Blocks\MediaBlock;
 use CMS\Entities\Blocks\MenuBlock;
 use CMS\Entities\Blocks\ViewFileBlock;
 use CMS\Repositories\BlockRepositoryInterface;
+use Webaccess\WCMSLaravel\Facades\BlockType;
+use Webaccess\WCMSLaravel\Helpers\BlockTypeHelper;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
+use Webaccess\WCMSLaravel\Models\Blocks\HTMLBlock as HTMLBlockModel;
 
 class EloquentBlockRepository implements BlockRepositoryInterface
 {
@@ -87,11 +90,6 @@ class EloquentBlockRepository implements BlockRepositoryInterface
 
         $blockModel->save();
 
-        $gallery = \Webaccess\WCMSLaravelGallery\Models\GalleryBlock::create([
-            'gallery_id' => 1
-        ]);
-        $gallery->block()->save($blockModel);
-
         return $blockModel->id;
     }
 
@@ -111,7 +109,10 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->is_master = $block->getIsMaster();
         $blockModel->is_ghost = $block->getIsGhost();
 
-        $this->updateBlockContent($blockModel, $block);
+        $method = \App::make('block_type')->getUpdateContentFunction($blockModel->type);
+        $arguments = [$blockModel, $block];
+
+        call_user_func_array($method, $arguments);
 
         return $blockModel->save();
     }
@@ -133,7 +134,11 @@ class EloquentBlockRepository implements BlockRepositoryInterface
 
     private static function createBlockFromModel(BlockModel $blockModel)
     {
-        if ($blockModel->type == 'html') {
+        $method = \App::make('block_type')->getEntityFromModelFunction($blockModel->type);
+        $arguments = [$blockModel];
+        $block = call_user_func_array($method, $arguments);
+
+        /*if ($blockModel->type == 'html') {
             $block = new HTMLBlock();
             $block->setHTML($blockModel->html);
         } elseif ($blockModel->type == 'menu') {
@@ -158,9 +163,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
             $block->setMediaID($blockModel->media_id);
             $block->setMediaLink($blockModel->media_link);
             $block->setMediaFormatID($blockModel->media_format_id);
-        } else {
-            $block = $blockModel->blockable->getEntity($blockModel);
-        }
+        }*/
 
         $block->setID($blockModel->id);
         $block->setName($blockModel->name);
@@ -180,7 +183,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         return $block;
     }
 
-    private function updateBlockContent(BlockModel $blockModel, Block $block)
+    /*private function updateBlockContent(BlockModel $blockModel, Block $block)
     {
         if ($blockModel->type == 'html') {
             $blockModel->html = $block->getHTML();
@@ -201,5 +204,5 @@ class EloquentBlockRepository implements BlockRepositoryInterface
             $blockModel->media_link = $block->getMediaLink();
             $blockModel->media_format_id = $block->getMediaFormatID();
         }
-    }
+    }*/
 } 

@@ -2,6 +2,10 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use CMS\Interactors\Areas\CreateAreaInteractor;
+use CMS\Interactors\Areas\DeleteAreaInteractor;
+use CMS\Interactors\Areas\GetAreaInteractor;
+use CMS\Interactors\Areas\UpdateAreaInteractor;
 use CMS\Structures\AreaStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
@@ -10,7 +14,7 @@ class AreaController extends AdminController
     public function get_infos($areaID)
     {
         try {
-            $area = \App::make('GetAreaInteractor')->getAreaByID($areaID, true);
+            $area = (new GetAreaInteractor())->getAreaByID($areaID, true);
 
             return json_encode(array('success' => true, 'area' => $area->toArray()));
         } catch (\Exception $e) {
@@ -31,8 +35,8 @@ class AreaController extends AdminController
         ]);
 
         try {
-            $areaID = \App::make('CreateAreaInteractor')->run($areaStructure);
-            $area = \App::make('GetAreaInteractor')->getAreaByID($areaID, true);
+            $areaID = (new CreateAreaInteractor())->run($areaStructure);
+            $area = (new GetAreaInteractor())->getAreaByID($areaID, true);
 
             return json_encode(array('success' => true, 'area' => $area->toArray()));
         } catch (\Exception $e) {
@@ -53,7 +57,7 @@ class AreaController extends AdminController
         ]);
 
         try {
-            \App::make('UpdateAreaInteractor')->run($areaID, $areaStructure);
+            (new UpdateAreaInteractor())->run($areaID, $areaStructure);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -71,7 +75,7 @@ class AreaController extends AdminController
             ]);
 
             try {
-                \App::make('UpdateAreaInteractor')->run($areaID, $areaStructure);
+                (new UpdateAreaInteractor())->run($areaID, $areaStructure);
             } catch (\Exception $e) {
                 return json_encode(array('success' => false, 'error' => $e->getMessage()));
             }
@@ -88,7 +92,7 @@ class AreaController extends AdminController
                 'display'=> \Input::get('display')
             ]);
 
-            \App::make('UpdateAreaInteractor')->run($areaID, $areaStructure);
+            (new UpdateAreaInteractor())->run($areaID, $areaStructure);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -100,7 +104,7 @@ class AreaController extends AdminController
         $areaID = \Input::get('ID');
 
         try {
-            \App::make('DeleteAreaInteractor')->run($areaID);
+            (new DeleteAreaInteractor())->run($areaID);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));

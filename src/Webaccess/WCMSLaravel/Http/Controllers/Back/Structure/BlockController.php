@@ -2,6 +2,17 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Structure;
 
+use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
+use CMS\Interactors\Articles\GetArticlesInteractor;
+use CMS\Interactors\Blocks\CreateBlockInteractor;
+use CMS\Interactors\Blocks\DeleteBlockInteractor;
+use CMS\Interactors\Blocks\GetBlockInteractor;
+use CMS\Interactors\Blocks\GetBlocksInteractor;
+use CMS\Interactors\Blocks\UpdateBlockInteractor;
+use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use CMS\Interactors\Medias\GetMediaInteractor;
+use CMS\Interactors\Medias\GetMediasInteractor;
+use CMS\Interactors\Menus\GetMenusInteractor;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
@@ -16,7 +27,7 @@ class BlockController extends AdminController
     public function index()
     {
         return view('w-cms-laravel::back.structure.blocks.index', [
-            'blocks' => \App::make('GetBlocksInteractor')->getGlobalBlocks(true),
+            'blocks' => (new GetBlocksInteractor())->getGlobalBlocks(true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
@@ -24,11 +35,11 @@ class BlockController extends AdminController
     public function create()
     {
         return view('w-cms-laravel::back.structure.blocks.create', [
-            'menus' => \App::make('GetMenusInteractor')->getAll(true),
-            'articles' => \App::make('GetArticlesInteractor')->getAll(true),
-            'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
-            'medias' => \App::make('GetMediasInteractor')->getAll(true),
-            'media_formats' => \App::make('GetMediaFormatsInteractor')->getAll(true),
+            'menus' => (new GetMenusInteractor())->getAll(true),
+            'articles' => (new GetArticlesInteractor())->getAll(true),
+            'article_categories' => (new GetArticleCategoriesInteractor())->getAll(true),
+            'medias' => (new GetMediasInteractor())->getAll(true),
+            'media_formats' => (new GetMediaFormatsInteractor())->getAll(true),
         ]);
     }
 
@@ -39,7 +50,7 @@ class BlockController extends AdminController
         $blockStructure->class = \Input::get('class');
 
         try {
-            $blockID = \App::make('CreateBlockInteractor')->run($blockStructure);
+            $blockID = (new CreateBlockInteractor())->run($blockStructure);
 
             if (\Input::exists('menu_id'))
                 $blockStructure = new MenuBlockStructure([
@@ -78,7 +89,7 @@ class BlockController extends AdminController
             $blockStructure->is_global = true;
 
             try {
-                \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+                (new UpdateBlockInteractor())->run($blockID, $blockStructure);
                 return \Redirect::route('back_global_blocks_edit', array('ID' => $blockID));
             } catch (\Exception $e) {
                 \Session::flash('error', $e->getMessage());
@@ -94,18 +105,18 @@ class BlockController extends AdminController
     public function edit($blockID)
     {
         try {
-            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID, true);
+            $block = (new GetBlockInteractor())->getBlockByID($blockID, true);
             if ($block instanceof MediaBlockStructure && $block->media_id) {
-                $block->media = \App::make('GetMediaInteractor')->getMediaByID($block->media_id, true);
+                $block->media = (new GetMediaInteractor())->getMediaByID($block->media_id, true);
             }
 
             return view('w-cms-laravel::back.structure.blocks.edit', [
                 'block' => $block,
-                'menus' => \App::make('GetMenusInteractor')->getAll(true),
-                'articles' => \App::make('GetArticlesInteractor')->getAll(true),
-                'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll(true),
-                'medias' => \App::make('GetMediasInteractor')->getAll(true),
-                'media_formats' => \App::make('GetMediaFormatsInteractor')->getAll(true),
+                'menus' => (new GetMenusInteractor())->getAll(true),
+                'articles' => (new GetArticlesInteractor())->getAll(true),
+                'article_categories' => (new GetArticleCategoriesInteractor())->getAll(true),
+                'medias' => (new GetMediasInteractor())->getAll(true),
+                'media_formats' => (new GetMediaFormatsInteractor())->getAll(true),
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
@@ -158,7 +169,7 @@ class BlockController extends AdminController
         $blockStructure->class = \Input::get('class');
 
         try {
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
             return \Redirect::route('back_global_blocks_edit', array('ID' => $blockID));
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
@@ -169,7 +180,7 @@ class BlockController extends AdminController
     public function delete($blockID)
     {
         try {
-            \App::make('DeleteBlockInteractor')->run($blockID);
+            (new DeleteBlockInteractor())->run($blockID);
             return \Redirect::route('back_global_blocks_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
