@@ -11,10 +11,7 @@ use CMS\Entities\Blocks\MediaBlock;
 use CMS\Entities\Blocks\MenuBlock;
 use CMS\Entities\Blocks\ViewFileBlock;
 use CMS\Repositories\BlockRepositoryInterface;
-use Webaccess\WCMSLaravel\Facades\BlockType;
-use Webaccess\WCMSLaravel\Helpers\BlockTypeHelper;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
-use Webaccess\WCMSLaravel\Models\Blocks\HTMLBlock as HTMLBlockModel;
 
 class EloquentBlockRepository implements BlockRepositoryInterface
 {
@@ -109,9 +106,8 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->is_master = $block->getIsMaster();
         $blockModel->is_ghost = $block->getIsGhost();
 
-        $method = \App::make('block_type')->getUpdateContentFunction($blockModel->type);
+        $method = \App::make('block_type')->getUpdateContentMethod($blockModel->type);
         $arguments = [$blockModel, $block];
-
         call_user_func_array($method, $arguments);
 
         return $blockModel->save();
@@ -134,7 +130,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
 
     private static function createBlockFromModel(BlockModel $blockModel)
     {
-        $method = \App::make('block_type')->getEntityFromModelFunction($blockModel->type);
+        $method = \App::make('block_type')->getEntityFromModelMethod($blockModel->type);
         $arguments = [$blockModel];
         $block = call_user_func_array($method, $arguments);
 

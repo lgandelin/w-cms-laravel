@@ -13,6 +13,7 @@ use CMS\Structures\Blocks\MediaBlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\Blocks\ViewFileBlockStructure;
+use CMS\Structures\BlockStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class BlockController extends AdminController
@@ -30,19 +31,19 @@ class BlockController extends AdminController
 
     public function create()
     {
-        $blockStructure = new HTMLBlockStructure([
-            'name' => \Input::get('name'),
-            'width' => \Input::get('width'),
-            'height' => \Input::get('height'),
-            'type' => \Input::get('type'),
-            'class' => \Input::get('class'),
-            'alignment' => \Input::get('alignment'),
-            'order' => 999,
-            'is_master' => \Input::get('is_master'),
-            'is_ghost' => \Input::get('is_ghost'),
-            'area_id' => \Input::get('area_id'),
-            'display' => 1
-        ]);
+        $method = \App::make('block_type')->getBlockStructureMethod(\Input::get('type'));
+        $blockStructure = call_user_func($method);
+        $blockStructure->name = \Input::get('name');
+        $blockStructure->width = \Input::get('width');
+        $blockStructure->height = \Input::get('height');
+        $blockStructure->type = \Input::get('type');
+        $blockStructure->class = \Input::get('class');
+        $blockStructure->alignment = \Input::get('alignment');
+        $blockStructure->order = 999;
+        $blockStructure->is_master = \Input::get('is_master');
+        $blockStructure->is_ghost = \Input::get('is_ghost');
+        $blockStructure->area_id = \Input::get('area_id');
+        $blockStructure->display = 1;
 
         try {
             $blockID = (new CreateBlockInteractor())->run($blockStructure);

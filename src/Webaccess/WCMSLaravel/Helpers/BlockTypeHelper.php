@@ -12,25 +12,33 @@ class BlockTypeHelper
     }
 
     public function addBlockType($blockType) {
-        $this->blockTypes[$blockType['code']]= $blockType;
+        $this->blockTypes[$blockType->code]= $blockType;
+    }
+
+    public function getBlockType($code) {
+        return $this->blockTypes[$code];
     }
 
     public function getContentView($code) {
-        return $this->blockTypes[$code]['content_view'];
+        return $this->getBlockType($code)->content_view;
     }
 
-    public function getUpdateContentFunction($code) {
-        return $this->blockTypes[$code]['update_content_function'];
+    public function getUpdateContentMethod($code) {
+        return $this->getBlockType($code)->getUpdateContentMethod;
     }
 
-    public function getEntityFromModelFunction($code) {
-        return $this->blockTypes[$code]['get_entity_from_model_function'];
+    public function getEntityFromModelMethod($code) {
+        return $this->getBlockType($code)->getEntityFromModelMethod;
+    }
+
+    public function getBlockStructureMethod($code) {
+        return $this->getBlockType($code)->getBlockStructureMethod;
     }
 
     public function getBlockTypes()
     {
         usort($this->blockTypes, function ($a, $b) {
-            return strcmp($a['order'], $b['order']);
+            return strcmp($a->order, $b->order);
         });
 
         return $this->blockTypes;

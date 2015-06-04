@@ -152,7 +152,7 @@
                         <select class="type form-control" autocomplete="off">
                             <option value="">{{ trans('w-cms-laravel::blocks.choose_block_type') }}</option>
                             @foreach (BlockType::getBlockTypes() as $blockType)
-                                <option value="{{ $blockType['code'] }}">{{ $blockType['name'] }}</option>
+                                <option value="{{ $blockType->code }}">{{ $blockType->name }}</option>
                             @endforeach
                         </select>
                     </div>

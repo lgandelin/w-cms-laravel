@@ -9,15 +9,15 @@ use CMS\Events\Events;
 
 use Illuminate\Support\ServiceProvider;
 
+use Webaccess\WCMSLaravel\BlockTypes\MenuBlockType;
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
 use Webaccess\WCMSLaravel\Helpers\AdminMenu;
 use Webaccess\WCMSLaravel\Helpers\BlockTypeHelper;
+use Webaccess\WCMSLaravel\BlockTypes\HTMLBlockType;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
 use Webaccess\WCMSLaravel\Helpers\Theme;
 use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
-use Webaccess\WCMSLaravel\Models\Blocks\HTMLBlock as HTMLBlockModel;
-use Webaccess\WCMSLaravel\Models\Block as BlockModel;
 use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
@@ -62,29 +62,14 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         ], 'back_assets');
 
         //Add standard block types
-        $this->app->make('block_type')->addBlockType([
-            'code' => 'html',
-            'name' => trans('w-cms-laravel::blocks.html_block'),
-            'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.html',
-            'order' => 1,
-            'get_entity_from_model_function' => function(BlockModel $blockModel) {
-                 $block = new HTMLBlock();
-                 $block->setHTML($blockModel->blockable->html);
-                 return $block;
-            },
-            'update_content_function' => function(BlockModel $blockModel, Block $block) {
-                $blockable = ($blockModel->blockable) ? $blockModel->blockable : new HTMLBlockModel();
-                $blockable->html = $block->getHTML();
-                $blockable->save();
-                $blockable->block()->save($blockModel);
-            }
-        ]);
-        $this->app->make('block_type')->addBlockType(['code' => 'menu', 'name' => trans('w-cms-laravel::blocks.navigation_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.menu', 'order' => 2]);
+        $this->app->make('block_type')->addBlockType(new HTMLBlockType());
+        $this->app->make('block_type')->addBlockType(new MenuBlockType());
+        /*$this->app->make('block_type')->addBlockType(['code' => 'menu', 'name' => trans('w-cms-laravel::blocks.navigation_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.menu', 'order' => 2]);
         $this->app->make('block_type')->addBlockType(['code' => 'view_file', 'name' => trans('w-cms-laravel::blocks.view_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.view_file', 'order' => 3]);
         $this->app->make('block_type')->addBlockType(['code' => 'article', 'name' => trans('w-cms-laravel::blocks.article_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.article', 'order' => 4]);
         $this->app->make('block_type')->addBlockType(['code' => 'article_list', 'name' => trans('w-cms-laravel::blocks.article_list_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.article_list', 'order' => 5]);
         $this->app->make('block_type')->addBlockType(['code' => 'global', 'name' => trans('w-cms-laravel::blocks.global_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.global', 'order' => 6]);
-        $this->app->make('block_type')->addBlockType(['code' => 'media', 'name' => trans('w-cms-laravel::blocks.media_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.media', 'order' => 7]);
+        $this->app->make('block_type')->addBlockType(['code' => 'media', 'name' => trans('w-cms-laravel::blocks.media_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.media', 'order' => 7]);*/
 
         Theme::load();
     }
