@@ -83,15 +83,15 @@ $(document).ready(function() {
         var block_id = $(this).attr('data-id');
         var block = $('.block[data-id="' + block_id + '"]');
         
-        var html, menu_id, view_file, article_id, article_list_category_id, article_list_order, article_list_number, block_reference_id, media_id, media_link, media_format_id;
+        var html, menu_id, view_path, article_id, article_list_category_id, article_list_order, article_list_number, block_reference_id, media_id, media_link, media_format_id;
 
         if (block.attr('data-type') == 'html') {
             var textarea_id = $('.block[data-id="' + block_id + '"] textarea').attr('id');
             html = CKEDITOR.instances[textarea_id].getData();    
         } else if (block.attr('data-type') == 'menu') {
             menu_id = $('.block[data-id="' + block_id + '"] .menu_id').val();
-        } else if (block.attr('data-type') == 'view_file') {
-            view_file = $('.block[data-id="' + block_id + '"] .view_file').val();
+        } else if (block.attr('data-type') == 'view') {
+            view_path = $('.block[data-id="' + block_id + '"] .view_path').val();
         } else if (block.attr('data-type') == 'article') {
             article_id = $('.block[data-id="' + block_id + '"] .article_id').val();
         } else if (block.attr('data-type') == 'article_list') {
@@ -113,7 +113,7 @@ $(document).ready(function() {
             'ID': block_id,
             'html': html,
             'menu_id': menu_id,
-            'view_file': view_file,
+            'view_path': view_path,
             'article_id': article_id,
             'article_list_category_id': article_list_category_id,
             'article_list_order': article_list_order,

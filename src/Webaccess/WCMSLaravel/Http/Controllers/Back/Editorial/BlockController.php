@@ -12,7 +12,7 @@ use CMS\Structures\Blocks\GlobalBlockStructure;
 use CMS\Structures\Blocks\MediaBlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
-use CMS\Structures\Blocks\ViewFileBlockStructure;
+use CMS\Structures\Blocks\ViewBlockStructure;
 use CMS\Structures\BlockStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
@@ -69,10 +69,10 @@ class BlockController extends AdminController
                 'html' => (\Input::get('html')) ? \Input::get('html') : null,
                 'type' => 'html'
             ]);
-        elseif (\Input::exists('view_file'))
-            $blockStructure = new ViewFileBlockStructure([
-                'view_file' => (\Input::get('view_file')) ? \Input::get('view_file') : null,
-                'type' => 'view_file'
+        elseif (\Input::exists('view_path'))
+            $blockStructure = new ViewBlockStructure([
+                'view_path' => (\Input::get('view_path')) ? \Input::get('view_path') : null,
+                'type' => 'view'
             ]);
         elseif (\Input::exists('article_id'))
             $blockStructure = new ArticleBlockStructure([
