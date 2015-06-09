@@ -1,6 +1,6 @@
 <div class="form-group">
     <label>{{ trans('w-cms-laravel::pages.block_article_list_category') }}</label>
-    <select class="article_list_category_id form-control" autocomplete="off">
+    <select name="article_list_category_id" class="article_list_category_id form-control" autocomplete="off">
         <option value="">{{ trans('w-cms-laravel::pages.choose_article_list_category') }}</option>
         @if (isset($article_categories))
             @foreach ($article_categories as $category)
@@ -12,7 +12,7 @@
 
 <div class="form-group">
     <label>{{ trans('w-cms-laravel::pages.block_article_list_number') }}</label>
-    <input type="text" class="form-control article_list_number" placeholder="{{ trans('w-cms-laravel::pages.block_article_list_number') }}" value="{{ $block->article_list_number }}" autocomplete="off" />
+    <input name="article_list_number" type="text" class="form-control article_list_number" placeholder="{{ trans('w-cms-laravel::pages.block_article_list_number') }}" value="{{ $block->article_list_number }}" autocomplete="off" />
 </div>
 
 <div class="form-group">

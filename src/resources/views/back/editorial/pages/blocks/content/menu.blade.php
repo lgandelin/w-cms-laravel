@@ -1,6 +1,6 @@
 <div class="form-group">
     <label>{{ trans('w-cms-laravel::pages.block_menu') }}</label>
-    <select class="menu_id form-control" autocomplete="off">
+    <select name="menu_id" class="menu_id form-control" autocomplete="off">
         <option value="">{{ trans('w-cms-laravel::pages.choose_menu') }}</option>
         @if (isset($menus))
             @foreach ($menus as $menu)

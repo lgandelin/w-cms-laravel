@@ -1,6 +1,6 @@
 <div class="form-group">
     <label>{{ trans('w-cms-laravel::pages.block_article') }}</label>
-    <select class="article_id form-control" autocomplete="off">
+    <select name="article_id" class="article_id form-control" autocomplete="off">
         <option value="">{{ trans('w-cms-laravel::pages.choose_article') }}</option>
         @if (isset($articles))
             @foreach ($articles as $article)
