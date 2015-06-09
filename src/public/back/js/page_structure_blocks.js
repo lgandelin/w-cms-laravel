@@ -94,18 +94,7 @@ $(document).ready(function() {
                         //Create block in "Content" tab
                         var block_content = '<div class="block" data-id="' + data.block.ID + '" data-type="' + data.block.type + '"><span class="title"><span class="block_name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span></span><div class="content">';
                     
-                        if (data.block.type == 'html')
-                            block_content += '<textarea class="ckeditor" id="editor' + data.block.ID + '" name="editor' + data.block.ID + '"></textarea>';
-                        else if (data.block.type == 'menu')
-                            block_content += $('#select_menu_template').html();
-                        else if (data.block.type == 'view_file')
-                            block_content += $('#view_file_template').html();
-                        else if (data.block.type == 'article')
-                            block_content += $('#select_article_template').html();
-                        else if (data.block.type == 'article_list')
-                            block_content += $('#article_category_template').html();
-                        else if (data.block.type == 'media')
-                            block_content += $('#select_media_template').html();
+                        block_content += $('#block_template_' + data.block.type).html();
 
                         block_content += '<div class="submit_wrapper"><input data-id="' + data.block.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + data.block.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                         $('#content .area[data-id="' + input_data.area_id + '"] > .content').append(block_content);
@@ -164,7 +153,7 @@ $(document).ready(function() {
                             $('#content .block[data-id="' + block_id + '"]').attr('data-type', input_data.type.toLowerCase());
 
                             var block_content = '';
-                            if (input_data.type == 'html')
+                            /*if (input_data.type == 'html')
                                 block_content += '<textarea class="ckeditor" id="editor' + input_data.ID + '" name="editor' + input_data.ID + '"></textarea>';
                             else if (input_data.type == 'menu')
                                 block_content += $('#select_menu_template').html();
@@ -175,7 +164,7 @@ $(document).ready(function() {
                             else if (input_data.type == 'article_list')
                                 block_content += $('#article_category_template').html();
                             else if (input_data.type == 'media')
-                                block_content += $('#select_media_template').html();
+                                block_content += $('#select_media_template').html();*/
 
                             block_content += '<div class="submit_wrapper"><input data-id="' + input_data.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + input_data.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                             
@@ -188,7 +177,7 @@ $(document).ready(function() {
                         $('#block-infos-modal').modal('hide');
 
                     } else {
-                        
+
                     }
                 }
             });

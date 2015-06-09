@@ -6,6 +6,7 @@ use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;
 use CMS\Interactors\Blocks\GetBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
+use CMS\Interactors\Blocks\UpdateBlockTypeInteractor;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\GlobalBlockStructure;
@@ -76,13 +77,16 @@ class BlockController extends AdminController
     public function update_infos()
     {
         $blockID = \Input::get('ID');
-        $block = (new GetBlockInteractor())->getBlockByID($blockID);
 
+        //Update block type if necessary
+        (new UpdateBlockTypeInteractor())->run($blockID, \Input::get('type'));
+
+        //Update block infos
+        $block = (new GetBlockInteractor())->getBlockByID($blockID);
         $blockStructure = $block->getStructure();
         $blockStructure->name = \Input::get('name');
         $blockStructure->width = \Input::get('width');
         $blockStructure->height = \Input::get('height');
-        $blockStructure->type = \Input::get('type');
         $blockStructure->class = \Input::get('class');
         $blockStructure->alignment = \Input::get('alignment');
         $blockStructure->is_master = \Input::get('is_master');

@@ -117,6 +117,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
     {
         $blockModel = BlockModel::find($block->getID());
         $blockModel->type = $block->getType();
+        $blockModel->blockable->delete();
 
         return $blockModel->save();
     }
