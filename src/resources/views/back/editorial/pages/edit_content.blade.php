@@ -15,7 +15,7 @@
     </div>
     <!-- Identifier -->
 
-    <!-- Is master -->
+    <!-- Is master
     <div class="form-group">
         <label for="is_master">{{ trans('w-cms-laravel::pages.master_page') }}</label>
         <br/>

@@ -168,7 +168,7 @@
                     <!-- Alignment -->
                     <div class="form-group">
                         <label>{{ trans('w-cms-laravel::pages.block_alignment') }}</label>
-                        <span class="radio-text" style="display: inline-block">{{ trans('w-cms-laravel::generic.left') }}</span> <input type="radio" id="block_alignment_left" name="block_alignment" value="left" autocomplete="off" />
+                        <span class="radio-text" style="display: inline-block">{{ trans('w-cms-laravel::generic.left') }}</span> <input type="radio" id="block_alignment_left" name="block_alignment" value="left" autocomplete="off" checked />
                         <span class="radio-text" style="margin-left: 10px; display: inline-block">{{ trans('w-cms-laravel::generic.center') }}</span> <input type="radio" id="block_alignment_center" name="block_alignment" value="center" autocomplete="off" />
                         <span class="radio-text" style="margin-left: 10px; display: inline-block">{{ trans('w-cms-laravel::generic.right') }}</span> <input type="radio" id="block_alignment_right" name="block_alignment" value="right" autocomplete="off" />
                     </div>
