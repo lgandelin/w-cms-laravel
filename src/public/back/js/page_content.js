@@ -107,6 +107,8 @@ $(document).ready(function() {
             media_id = $('.block[data-id="' + block_id + '"] .media_id').val();
             media_link = $('.block[data-id="' + block_id + '"] .media_link').val();
             media_format_id = $('.block[data-id="' + block_id + '"] .media_format_id').val();
+        } else if (block.attr('data-type') == 'gallery') {
+            gallery_id = $('.block[data-id="' + block_id + '"] .gallery_id').val();
         }
 
         var data = {
@@ -122,6 +124,7 @@ $(document).ready(function() {
             'media_id': media_id,
             'media_link': media_link,
             'media_format_id': media_format_id,
+            'gallery_id': gallery_id,
             '_token': $('input[name="_token"]').val()
         };
 

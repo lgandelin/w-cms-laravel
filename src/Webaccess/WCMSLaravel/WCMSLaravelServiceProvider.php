@@ -125,16 +125,16 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         });
 
         //Init Context
-        Context::$pageRepository = new EloquentPageRepository();
-        Context::$areaRepository = new EloquentAreaRepository();
-        Context::$langRepository = new EloquentLangRepository();
-        Context::$blockRepository = new EloquentBlockRepository();
-        Context::$menuRepository = new EloquentMenuRepository();
-        Context::$menuItemRepository = new EloquentMenuItemRepository();
-        Context::$articleRepository = new EloquentArticleRepository();
-        Context::$articleCategoryRepository = new EloquentArticleCategoryRepository();
-        Context::$mediaRepository = new EloquentMediaRepository();
-        Context::$mediaFormatRepository = new EloquentMediaFormatRepository();
-        Context::$userRepository = new EloquentUserRepository();
+        Context::addRepository('page', new EloquentPageRepository());
+        Context::addRepository('area', new EloquentAreaRepository());
+        Context::addRepository('lang', new EloquentLangRepository());
+        Context::addRepository('block', new EloquentBlockRepository());
+        Context::addRepository('menu', new EloquentMenuRepository());
+        Context::addRepository('menu_item', new EloquentMenuItemRepository());
+        Context::addRepository('article', new EloquentArticleRepository());
+        Context::addRepository('article_category', new EloquentArticleCategoryRepository());
+        Context::addRepository('media', new EloquentMediaRepository());
+        Context::addRepository('media_format', new EloquentMediaFormatRepository());
+        Context::addRepository('user', new EloquentUserRepository());
     }
 }

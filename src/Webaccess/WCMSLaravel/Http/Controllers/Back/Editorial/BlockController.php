@@ -13,7 +13,7 @@ use CMS\Structures\Blocks\MediaBlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\Blocks\ViewBlockStructure;
-use CMS\Structures\BlockStructure;
+use Webaccess\CMS\Structures\Blocks\GalleryBlockStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class BlockController extends AdminController
@@ -97,6 +97,11 @@ class BlockController extends AdminController
                 'media_link' => (\Input::get('media_link')) ? \Input::get('media_link') : null,
                 'media_format_id' => (\Input::get('media_format_id')) ? \Input::get('media_format_id') : null,
                 'type' => 'media'
+            ]);
+        elseif (\Input::exists('gallery_id'))
+            $blockStructure = new GalleryBlockStructure([
+                'gallery_id' => (\Input::get('gallery_id')) ? \Input::get('gallery_id') : null,
+                'type' => 'gallery'
             ]);
 
         try {

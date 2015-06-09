@@ -43,4 +43,8 @@ class BlockTypeHelper
 
         return $this->blockTypes;
     }
+
+    public function getFrontView($code) {
+        return $this->getBlockType($code)->front_view;
+    }
 }

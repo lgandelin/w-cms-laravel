@@ -92,7 +92,8 @@ class PageController extends AdminController
                 'article_categories' => (new GetArticleCategoriesInteractor())->getAll($this->getLangID(), true),
                 'global_blocks' => (new GetBlocksInteractor())->getGlobalBlocks(true),
                 'medias' => (new GetMediasInteractor())->getAll(true),
-                'media_formats' => (new GetMediaFormatsInteractor())->getAll(true)
+                'media_formats' => (new GetMediaFormatsInteractor())->getAll(true),
+                'galleries' => (new \Webaccess\CMS\Interactors\Galleries\GetGalleriesInteractor())->getAll($this->getLangID(), true)
 		    ]);
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());
