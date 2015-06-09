@@ -134,33 +134,6 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $arguments = [$blockModel];
         $block = call_user_func_array($method, $arguments);
 
-        /*if ($blockModel->type == 'html') {
-            $block = new HTMLBlock();
-            $block->setHTML($blockModel->html);
-        } elseif ($blockModel->type == 'menu') {
-            $block = new MenuBlock();
-            $block->setMenuID($blockModel->menu_id);
-        } elseif ($blockModel->type == 'view_file') {
-            $block = new ViewFileBlock();
-            $block->setViewFile($blockModel->view_file);
-        } elseif ($blockModel->type == 'article') {
-            $block = new ArticleBlock();
-            $block->setArticleID($blockModel->article_id);
-        } elseif ($blockModel->type == 'article_list') {
-            $block = new ArticleListBlock();
-            $block->setArticleListCategoryID($blockModel->article_list_category_id);
-            $block->setArticleListOrder($blockModel->article_list_order);
-            $block->setArticleListNumber($blockModel->article_list_number);
-        } elseif ($blockModel->type == 'global') {
-            $block = new GlobalBlock();
-            $block->setBlockReferenceID($blockModel->block_reference_id);
-        } elseif ($blockModel->type == 'media') {
-            $block = new MediaBlock();
-            $block->setMediaID($blockModel->media_id);
-            $block->setMediaLink($blockModel->media_link);
-            $block->setMediaFormatID($blockModel->media_format_id);
-        }*/
-
         $block->setID($blockModel->id);
         $block->setName($blockModel->name);
         $block->setWidth($blockModel->width);
@@ -178,27 +151,4 @@ class EloquentBlockRepository implements BlockRepositoryInterface
 
         return $block;
     }
-
-    /*private function updateBlockContent(BlockModel $blockModel, Block $block)
-    {
-        if ($blockModel->type == 'html') {
-            $blockModel->html = $block->getHTML();
-        } elseif ($blockModel->type == 'menu') {
-            $blockModel->menu_id = $block->getMenuID();
-        } elseif ($blockModel->type == 'view_file') {
-            $blockModel->view_file = $block->getViewFile();
-        } elseif ($blockModel->type == 'article') {
-            $blockModel->article_id = $block->getArticleID();
-        } elseif ($blockModel->type == 'article_list') {
-            $blockModel->article_list_category_id = $block->getArticleListCategoryID();
-            $blockModel->article_list_order = $block->getArticleListOrder();
-            $blockModel->article_list_number = $block->getArticleListNumber();
-        } elseif ($blockModel->type == 'global') {
-            $blockModel->block_reference_id = $block->getBlockReferenceID();
-        } elseif ($blockModel->type == 'media') {
-            $blockModel->media_id = $block->getMediaID();
-            $blockModel->media_link = $block->getMediaLink();
-            $blockModel->media_format_id = $block->getMediaFormatID();
-        }
-    }*/
 } 

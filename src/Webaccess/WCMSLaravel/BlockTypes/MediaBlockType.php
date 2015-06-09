@@ -37,5 +37,13 @@ class MediaBlockType
         $this->getBlockStructureMethod = function() {
             return new MediaBlockStructure();
         };
+        $this->getBlockStructureForUpdateMethod = function($arguments) {
+            return new MediaBlockStructure([
+                'media_id' => $arguments['media_id'],
+                'media_link' => $arguments['media_link'],
+                'media_format_id' => $arguments['media_format_id'],
+                'type' => $arguments['type']
+            ]);
+        };
     }
 }

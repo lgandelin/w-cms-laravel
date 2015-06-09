@@ -14,6 +14,8 @@ use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\Blocks\ViewBlockStructure;
 use Webaccess\CMS\Structures\Blocks\GalleryBlockStructure;
+use Webaccess\WCMSLaravel\Facades\BlockType;
+use Webaccess\WCMSLaravel\Helpers\BlockTypeHelper;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class BlockController extends AdminController
@@ -59,50 +61,9 @@ class BlockController extends AdminController
     {
         $blockID = \Input::get('ID');
 
-        if (\Input::exists('menu_id'))
-            $blockStructure = new MenuBlockStructure([
-                'menu_id' => (\Input::get('menu_id')) ? \Input::get('menu_id') : null,
-                'type' => 'menu'
-            ]);
-        elseif (\Input::exists('html'))
-            $blockStructure = new HTMLBlockStructure([
-                'html' => (\Input::get('html')) ? \Input::get('html') : null,
-                'type' => 'html'
-            ]);
-        elseif (\Input::exists('view_path'))
-            $blockStructure = new ViewBlockStructure([
-                'view_path' => (\Input::get('view_path')) ? \Input::get('view_path') : null,
-                'type' => 'view'
-            ]);
-        elseif (\Input::exists('article_id'))
-            $blockStructure = new ArticleBlockStructure([
-                'article_id' => (\Input::get('article_id')) ? \Input::get('article_id') : null,
-                'type' => 'article'
-            ]);
-        elseif (\Input::exists('article_list_category_id') || \Input::exists('article_list_order') || \Input::exists('article_list_number'))
-            $blockStructure = new ArticleListBlockStructure([
-                'article_list_category_id' => (\Input::get('article_list_category_id')) ? \Input::get('article_list_category_id') : null,
-                'article_list_order' => (\Input::get('article_list_order')) ? \Input::get('article_list_order') : null,
-                'article_list_number' => (\Input::get('article_list_number')) ? \Input::get('article_list_number') : null,
-                'type' => 'article_list'
-            ]);
-        elseif (\Input::exists('block_reference_id'))
-            $blockStructure = new GlobalBlockStructure([
-                'block_reference_id' => (\Input::get('block_reference_id')) ? \Input::get('block_reference_id') : null,
-                'type' => 'global'
-            ]);
-        elseif (\Input::exists('media_id'))
-            $blockStructure = new MediaBlockStructure([
-                'media_id' => (\Input::get('media_id')) ? \Input::get('media_id') : null,
-                'media_link' => (\Input::get('media_link')) ? \Input::get('media_link') : null,
-                'media_format_id' => (\Input::get('media_format_id')) ? \Input::get('media_format_id') : null,
-                'type' => 'media'
-            ]);
-        elseif (\Input::exists('gallery_id'))
-            $blockStructure = new GalleryBlockStructure([
-                'gallery_id' => (\Input::get('gallery_id')) ? \Input::get('gallery_id') : null,
-                'type' => 'gallery'
-            ]);
+        $method= \App::make('block_type')->getBlockStructureForUpdateMethod(\Input::get('type'));
+        $arguments = [\Input::all()];
+        $blockStructure = call_user_func_array($method, $arguments);
 
         try {
             (new UpdateBlockInteractor())->run($blockID, $blockStructure);

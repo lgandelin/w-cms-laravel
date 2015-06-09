@@ -27,6 +27,10 @@ class BlockTypeHelper
         return $this->getBlockType($code)->getUpdateContentMethod;
     }
 
+    public function getBlockStructureForUpdateMethod($code) {
+        return $this->getBlockType($code)->getBlockStructureForUpdateMethod;
+    }
+
     public function getEntityFromModelMethod($code) {
         return $this->getBlockType($code)->getEntityFromModelMethod;
     }

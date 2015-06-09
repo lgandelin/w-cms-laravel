@@ -85,12 +85,15 @@ $(document).ready(function() {
 
         var data = {
             'ID': block_id,
+            'type' : block.data('type'),
             '_token': $('input[name="_token"]').val()
         };
 
         $('.block[data-id="' + block_id + '"] *[name]').each(function() {
             var value = $(this).val();
-            if ($(this).hasClass('ckeditor')) {
+            if ($(this).attr('type') == 'radio') {
+                value = $('.block[data-id="' + block_id + '"] input[name="' + $(this).attr('name') + '"]:checked').val()
+            } else if ($(this).hasClass('ckeditor')) {
                 value = CKEDITOR.instances[$(this).attr('id')].getData();
             }
             data[$(this).attr('name')] = value;

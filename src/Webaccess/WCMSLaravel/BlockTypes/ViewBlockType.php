@@ -33,5 +33,11 @@ class ViewBlockType
         $this->getBlockStructureMethod = function() {
             return new ViewBlockStructure();
         };
+        $this->getBlockStructureForUpdateMethod = function($arguments) {
+            return new ViewBlockStructure([
+                'view_path' => $arguments['view_path'],
+                'type' => $arguments['type']
+            ]);
+        };
     }
 }
