@@ -17,8 +17,9 @@ class EloquentBlockRepository implements BlockRepositoryInterface
 {
     public function findByID($blockID)
     {
-        if ($blockModel = BlockModel::find($blockID))
+        if ($blockModel = BlockModel::find($blockID)) {
             return self::createBlockFromModel($blockModel);
+        }
 
         return false;
     }
@@ -105,7 +106,9 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->is_master = $block->getIsMaster();
         $blockModel->is_ghost = $block->getIsGhost();
 
-        $this->updateBlockContent($blockModel, $block);
+        $method = \App::make('block_type')->getUpdateContentMethod($blockModel->type);
+        $arguments = [$blockModel, $block];
+        call_user_func_array($method, $arguments);
 
         return $blockModel->save();
     }
@@ -127,7 +130,11 @@ class EloquentBlockRepository implements BlockRepositoryInterface
 
     private static function createBlockFromModel(BlockModel $blockModel)
     {
-        if ($blockModel->type == 'html') {
+        $method = \App::make('block_type')->getEntityFromModelMethod($blockModel->type);
+        $arguments = [$blockModel];
+        $block = call_user_func_array($method, $arguments);
+
+        /*if ($blockModel->type == 'html') {
             $block = new HTMLBlock();
             $block->setHTML($blockModel->html);
         } elseif ($blockModel->type == 'menu') {
@@ -152,9 +159,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
             $block->setMediaID($blockModel->media_id);
             $block->setMediaLink($blockModel->media_link);
             $block->setMediaFormatID($blockModel->media_format_id);
-        } else {
-            throw new \Exception('Block type not found');
-        }
+        }*/
 
         $block->setID($blockModel->id);
         $block->setName($blockModel->name);
@@ -174,7 +179,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         return $block;
     }
 
-    private function updateBlockContent(BlockModel $blockModel, Block $block)
+    /*private function updateBlockContent(BlockModel $blockModel, Block $block)
     {
         if ($blockModel->type == 'html') {
             $blockModel->html = $block->getHTML();
@@ -195,5 +200,5 @@ class EloquentBlockRepository implements BlockRepositoryInterface
             $blockModel->media_link = $block->getMediaLink();
             $blockModel->media_format_id = $block->getMediaFormatID();
         }
-    }
+    }*/
 } 

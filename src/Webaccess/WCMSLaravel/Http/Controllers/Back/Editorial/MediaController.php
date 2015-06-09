@@ -2,6 +2,13 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use CMS\Interactors\MediaFormats\GetMediaFormatInteractor;
+use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use CMS\Interactors\Medias\CreateMediaInteractor;
+use CMS\Interactors\Medias\DeleteMediaInteractor;
+use CMS\Interactors\Medias\GetMediaInteractor;
+use CMS\Interactors\Medias\GetMediasInteractor;
+use CMS\Interactors\Medias\UpdateMediaInteractor;
 use CMS\Structures\MediaStructure;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
@@ -13,7 +20,7 @@ class MediaController extends AdminController
     public function index()
     {
         return view('w-cms-laravel::back.editorial.medias.index', [
-            'medias' => \App::make('GetMediasInteractor')->getAll(true),
+            'medias' => (new GetMediasInteractor())->getAll(true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
@@ -32,7 +39,7 @@ class MediaController extends AdminController
         ]);
 
         try {
-            $mediaID = \App::make('CreateMediaInteractor')->run($mediaStructure);
+            $mediaID = (new CreateMediaInteractor())->run($mediaStructure);
 
             return \Redirect::route('back_medias_edit', array('mediaID' => $mediaID));
         } catch (\Exception $e) {
@@ -46,11 +53,11 @@ class MediaController extends AdminController
     public function edit($mediaID)
     {
         try {
-            $media = \App::make('GetMediaInteractor')->getMediaByID($mediaID, true);
+            $media = (new GetMediaInteractor())->getMediaByID($mediaID, true);
 
             return view('w-cms-laravel::back.editorial.medias.edit', [
                 'media' => $media,
-                'media_formats' => \App::make('GetMediaFormatsInteractor')->getAll(true)
+                'media_formats' => (new GetMediaFormatsInteractor())->getAll(true)
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
@@ -68,7 +75,7 @@ class MediaController extends AdminController
             $fileName = $mediaID . '.' . $type;
         }
 
-        $oldMedia = \App::make('GetMediaInteractor')->getMediaByID($mediaID, true);
+        $oldMedia = (new GetMediaInteractor())->getMediaByID($mediaID, true);
 
         $mediaStructure = new MediaStructure([
             'name' => \Input::get('name'),
@@ -78,13 +85,13 @@ class MediaController extends AdminController
         ]);
 
         try {
-            \App::make('UpdateMediaInteractor')->run($mediaID, $mediaStructure);
+            (new UpdateMediaInteractor())->run($mediaID, $mediaStructure);
 
             //Rename file
             if ($fileName != $oldMedia->file_name) {
                 File::move($this->getMediaFolder($mediaID) . $oldMedia->file_name, $this->getMediaFolder($mediaID) . $fileName);
 
-                $mediaFormats = \App::make('GetMediaFormatsInteractor')->getAll(true);
+                $mediaFormats = (new GetMediaFormatsInteractor())->getAll(true);
                 if (is_array($mediaFormats) && sizeof($mediaFormats) > 0) {
                     foreach ($mediaFormats as $mediaFormat) {
                         File::move($this->getMediaFolder($mediaID) . $mediaFormat->width . '_' . $mediaFormat->height . '_' . $oldMedia->file_name, $this->getMediaFolder($mediaID) . $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName);
@@ -102,7 +109,7 @@ class MediaController extends AdminController
     public function delete($mediaID)
     {
         try {
-            \App::make('DeleteMediaInteractor')->run($mediaID);
+            (new DeleteMediaInteractor())->run($mediaID);
 
             array_map('unlink', glob($this->getMediaFolder($mediaID) . '*'));
             rmdir($this->getMediaFolder($mediaID));
@@ -126,7 +133,7 @@ class MediaController extends AdminController
         $mediaFormatsImages = array();
 
         try {
-            \App::make('UpdateMediaInteractor')->run($mediaID, $mediaStructure);
+            (new UpdateMediaInteractor())->run($mediaID, $mediaStructure);
 
             //Upload new image
             if (\Input::file('image')) {
@@ -134,7 +141,7 @@ class MediaController extends AdminController
                 \Input::file('image')->move($this->getMediaFolder($mediaID), $fileName);
 
                 //Upload image foreach media format
-                $mediaFormats = \App::make('GetMediaFormatsInteractor')->getAll(true);
+                $mediaFormats = (new GetMediaFormatsInteractor())->getAll(true);
                 if (is_array($mediaFormats) && sizeof($mediaFormats) > 0) {
                     foreach ($mediaFormats as $mediaFormat) {
 
@@ -180,8 +187,8 @@ class MediaController extends AdminController
         $x = \Input::get('x');
         $y = \Input::get('y');
 
-        $media = \App::make('GetMediaInteractor')->getMediaByID($mediaID, true);
-        $mediaFormat = \App::make('GetMediaFormatInteractor')->getMediaFormatByID($mediaFormatID, true);
+        $media = (new GetMediaInteractor())->getMediaByID($mediaID, true);
+        $mediaFormat = (new GetMediaFormatInteractor())->getMediaFormatByID($mediaFormatID, true);
 
         $fileName = $media->file_name;
         $newFileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName;

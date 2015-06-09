@@ -151,13 +151,9 @@
                         <label>{{ trans('w-cms-laravel::pages.block_type') }}</label>
                         <select class="type form-control" autocomplete="off">
                             <option value="">{{ trans('w-cms-laravel::blocks.choose_block_type') }}</option>
-                            <option value="html">{{ trans('w-cms-laravel::blocks.html_block') }}</option>
-                            <option value="menu">{{ trans('w-cms-laravel::blocks.navigation_block') }}</option>
-                            <option value="view_file">{{ trans('w-cms-laravel::blocks.view_block') }}</option>
-                            <option value="article">{{ trans('w-cms-laravel::blocks.article_block') }}</option>
-                            <option value="article_list">{{ trans('w-cms-laravel::blocks.article_list_block') }}</option>
-                            <option value="global">{{ trans('w-cms-laravel::blocks.global_block') }}</option>
-                            <option value="media">{{ trans('w-cms-laravel::blocks.media_block') }}</option>
+                            @foreach (BlockType::getBlockTypes() as $blockType)
+                                <option value="{{ $blockType->code }}">{{ $blockType->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <!-- Type -->
