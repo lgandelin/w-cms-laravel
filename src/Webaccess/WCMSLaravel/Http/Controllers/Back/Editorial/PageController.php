@@ -85,16 +85,16 @@ class PageController extends AdminController
                 }
             }
 
-		    return view('w-cms-laravel::back.editorial.pages.edit', [
-		        'page' => $page,
-                'menus' => (new GetMenusInteractor())->getAll($this->getLangID(), true),
-                'articles' => (new GetArticlesInteractor())->getAll(null, null, null, $this->getLangID(), true),
-                'article_categories' => (new GetArticleCategoriesInteractor())->getAll($this->getLangID(), true),
-                'global_blocks' => (new GetBlocksInteractor())->getGlobalBlocks(true),
-                'medias' => (new GetMediasInteractor())->getAll(true),
-                'media_formats' => (new GetMediaFormatsInteractor())->getAll(true),
-                'galleries' => (new \Webaccess\CMS\Interactors\Galleries\GetGalleriesInteractor())->getAll($this->getLangID(), true)
-		    ]);
+            \App::make('BlockTypesVariable')->addVariable('page', $page);
+            \App::make('BlockTypesVariable')->addVariable('menus', (new GetMenusInteractor())->getAll($this->getLangID(), true));
+            \App::make('BlockTypesVariable')->addVariable('articles', (new GetArticlesInteractor())->getAll(null, null, null, $this->getLangID(), true));
+            \App::make('BlockTypesVariable')->addVariable('article_categories', (new GetArticleCategoriesInteractor())->getAll($this->getLangID(), true));
+            \App::make('BlockTypesVariable')->addVariable('global_blocks', (new GetBlocksInteractor())->getGlobalBlocks(true));
+            \App::make('BlockTypesVariable')->addVariable('medias', (new GetMediasInteractor())->getAll(true));
+            \App::make('BlockTypesVariable')->addVariable('media_formats', (new GetMediaFormatsInteractor())->getAll(true));
+
+		    return view('w-cms-laravel::back.editorial.pages.edit', \App::make('BlockTypesVariable')->getVariables());
+
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());
             return \Redirect::route('back_pages_index');

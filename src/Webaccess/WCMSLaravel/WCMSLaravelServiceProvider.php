@@ -3,10 +3,7 @@
 namespace Webaccess\WCMSLaravel;
 
 use CMS\Context;
-use CMS\Entities\Block;
-use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Events\Events;
-
 use Illuminate\Support\ServiceProvider;
 
 use Webaccess\WCMSLaravel\BlockTypes\ArticleBlockType;
@@ -19,6 +16,7 @@ use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
 use Webaccess\WCMSLaravel\Helpers\AdminMenu;
 use Webaccess\WCMSLaravel\Helpers\BlockTypeHelper;
 use Webaccess\WCMSLaravel\BlockTypes\HTMLBlockType;
+use Webaccess\WCMSLaravel\Helpers\BlockTypesVariable;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
 use Webaccess\WCMSLaravel\Helpers\Theme;
 use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
@@ -85,6 +83,11 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         $this->app->singleton('AdminMenu', function()
         {
             return new AdminMenu();
+        });
+
+        $this->app->singleton('BlockTypesVariable', function()
+        {
+            return new BlockTypesVariable();
         });
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
