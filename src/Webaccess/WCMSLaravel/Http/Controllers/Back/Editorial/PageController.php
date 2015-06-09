@@ -88,7 +88,7 @@ class PageController extends AdminController
 		    return view('w-cms-laravel::back.editorial.pages.edit', [
 		        'page' => $page,
                 'menus' => (new GetMenusInteractor())->getAll($this->getLangID(), true),
-                'articles' => (new GetArticlesInteractor())->getAll($this->getLangID(), true),
+                'articles' => (new GetArticlesInteractor())->getAll(null, null, null, $this->getLangID(), true),
                 'article_categories' => (new GetArticleCategoriesInteractor())->getAll($this->getLangID(), true),
                 'global_blocks' => (new GetBlocksInteractor())->getGlobalBlocks(true),
                 'medias' => (new GetMediasInteractor())->getAll(true),

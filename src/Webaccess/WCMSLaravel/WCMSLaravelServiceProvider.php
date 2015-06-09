@@ -72,11 +72,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         $this->app->make('block_type')->addBlockType(new MediaBlockType());
         $this->app->make('block_type')->addBlockType(new ArticleBlockType());
         $this->app->make('block_type')->addBlockType(new ArticleListBlockType());
-
-        /*$this->app->make('block_type')->addBlockType(['code' => 'article_list', 'name' => trans('w-cms-laravel::blocks.article_list_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.article_list', 'order' => 5]);
-        $this->app->make('block_type')->addBlockType(['code' => 'global', 'name' => trans('w-cms-laravel::blocks.global_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.global', 'order' => 6]);
-        */
-
         Theme::load();
     }
 

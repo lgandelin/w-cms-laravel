@@ -23,7 +23,7 @@ class ArticleController extends AdminController
 {
     public function index()
     {
-        $articles = (new GetArticlesInteractor())->getAll($this->getLangID(), true);
+        $articles = (new GetArticlesInteractor())->getAll(null, null, null, $this->getLangID(), true);
         foreach ($articles as $article) {
             if ($article->author_id) {
                 $article->author = (new GetUserInteractor())->getUserByID($article->author_id, true);
@@ -36,7 +36,6 @@ class ArticleController extends AdminController
             if ($article->page_id) {
                 $article->page = (new GetPageInteractor())->getPageByID($article->page_id, true);
             }
-
         }
 
         return view('w-cms-laravel::back.editorial.articles.index', [

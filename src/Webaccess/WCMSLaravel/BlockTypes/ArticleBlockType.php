@@ -14,7 +14,7 @@ class ArticleBlockType
         $this->code = 'article';
         $this->name = trans('w-cms-laravel::blocks.article_block');
         $this->content_view = 'w-cms-laravel::back.editorial.pages.blocks.content.article';
-        $this->order = 4;
+        $this->order = 5;
         $this->getEntityFromModelMethod = function(BlockModel $blockModel) {
             $block = new ArticleBlock();
             if ($blockModel->blockable) {
