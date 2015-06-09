@@ -9,6 +9,9 @@ use CMS\Events\Events;
 
 use Illuminate\Support\ServiceProvider;
 
+use Webaccess\WCMSLaravel\BlockTypes\ArticleBlockType;
+use Webaccess\WCMSLaravel\BlockTypes\ArticleListBlockType;
+use Webaccess\WCMSLaravel\BlockTypes\MediaBlockType;
 use Webaccess\WCMSLaravel\BlockTypes\MenuBlockType;
 use Webaccess\WCMSLaravel\BlockTypes\ViewBlockType;
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
@@ -66,12 +69,13 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         $this->app->make('block_type')->addBlockType(new HTMLBlockType());
         $this->app->make('block_type')->addBlockType(new MenuBlockType());
         $this->app->make('block_type')->addBlockType(new ViewBlockType());
-        /*$this->app->make('block_type')->addBlockType(['code' => 'menu', 'name' => trans('w-cms-laravel::blocks.navigation_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.menu', 'order' => 2]);
-        $this->app->make('block_type')->addBlockType(['code' => 'view_file', 'name' => trans('w-cms-laravel::blocks.view_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.view_file', 'order' => 3]);
-        $this->app->make('block_type')->addBlockType(['code' => 'article', 'name' => trans('w-cms-laravel::blocks.article_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.article', 'order' => 4]);
-        $this->app->make('block_type')->addBlockType(['code' => 'article_list', 'name' => trans('w-cms-laravel::blocks.article_list_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.article_list', 'order' => 5]);
+        $this->app->make('block_type')->addBlockType(new MediaBlockType());
+        $this->app->make('block_type')->addBlockType(new ArticleBlockType());
+        $this->app->make('block_type')->addBlockType(new ArticleListBlockType());
+
+        /*$this->app->make('block_type')->addBlockType(['code' => 'article_list', 'name' => trans('w-cms-laravel::blocks.article_list_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.article_list', 'order' => 5]);
         $this->app->make('block_type')->addBlockType(['code' => 'global', 'name' => trans('w-cms-laravel::blocks.global_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.global', 'order' => 6]);
-        $this->app->make('block_type')->addBlockType(['code' => 'media', 'name' => trans('w-cms-laravel::blocks.media_block') , 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.content.media', 'order' => 7]);*/
+        */
 
         Theme::load();
     }

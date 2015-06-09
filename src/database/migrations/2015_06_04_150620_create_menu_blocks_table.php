@@ -12,7 +12,7 @@ class CreateMenuBlocksTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('menu_blocks', function($table) {
+		Schema::create('blocks_menu', function($table) {
             $table->increments('id');
             $table->integer('menu_id')->nullable();
             $table->timestamps();
@@ -26,7 +26,7 @@ class CreateMenuBlocksTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('menu_blocks');
+		Schema::drop('blocks_menu');
 	}
 
 }

@@ -12,9 +12,9 @@ class CreateViewBlocksTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('view_blocks', function($table) {
+		Schema::create('blocks_view', function($table) {
             $table->increments('id');
-            $table->string('view_path')->nullable();
+            $table->integer('view_path')->nullable();
             $table->timestamps();
         });
 	}
@@ -26,7 +26,7 @@ class CreateViewBlocksTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('view_blocks');
+		Schema::drop('blocks_view');
 	}
 
 }

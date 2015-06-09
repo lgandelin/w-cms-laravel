@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHtmlBlocksTable extends Migration {
+class CreateArticleBlocksTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,9 @@ class CreateHtmlBlocksTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('blocks_html', function($table) {
+		Schema::create('blocks_article', function($table) {
             $table->increments('id');
-            $table->text('html')->nullable();
+            $table->integer('article_id')->nullable();
             $table->timestamps();
         });
 	}
@@ -26,7 +26,7 @@ class CreateHtmlBlocksTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('blocks_html');
+		Schema::drop('blocks_article');
 	}
 
 }
