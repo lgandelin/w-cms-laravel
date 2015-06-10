@@ -60,7 +60,9 @@
                         @endif
                     </span>
                     <div class="content">
-                        @include (BlockType::getContentView($block->type))
+                        @if (BlockType::getContentView($block->type))
+                            @include (BlockType::getContentView($block->type))
+                        @endif
 
                         <!-- Save -->
                         <div class="submit_wrapper">

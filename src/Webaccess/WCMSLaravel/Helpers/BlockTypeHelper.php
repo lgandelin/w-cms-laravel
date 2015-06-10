@@ -16,27 +16,59 @@ class BlockTypeHelper
     }
 
     public function getBlockType($code) {
-        return $this->blockTypes[$code];
+        if (isset($this->blockTypes[$code]))
+            return $this->blockTypes[$code];
+
+        return null;
+    }
+
+    public function getFrontView($code) {
+        if ($blockType = $this->getBlockType($code))
+            return $blockType->front_view;
+
+        return false;
     }
 
     public function getContentView($code) {
-        return $this->getBlockType($code)->content_view;
+        if ($blockType = $this->getBlockType($code))
+            return $blockType->content_view;
+
+        return null;
+    }
+
+    public function getTemplateView($code) {
+        if ($blockType = $this->getBlockType($code))
+            return $blockType->template_view;
+
+        return null;
     }
 
     public function getUpdateContentMethod($code) {
-        return $this->getBlockType($code)->getUpdateContentMethod;
+        if ($blockType = $this->getBlockType($code))
+            return $blockType->getUpdateContentMethod;
+
+        return null;
     }
 
     public function getBlockStructureForUpdateMethod($code) {
-        return $this->getBlockType($code)->getBlockStructureForUpdateMethod;
+        if ($blockType = $this->getBlockType($code))
+            return $blockType->getBlockStructureForUpdateMethod;
+
+        return null;
     }
 
     public function getEntityFromModelMethod($code) {
-        return $this->getBlockType($code)->getEntityFromModelMethod;
+        if ($blockType = $this->getBlockType($code))
+            return $blockType->getEntityFromModelMethod;
+
+        return null;
     }
 
     public function getBlockStructureMethod($code) {
-        return $this->getBlockType($code)->getBlockStructureMethod;
+        if ($blockType = $this->getBlockType($code))
+            return $blockType->getBlockStructureMethod;
+
+        return null;
     }
 
     public function getBlockTypes()
@@ -46,9 +78,5 @@ class BlockTypeHelper
         });
 
         return $this->blockTypes;
-    }
-
-    public function getFrontView($code) {
-        return $this->getBlockType($code)->front_view;
     }
 }

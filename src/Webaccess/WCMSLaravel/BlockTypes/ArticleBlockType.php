@@ -14,6 +14,7 @@ class ArticleBlockType
         $this->code = 'article';
         $this->name = trans('w-cms-laravel::blocks.article_block');
         $this->content_view = 'w-cms-laravel::back.editorial.pages.blocks.content.article';
+        $this->template_view = 'w-cms-laravel::back.editorial.pages.blocks.templates.article';
         $this->front_view = 'partials.blocks.article';
         $this->order = 5;
         $this->getEntityFromModelMethod = function(BlockModel $blockModel) {
@@ -21,7 +22,6 @@ class ArticleBlockType
             if ($blockModel->blockable) {
                 $block->setArticleID($blockModel->blockable->article_id);
             }
-
             return $block;
         };
         $this->getUpdateContentMethod = function(BlockModel $blockModel, Block $block) {

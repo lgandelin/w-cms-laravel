@@ -3,13 +3,6 @@
 namespace Webaccess\WCMSLaravel\Repositories;
 
 use CMS\Entities\Block;
-use CMS\Entities\Blocks\ArticleBlock;
-use CMS\Entities\Blocks\ArticleListBlock;
-use CMS\Entities\Blocks\HTMLBlock;
-use CMS\Entities\Blocks\GlobalBlock;
-use CMS\Entities\Blocks\MediaBlock;
-use CMS\Entities\Blocks\MenuBlock;
-use CMS\Entities\Blocks\ViewFileBlock;
 use CMS\Repositories\BlockRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
 
@@ -107,8 +100,10 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->is_ghost = $block->getIsGhost();
 
         $method = \App::make('block_type')->getUpdateContentMethod($blockModel->type);
-        $arguments = [$blockModel, $block];
-        call_user_func_array($method, $arguments);
+        if ($method) {
+            $arguments = [$blockModel, $block];
+            call_user_func_array($method, $arguments);
+        }
 
         return $blockModel->save();
     }
@@ -117,7 +112,8 @@ class EloquentBlockRepository implements BlockRepositoryInterface
     {
         $blockModel = BlockModel::find($block->getID());
         $blockModel->type = $block->getType();
-        $blockModel->blockable->delete();
+        if ($blockModel->blockable)
+            $blockModel->blockable->delete();
 
         return $blockModel->save();
     }
@@ -132,24 +128,28 @@ class EloquentBlockRepository implements BlockRepositoryInterface
     private static function createBlockFromModel(BlockModel $blockModel)
     {
         $method = \App::make('block_type')->getEntityFromModelMethod($blockModel->type);
-        $arguments = [$blockModel];
-        $block = call_user_func_array($method, $arguments);
+        if ($method) {
+            $arguments = [$blockModel];
+            $block = call_user_func_array($method, $arguments);
 
-        $block->setID($blockModel->id);
-        $block->setName($blockModel->name);
-        $block->setWidth($blockModel->width);
-        $block->setHeight($blockModel->height);
-        $block->setClass($blockModel->class);
-        $block->setAlignment($blockModel->alignment);
-        $block->setOrder($blockModel->order);
-        $block->setType($blockModel->type);
-        $block->setAreaID($blockModel->area_id);
-        $block->setDisplay($blockModel->display);
-        $block->setIsGlobal($blockModel->is_global);
-        $block->setMasterBlockID($blockModel->master_block_id);
-        $block->setIsMaster($blockModel->is_master);
-        $block->setIsGhost($blockModel->is_ghost);
+            $block->setID($blockModel->id);
+            $block->setName($blockModel->name);
+            $block->setWidth($blockModel->width);
+            $block->setHeight($blockModel->height);
+            $block->setClass($blockModel->class);
+            $block->setAlignment($blockModel->alignment);
+            $block->setOrder($blockModel->order);
+            $block->setType($blockModel->type);
+            $block->setAreaID($blockModel->area_id);
+            $block->setDisplay($blockModel->display);
+            $block->setIsGlobal($blockModel->is_global);
+            $block->setMasterBlockID($blockModel->master_block_id);
+            $block->setIsMaster($blockModel->is_master);
+            $block->setIsGhost($blockModel->is_ghost);
 
-        return $block;
+            return $block;
+        }
+
+        return false;
     }
 } 

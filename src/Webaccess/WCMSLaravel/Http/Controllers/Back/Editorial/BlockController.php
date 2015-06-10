@@ -7,16 +7,7 @@ use CMS\Interactors\Blocks\DeleteBlockInteractor;
 use CMS\Interactors\Blocks\GetBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockTypeInteractor;
-use CMS\Structures\Blocks\ArticleBlockStructure;
-use CMS\Structures\Blocks\ArticleListBlockStructure;
-use CMS\Structures\Blocks\GlobalBlockStructure;
-use CMS\Structures\Blocks\MediaBlockStructure;
-use CMS\Structures\Blocks\MenuBlockStructure;
-use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\Blocks\ViewBlockStructure;
-use Webaccess\CMS\Structures\Blocks\GalleryBlockStructure;
-use Webaccess\WCMSLaravel\Facades\BlockType;
-use Webaccess\WCMSLaravel\Helpers\BlockTypeHelper;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class BlockController extends AdminController
@@ -36,10 +27,10 @@ class BlockController extends AdminController
     {
         $method = \App::make('block_type')->getBlockStructureMethod(\Input::get('type'));
         $blockStructure = call_user_func($method);
+        $blockStructure->type = \Input::get('type');
         $blockStructure->name = \Input::get('name');
         $blockStructure->width = \Input::get('width');
         $blockStructure->height = \Input::get('height');
-        $blockStructure->type = \Input::get('type');
         $blockStructure->class = \Input::get('class');
         $blockStructure->alignment = \Input::get('alignment');
         $blockStructure->order = 999;

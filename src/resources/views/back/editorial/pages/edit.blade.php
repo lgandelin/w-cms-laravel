@@ -39,16 +39,20 @@
                 </ul>
 
                 <div class="tab-content">
-
                     @include('w-cms-laravel::back.editorial.pages.edit_content')
-
                     @include('w-cms-laravel::back.editorial.pages.edit_structure')
-
                     @include('w-cms-laravel::back.editorial.pages.edit_versions')
-
                     @include('w-cms-laravel::back.editorial.pages.edit_seo')
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                </div>
+
+                <div style="display: none">
+                    @foreach (BlockType::getBlockTypes() as $code => $type)
+                        @if (BlockType::getTemplateView($code))
+                            @include(BlockType::getTemplateView($code))
+                        @endif
+                    @endforeach
                 </div>
 
 			@else

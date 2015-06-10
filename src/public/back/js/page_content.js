@@ -82,10 +82,9 @@ $(document).ready(function() {
     $('body').on('click', '.page-content-save-block', function() {
         var block_id = $(this).attr('data-id');
         var block = $('.block[data-id="' + block_id + '"]');
-
         var data = {
             'ID': block_id,
-            'type' : block.data('type'),
+            'type' : block.attr('data-type'),
             '_token': $('input[name="_token"]').val()
         };
 
