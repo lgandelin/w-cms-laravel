@@ -1,13 +1,14 @@
 <div class="form-group">
     <label>{{ trans('w-cms-laravel::blocks.media_block') }}</label>
 
-    <div class="thumbnail" style="width:200px; margin-bottom: 15px">
-        <img style="max-width: 100%; display:block" src="@if (isset($block->media)){{ asset(Shortcut::get_uploads_folder() . $block->media->ID . '/' . $block->media->file_name) }} @endif" />
-        <span class="media-name" style="margin-top: 5px; display: block;">@if (isset($block->media)){{ $block->media->name }}@endif</span>
+    <div id="block-{{ $block->ID }}-media-id">
+        <div class="thumbnail" style="width:200px; margin-bottom: 15px">
+            <img style="max-width: 100%; display:block" src="@if (isset($block->media)){{ asset(Shortcut::get_uploads_folder() . $block->media->ID . '/' . $block->media->file_name) }} @endif" />
+            <span class="media-name" style="margin-top: 5px; display: block;">@if (isset($block->media)){{ $block->media->name }}@endif</span>
+        </div>
+        <input name="media_id" class="media_id" type="hidden" value="{{ $block->media_id }}" />
     </div>
-
-    <input type="button" class="btn btn-primary open-medias-modal" value="{{ trans('w-cms-laravel::generic.browse') }}" />
-    <input name="media_id" class="media_id" type="hidden" value="{{ $block->media_id }}" />
+    <input type="button" class="btn btn-primary open-medias-modal" data-div-id="block-{{ $block->ID }}-media-id" value="{{ trans('w-cms-laravel::generic.browse') }}" />
 </div>
 
 <div class="form-group">

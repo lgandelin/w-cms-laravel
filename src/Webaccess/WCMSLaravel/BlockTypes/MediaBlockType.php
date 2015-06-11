@@ -40,10 +40,9 @@ class MediaBlockType
         };
         $this->getBlockStructureForUpdateMethod = function($arguments) {
             return new MediaBlockStructure([
-                'media_id' => $arguments['media_id'],
-                'media_link' => $arguments['media_link'],
-                'media_format_id' => $arguments['media_format_id'],
-                'type' => $arguments['type']
+                'media_id' => isset($arguments['media_id']) ? $arguments['media_id'] : null,
+                'media_link' => isset($arguments['media_link']) ? $arguments['media_link'] : null,
+                'media_format_id' => isset($arguments['media_format_id']) ? $arguments['media_format_id'] : null,
             ]);
         };
     }

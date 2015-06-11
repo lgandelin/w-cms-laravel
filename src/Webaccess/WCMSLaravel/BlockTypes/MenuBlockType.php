@@ -36,8 +36,7 @@ class MenuBlockType
         };
         $this->getBlockStructureForUpdateMethod = function($arguments) {
             return new MenuBlockStructure([
-                'menu_id' => $arguments['menu_id'],
-                'type' => $arguments['type']
+                'menu_id' => isset($arguments['menu_id']) ? $arguments['menu_id'] : null,
             ]);
         };
     }

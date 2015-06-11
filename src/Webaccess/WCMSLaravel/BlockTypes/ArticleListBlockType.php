@@ -43,7 +43,6 @@ class ArticleListBlockType
                 'article_list_category_id' => isset($arguments['article_list_category_id']) ? $arguments['article_list_category_id'] : null,
                 'article_list_order' => isset($arguments['article_list_order']) ? $arguments['article_list_order'] : 'desc',
                 'article_list_number' => isset($arguments['article_list_number']) ? $arguments['article_list_number'] : 0,
-                'type' => $arguments['type']
             ]);
         };
     }

@@ -36,7 +36,6 @@ class ArticleBlockType
         $this->getBlockStructureForUpdateMethod = function($arguments) {
             return new ArticleBlockStructure([
                 'article_id' => isset($arguments['article_id']) ? $arguments['article_id'] : null,
-                'type' => $arguments['type']
             ]);
         };
     }

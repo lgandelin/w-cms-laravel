@@ -36,8 +36,7 @@ class ViewBlockType
         };
         $this->getBlockStructureForUpdateMethod = function($arguments) {
             return new ViewBlockStructure([
-                'view_path' => $arguments['view_path'],
-                'type' => $arguments['type']
+                'view_path' => isset($arguments['view_path']) ? $arguments['view_path'] : null,
             ]);
         };
     }

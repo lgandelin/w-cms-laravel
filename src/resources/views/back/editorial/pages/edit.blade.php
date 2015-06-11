@@ -9,6 +9,7 @@
 	{!! HTML::script('vendor/w-cms-laravel/back/js/page_content.js') !!}
 	{!! HTML::script('vendor/w-cms-laravel/back/js/page_structure_areas.js') !!}
 	{!! HTML::script('vendor/w-cms-laravel/back/js/page_structure_blocks.js') !!}
+	{!! HTML::script('vendor/w-cms-laravel/back/js/includes.js') !!}
 @stop
 
 @section('content')

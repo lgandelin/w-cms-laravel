@@ -36,8 +36,7 @@ class HTMLBlockType
         };
         $this->getBlockStructureForUpdateMethod = function($arguments) {
             return new HTMLBlockStructure([
-                'html' => $arguments['html'],
-                'type' => $arguments['type']
+                'html' => isset($arguments['html']) ? $arguments['html'] : null,
             ]);
         };
     }
