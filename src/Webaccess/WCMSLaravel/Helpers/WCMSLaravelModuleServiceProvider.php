@@ -19,9 +19,11 @@ class WCMSLaravelModuleServiceProvider extends ServiceProvider
         $config['themeLangsFolder'] = 'lang/modules/';
         $config['themeAssetsFolder'] = 'assets/modules/';
 
-        $this->publishes([
-            $prefixFolder . $config['moduleConfigFolder'] . 'config.php' => config_path('vendor/w-cms-laravel-' . $moduleName . '.php')
-        ], 'config');
+        if (is_dir($prefixFolder . $config['moduleConfigFolder'])) {
+            $this->publishes([
+                $prefixFolder . $config['moduleConfigFolder'] . 'config.php' => config_path('vendor/w-cms-laravel-' . $moduleName . '.php')
+            ], 'config');
+        }
 
         if (is_dir($prefixFolder . $config['moduleViewsFolder'] . 'front')) {
             $this->publishes([
