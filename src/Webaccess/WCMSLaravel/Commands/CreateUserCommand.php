@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Commands;
 
+use CMS\Interactors\Users\CreateUserInteractor;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -52,7 +53,7 @@ class CreateUserCommand extends Command {
             'email' => '',
         ]);
         
-        $userStructure = \App::make('CreateUserInteractor')->run($userStructure);
+        $userStructure = (new CreateUserInteractor())->run($userStructure);
 
         $this->info('User successfullly created with following password : ' . $password);
 	}
