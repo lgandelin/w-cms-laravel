@@ -37,11 +37,11 @@
 
         @if (isset($page->areas))
         @foreach ($page->areas as $area)
-        <div class="area @if ($area->master_area_id) child-area @endif" data-id="{{ $area->ID }}">
+        <div class="area @if ($area->masterAreaID) child-area @endif" data-id="{{ $area->ID }}">
             <span class="title">
                 <span class="area_name">{{ $area->name }}</span>
 
-                @if ($area->master_area_id)
+                @if ($area->masterAreaID)
                     <span class="glyphicon glyphicon-exclamation-sign disabled"></span>
                 @else
                     <span class="glyphicon glyphicon-chevron-up opening-status"></span>

@@ -7,7 +7,7 @@ use CMS\Interactors\ArticleCategories\DeleteArticleCategoryInteractor;
 use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
 use CMS\Interactors\ArticleCategories\GetArticleCategoryInteractor;
 use CMS\Interactors\ArticleCategories\UpdateArticleCategoryInteractor;
-use CMS\Structures\ArticleCategoryStructure;
+use CMS\Structures\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class ArticleCategoryController extends AdminController
@@ -27,7 +27,7 @@ class ArticleCategoryController extends AdminController
 
     public function store()
     {
-        $articleCategoryStructure = new ArticleCategoryStructure([
+        $articleCategoryStructure = new DataStructure([
             'name' => \Input::get('name'),
             'description' => \Input::get('description'),
             'lang_id' => $this->getLangID(),
@@ -59,7 +59,7 @@ class ArticleCategoryController extends AdminController
     public function update()
     {
         $articleCategoryID = \Input::get('ID');
-        $articleCategoryStructure = new ArticleCategoryStructure([
+        $articleCategoryStructure = new DataStructure([
             'name' => \Input::get('name'),
             'description' => \Input::get('description'),
         ]);

@@ -15,7 +15,7 @@ use CMS\Interactors\Pages\GetPageInfoFromMasterInteractor;
 use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Interactors\Pages\GetPagesInteractor;
 use CMS\Interactors\Users\GetUserInteractor;
-use CMS\Structures\ArticleStructure;
+use CMS\Structures\DataStructure;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
@@ -25,16 +25,16 @@ class ArticleController extends AdminController
     {
         $articles = (new GetArticlesInteractor())->getAll(null, null, null, $this->getLangID(), true);
         foreach ($articles as $article) {
-            if ($article->author_id) {
-                $article->author = (new GetUserInteractor())->getUserByID($article->author_id, true);
+            if ($article->authorID) {
+                $article->author = (new GetUserInteractor())->getUserByID($article->authorID, true);
             }
 
-            if ($article->category_id) {
-                $article->category = (new GetArticleCategoryInteractor())->getArticleCategoryByID($article->category_id, true);
+            if ($article->categoryID) {
+                $article->category = (new GetArticleCategoryInteractor())->getArticleCategoryByID($article->categoryID, true);
             }
 
-            if ($article->page_id) {
-                $article->page = (new GetPageInteractor())->getPageByID($article->page_id, true);
+            if ($article->pageID) {
+                $article->page = (new GetPageInteractor())->getPageByID($article->pageID, true);
             }
         }
 
@@ -56,7 +56,7 @@ class ArticleController extends AdminController
     public function store()
     {
         $publicationDate = \DateTime::createFromFormat('d/m/Y H:i', \Input::get('publication_date'));
-        $articleStructure = new ArticleStructure([
+        $articleStructure = new DataStructure([
             'title' => \Input::get('title'),
             'summary' => \Input::get('summary'),
             'text' => \Input::get('text'),
@@ -98,7 +98,7 @@ class ArticleController extends AdminController
     {
         $articleID = \Input::get('ID');
         $publicationDate = \DateTime::createFromFormat('d/m/Y H:i', \Input::get('publication_date'));
-        $articleStructure = new ArticleStructure([
+        $articleStructure = new DataStructure([
             'title' => \Input::get('title'),
             'summary' => \Input::get('summary'),
             'text' => \Input::get('text'),
@@ -121,8 +121,8 @@ class ArticleController extends AdminController
                 ]);
                 $pageID = (new CreatePageFromMasterInteractor())->run($pageStructure, $articleStructure);
 
-                $articleStructure = new ArticleStructure([
-                    'page_id' => $pageID
+                $articleStructure = new DataStructure([
+                    'pageID' => $pageID
                 ]);
                 (new UpdateArticleInteractor())->run($articleID, $articleStructure);
             }

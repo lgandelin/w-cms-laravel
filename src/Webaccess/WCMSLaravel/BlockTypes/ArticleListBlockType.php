@@ -15,7 +15,7 @@ class ArticleListBlockType
         $this->name = trans('w-cms-laravel::blocks.article_list_block');
         $this->content_view = 'w-cms-laravel::back.editorial.pages.blocks.content.article_list';
         $this->template_view = 'w-cms-laravel::back.editorial.pages.blocks.templates.article_list';
-        $this->front_view = 'blocks.article_list';
+        $this->front_view = 'blocks.standard.article_list';
         $this->order = 6;
         $this->getEntityFromModelMethod = function(BlockModel $blockModel) {
             $block = new ArticleListBlock();

@@ -7,7 +7,7 @@ use CMS\Interactors\Langs\DeleteLangInteractor;
 use CMS\Interactors\Langs\GetLangInteractor;
 use CMS\Interactors\Langs\GetLangsInteractor;
 use CMS\Interactors\Langs\UpdateLangInteractor;
-use CMS\Structures\LangStructure;
+use CMS\Structures\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class LangController extends AdminController
@@ -27,7 +27,7 @@ class LangController extends AdminController
 
     public function store()
     {
-        $langStructure = new LangStructure([
+        $langStructure = new DataStructure([
             'name' => \Input::get('name'),
             'prefix' => \Input::get('prefix'),
             'code' => \Input::get('code'),
@@ -60,7 +60,7 @@ class LangController extends AdminController
     public function update()
     {
         $langID = \Input::get('ID');
-        $langStructure = new LangStructure([
+        $langStructure = new DataStructure([
             'name' => \Input::get('name'),
             'prefix' => \Input::get('prefix'),
             'code' => \Input::get('code'),

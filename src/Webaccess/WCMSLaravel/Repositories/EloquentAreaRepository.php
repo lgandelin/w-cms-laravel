@@ -3,7 +3,6 @@
 namespace Webaccess\WCMSLaravel\Repositories;
 
 use CMS\Entities\Area;
-use CMS\Structures\AreaStructure;
 use CMS\Repositories\AreaRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Area as AreaModel;
 

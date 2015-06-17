@@ -7,7 +7,7 @@ use CMS\Interactors\Users\DeleteUserInteractor;
 use CMS\Interactors\Users\GetUserInteractor;
 use CMS\Interactors\Users\GetUsersInteractor;
 use CMS\Interactors\Users\UpdateUserInteractor;
-use CMS\Structures\UserStructure;
+use CMS\Structures\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class UserController extends AdminController
@@ -27,7 +27,7 @@ class UserController extends AdminController
 
     public function store()
     {
-        $userStructure = new UserStructure([
+        $userStructure = new DataStructure([
             'login' => \Input::get('login'),
             'password' => (\Input::get('password')) ? \Hash::make(\Input::get('password')) : null,
             'last_name' => \Input::get('last_name'),
@@ -61,7 +61,7 @@ class UserController extends AdminController
     public function update()
     {
         $userID = \Input::get('ID');
-        $userStructure = new UserStructure([
+        $userStructure = new DataStructure([
             'login' => \Input::get('login'),
             'password' => (\Input::get('password')) ? \Hash::make(\Input::get('password')) : null,
             'last_name' => \Input::get('last_name'),

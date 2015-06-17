@@ -6,14 +6,14 @@ use CMS\Interactors\MenuItems\CreateMenuItemInteractor;
 use CMS\Interactors\MenuItems\DeleteMenuItemInteractor;
 use CMS\Interactors\MenuItems\GetMenuItemInteractor;
 use CMS\Interactors\MenuItems\UpdateMenuItemInteractor;
-use CMS\Structures\MenuItemStructure;
+use CMS\Structures\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class MenuItemController extends AdminController
 {
     public function create()
     {
-        $menuItemStructure = new MenuItemStructure([
+        $menuItemStructure = new DataStructure([
             'menu_id' => \Input::get('menuID'),
             'label' => \Input::get('label'),
             'order' => 999,
@@ -46,7 +46,7 @@ class MenuItemController extends AdminController
     public function update_infos()
     {
         $menuItemID = \Input::get('ID');
-        $menuItemStructure = new MenuItemStructure([
+        $menuItemStructure = new DataStructure([
             'label' => \Input::get('label'),
             'page_id' => \Input::get('pageID'),
             'class' => \Input::get('class'),
@@ -84,7 +84,7 @@ class MenuItemController extends AdminController
     {
         try {
             $menuItemID = \Input::get('ID');
-            $menuItemStructure = new MenuItemStructure([
+            $menuItemStructure = new DataStructure([
                 'display'=> \Input::get('display')
             ]);
 

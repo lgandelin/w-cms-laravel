@@ -6,7 +6,7 @@ use CMS\Interactors\Areas\CreateAreaInteractor;
 use CMS\Interactors\Areas\DeleteAreaInteractor;
 use CMS\Interactors\Areas\GetAreaInteractor;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
-use CMS\Structures\AreaStructure;
+use CMS\Structures\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class AreaController extends AdminController
@@ -24,7 +24,7 @@ class AreaController extends AdminController
 
     public function create()
     {
-        $areaStructure = new AreaStructure([
+        $areaStructure = new DataStructure([
             'name' => \Input::get('name'),
             'width' => \Input::get('width'),
             'height' => \Input::get('height'),
@@ -48,7 +48,7 @@ class AreaController extends AdminController
     {
         $areaID = \Input::get('ID');
 
-        $areaStructure = new AreaStructure([
+        $areaStructure = new DataStructure([
             'name' => \Input::get('name'),
             'width' => \Input::get('width'),
             'height' => \Input::get('height'),
@@ -70,7 +70,7 @@ class AreaController extends AdminController
         for ($i = 0; $i < sizeof($areas); $i++) {
             $areaID = preg_replace('/a-/', '', $areas[$i]);
 
-            $areaStructure = new AreaStructure([
+            $areaStructure = new DataStructure([
                 'order' => $i + 1,
             ]);
 
@@ -88,7 +88,7 @@ class AreaController extends AdminController
     {
         try {
             $areaID = \Input::get('ID');
-            $areaStructure = new AreaStructure([
+            $areaStructure = new DataStructure([
                 'display'=> \Input::get('display')
             ]);
 

@@ -7,10 +7,10 @@
         @if (isset($page->areas))
         @foreach ($page->areas as $area)
         <div id="a-{{ $area->ID }}" data-id="{{ $area->ID }}" class="area col-xs-{{ $area->width }}" data-width="{{ $area->width }}" data-display="{{ $area->display }}">
-            <div class="area_color @if ($area->master_area_id) child-area @endif">
+            <div class="area_color @if ($area->masterAreaID) child-area @endif">
                 <span class="title">
                     <span class="area-name">{{ $area->name }}</span> <span class="area_width">[<span class="width_value">{{ $area->width }}</span>]</span>
-                    @if (!$area->master_area_id)
+                    @if (!$area->masterAreaID)
                         <span data-id="{{ $area->ID }}" class="area-delete glyphicon glyphicon-remove"></span>
                         <span data-id="{{ $area->ID }}" class="area-move glyphicon glyphicon-move"></span>
                         <span data-id="{{ $area->ID }}" class="area-display @if ($area->display == 0) area-hidden @endif glyphicon glyphicon-eye-open"></span>
