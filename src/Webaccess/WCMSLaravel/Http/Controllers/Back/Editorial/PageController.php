@@ -76,9 +76,6 @@ class PageController extends AdminController
                 foreach ($areas as $area) {
                     $area->blocks = (new GetBlocksInteractor())->getAllByAreaID($area->ID, true);
                     foreach ($area->blocks as $i => $block) {
-                        if ($block instanceof MediaBlockStructure && $block->media_id) {
-                            $block->media = (new GetMediaInteractor())->getMediaByID($block->media_id, true);
-                        }
                         $area->blocks[$i]= $block;
                     }
                     $page->areas[]= $area;

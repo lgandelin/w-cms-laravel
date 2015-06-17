@@ -7,7 +7,6 @@ use CMS\Interactors\Blocks\DeleteBlockInteractor;
 use CMS\Interactors\Blocks\GetBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockTypeInteractor;
-use CMS\Structures\Blocks\ViewBlockStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class BlockController extends AdminController

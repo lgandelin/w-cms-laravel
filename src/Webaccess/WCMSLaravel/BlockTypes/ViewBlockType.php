@@ -15,7 +15,7 @@ class ViewBlockType
         $this->name = trans('w-cms-laravel::blocks.view_block');
         $this->content_view = 'w-cms-laravel::back.editorial.pages.blocks.content.view';
         $this->template_view = 'w-cms-laravel::back.editorial.pages.blocks.templates.view';
-        $this->front_view = 'partials.blocks.view';
+        $this->front_view = 'blocks.view';
         $this->order = 3;
         $this->getEntityFromModelMethod = function(BlockModel $blockModel) {
             $block = new ViewBlock();

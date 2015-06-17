@@ -14,7 +14,7 @@ class CreateViewBlocksTable extends Migration {
 	{
 		Schema::create('blocks_view', function($table) {
             $table->increments('id');
-            $table->integer('view_path')->nullable();
+            $table->string('view_path')->nullable();
             $table->timestamps();
         });
 	}

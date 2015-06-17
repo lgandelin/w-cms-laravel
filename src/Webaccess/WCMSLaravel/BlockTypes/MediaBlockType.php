@@ -15,7 +15,7 @@ class MediaBlockType
         $this->name = trans('w-cms-laravel::blocks.media_block');
         $this->content_view = 'w-cms-laravel::back.editorial.pages.blocks.content.media';
         $this->template_view = 'w-cms-laravel::back.editorial.pages.blocks.templates.media';
-        $this->front_view = 'partials.blocks.media';
+        $this->front_view = 'blocks.media';
         $this->order = 4;
         $this->getEntityFromModelMethod = function(BlockModel $blockModel) {
             $block = new MediaBlock();

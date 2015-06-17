@@ -15,7 +15,7 @@ class HTMLBlockType
         $this->name = trans('w-cms-laravel::blocks.html_block');
         $this->content_view = 'w-cms-laravel::back.editorial.pages.blocks.content.html';
         $this->template_view = 'w-cms-laravel::back.editorial.pages.blocks.templates.html';
-        $this->front_view = 'partials.blocks.html';
+        $this->front_view = 'blocks.html';
         $this->order = 1;
         $this->getEntityFromModelMethod = function(BlockModel $blockModel) {
             $block = new HTMLBlock();

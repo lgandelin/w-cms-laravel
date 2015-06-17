@@ -12,7 +12,7 @@ class FrontController extends Controller
     {
         $uri = ($uri != '/') ? '/' . $uri : '/';
 
-        return view(Shortcut::get_theme() . '::pages.index', [
+        return view(Shortcut::get_theme() . '::index', [
             'page' => (new GetPageContentInteractor())->run($uri, true)
         ]);
     }
