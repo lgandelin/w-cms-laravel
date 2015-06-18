@@ -7,7 +7,7 @@ use CMS\Interactors\MediaFormats\DeleteMediaFormatInteractor;
 use CMS\Interactors\MediaFormats\GetMediaFormatInteractor;
 use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
 use CMS\Interactors\MediaFormats\UpdateMediaFormatInteractor;
-use CMS\Structures\MediaFormatStructure;
+use CMS\Structures\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class MediaFormatController extends AdminController
@@ -27,7 +27,7 @@ class MediaFormatController extends AdminController
 
     public function store()
     {
-        $mediaFormatStructure = new MediaFormatStructure([
+        $mediaFormatStructure = new DataStructure([
             'name' => \Input::get('name'),
             'width' => \Input::get('width'),
             'height' => \Input::get('height'),
@@ -61,7 +61,7 @@ class MediaFormatController extends AdminController
     public function update()
     {
         $mediaFormatID = \Input::get('ID');
-        $mediaFormatStructure = new MediaFormatStructure([
+        $mediaFormatStructure = new DataStructure([
             'name' => \Input::get('name'),
             'width' => \Input::get('width'),
             'height' => \Input::get('height'),

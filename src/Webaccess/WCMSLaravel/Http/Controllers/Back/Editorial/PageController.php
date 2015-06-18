@@ -8,6 +8,7 @@ use CMS\Interactors\Articles\GetArticlesInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Langs\GetLangInteractor;
 use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use CMS\Interactors\Medias\GetMediaInteractor;
 use CMS\Interactors\Medias\GetMediasInteractor;
 use CMS\Interactors\Menus\GetMenusInteractor;
 use CMS\Interactors\Pages\CreatePageFromMasterInteractor;
@@ -17,6 +18,7 @@ use CMS\Interactors\Pages\DuplicatePageInteractor;
 use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Interactors\Pages\GetPagesInteractor;
 use CMS\Interactors\Pages\UpdatePageInteractor;
+use CMS\Structures\Blocks\MediaBlockStructure;
 use CMS\Structures\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
@@ -48,7 +50,7 @@ class PageController extends AdminController
             'master_page_id' => \Input::get('master_page_id'),
             'is_master' => \Input::get('is_master')
 		]);
-		
+
 		try {
             if ($pageStructure->master_page_id)
                 $pageID = (new CreatePageFromMasterInteractor())->run($pageStructure);
@@ -74,6 +76,9 @@ class PageController extends AdminController
                 foreach ($areas as $area) {
                     $area->blocks = (new GetBlocksInteractor())->getAllByAreaID($area->ID, true);
                     foreach ($area->blocks as $i => $block) {
+                        if ($block instanceof MediaBlockStructure && $block->media_id) {
+                            $block->media = (new GetMediaInteractor())->getMediaByID($block->media_id, true);
+                        }
                         $area->blocks[$i]= $block;
                     }
                     $page->areas[]= $area;
