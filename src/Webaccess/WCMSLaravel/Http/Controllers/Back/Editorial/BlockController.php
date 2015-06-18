@@ -7,6 +7,7 @@ use CMS\Interactors\Blocks\DeleteBlockInteractor;
 use CMS\Interactors\Blocks\GetBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockTypeInteractor;
+use CMS\Structures\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class BlockController extends AdminController
@@ -24,8 +25,7 @@ class BlockController extends AdminController
 
     public function create()
     {
-        $method = \App::make('block_type')->getBlockStructureMethod(\Input::get('type'));
-        $blockStructure = call_user_func($method);
+        $blockStructure = new DataStructure();
         $blockStructure->type = \Input::get('type');
         $blockStructure->name = \Input::get('name');
         $blockStructure->width = \Input::get('width');
@@ -52,9 +52,11 @@ class BlockController extends AdminController
     {
         $blockID = \Input::get('ID');
 
-        $method= \App::make('block_type')->getBlockStructureForUpdateMethod(\Input::get('type'));
-        $arguments = [\Input::all()];
-        $blockStructure = call_user_func_array($method, $arguments);
+        $block = (new GetBlockInteractor())->getBlockByID($blockID);
+        $blockStructure = $block->toStructure();
+        foreach (\Input::all() as $key => $value) {
+            $blockStructure->$key = $value;
+        }
 
         try {
             (new UpdateBlockInteractor())->run($blockID, $blockStructure);
@@ -73,7 +75,7 @@ class BlockController extends AdminController
 
         //Update block infos
         $block = (new GetBlockInteractor())->getBlockByID($blockID);
-        $blockStructure = $block->getStructure();
+        $blockStructure = $block->toStructure();
         $blockStructure->name = \Input::get('name');
         $blockStructure->width = \Input::get('width');
         $blockStructure->height = \Input::get('height');

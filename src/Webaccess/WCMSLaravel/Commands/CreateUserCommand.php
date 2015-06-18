@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-use CMS\Structures\UserStructure;
+use CMS\Structures\DataStructure;
 
 class CreateUserCommand extends Command {
 
@@ -45,7 +45,7 @@ class CreateUserCommand extends Command {
 		$login = $this->argument('login');
 		$password = self::getRandomPassword();
 
-		$userStructure = new UserStructure([
+		$userStructure = new DataStructure([
             'login' => $login,
             'password' => \Hash::make($password),
             'last_name' => '',

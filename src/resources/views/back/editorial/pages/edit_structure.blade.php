@@ -23,10 +23,10 @@
 
                 @foreach ($area->blocks as $block)
                 <div id="b-{{ $block->ID }}" data-id="{{ $block->ID }}" class="block col-xs-{{ $block->width}} align-{{ $block->alignment }}" data-width="{{ $block->width }}" data-display="{{ $block->display }}">
-                    <div class="block_color @if ($block->master_block_id) child-block @endif">
+                    <div class="block_color @if ($block->masterBlockID) child-block @endif">
                         <span class="title">
                             <span class="block-name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span> [<span class="width_value">{{ $block->width }}</span>]
-                            @if (!$block->master_block_id)
+                            @if (!$block->masterBlockID)
                                 <span data-id="{{ $block->ID }}" class="block-delete glyphicon glyphicon-remove"></span>
                                 <span data-id="{{ $block->ID }}" class="block-move glyphicon glyphicon-move"></span>
                                 <span data-id="{{ $block->ID }}" class="block-display @if (!$block->display) block-hidden @endif glyphicon glyphicon-eye-open"></span>
