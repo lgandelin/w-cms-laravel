@@ -16,7 +16,7 @@ $(document).ready(function() {
         var div_id = $('#medias-modal').attr('data-div-id');
 
         var div = $('#' + div_id);
-        div.find('.media_id').val(media_id);
+        div.find('.mediaID').val(media_id);
         div.find('.media-name').text(media_name);
         div.find('.thumbnail img').attr('src', media_src);
         $('#medias-modal').modal('hide');

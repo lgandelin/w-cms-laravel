@@ -98,7 +98,7 @@ class BlockController extends AdminController
             $blockID = \Input::get('block_id');
             $block = (new GetBlockInteractor())->getBlockByID($blockID);
 
-            $blockStructure = $block->getStructure();
+            $blockStructure = $block->toStructure();
             $blockStructure->area_id = \Input::get('area_id');
 
             (new UpdateBlockInteractor())->run($blockID, $blockStructure);
@@ -111,7 +111,7 @@ class BlockController extends AdminController
             $blockID = preg_replace('/b-/', '', $blocks[$i]);
             $block = (new GetBlockInteractor())->getBlockByID($blockID);
 
-            $blockStructure = $block->getStructure();
+            $blockStructure = $block->toStructure();
             $blockStructure->order = $i + 1;
 
             try {
@@ -130,7 +130,7 @@ class BlockController extends AdminController
             $blockID = \Input::get('ID');
             $block = (new GetBlockInteractor())->getBlockByID($blockID);
 
-            $blockStructure = $block->getStructure();
+            $blockStructure = $block->toStructure();
             $blockStructure->display = \Input::get('display');
 
             (new UpdateBlockInteractor())->run($blockID, $blockStructure);

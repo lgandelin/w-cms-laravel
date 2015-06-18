@@ -4,7 +4,6 @@ namespace Webaccess\WCMSLaravel\BlockTypes;
 
 use CMS\Entities\Block;
 use CMS\Entities\Blocks\ArticleListBlock;
-use CMS\Structures\Blocks\ArticleListBlockStructure;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
 use Webaccess\WCMSLaravel\Models\Blocks\ArticleListBlock as ArticleListBlockModel;
 
@@ -34,16 +33,6 @@ class ArticleListBlockType
             $blockable->article_list_number = $block->getArticleListNumber();
             $blockable->save();
             $blockable->block()->save($blockModel);
-        };
-        $this->getBlockStructureMethod = function() {
-            return new ArticleListBlockStructure();
-        };
-        $this->getBlockStructureForUpdateMethod = function($arguments) {
-            return new ArticleListBlockStructure([
-                'article_list_category_id' => isset($arguments['article_list_category_id']) ? $arguments['article_list_category_id'] : null,
-                'article_list_order' => isset($arguments['article_list_order']) ? $arguments['article_list_order'] : 'desc',
-                'article_list_number' => isset($arguments['article_list_number']) ? $arguments['article_list_number'] : 0,
-            ]);
         };
     }
 } 

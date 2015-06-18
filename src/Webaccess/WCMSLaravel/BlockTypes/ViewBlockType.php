@@ -4,7 +4,6 @@ namespace Webaccess\WCMSLaravel\BlockTypes;
 
 use CMS\Entities\Block;
 use CMS\Entities\Blocks\ViewBlock;
-use CMS\Structures\Blocks\ViewBlockStructure;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
 use Webaccess\WCMSLaravel\Models\Blocks\ViewBlock as ViewBlockModel;
 
@@ -30,14 +29,6 @@ class ViewBlockType
             $blockable->view_path = $block->getViewPath();
             $blockable->save();
             $blockable->block()->save($blockModel);
-        };
-        $this->getBlockStructureMethod = function() {
-            return new ViewBlockStructure();
-        };
-        $this->getBlockStructureForUpdateMethod = function($arguments) {
-            return new ViewBlockStructure([
-                'view_path' => isset($arguments['view_path']) ? $arguments['view_path'] : null,
-            ]);
         };
     }
 }

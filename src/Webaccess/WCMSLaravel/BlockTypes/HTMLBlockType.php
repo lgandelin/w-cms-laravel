@@ -4,7 +4,6 @@ namespace Webaccess\WCMSLaravel\BlockTypes;
 
 use CMS\Entities\Block;
 use CMS\Entities\Blocks\HTMLBlock;
-use CMS\Structures\Blocks\HTMLBlockStructure;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
 use Webaccess\WCMSLaravel\Models\Blocks\HTMLBlock as HTMLBlockModel;
 
@@ -30,14 +29,6 @@ class HTMLBlockType
             $blockable->html = $block->getHTML();
             $blockable->save();
             $blockable->block()->save($blockModel);
-        };
-        $this->getBlockStructureMethod = function() {
-            return new HTMLBlockStructure();
-        };
-        $this->getBlockStructureForUpdateMethod = function($arguments) {
-            return new HTMLBlockStructure([
-                'html' => isset($arguments['html']) ? $arguments['html'] : null,
-            ]);
         };
     }
 }
