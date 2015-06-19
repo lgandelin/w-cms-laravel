@@ -2,6 +2,11 @@
 
 namespace Webaccess\WCMSLaravel\BlockTypes;
 
+use CMS\Entities\Block;
+use CMS\Entities\Blocks\ViewBlock;
+use Webaccess\WCMSLaravel\Models\Block as BlockModel;
+use Webaccess\WCMSLaravel\Models\Blocks\ViewBlock as ViewBlockModel;
+
 class ViewBlockType
 {
     public function __construct() {
@@ -11,5 +16,20 @@ class ViewBlockType
         $this->template_view = 'w-cms-laravel::back.editorial.pages.blocks.templates.view';
         $this->front_view = 'blocks.standard.view';
         $this->order = 3;
+    }
+
+    public function getEntityFromModelMethod(BlockModel $blockModel) {
+        $block = new ViewBlock();
+        if ($blockModel->blockable) {
+            $block->setViewPath($blockModel->blockable->view_path);
+        }
+        return $block;
+    }
+
+    public function getUpdateContentMethod(BlockModel $blockModel, Block $block) {
+        $blockable = ($blockModel->blockable) ? $blockModel->blockable : new ViewBlockModel();
+        $blockable->view_path = $block->getViewPath();
+        $blockable->save();
+        $blockable->block()->save($blockModel);
     }
 }
