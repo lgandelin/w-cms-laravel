@@ -70,6 +70,8 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         $this->app->make('block_type')->addBlockType(new MediaBlockType());
         $this->app->make('block_type')->addBlockType(new ArticleBlockType());
         $this->app->make('block_type')->addBlockType(new ArticleListBlockType());
+
+        //Load the theme
         Theme::load();
     }
 

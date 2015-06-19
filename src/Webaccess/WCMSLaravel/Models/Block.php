@@ -16,20 +16,4 @@ class Block extends \Eloquent {
     {
         return $this->morphTo();
     }
-
-    public function getEntity() {
-        if ($this->blockable) {
-            return $this->blockable->getEntity();
-        }
-
-        return false;
-    }
-
-    public function updateFromEntity(\CMS\Entities\Block $block) {
-        if ($this->blockable) {
-            return $this->blockable->updateFromEntity($block);
-        }
-
-        return false;
-    }
 }
