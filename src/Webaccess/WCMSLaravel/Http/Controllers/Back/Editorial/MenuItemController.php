@@ -6,7 +6,7 @@ use CMS\Interactors\MenuItems\CreateMenuItemInteractor;
 use CMS\Interactors\MenuItems\DeleteMenuItemInteractor;
 use CMS\Interactors\MenuItems\GetMenuItemInteractor;
 use CMS\Interactors\MenuItems\UpdateMenuItemInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class MenuItemController extends AdminController

@@ -7,7 +7,7 @@ use CMS\Interactors\Langs\DeleteLangInteractor;
 use CMS\Interactors\Langs\GetLangInteractor;
 use CMS\Interactors\Langs\GetLangsInteractor;
 use CMS\Interactors\Langs\UpdateLangInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class LangController extends AdminController

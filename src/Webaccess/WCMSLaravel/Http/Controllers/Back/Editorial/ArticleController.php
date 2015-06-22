@@ -15,7 +15,7 @@ use CMS\Interactors\Pages\GetPageInfoFromMasterInteractor;
 use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Interactors\Pages\GetPagesInteractor;
 use CMS\Interactors\Users\GetUserInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 

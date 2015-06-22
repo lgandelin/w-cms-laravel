@@ -7,7 +7,7 @@ use CMS\Interactors\Users\DeleteUserInteractor;
 use CMS\Interactors\Users\GetUserInteractor;
 use CMS\Interactors\Users\GetUsersInteractor;
 use CMS\Interactors\Users\UpdateUserInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class UserController extends AdminController

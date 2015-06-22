@@ -7,7 +7,7 @@ use CMS\Interactors\MediaFormats\DeleteMediaFormatInteractor;
 use CMS\Interactors\MediaFormats\GetMediaFormatInteractor;
 use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
 use CMS\Interactors\MediaFormats\UpdateMediaFormatInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class MediaFormatController extends AdminController

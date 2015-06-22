@@ -6,7 +6,7 @@ use CMS\Interactors\Areas\CreateAreaInteractor;
 use CMS\Interactors\Areas\DeleteAreaInteractor;
 use CMS\Interactors\Areas\GetAreaInteractor;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class AreaController extends AdminController

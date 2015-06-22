@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateUserCommand extends Command {
 

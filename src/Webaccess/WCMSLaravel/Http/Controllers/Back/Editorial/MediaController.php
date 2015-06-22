@@ -9,7 +9,7 @@ use CMS\Interactors\Medias\DeleteMediaInteractor;
 use CMS\Interactors\Medias\GetMediaInteractor;
 use CMS\Interactors\Medias\GetMediasInteractor;
 use CMS\Interactors\Medias\UpdateMediaInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use Webaccess\WCMSLaravel\Facades\Shortcut;

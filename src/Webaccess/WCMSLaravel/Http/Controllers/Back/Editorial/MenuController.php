@@ -10,7 +10,7 @@ use CMS\Interactors\Menus\GetMenuInteractor;
 use CMS\Interactors\Menus\GetMenusInteractor;
 use CMS\Interactors\Menus\UpdateMenuInteractor;
 use CMS\Interactors\Pages\GetPagesInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class MenuController extends AdminController

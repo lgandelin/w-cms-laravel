@@ -7,7 +7,7 @@ use CMS\Interactors\ArticleCategories\DeleteArticleCategoryInteractor;
 use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
 use CMS\Interactors\ArticleCategories\GetArticleCategoryInteractor;
 use CMS\Interactors\ArticleCategories\UpdateArticleCategoryInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class ArticleCategoryController extends AdminController
