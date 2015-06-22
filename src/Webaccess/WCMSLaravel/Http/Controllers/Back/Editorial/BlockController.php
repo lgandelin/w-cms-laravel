@@ -26,17 +26,9 @@ class BlockController extends AdminController
     public function create()
     {
         $blockStructure = new DataStructure();
-        $blockStructure->type = \Input::get('type');
-        $blockStructure->name = \Input::get('name');
-        $blockStructure->width = \Input::get('width');
-        $blockStructure->height = \Input::get('height');
-        $blockStructure->class = \Input::get('class');
-        $blockStructure->alignment = \Input::get('alignment');
-        $blockStructure->order = 999;
-        $blockStructure->is_master = \Input::get('is_master');
-        $blockStructure->is_ghost = \Input::get('is_ghost');
-        $blockStructure->area_id = \Input::get('area_id');
-        $blockStructure->display = 1;
+        foreach (\Input::all() as $key => $value) {
+            $blockStructure->$key = $value;
+        }
 
         try {
             $blockID = (new CreateBlockInteractor())->run($blockStructure);
@@ -52,8 +44,7 @@ class BlockController extends AdminController
     {
         $blockID = \Input::get('ID');
 
-        $block = (new GetBlockInteractor())->getBlockByID($blockID);
-        $blockStructure = $block->toStructure();
+        $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
         foreach (\Input::all() as $key => $value) {
             $blockStructure->$key = $value;
         }
@@ -74,15 +65,10 @@ class BlockController extends AdminController
         (new UpdateBlockTypeInteractor())->run($blockID, \Input::get('type'));
 
         //Update block infos
-        $block = (new GetBlockInteractor())->getBlockByID($blockID);
-        $blockStructure = $block->toStructure();
-        $blockStructure->name = \Input::get('name');
-        $blockStructure->width = \Input::get('width');
-        $blockStructure->height = \Input::get('height');
-        $blockStructure->class = \Input::get('class');
-        $blockStructure->alignment = \Input::get('alignment');
-        $blockStructure->is_master = \Input::get('is_master');
-        $blockStructure->is_ghost = \Input::get('is_ghost');
+        $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
+        foreach (\Input::all() as $key => $value) {
+            $blockStructure->$key = $value;
+        }
 
         try {
             (new UpdateBlockInteractor())->run($blockID, $blockStructure);
@@ -96,9 +82,7 @@ class BlockController extends AdminController
     {
         try {
             $blockID = \Input::get('block_id');
-            $block = (new GetBlockInteractor())->getBlockByID($blockID);
-
-            $blockStructure = $block->toStructure();
+            $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
             $blockStructure->area_id = \Input::get('area_id');
 
             (new UpdateBlockInteractor())->run($blockID, $blockStructure);
@@ -109,9 +93,7 @@ class BlockController extends AdminController
         $blocks = json_decode(\Input::get('blocks'));
         for ($i = 0; $i < sizeof($blocks); $i++) {
             $blockID = preg_replace('/b-/', '', $blocks[$i]);
-            $block = (new GetBlockInteractor())->getBlockByID($blockID);
-
-            $blockStructure = $block->toStructure();
+            $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
             $blockStructure->order = $i + 1;
 
             try {
@@ -128,9 +110,7 @@ class BlockController extends AdminController
     {
         try {
             $blockID = \Input::get('ID');
-            $block = (new GetBlockInteractor())->getBlockByID($blockID);
-
-            $blockStructure = $block->toStructure();
+            $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
             $blockStructure->display = \Input::get('display');
 
             (new UpdateBlockInteractor())->run($blockID, $blockStructure);

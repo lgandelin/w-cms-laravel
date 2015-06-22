@@ -70,6 +70,8 @@ $(document).ready(function() {
                 'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
                 'is_ghost': $('#block-infos-modal input[name="block_is_ghost"]:checked').val(),
                 'area_id': $(this).attr('data-area-id'),
+                'order': 999,
+                'display': 1,
                 '_token': $('input[name="_token"]').val()
             };
 
