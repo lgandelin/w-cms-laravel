@@ -36,13 +36,13 @@
                         <option value="">{{ trans('w-cms-laravel::articles.choose_article_category') }}</option>
                         @if (isset($article_categories))
                         @foreach ($article_categories as $category)
-                        <option value="{{ $category->ID }}" @if (isset($article->category_id) && $article->category_id == $category->ID) selected="selected" @endif>{{ $category->name }}</option>
+                        <option value="{{ $category->ID }}" @if (isset($article->categoryID) && $article->categoryID == $category->ID) selected="selected" @endif>{{ $category->name }}</option>
                         @endforeach
                         @endif
                     </select>
                 </div>
 
-                @if (!$article->page_id)
+                @if (!$article->pageID)
                     <div class="form-group col-xs-6">
                         <label for="page_id">{{ trans('w-cms-laravel::articles.article_page_associated') }}</label>
 
@@ -50,7 +50,7 @@
                             <option value="">{{ trans('w-cms-laravel::articles.choose_page') }}</option>
                             @if (isset($master_pages))
                                 @foreach ($master_pages as $page)
-                                    <option value="{{ $page->ID }}" @if (isset($article->page_id) && $article->page_id == $page->ID) selected="selected" @endif>{{ $page->name }}</option>
+                                    <option value="{{ $page->ID }}" @if (isset($article->pageID) && $article->pageID == $page->ID) selected="selected" @endif>{{ $page->name }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -59,9 +59,9 @@
                 @else
                     <div class="form-group col-xs-6">
                         <br/>
-                        <a href="{{ route('back_pages_edit', array('id' => $article->page_id)) }}">{{ trans('w-cms-laravel::articles.article_go_to_page_associated') }}</a>
+                        <a href="{{ route('back_pages_edit', array('id' => $article->pageID)) }}">{{ trans('w-cms-laravel::articles.article_go_to_page_associated') }}</a>
 
-                        <input type="hidden" name="page_id" value="{{ $article->page_id }}" />
+                        <input type="hidden" name="page_id" value="{{ $article->pageID }}" />
                         <input type="hidden" name="create_associated_page" value="0" />
                     </div>
                 @endif
@@ -91,7 +91,7 @@
 
             <div class="form-group">
                 <label for="text">{{ trans('w-cms-laravel::articles.publication_date') }}</label>
-                <input autocomplete="off" type="text" class="form-control" id="publication_date" name="publication_date" placeholder="{{ trans('w-cms-laravel::articles.publication_date') }}" value="{{ date('d/m/Y H:i', strtotime($article->publication_date)) }}" />
+                <input autocomplete="off" type="text" class="form-control" id="publication_date" name="publication_date" placeholder="{{ trans('w-cms-laravel::articles.publication_date') }}" value="{{ date('d/m/Y H:i', strtotime($article->publicationDate)) }}" />
             </div>
 
             <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />

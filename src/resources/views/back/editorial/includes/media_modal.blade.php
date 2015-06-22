@@ -12,8 +12,8 @@
                 <ul style="overflow: hidden; display: block; padding-left: 10px">
                     @foreach ($medias as $media)
                     <li style="display: inline-block; padding-right: 20px; vertical-align: middle; text-align: center">
-                        <a href="#" class="thumbnail popup-media-id" data-id="{{ $media->ID }}" data-name="{{ $media->name }}" data-src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->file_name) }}">
-                            <img src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->file_name) }}" width="175" alt="{{ $media->name }}" />
+                        <a href="#" class="thumbnail popup-media-id" data-id="{{ $media->ID }}" data-name="{{ $media->name }}" data-src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->fileName) }}">
+                            <img src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->fileName) }}" width="175" alt="{{ $media->name }}" />
                             <span class="media-name" style="font-weight: bold;">{{ $media->name }}</span>
                         </a>
                     </li>

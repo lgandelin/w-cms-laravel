@@ -70,6 +70,8 @@ $(document).ready(function() {
                 'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
                 'is_ghost': $('#block-infos-modal input[name="block_is_ghost"]:checked').val(),
                 'area_id': $(this).attr('data-area-id'),
+                'order': 999,
+                'display': 1,
                 '_token': $('input[name="_token"]').val()
             };
 
@@ -87,7 +89,7 @@ $(document).ready(function() {
                         button.val('Submit');
 
                         //Create block in "Structure" tab
-                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + ' align-' + data.block.alignment + '" data-display="1" data-width="' + data.block.width + '"><div class="block_color"><span class="title"><span class="block-name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-cog"></span><span data-id="' + data.block.ID + '" class="block-go-to-content glyphicon glyphicon-pencil"></span></span></div></div>';
+                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + ' align-' + data.block.alignment + '" data-display="1" data-width="' + data.block.width + '"><div class="block_color"><span class="title"><span class="block-name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span style="display: none" data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-cog"></span><span data-id="' + data.block.ID + '" class="block-go-to-content glyphicon glyphicon-pencil"></span></span></div></div>';
                         $('#structure .area[data-id="' + input_data.area_id + '"] .area_color').append(block_content);
                         init_block_sortable();
 
@@ -102,10 +104,10 @@ $(document).ready(function() {
 
                         $('#content .area[data-id="' + input_data.area_id + '"] > .content').append(block_content);
 
-                        if (input_data.type == 'html') {
-                            $('#content .block[data-id="' + data.block.ID + '"] .content textarea[name="html"]').attr('id', 'editor' + data.block.ID).addClass('ckeditor');
-                            CKEDITOR.replace('editor' + data.block.ID);
-                        }
+                        $('#content .block[data-id="' + data.block.ID + '"] .content textarea').each(function(index, value) {
+                            $(this).attr('id', 'editor' + data.block.ID + '-' + index).addClass('ckeditor');
+                            CKEDITOR.replace('editor' + data.block.ID + '-' + index);
+                        });
 
                         $('#block-infos-modal').modal('hide');
                     } else {

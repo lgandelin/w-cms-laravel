@@ -8,7 +8,6 @@ use CMS\Interactors\Articles\GetArticlesInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Langs\GetLangInteractor;
 use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
-use CMS\Interactors\Medias\GetMediaInteractor;
 use CMS\Interactors\Medias\GetMediasInteractor;
 use CMS\Interactors\Menus\GetMenusInteractor;
 use CMS\Interactors\Pages\CreatePageFromMasterInteractor;
@@ -18,8 +17,7 @@ use CMS\Interactors\Pages\DuplicatePageInteractor;
 use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Interactors\Pages\GetPagesInteractor;
 use CMS\Interactors\Pages\UpdatePageInteractor;
-use CMS\Structures\Blocks\MediaBlockStructure;
-use CMS\Structures\PageStructure;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class PageController extends AdminController
@@ -42,7 +40,7 @@ class PageController extends AdminController
 	public function store()
 	{
         $lang = (new GetLangInteractor())->getLangByID($this->getLangID(), true);
-        $pageStructure = new PageStructure([
+        $pageStructure = new DataStructure([
 		    'name' => \Input::get('name'),
 		    'uri' => $lang->prefix . \Input::get('uri'),
 		    'lang_id' => $this->getLangID(),
@@ -50,7 +48,7 @@ class PageController extends AdminController
             'master_page_id' => \Input::get('master_page_id'),
             'is_master' => \Input::get('is_master')
 		]);
-		
+
 		try {
             if ($pageStructure->master_page_id)
                 $pageID = (new CreatePageFromMasterInteractor())->run($pageStructure);
@@ -101,7 +99,7 @@ class PageController extends AdminController
     public function update_infos()
     {
         $pageID = \Input::get('ID');
-        $pageStructure = new PageStructure([
+        $pageStructure = new DataStructure([
             'name' => \Input::get('name'),
             'identifier' => \Input::get('identifier'),
             'is_master' => \Input::get('is_master'),
@@ -118,7 +116,7 @@ class PageController extends AdminController
     public function update_seo()
     {
         $pageID = \Input::get('ID');
-        $pageStructure = new PageStructure([
+        $pageStructure = new DataStructure([
             'uri' => \Input::get('uri'),
             'meta_title' => \Input::get('meta_title'),
             'meta_description' => \Input::get('meta_description'),

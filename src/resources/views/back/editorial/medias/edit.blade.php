@@ -67,7 +67,7 @@
                         <div class="form-group media-format" data-media-format-id="{{ $media_format->ID }}" data-width="{{ $media_format->width }}" data-height="{{ $media_format->height }}">
                             <label for="">{{ $media_format->name }} ({{ $media_format->width }} x {{ $media_format->height }})</label>
                             <div class="media-format-image">
-                                <img src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media_format->width . '_' . $media_format->height . '_' . $media->file_name) }}?date={{ time() }}" />
+                                <img src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media_format->width . '_' . $media_format->height . '_' . $media->fileName) }}?date={{ time() }}" />
                             </div>
 
                             <div style="margin-top: 20px; margin-bottom: 50px">
@@ -85,7 +85,7 @@
                     <div class="form-group">
                         <label for="">{{ trans('w-cms-laravel::medias.thumbnail') }}</label>
                         <div class="media-thumbnail">
-                            <img src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->file_name) }}" />
+                            <img src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->fileName) }}" />
                         </div>
                         <span class="btn  btn-primary btn-file">
                             {{ trans('w-cms-laravel::generic.browse') }} <input type="file" name="image">
@@ -94,7 +94,7 @@
 
                     <div class="form-group">
                         <label for="">{{ trans('w-cms-laravel::medias.file_name') }}</label>
-                        <input autocomplete="off" type="text" class="form-control" id="file_name" name="file_name" placeholder="{{ trans('w-cms-laravel::medias.file_name') }}" value="{{ $media->file_name }}" />
+                        <input autocomplete="off" type="text" class="form-control" id="file_name" name="file_name" placeholder="{{ trans('w-cms-laravel::medias.file_name') }}" value="{{ $media->fileName }}" />
                     </div>
 
                 </div>
@@ -113,7 +113,7 @@
 
                         <div class="modal-body">
                             <div class="cropper-container">
-                                <img class="media-image-to-crop" src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->file_name) }}?date={{ time() }}" />
+                                <img class="media-image-to-crop" src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->fileName) }}?date={{ time() }}" />
                             </div>
                             <span>Largeur :</span> <input id="dataWidth" autocomplete="off" style="border:none; width: 50px" /> px
                             <span>Hauteur :</span> <input id="dataHeight" autocomplete="off" style="border:none; width: 50px" /> px

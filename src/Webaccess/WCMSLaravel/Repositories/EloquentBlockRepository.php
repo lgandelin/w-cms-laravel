@@ -99,11 +99,10 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->is_master = $block->getIsMaster();
         $blockModel->is_ghost = $block->getIsGhost();
 
-        $method = \App::make('block_type')->getUpdateContentMethod($blockModel->type);
-        if ($method) {
-            $arguments = [$blockModel, $block];
-            call_user_func_array($method, $arguments);
-        }
+        $className = \App::make('block_type')->getBlockType($blockModel->type)->model_class;
+        $model = new $className;
+
+        $model->updateContent($blockModel, $block);
 
         return $blockModel->save();
     }
@@ -127,28 +126,27 @@ class EloquentBlockRepository implements BlockRepositoryInterface
 
     private static function createBlockFromModel(BlockModel $blockModel)
     {
-        $method = \App::make('block_type')->getEntityFromModelMethod($blockModel->type);
-        if ($method) {
-            $arguments = [$blockModel];
-            $block = call_user_func_array($method, $arguments);
+        $className = \App::make('block_type')->getBlockType($blockModel->type)->model_class;
+        $model = new $className;
 
-            $block->setID($blockModel->id);
-            $block->setName($blockModel->name);
-            $block->setWidth($blockModel->width);
-            $block->setHeight($blockModel->height);
-            $block->setClass($blockModel->class);
-            $block->setAlignment($blockModel->alignment);
-            $block->setOrder($blockModel->order);
-            $block->setType($blockModel->type);
-            $block->setAreaID($blockModel->area_id);
-            $block->setDisplay($blockModel->display);
-            $block->setIsGlobal($blockModel->is_global);
-            $block->setMasterBlockID($blockModel->master_block_id);
-            $block->setIsMaster($blockModel->is_master);
-            $block->setIsGhost($blockModel->is_ghost);
+        $block = $model->getEntity($blockModel);
 
-            return $block;
-        }
+        $block->setID($blockModel->id);
+        $block->setName($blockModel->name);
+        $block->setWidth($blockModel->width);
+        $block->setHeight($blockModel->height);
+        $block->setClass($blockModel->class);
+        $block->setAlignment($blockModel->alignment);
+        $block->setOrder($blockModel->order);
+        $block->setType($blockModel->type);
+        $block->setAreaID($blockModel->area_id);
+        $block->setDisplay($blockModel->display);
+        $block->setIsGlobal($blockModel->is_global);
+        $block->setMasterBlockID($blockModel->master_block_id);
+        $block->setIsMaster($blockModel->is_master);
+        $block->setIsGhost($blockModel->is_ghost);
+
+        return $block;
 
         return false;
     }

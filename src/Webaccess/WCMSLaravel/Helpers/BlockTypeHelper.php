@@ -2,6 +2,9 @@
 
 namespace Webaccess\WCMSLaravel\Helpers;
 
+use CMS\Entities\Block;
+use Webaccess\WCMSLaravel\Models\Block as BlockModel;
+
 class BlockTypeHelper
 {
     private $blockTypes;
@@ -43,30 +46,16 @@ class BlockTypeHelper
         return null;
     }
 
-    public function getUpdateContentMethod($code) {
+    public function getUpdateContentMethod($code, BlockModel $blockModel, Block $block) {
         if ($blockType = $this->getBlockType($code))
-            return $blockType->getUpdateContentMethod;
+            return $blockType->getUpdateContentMethod($blockModel, $block);
 
         return null;
     }
 
-    public function getBlockStructureForUpdateMethod($code) {
+    public function getEntityFromModelMethod($code, BlockModel $blockModel) {
         if ($blockType = $this->getBlockType($code))
-            return $blockType->getBlockStructureForUpdateMethod;
-
-        return null;
-    }
-
-    public function getEntityFromModelMethod($code) {
-        if ($blockType = $this->getBlockType($code))
-            return $blockType->getEntityFromModelMethod;
-
-        return null;
-    }
-
-    public function getBlockStructureMethod($code) {
-        if ($blockType = $this->getBlockType($code))
-            return $blockType->getBlockStructureMethod;
+            return $blockType->getEntityFromModelMethod($blockModel);
 
         return null;
     }

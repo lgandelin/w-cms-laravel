@@ -37,11 +37,11 @@
 
         @if (isset($page->areas))
         @foreach ($page->areas as $area)
-        <div class="area @if ($area->master_area_id) child-area @endif" data-id="{{ $area->ID }}">
+        <div class="area @if ($area->masterAreaID) child-area @endif" data-id="{{ $area->ID }}">
             <span class="title">
                 <span class="area_name">{{ $area->name }}</span>
 
-                @if ($area->master_area_id)
+                @if ($area->masterAreaID)
                     <span class="glyphicon glyphicon-exclamation-sign disabled"></span>
                 @else
                     <span class="glyphicon glyphicon-chevron-up opening-status"></span>
@@ -50,10 +50,10 @@
 
             <div class="content">
                 @foreach ($area->blocks as $block)
-                <div class="block @if ($block->master_block_id) child-block @endif" data-id="{{ $block->ID }}" data-type="{{ $block->type }}">
+                <div class="block @if ($block->masterBlockID) child-block @endif" data-id="{{ $block->ID }}" data-type="{{ $block->type }}">
                     <span class="title">
                         <span class="block_name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span>
-                        @if ($block->master_block_id)
+                        @if ($block->masterBlockID)
                             <span class="glyphicon glyphicon-exclamation-sign disabled"></span>
                         @else
                             <span class="glyphicon glyphicon-chevron-down opening-status"></span>
@@ -84,3 +84,4 @@
 <!-- CONTENT -->
 
 @include ('w-cms-laravel::back.editorial.includes.media_modal')
+@include ('w-cms-laravel::back.editorial.includes.new_media_modal')

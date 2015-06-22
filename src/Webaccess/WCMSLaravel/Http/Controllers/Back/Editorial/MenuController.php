@@ -10,7 +10,7 @@ use CMS\Interactors\Menus\GetMenuInteractor;
 use CMS\Interactors\Menus\GetMenusInteractor;
 use CMS\Interactors\Menus\UpdateMenuInteractor;
 use CMS\Interactors\Pages\GetPagesInteractor;
-use CMS\Structures\MenuStructure;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class MenuController extends AdminController
@@ -30,7 +30,7 @@ class MenuController extends AdminController
 
     public function store()
     {
-        $menuStructure = new MenuStructure([
+        $menuStructure = new DataStructure([
             'identifier' => \Input::get('identifier'),
             'name' => \Input::get('name'),
             'lang_id' => $this->getLangID()
@@ -66,7 +66,7 @@ class MenuController extends AdminController
     public function update()
     {
         $menuID = \Input::get('ID');
-        $menuStructure = new MenuStructure([
+        $menuStructure = new DataStructure([
             'name' => \Input::get('name'),
             'identifier' => \Input::get('identifier'),
         ]);

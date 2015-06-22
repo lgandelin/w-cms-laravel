@@ -128,6 +128,7 @@
             var route_menu_items_delete = "{{ route('back_menu_items_delete') }}";
 
             var route_media_upload = "{{ route('back_medias_upload') }}";
+            var route_media_create_and_upload = "{{ route('back_medias_create_and_upload') }}";
             var route_media_crop = "{{ route('back_medias_crop') }}";
         </script>
 

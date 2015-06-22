@@ -9,7 +9,7 @@ use CMS\Interactors\Medias\DeleteMediaInteractor;
 use CMS\Interactors\Medias\GetMediaInteractor;
 use CMS\Interactors\Medias\GetMediasInteractor;
 use CMS\Interactors\Medias\UpdateMediaInteractor;
-use CMS\Structures\MediaStructure;
+use CMS\DataStructure;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use Webaccess\WCMSLaravel\Facades\Shortcut;
@@ -32,7 +32,7 @@ class MediaController extends AdminController
 
     public function store()
     {
-        $mediaStructure = new MediaStructure([
+        $mediaStructure = new DataStructure([
             'name' => \Input::get('name'),
             'alt' => \Input::get('alt'),
             'title' => \Input::get('title'),
@@ -77,9 +77,9 @@ class MediaController extends AdminController
 
         $oldMedia = (new GetMediaInteractor())->getMediaByID($mediaID, true);
 
-        $mediaStructure = new MediaStructure([
+        $mediaStructure = new DataStructure([
             'name' => \Input::get('name'),
-            'file_name' => $fileName,
+            'fileName' => $fileName,
             'alt' => \Input::get('alt'),
             'title' => \Input::get('title'),
         ]);
@@ -88,13 +88,13 @@ class MediaController extends AdminController
             (new UpdateMediaInteractor())->run($mediaID, $mediaStructure);
 
             //Rename file
-            if ($fileName != $oldMedia->file_name) {
-                File::move($this->getMediaFolder($mediaID) . $oldMedia->file_name, $this->getMediaFolder($mediaID) . $fileName);
+            if ($fileName != $oldMedia->fileName) {
+                File::move($this->getMediaFolder($mediaID) . $oldMedia->fileName, $this->getMediaFolder($mediaID) . $fileName);
 
                 $mediaFormats = (new GetMediaFormatsInteractor())->getAll(true);
                 if (is_array($mediaFormats) && sizeof($mediaFormats) > 0) {
                     foreach ($mediaFormats as $mediaFormat) {
-                        File::move($this->getMediaFolder($mediaID) . $mediaFormat->width . '_' . $mediaFormat->height . '_' . $oldMedia->file_name, $this->getMediaFolder($mediaID) . $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName);
+                        File::move($this->getMediaFolder($mediaID) . $mediaFormat->width . '_' . $mediaFormat->height . '_' . $oldMedia->fileName, $this->getMediaFolder($mediaID) . $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName);
                     }
                 }
             }
@@ -126,45 +126,18 @@ class MediaController extends AdminController
         $mediaID = \Input::get('ID');
         $fileName = \Input::file('image')->getClientOriginalName();
 
-        $mediaStructure = new MediaStructure([
-            'file_name' => $fileName,
+        $mediaStructure = new DataStructure([
+            'fileName' => $fileName,
         ]);
-
-        $mediaFormatsImages = array();
 
         try {
             (new UpdateMediaInteractor())->run($mediaID, $mediaStructure);
-
-            //Upload new image
-            if (\Input::file('image')) {
-                array_map('unlink', glob($this->getMediaFolder($mediaID) . '*'));
-                \Input::file('image')->move($this->getMediaFolder($mediaID), $fileName);
-
-                //Upload image foreach media format
-                $mediaFormats = (new GetMediaFormatsInteractor())->getAll(true);
-                if (is_array($mediaFormats) && sizeof($mediaFormats) > 0) {
-                    foreach ($mediaFormats as $mediaFormat) {
-
-                        $manager = new ImageManager();
-                        $image = $manager->make($this->getMediaFolder($mediaID) . $fileName);
-
-                        if ($image->width() >= $mediaFormat->width) {
-                            $image->resize($mediaFormat->width, $mediaFormat->height);
-                        }
-
-                        $newFileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName;
-                        $image->save($this->getMediaFolder($mediaID) . $newFileName);
-
-
-                        $mediaFormatsImages[]= array('media_format_id' => $mediaFormat->ID, 'image' => asset(Shortcut::get_uploads_folder() . $mediaID . '/' . $newFileName));
-                    }
-                }
-            }
+            $mediaFormatsImages = $this->uploadImage($mediaID, $fileName);
 
             return \Response::json(
                 array(
                     'image' => asset(Shortcut::get_uploads_folder() . $mediaID . '/' . $fileName),
-                    'file_name' => $fileName,
+                    'fileName' => $fileName,
                     'media_format_images' => $mediaFormatsImages
                 )
             );
@@ -172,9 +145,39 @@ class MediaController extends AdminController
             \Session::flash('error', $e->getMessage());
             return \Response::json(
                 array(
-                    'file_name' => $e->getMessage(),
+                    'fileName' => $e->getMessage(),
                 )
             );
+        }
+    }
+
+    public function create_and_upload()
+    {
+        $fileName = \Input::file('image')->getClientOriginalName();
+
+        $mediaStructure = new DataStructure([
+            'name' => \Input::get('name'),
+            'alt' => \Input::get('alt'),
+            'title' => \Input::get('title'),
+            'fileName' => $fileName,
+        ]);
+
+        try {
+            $mediaID = (new CreateMediaInteractor())->run($mediaStructure);
+            $this->uploadImage($mediaID, $fileName);
+
+            return \Response::json(
+                array(
+                    'image' => asset(Shortcut::get_uploads_folder() . $mediaID . '/' . $fileName),
+                    'fileName' => $fileName,
+                    'media_id' => $mediaID
+                )
+            );
+        } catch (\Exception $e) {
+            return view('w-cms-laravel::back.editorial.medias.create', [
+                'error' => $e->getMessage(),
+                'media' => $mediaStructure
+            ]);
         }
     }
 
@@ -190,7 +193,7 @@ class MediaController extends AdminController
         $media = (new GetMediaInteractor())->getMediaByID($mediaID, true);
         $mediaFormat = (new GetMediaFormatInteractor())->getMediaFormatByID($mediaFormatID, true);
 
-        $fileName = $media->file_name;
+        $fileName = $media->fileName;
         $newFileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName;
 
         //Delete old image
@@ -204,11 +207,43 @@ class MediaController extends AdminController
             ->resize($mediaFormat->width, $mediaFormat->height)
             ->save($this->getMediaFolder($mediaID) . $newFileName);
 
-        return \Response::json(array('image' => asset(Shortcut::get_uploads_folder() . $mediaID . '/' . $newFileName), 'file_name' => $newFileName));
+        return \Response::json(array('image' => asset(Shortcut::get_uploads_folder() . $mediaID . '/' . $newFileName), 'fileName' => $newFileName));
     }
 
     private function getMediaFolder($mediaID)
     {
         return public_path() . '/' . Shortcut::get_uploads_folder() . $mediaID . '/';
+    }
+
+    private function uploadImage($mediaID, $fileName)
+    {
+        $mediaFormatsImages = [];
+        //Upload new image
+        if (\Input::file('image')) {
+            array_map('unlink', glob($this->getMediaFolder($mediaID) . '*'));
+            \Input::file('image')->move($this->getMediaFolder($mediaID), $fileName);
+
+            //Upload image foreach media format
+            $mediaFormats = (new GetMediaFormatsInteractor())->getAll(true);
+            if (is_array($mediaFormats) && sizeof($mediaFormats) > 0) {
+                foreach ($mediaFormats as $mediaFormat) {
+
+                    $manager = new ImageManager();
+                    $image = $manager->make($this->getMediaFolder($mediaID) . $fileName);
+
+                    if ($image->width() >= $mediaFormat->width) {
+                        $image->resize($mediaFormat->width, $mediaFormat->height);
+                    }
+
+                    $newFileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName;
+                    $image->save($this->getMediaFolder($mediaID) . $newFileName);
+
+
+                    $mediaFormatsImages[] = array('media_format_id' => $mediaFormat->ID, 'image' => asset(Shortcut::get_uploads_folder() . $mediaID . '/' . $newFileName));
+                }
+            }
+        }
+
+        return $mediaFormatsImages;
     }
 }
