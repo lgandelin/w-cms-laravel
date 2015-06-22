@@ -18,6 +18,10 @@
                         </a>
                     </li>
                     @endforeach
+
+                    <li style="display: inline-block; padding-right: 20px; vertical-align: middle; text-align: center">
+                        <a class="btn btn-success new-media" data-toggle="modal" data-target="#new-media-modal">Ajouter un media</a>
+                    </li>
                 </ul>
                 @endif
             </div>
