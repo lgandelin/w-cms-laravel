@@ -3,13 +3,6 @@
 namespace Webaccess\WCMSLaravel\Repositories;
 
 use CMS\Entities\Block;
-use CMS\Entities\Blocks\ArticleBlock;
-use CMS\Entities\Blocks\ArticleListBlock;
-use CMS\Entities\Blocks\HTMLBlock;
-use CMS\Entities\Blocks\GlobalBlock;
-use CMS\Entities\Blocks\MediaBlock;
-use CMS\Entities\Blocks\MenuBlock;
-use CMS\Entities\Blocks\ViewFileBlock;
 use CMS\Repositories\BlockRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
 
@@ -17,8 +10,9 @@ class EloquentBlockRepository implements BlockRepositoryInterface
 {
     public function findByID($blockID)
     {
-        if ($blockModel = BlockModel::find($blockID))
+        if ($blockModel = BlockModel::find($blockID)) {
             return self::createBlockFromModel($blockModel);
+        }
 
         return false;
     }
@@ -104,21 +98,11 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->master_block_id = $block->getMasterBlockID();
         $blockModel->is_master = $block->getIsMaster();
         $blockModel->is_ghost = $block->getIsGhost();
-        if ($blockModel->type == 'html') $blockModel->html = $block->getHTML();
-        if ($blockModel->type == 'menu') $blockModel->menu_id = $block->getMenuID();
-        if ($blockModel->type == 'view_file') $blockModel->view_file = $block->getViewFile();
-        if ($blockModel->type == 'article') $blockModel->article_id = $block->getArticleID();
-        if ($blockModel->type == 'article_list') {
-            $blockModel->article_list_category_id = $block->getArticleListCategoryID();
-            $blockModel->article_list_order = $block->getArticleListOrder();
-            $blockModel->article_list_number = $block->getArticleListNumber();
-        }
-        if ($blockModel->type == 'global') $blockModel->block_reference_id = $block->getBlockReferenceID();
-        if ($blockModel->type == 'media') {
-            $blockModel->media_id = $block->getMediaID();
-            $blockModel->media_link = $block->getMediaLink();
-            $blockModel->media_format_id = $block->getMediaFormatID();
-        }
+
+        $className = \App::make('block_type')->getBlockType($blockModel->type)->model_class;
+        $model = new $className;
+
+        $model->updateContent($blockModel, $block);
 
         return $blockModel->save();
     }
@@ -127,6 +111,8 @@ class EloquentBlockRepository implements BlockRepositoryInterface
     {
         $blockModel = BlockModel::find($block->getID());
         $blockModel->type = $block->getType();
+        if ($blockModel->blockable)
+            $blockModel->blockable->delete();
 
         return $blockModel->save();
     }
@@ -138,36 +124,12 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         return $blockModel->delete();
     }
 
-    private static function createBlockFromModel($blockModel)
+    private static function createBlockFromModel(BlockModel $blockModel)
     {
-        if ($blockModel->type == 'html') {
-            $block = new HTMLBlock();
-            $block->setHTML($blockModel->html);
-        } elseif ($blockModel->type == 'menu') {
-            $block = new MenuBlock();
-            $block->setMenuID($blockModel->menu_id);
-        } elseif ($blockModel->type == 'view_file') {
-            $block = new ViewFileBlock();
-            $block->setViewFile($blockModel->view_file);
-        } elseif ($blockModel->type == 'article') {
-            $block = new ArticleBlock();
-            $block->setArticleID($blockModel->article_id);
-        } elseif ($blockModel->type == 'article_list') {
-            $block = new ArticleListBlock();
-            $block->setArticleListCategoryID($blockModel->article_list_category_id);
-            $block->setArticleListOrder($blockModel->article_list_order);
-            $block->setArticleListNumber($blockModel->article_list_number);
-        } elseif ($blockModel->type == 'global') {
-            $block = new GlobalBlock();
-            $block->setBlockReferenceID($blockModel->block_reference_id);
-        } elseif ($blockModel->type == 'media') {
-            $block = new MediaBlock();
-            $block->setMediaID($blockModel->media_id);
-            $block->setMediaLink($blockModel->media_link);
-            $block->setMediaFormatID($blockModel->media_format_id);
-        } else {
-            throw new \Exception('Block type not found');
-        }
+        $className = \App::make('block_type')->getBlockType($blockModel->type)->model_class;
+        $model = new $className;
+
+        $block = $model->getEntity($blockModel);
 
         $block->setID($blockModel->id);
         $block->setName($blockModel->name);
@@ -185,5 +147,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $block->setIsGhost($blockModel->is_ghost);
 
         return $block;
+
+        return false;
     }
 } 

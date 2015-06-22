@@ -2,7 +2,12 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\General;
 
-use CMS\Structures\UserStructure;
+use CMS\Interactors\Users\CreateUserInteractor;
+use CMS\Interactors\Users\DeleteUserInteractor;
+use CMS\Interactors\Users\GetUserInteractor;
+use CMS\Interactors\Users\GetUsersInteractor;
+use CMS\Interactors\Users\UpdateUserInteractor;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class UserController extends AdminController
@@ -10,7 +15,7 @@ class UserController extends AdminController
     public function index()
     {
         return view('w-cms-laravel::back.general.users.index', [
-            'users' => \App::make('GetUsersInteractor')->getAll(true),
+            'users' => (new GetUsersInteractor())->getAll(true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
@@ -22,7 +27,7 @@ class UserController extends AdminController
 
     public function store()
     {
-        $userStructure = new UserStructure([
+        $userStructure = new DataStructure([
             'login' => \Input::get('login'),
             'password' => (\Input::get('password')) ? \Hash::make(\Input::get('password')) : null,
             'last_name' => \Input::get('last_name'),
@@ -31,7 +36,7 @@ class UserController extends AdminController
         ]);
         
         try {
-            $userStructure = \App::make('CreateUserInteractor')->run($userStructure);
+            $userStructure = (new CreateUserInteractor())->run($userStructure);
             return \Redirect::route('back_users_index');
         } catch (\Exception $e) {
             return view('w-cms-laravel::back.general.users.create', [
@@ -45,7 +50,7 @@ class UserController extends AdminController
     {
         try {
             return view('w-cms-laravel::back.general.users.edit', [
-                'user' => \App::make('GetUserInteractor')->getUserByID($userID, true)
+                'user' => (new GetUserInteractor())->getUserByID($userID, true)
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
@@ -56,7 +61,7 @@ class UserController extends AdminController
     public function update()
     {
         $userID = \Input::get('ID');
-        $userStructure = new UserStructure([
+        $userStructure = new DataStructure([
             'login' => \Input::get('login'),
             'password' => (\Input::get('password')) ? \Hash::make(\Input::get('password')) : null,
             'last_name' => \Input::get('last_name'),
@@ -65,7 +70,7 @@ class UserController extends AdminController
         ]);
 
         try {
-            \App::make('UpdateUserInteractor')->run($userID, $userStructure);
+            (new UpdateUserInteractor())->run($userID, $userStructure);
             return \Redirect::route('back_users_index');
         } catch (\Exception $e) {
             return view('w-cms-laravel::back.general.users.edit', [
@@ -78,7 +83,7 @@ class UserController extends AdminController
     public function delete($userID)
     {
         try {
-            \App::make('DeleteUserInteractor')->run($userID);
+            (new DeleteUserInteractor())->run($userID);
             return \Redirect::route('back_users_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());

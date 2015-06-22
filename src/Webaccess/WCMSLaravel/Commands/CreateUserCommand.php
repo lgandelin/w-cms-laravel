@@ -2,11 +2,12 @@
 
 namespace Webaccess\WCMSLaravel\Commands;
 
+use CMS\Interactors\Users\CreateUserInteractor;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-use CMS\Structures\UserStructure;
+use CMS\DataStructure;
 
 class CreateUserCommand extends Command {
 
@@ -44,7 +45,7 @@ class CreateUserCommand extends Command {
 		$login = $this->argument('login');
 		$password = self::getRandomPassword();
 
-		$userStructure = new UserStructure([
+		$userStructure = new DataStructure([
             'login' => $login,
             'password' => \Hash::make($password),
             'last_name' => '',
@@ -52,7 +53,7 @@ class CreateUserCommand extends Command {
             'email' => '',
         ]);
         
-        $userStructure = \App::make('CreateUserInteractor')->run($userStructure);
+        $userStructure = (new CreateUserInteractor())->run($userStructure);
 
         $this->info('User successfullly created with following password : ' . $password);
 	}

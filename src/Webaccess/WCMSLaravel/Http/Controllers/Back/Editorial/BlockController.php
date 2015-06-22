@@ -2,13 +2,12 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Structures\Blocks\ArticleBlockStructure;
-use CMS\Structures\Blocks\ArticleListBlockStructure;
-use CMS\Structures\Blocks\GlobalBlockStructure;
-use CMS\Structures\Blocks\MediaBlockStructure;
-use CMS\Structures\Blocks\MenuBlockStructure;
-use CMS\Structures\Blocks\HTMLBlockStructure;
-use CMS\Structures\Blocks\ViewFileBlockStructure;
+use CMS\Interactors\Blocks\CreateBlockInteractor;
+use CMS\Interactors\Blocks\DeleteBlockInteractor;
+use CMS\Interactors\Blocks\GetBlockInteractor;
+use CMS\Interactors\Blocks\UpdateBlockInteractor;
+use CMS\Interactors\Blocks\UpdateBlockTypeInteractor;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class BlockController extends AdminController
@@ -16,7 +15,7 @@ class BlockController extends AdminController
     public function get_infos($blockID)
     {
         try {
-            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID, true);
+            $block = (new GetBlockInteractor())->getBlockByID($blockID, true);
 
             return json_encode(array('success' => true, 'block' => $block->toArray()));
         } catch (\Exception $e) {
@@ -26,23 +25,14 @@ class BlockController extends AdminController
 
     public function create()
     {
-        $blockStructure = new HTMLBlockStructure([
-            'name' => \Input::get('name'),
-            'width' => \Input::get('width'),
-            'height' => \Input::get('height'),
-            'type' => \Input::get('type'),
-            'class' => \Input::get('class'),
-            'alignment' => \Input::get('alignment'),
-            'order' => 999,
-            'is_master' => \Input::get('is_master'),
-            'is_ghost' => \Input::get('is_ghost'),
-            'area_id' => \Input::get('area_id'),
-            'display' => 1
-        ]);
+        $blockStructure = new DataStructure();
+        foreach (\Input::all() as $key => $value) {
+            $blockStructure->$key = $value;
+        }
 
         try {
-            $blockID = \App::make('CreateBlockInteractor')->run($blockStructure);
-            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID, true);
+            $blockID = (new CreateBlockInteractor())->run($blockStructure);
+            $block = (new GetBlockInteractor())->getBlockByID($blockID, true);
 
             return json_encode(array('success' => true, 'block' => $block->toArray()));
         } catch (\Exception $e) {
@@ -54,48 +44,13 @@ class BlockController extends AdminController
     {
         $blockID = \Input::get('ID');
 
-        if (\Input::exists('menu_id'))
-            $blockStructure = new MenuBlockStructure([
-                'menu_id' => (\Input::get('menu_id')) ? \Input::get('menu_id') : null,
-                'type' => 'menu'
-            ]);
-        elseif (\Input::exists('html'))
-            $blockStructure = new HTMLBlockStructure([
-                'html' => (\Input::get('html')) ? \Input::get('html') : null,
-                'type' => 'html'
-            ]);
-        elseif (\Input::exists('view_file'))
-            $blockStructure = new ViewFileBlockStructure([
-                'view_file' => (\Input::get('view_file')) ? \Input::get('view_file') : null,
-                'type' => 'view_file'
-            ]);
-        elseif (\Input::exists('article_id'))
-            $blockStructure = new ArticleBlockStructure([
-                'article_id' => (\Input::get('article_id')) ? \Input::get('article_id') : null,
-                'type' => 'article'
-            ]);
-        elseif (\Input::exists('article_list_category_id') || \Input::exists('article_list_order') || \Input::exists('article_list_number'))
-            $blockStructure = new ArticleListBlockStructure([
-                'article_list_category_id' => (\Input::get('article_list_category_id')) ? \Input::get('article_list_category_id') : null,
-                'article_list_order' => (\Input::get('article_list_order')) ? \Input::get('article_list_order') : null,
-                'article_list_number' => (\Input::get('article_list_number')) ? \Input::get('article_list_number') : null,
-                'type' => 'article_list'
-            ]);
-        elseif (\Input::exists('block_reference_id'))
-            $blockStructure = new GlobalBlockStructure([
-                'block_reference_id' => (\Input::get('block_reference_id')) ? \Input::get('block_reference_id') : null,
-                'type' => 'global'
-            ]);
-        elseif (\Input::exists('media_id'))
-            $blockStructure = new MediaBlockStructure([
-                'media_id' => (\Input::get('media_id')) ? \Input::get('media_id') : null,
-                'media_link' => (\Input::get('media_link')) ? \Input::get('media_link') : null,
-                'media_format_id' => (\Input::get('media_format_id')) ? \Input::get('media_format_id') : null,
-                'type' => 'media'
-            ]);
+        $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
+        foreach (\Input::all() as $key => $value) {
+            $blockStructure->$key = $value;
+        }
 
         try {
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -105,20 +60,18 @@ class BlockController extends AdminController
     public function update_infos()
     {
         $blockID = \Input::get('ID');
-        $block = \App::make('GetBlockInteractor')->getBlockByID($blockID);
 
-        $blockStructure = $block->getStructure();
-        $blockStructure->name = \Input::get('name');
-        $blockStructure->width = \Input::get('width');
-        $blockStructure->height = \Input::get('height');
-        $blockStructure->type = \Input::get('type');
-        $blockStructure->class = \Input::get('class');
-        $blockStructure->alignment = \Input::get('alignment');
-        $blockStructure->is_master = \Input::get('is_master');
-        $blockStructure->is_ghost = \Input::get('is_ghost');
+        //Update block type if necessary
+        (new UpdateBlockTypeInteractor())->run($blockID, \Input::get('type'));
+
+        //Update block infos
+        $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
+        foreach (\Input::all() as $key => $value) {
+            $blockStructure->$key = $value;
+        }
 
         try {
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -129,12 +82,10 @@ class BlockController extends AdminController
     {
         try {
             $blockID = \Input::get('block_id');
-            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID);
-
-            $blockStructure = $block->getStructure();
+            $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
             $blockStructure->area_id = \Input::get('area_id');
 
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
@@ -142,13 +93,11 @@ class BlockController extends AdminController
         $blocks = json_decode(\Input::get('blocks'));
         for ($i = 0; $i < sizeof($blocks); $i++) {
             $blockID = preg_replace('/b-/', '', $blocks[$i]);
-            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID);
-
-            $blockStructure = $block->getStructure();
+            $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
             $blockStructure->order = $i + 1;
 
             try {
-                \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+                (new UpdateBlockInteractor())->run($blockID, $blockStructure);
             } catch (\Exception $e) {
                 return json_encode(array('success' => false, 'error' => $e->getMessage()));
             }
@@ -161,12 +110,10 @@ class BlockController extends AdminController
     {
         try {
             $blockID = \Input::get('ID');
-            $block = \App::make('GetBlockInteractor')->getBlockByID($blockID);
-
-            $blockStructure = $block->getStructure();
+            $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
             $blockStructure->display = \Input::get('display');
 
-            \App::make('UpdateBlockInteractor')->run($blockID, $blockStructure);
+            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -178,7 +125,7 @@ class BlockController extends AdminController
         $blockID = \Input::get('ID');
 
         try {
-            \App::make('DeleteBlockInteractor')->run($blockID);
+            (new DeleteBlockInteractor())->run($blockID);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));

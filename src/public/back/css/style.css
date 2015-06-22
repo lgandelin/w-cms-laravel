@@ -227,7 +227,7 @@ label {
 }
 /* line 160, ../sass/_pages.scss */
 .pages-interface #structure .area .area-name, .pages-interface #structure .area .block-name {
-  cursor: pointer;
+  cursor: move;
 }
 /* line 166, ../sass/_pages.scss */
 .pages-interface #structure .sortable-placeholder .area_color, .pages-interface #structure .sortable-placeholder .block_color {

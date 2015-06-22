@@ -2,26 +2,18 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Front;
 
+use CMS\Interactors\Pages\GetPageContentInteractor;
 use Illuminate\Routing\Controller;
 use Webaccess\WCMSLaravel\Facades\Shortcut;
 
 class FrontController extends Controller
 {
-    public function __construct()
-    {
-        \View::addNamespace($this->getTheme(), base_path() . '/themes/' . $this->getTheme() . '/views');
-        \Lang::addNamespace($this->getTheme(), base_path() . '/themes/' . $this->getTheme() . '/langs');
-    }
-
     public function index($uri = null)
     {
-        return view($this->getTheme() . '::pages.index', [
-            'page' => \App::make('GetPageContentInteractor')->run(($uri != '/') ? '/' . $uri : '/')
+        $uri = ($uri != '/') ? '/' . $uri : '/';
+
+        return view(Shortcut::get_theme() . '::index', [
+            'page' => (new GetPageContentInteractor())->run($uri, true)
         ]);
     }
-
-    protected function getTheme()
-    {
-        return Shortcut::get_theme();
-    }
-} 
+}

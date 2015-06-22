@@ -54,6 +54,12 @@
                                 <li><a href="{{ route('back_articles_index') }}"><span class="icon glyphicon glyphicon-font"></span>{{ trans('w-cms-laravel::header.articles') }}</a></li>
                                 <li><a href="{{ route('back_menus_index') }}"><span class="icon glyphicon glyphicon-align-justify"></span>{{ trans('w-cms-laravel::header.menus') }}</a></li>
                                 <li><a href="{{ route('back_medias_index') }}"><span class="icon glyphicon glyphicon-picture"></span>{{ trans('w-cms-laravel::header.medias') }}</a></li>
+
+                                @if ($editorial_menu_items)
+                                    @foreach ($editorial_menu_items as $menu_item)
+                                        <li><a href="{{ route($menu_item['route_name']) }}"><span class="icon glyphicon {{ $menu_item['class_name'] }}"></span>{{ $menu_item['label'] }}</a></li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </li>
                         <!-- EDITORIAL -->
@@ -122,6 +128,7 @@
             var route_menu_items_delete = "{{ route('back_menu_items_delete') }}";
 
             var route_media_upload = "{{ route('back_medias_upload') }}";
+            var route_media_create_and_upload = "{{ route('back_medias_create_and_upload') }}";
             var route_media_crop = "{{ route('back_medias_crop') }}";
         </script>
 

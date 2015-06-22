@@ -2,14 +2,18 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Structures\MenuItemStructure;
+use CMS\Interactors\MenuItems\CreateMenuItemInteractor;
+use CMS\Interactors\MenuItems\DeleteMenuItemInteractor;
+use CMS\Interactors\MenuItems\GetMenuItemInteractor;
+use CMS\Interactors\MenuItems\UpdateMenuItemInteractor;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class MenuItemController extends AdminController
 {
     public function create()
     {
-        $menuItemStructure = new MenuItemStructure([
+        $menuItemStructure = new DataStructure([
             'menu_id' => \Input::get('menuID'),
             'label' => \Input::get('label'),
             'order' => 999,
@@ -20,8 +24,8 @@ class MenuItemController extends AdminController
         ]);
 
         try {
-            $menuItemID = \App::make('CreateMenuItemInteractor')->run($menuItemStructure);
-            $menuItem = \App::make('GetMenuItemInteractor')->getMenuItemByID($menuItemID, true);
+            $menuItemID = (new CreateMenuItemInteractor())->run($menuItemStructure);
+            $menuItem = (new GetMenuItemInteractor())->getMenuItemByID($menuItemID, true);
 
             return json_encode(array('success' => true, 'menu_item' => $menuItem->toArray()));
         } catch (\Exception $e) {
@@ -32,7 +36,7 @@ class MenuItemController extends AdminController
     public function get_infos($menuItemID)
     {
         try {
-            $menuItem = \App::make('GetMenuItemInteractor')->getMenuItemByID($menuItemID, true);
+            $menuItem = (new GetMenuItemInteractor())->getMenuItemByID($menuItemID, true);
             return json_encode(array('success' => true, 'menu_item' => $menuItem->toArray()));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -42,7 +46,7 @@ class MenuItemController extends AdminController
     public function update_infos()
     {
         $menuItemID = \Input::get('ID');
-        $menuItemStructure = new MenuItemStructure([
+        $menuItemStructure = new DataStructure([
             'label' => \Input::get('label'),
             'page_id' => \Input::get('pageID'),
             'class' => \Input::get('class'),
@@ -50,7 +54,7 @@ class MenuItemController extends AdminController
         ]);
 
         try {
-            \App::make('UpdateMenuItemInteractor')->run($menuItemID, $menuItemStructure);
+            (new UpdateMenuItemInteractor())->run($menuItemID, $menuItemStructure);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -67,7 +71,7 @@ class MenuItemController extends AdminController
             ]);
 
             try {
-                \App::make('UpdateMenuItemInteractor')->run($menuItemID, $menuItemStructure);
+                (new UpdateMenuItemInteractor())->run($menuItemID, $menuItemStructure);
             } catch (\Exception $e) {
                 return json_encode(array('success' => false, 'error' => $e->getMessage()));
             }
@@ -80,11 +84,11 @@ class MenuItemController extends AdminController
     {
         try {
             $menuItemID = \Input::get('ID');
-            $menuItemStructure = new MenuItemStructure([
+            $menuItemStructure = new DataStructure([
                 'display'=> \Input::get('display')
             ]);
 
-            \App::make('UpdateMenuItemInteractor')->run($menuItemID, $menuItemStructure);
+            (new UpdateMenuItemInteractor())->run($menuItemID, $menuItemStructure);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -96,7 +100,7 @@ class MenuItemController extends AdminController
         $menuItemID = \Input::get('ID');
 
         try {
-            \App::make('DeleteMenuItemInteractor')->run($menuItemID);
+            (new DeleteMenuItemInteractor())->run($menuItemID);
             return json_encode(array('success' => true));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));

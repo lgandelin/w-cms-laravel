@@ -70,6 +70,8 @@ $(document).ready(function() {
                 'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
                 'is_ghost': $('#block-infos-modal input[name="block_is_ghost"]:checked').val(),
                 'area_id': $(this).attr('data-area-id'),
+                'order': 999,
+                'display': 1,
                 '_token': $('input[name="_token"]').val()
             };
 
@@ -87,31 +89,25 @@ $(document).ready(function() {
                         button.val('Submit');
 
                         //Create block in "Structure" tab
-                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + ' align-' + data.block.alignment + '" data-display="1" data-width="' + data.block.width + '"><div class="block_color"><span class="title"><span class="block-name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-cog"></span><span data-id="' + data.block.ID + '" class="block-go-to-content glyphicon glyphicon-pencil"></span></span></div></div>';
+                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + ' align-' + data.block.alignment + '" data-display="1" data-width="' + data.block.width + '"><div class="block_color"><span class="title"><span class="block-name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span style="display: none" data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-cog"></span><span data-id="' + data.block.ID + '" class="block-go-to-content glyphicon glyphicon-pencil"></span></span></div></div>';
                         $('#structure .area[data-id="' + input_data.area_id + '"] .area_color').append(block_content);
                         init_block_sortable();
 
                         //Create block in "Content" tab
                         var block_content = '<div class="block" data-id="' + data.block.ID + '" data-type="' + data.block.type + '"><span class="title"><span class="block_name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span></span><div class="content">';
-                    
-                        if (data.block.type == 'html')
-                            block_content += '<textarea class="ckeditor" id="editor' + data.block.ID + '" name="editor' + data.block.ID + '"></textarea>';
-                        else if (data.block.type == 'menu')
-                            block_content += $('#select_menu_template').html();
-                        else if (data.block.type == 'view_file')
-                            block_content += $('#view_file_template').html();
-                        else if (data.block.type == 'article')
-                            block_content += $('#select_article_template').html();
-                        else if (data.block.type == 'article_list')
-                            block_content += $('#article_category_template').html();
-                        else if (data.block.type == 'media')
-                            block_content += $('#select_media_template').html();
 
-                        block_content += '<div class="submit_wrapper"><input data-id="' + data.block.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + data.block.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
+                        var block_template = $('#block-template-' + data.block.type).html();
+                        if (block_template) {
+                            block_content += block_template;
+                            block_content += '<div class="submit_wrapper"><input data-id="' + data.block.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + data.block.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
+                        }
+
                         $('#content .area[data-id="' + input_data.area_id + '"] > .content').append(block_content);
-                        
-                        if (data.block.type == 'html')
-                            CKEDITOR.replace( 'editor' + data.block.ID);
+
+                        $('#content .block[data-id="' + data.block.ID + '"] .content textarea').each(function(index, value) {
+                            $(this).attr('id', 'editor' + data.block.ID + '-' + index).addClass('ckeditor');
+                            CKEDITOR.replace('editor' + data.block.ID + '-' + index);
+                        });
 
                         $('#block-infos-modal').modal('hide');
                     } else {
@@ -163,32 +159,25 @@ $(document).ready(function() {
                         if ($('#content .block[data-id="' + block_id + '"]').attr('data-type') != input_data.type) {
                             $('#content .block[data-id="' + block_id + '"]').attr('data-type', input_data.type.toLowerCase());
 
+                            var block_template = $('#block-template-' + input_data.type).html();
                             var block_content = '';
-                            if (input_data.type == 'html')
-                                block_content += '<textarea class="ckeditor" id="editor' + input_data.ID + '" name="editor' + input_data.ID + '"></textarea>';
-                            else if (input_data.type == 'menu')
-                                block_content += $('#select_menu_template').html();
-                            else if (input_data.type == 'view_file')
-                                block_content += $('#view_file_template').html();
-                            else if (input_data.type == 'article')
-                                block_content += $('#select_article_template').html();
-                            else if (input_data.type == 'article_list')
-                                block_content += $('#article_category_template').html();
-                            else if (input_data.type == 'media')
-                                block_content += $('#select_media_template').html();
 
-                            block_content += '<div class="submit_wrapper"><input data-id="' + input_data.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + input_data.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
-                            
+                            if (block_template) {
+                                block_content = block_template;
+                                block_content += '<div class="submit_wrapper"><input data-id="' + input_data.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + input_data.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div>';
+                            }
+
                             $('#content .block[data-id="' + block_id + '"] .content').html(block_content);
 
-                            if (input_data.type == 'html')
-                                CKEDITOR.replace( 'editor' + input_data.ID);
+                            if (input_data.type == 'html') {
+                                $('#content .block[data-id="' + block_id + '"] .content textarea[name="html"]').attr('id', 'editor' + block_id).addClass('ckeditor');
+                                CKEDITOR.replace('editor' + block_id);
+                            }
                         }
                         
                         $('#block-infos-modal').modal('hide');
-
                     } else {
-                        
+
                     }
                 }
             });

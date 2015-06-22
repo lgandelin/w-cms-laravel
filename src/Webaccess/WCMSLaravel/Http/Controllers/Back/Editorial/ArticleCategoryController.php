@@ -2,7 +2,12 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Structures\ArticleCategoryStructure;
+use CMS\Interactors\ArticleCategories\CreateArticleCategoryInteractor;
+use CMS\Interactors\ArticleCategories\DeleteArticleCategoryInteractor;
+use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
+use CMS\Interactors\ArticleCategories\GetArticleCategoryInteractor;
+use CMS\Interactors\ArticleCategories\UpdateArticleCategoryInteractor;
+use CMS\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class ArticleCategoryController extends AdminController
@@ -10,7 +15,7 @@ class ArticleCategoryController extends AdminController
     public function index()
     {
         return view('w-cms-laravel::back.editorial.article_categories.index', [
-            'article_categories' => \App::make('GetArticleCategoriesInteractor')->getAll($this->getLangID(), true),
+            'article_categories' => (new GetArticleCategoriesInteractor())->getAll($this->getLangID(), true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
     }
@@ -22,14 +27,14 @@ class ArticleCategoryController extends AdminController
 
     public function store()
     {
-        $articleCategoryStructure = new ArticleCategoryStructure([
+        $articleCategoryStructure = new DataStructure([
             'name' => \Input::get('name'),
             'description' => \Input::get('description'),
             'lang_id' => $this->getLangID(),
         ]);
 
         try {
-            $articleCategoryID = \App::make('CreateArticleCategoryInteractor')->run($articleCategoryStructure);
+            $articleCategoryID = (new CreateArticleCategoryInteractor())->run($articleCategoryStructure);
             return \Redirect::route('back_article_categories_edit', array('articleID' => $articleCategoryID));
         } catch (\Exception $e) {
             return view('w-cms-laravel::back.editorial.article_categories.create', [
@@ -43,7 +48,7 @@ class ArticleCategoryController extends AdminController
     {
         try {
             return view('w-cms-laravel::back.editorial.article_categories.edit', [
-                'article_category' => \App::make('GetArticleCategoryInteractor')->getArticleCategoryByID($articleCategoryID, true),
+                'article_category' => (new GetArticleCategoryInteractor())->getArticleCategoryByID($articleCategoryID, true),
             ]);
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
@@ -54,13 +59,13 @@ class ArticleCategoryController extends AdminController
     public function update()
     {
         $articleCategoryID = \Input::get('ID');
-        $articleCategoryStructure = new ArticleCategoryStructure([
+        $articleCategoryStructure = new DataStructure([
             'name' => \Input::get('name'),
             'description' => \Input::get('description'),
         ]);
 
         try {
-            \App::make('UpdateArticleCategoryInteractor')->run($articleCategoryID, $articleCategoryStructure);
+            (new UpdateArticleCategoryInteractor())->run($articleCategoryID, $articleCategoryStructure);
             return \Redirect::route('back_article_categories_index');
         } catch (\Exception $e) {
             return view('w-cms-laravel::back.general.article-categories.edit', [
@@ -73,7 +78,7 @@ class ArticleCategoryController extends AdminController
     public function delete($articleCategoryID)
     {
         try {
-            \App::make('DeleteArticleCategoryInteractor')->run($articleCategoryID);
+            (new DeleteArticleCategoryInteractor())->run($articleCategoryID);
             return \Redirect::route('back_article_categories_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
