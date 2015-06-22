@@ -104,10 +104,10 @@ $(document).ready(function() {
 
                         $('#content .area[data-id="' + input_data.area_id + '"] > .content').append(block_content);
 
-                        if (input_data.type == 'html') {
-                            $('#content .block[data-id="' + data.block.ID + '"] .content textarea[name="html"]').attr('id', 'editor' + data.block.ID).addClass('ckeditor');
-                            CKEDITOR.replace('editor' + data.block.ID);
-                        }
+                        $('#content .block[data-id="' + data.block.ID + '"] .content textarea').each(function(index, value) {
+                            $(this).attr('id', 'editor' + data.block.ID + '-' + index).addClass('ckeditor');
+                            CKEDITOR.replace('editor' + data.block.ID + '-' + index);
+                        });
 
                         $('#block-infos-modal').modal('hide');
                     } else {
