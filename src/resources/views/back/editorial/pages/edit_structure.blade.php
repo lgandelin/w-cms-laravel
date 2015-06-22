@@ -12,7 +12,7 @@
                     <span class="area-name">{{ $area->name }}</span> <span class="area_width">[<span class="width_value">{{ $area->width }}</span>]</span>
                     @if (!$area->masterAreaID)
                         <span data-id="{{ $area->ID }}" class="area-delete glyphicon glyphicon-remove"></span>
-                        <span data-id="{{ $area->ID }}" class="area-move glyphicon glyphicon-move"></span>
+                        <span style="display: none" data-id="{{ $area->ID }}" class="area-move glyphicon glyphicon-move"></span>
                         <span data-id="{{ $area->ID }}" class="area-display @if ($area->display == 0) area-hidden @endif glyphicon glyphicon-eye-open"></span>
                         <span data-id="{{ $area->ID }}" class="area-update glyphicon glyphicon-cog"></span>
                         <span data-id="{{ $area->ID }}" class="area-create-block glyphicon glyphicon-plus"></span>
@@ -28,7 +28,7 @@
                             <span class="block-name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span> [<span class="width_value">{{ $block->width }}</span>]
                             @if (!$block->masterBlockID)
                                 <span data-id="{{ $block->ID }}" class="block-delete glyphicon glyphicon-remove"></span>
-                                <span data-id="{{ $block->ID }}" class="block-move glyphicon glyphicon-move"></span>
+                                <span style="display: none" data-id="{{ $block->ID }}" class="block-move glyphicon glyphicon-move"></span>
                                 <span data-id="{{ $block->ID }}" class="block-display @if (!$block->display) block-hidden @endif glyphicon glyphicon-eye-open"></span>
                                 <span data-id="{{ $block->ID }}" class="block-update glyphicon glyphicon-cog"></span>
                                 <span data-id="{{ $block->ID }}" class="block-go-to-content glyphicon glyphicon-pencil"></span>

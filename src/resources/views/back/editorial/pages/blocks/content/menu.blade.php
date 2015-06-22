@@ -4,7 +4,7 @@
         <option value="">{{ trans('w-cms-laravel::pages.choose_menu') }}</option>
         @if (isset($menus))
             @foreach ($menus as $menu)
-                <option value="{{ $menu->ID }}" @if ($block->menu_id == $menu->ID) selected="selected" @endif>{{ $menu->name }}</option>
+                <option value="{{ $menu->ID }}" @if ($block->menuID == $menu->ID) selected="selected" @endif>{{ $menu->name }}</option>
             @endforeach
         @endif
     </select>
