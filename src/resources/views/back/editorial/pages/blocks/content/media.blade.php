@@ -1,7 +1,7 @@
 <div class="form-group">
     <label>{{ trans('w-cms-laravel::blocks.media_block') }}</label>
 
-    @include ('w-cms-laravel::back.editorial.includes.media_field', ['block' => $block])
+    @include ('w-cms-laravel::back.editorial.includes.media_field', ['divID' => 'block-' . $block->ID, 'media' => $block->content->media ])
 </div>
 
 <div class="form-group">
