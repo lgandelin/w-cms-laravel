@@ -79,7 +79,7 @@ $blue: #2A6496;
 	color: $blue;
 }
 
-@import "_pages.scss";
-@import "_menus.scss";
-@import "_medias.scss";
-@import "_blocks.scss";
+@import "pages";
+@import "menus";
+@import "medias";
+@import "blocks";

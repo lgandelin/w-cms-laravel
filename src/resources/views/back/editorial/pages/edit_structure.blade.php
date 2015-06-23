@@ -9,7 +9,8 @@
         <div id="a-{{ $area->ID }}" data-id="{{ $area->ID }}" class="area col-xs-{{ $area->width }}" data-width="{{ $area->width }}" data-display="{{ $area->display }}">
             <div class="area_color @if ($area->masterAreaID) child-area @endif">
                 <span class="title">
-                    <span class="area-name">{{ $area->name }}</span> <span class="area_width">[<span class="width_value">{{ $area->width }}</span>]</span>
+                    <span class="width_value">{{ $area->width }}</span>
+                    <span class="area-name">{{ $area->name }}</span>
                     @if (!$area->masterAreaID)
                         <span data-id="{{ $area->ID }}" class="area-delete glyphicon glyphicon-remove"></span>
                         <span style="display: none" data-id="{{ $area->ID }}" class="area-move glyphicon glyphicon-move"></span>
@@ -25,7 +26,9 @@
                 <div id="b-{{ $block->ID }}" data-id="{{ $block->ID }}" class="block col-xs-{{ $block->width}} align-{{ $block->alignment }}" data-width="{{ $block->width }}" data-display="{{ $block->display }}">
                     <div class="block_color @if ($block->masterBlockID) child-block @endif">
                         <span class="title">
-                            <span class="block-name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span> [<span class="width_value">{{ $block->width }}</span>]
+                            <span class="width_value">{{ $block->width }}</span>
+                            <span class="block-name">{{ $block->name }}</span>
+                            <span class="type">{{ $block->type }}</span>
                             @if (!$block->masterBlockID)
                                 <span data-id="{{ $block->ID }}" class="block-delete glyphicon glyphicon-remove"></span>
                                 <span style="display: none" data-id="{{ $block->ID }}" class="block-move glyphicon glyphicon-move"></span>

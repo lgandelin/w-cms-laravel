@@ -20,7 +20,7 @@
 
 			.block {
 				background: #fdfdfd;
-				padding: 10px;
+				padding: 10px 25px;
 				border: 1px solid #ddd;
 				margin-bottom: 20px;
 
@@ -30,11 +30,10 @@
 
 				.content {
 					display: none;
-				}
-
-				.type {
-					font-weight: normal;
-					text-transform: uppercase;
+                    padding-top: 15px;
+                    border-top: 1px solid #EEE;
+                    background: #FFF none repeat scroll 0% 0%;
+                    margin-top: 20px;
 				}
 			}
 
@@ -91,7 +90,7 @@
 		.area {
 			text-align: center;
 			padding: 10px;
-		
+
 			.area_color {
 				overflow: hidden;
 				min-height: 104px;
@@ -102,7 +101,7 @@
 			.area-delete, .area-update, .area-create-block, .area-move, .area-display {
 				cursor: pointer;
 				float: right;
-				margin: 5px 5px 0 0;
+				margin: 10 5px 0 0;
 			}
 
 			.child-area {
@@ -132,15 +131,10 @@
 					margin: 20px 0;
 				}
 
-				.type {
-					font-weight: normal;
-					text-transform: uppercase;
-				}
-
 				.block-delete, .block-update, .block-move, .block-display, .block-go-to-content {
 					cursor: pointer;
 					float: right;
-					margin: 5px 5px 0 0;
+					margin: 10px 5px 0 0;
 				}
 
 				.child-block {
@@ -160,6 +154,20 @@
 			.area-name, .block-name {
 				cursor: move;
 			}
+
+            .width_value {
+                position: absolute;
+                left: 22px;
+                top: 22px;
+                font-size: 11px;
+                border-radius: 0px;
+                background: #81B4CC;
+                width: 19px;
+                height: 17px;
+                line-height: 17px;
+                color: white;
+                text-align: center;
+            }
 		}
 
 		.sortable-placeholder {
@@ -180,12 +188,21 @@
 		}
 	}
 
+    span.type {
+        font-size: 11px;
+        color: #81B4CC;
+        margin-left: 10px;
+        padding: 2px 5px;
+        background: #eee;
+        border: 1px solid #ddd;
+    }
+
     .align-center {
         display: inline-block;
         float: none;
     }
 
     .align-right {
-        float: right:
+        float: right;
     }
 }

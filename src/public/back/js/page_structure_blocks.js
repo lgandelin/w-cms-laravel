@@ -89,12 +89,12 @@ $(document).ready(function() {
                         button.val('Submit');
 
                         //Create block in "Structure" tab
-                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + ' align-' + data.block.alignment + '" data-display="1" data-width="' + data.block.width + '"><div class="block_color"><span class="title"><span class="block-name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span> [<span class="width_value">' + data.block.width + '</span>]<span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span style="display: none" data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-cog"></span><span data-id="' + data.block.ID + '" class="block-go-to-content glyphicon glyphicon-pencil"></span></span></div></div>';
+                        var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + ' align-' + data.block.alignment + '" data-display="1" data-width="' + data.block.width + '"><div class="block_color"><span class="title"><span class="width_value">' + data.block.width + '</span><span class="block-name">' + data.block.name + '</span> <span class="type">' + data.block.type + '</span><span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span style="display: none" data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-cog"></span><span data-id="' + data.block.ID + '" class="block-go-to-content glyphicon glyphicon-pencil"></span></span></div></div>';
                         $('#structure .area[data-id="' + input_data.area_id + '"] .area_color').append(block_content);
                         init_block_sortable();
 
                         //Create block in "Content" tab
-                        var block_content = '<div class="block" data-id="' + data.block.ID + '" data-type="' + data.block.type + '"><span class="title"><span class="block_name">' + data.block.name + '</span> <span class="type">(' + data.block.type + ')</span></span><div class="content">';
+                        var block_content = '<div class="block" data-id="' + data.block.ID + '" data-type="' + data.block.type + '"><span class="title"><span class="block_name">' + data.block.name + '</span> <span class="type">' + data.block.type + '</span></span><div class="content">';
 
                         var block_template = $('#block-template-' + data.block.type).html();
                         if (block_template) {
@@ -150,14 +150,14 @@ $(document).ready(function() {
                         block.attr('data-width', input_data.width);
                         block.find('.width_value').text(input_data.width);
                         block.find('.block-name').text(input_data.name);
-                        block.find('.type').text('(' + input_data.type.toUpperCase() + ')');
+                        block.find('.type').text(input_data.type);
 
                         //Update block in "Content" tab                            
                         $('#content .block[data-id="' + block_id + '"]').find('.block_name').text(input_data.name);
-                        $('#content .block[data-id="' + block_id + '"]').find('.type').text('(' + input_data.type + ')');
+                        $('#content .block[data-id="' + block_id + '"]').find('.type').text(input_data.type);
 
                         if ($('#content .block[data-id="' + block_id + '"]').attr('data-type') != input_data.type) {
-                            $('#content .block[data-id="' + block_id + '"]').attr('data-type', input_data.type.toLowerCase());
+                            $('#content .block[data-id="' + block_id + '"]').attr('data-type', input_data.type);
 
                             var block_template = $('#block-template-' + input_data.type).html();
                             var block_content = '';
