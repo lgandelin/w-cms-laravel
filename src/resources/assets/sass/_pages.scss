@@ -85,7 +85,9 @@
 
 			min-height: 40px;
 			line-height: 40px;
-		}
+
+            padding-right: 5px;
+        }
 
 		.area {
 			text-align: center;
@@ -96,6 +98,7 @@
 				min-height: 104px;
 				background: #eee;
 				border: 1px solid #ccc;
+                padding-right: 10px;
 			}
 
 			.area-delete, .area-update, .area-create-block, .area-move, .area-display {
@@ -120,7 +123,7 @@
 			}
 
 			.block {
-				padding: 10px;
+				padding: 10px 0 10px 10px;
 
 				.block_color {
 					background: #fdfdfd;

@@ -1,7 +1,10 @@
+var columns = 12;
+
 $(document).ready(function() {
 
     //Drag and drop initialization
     init_block_sortable();
+    init_block_resizable();
 
     //Create block
     $('body').on('click', '.area-create-block', function() {
@@ -22,7 +25,7 @@ $(document).ready(function() {
         var block_id = $(this).attr('data-id');
         var modal = $('#block-infos-modal');
         $(modal).find('.btn-valid').attr('data-id', block_id).attr('data-action', 'update');
-        
+
         var block = $('.block[data-id="' + block_id + '"]');
 
         $.ajax({
@@ -50,7 +53,7 @@ $(document).ready(function() {
 
                     $(modal).modal('show');
                 } else {
-                    
+
                 }
             }
         });
@@ -92,6 +95,7 @@ $(document).ready(function() {
                         var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + ' align-' + data.block.alignment + '" data-display="1" data-width="' + data.block.width + '"><div class="block_color"><span class="title"><span class="width_value">' + data.block.width + '</span><span class="block-name">' + data.block.name + '</span> <span class="type">' + data.block.type + '</span><span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span style="display: none" data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-cog"></span><span data-id="' + data.block.ID + '" class="block-go-to-content glyphicon glyphicon-pencil"></span></span></div></div>';
                         $('#structure .area[data-id="' + input_data.area_id + '"] .area_color').append(block_content);
                         init_block_sortable();
+                        init_block_resizable();
 
                         //Create block in "Content" tab
                         var block_content = '<div class="block" data-id="' + data.block.ID + '" data-type="' + data.block.type + '"><span class="title"><span class="block_name">' + data.block.name + '</span> <span class="type">' + data.block.type + '</span></span><div class="content">';
@@ -111,7 +115,7 @@ $(document).ready(function() {
 
                         $('#block-infos-modal').modal('hide');
                     } else {
-                        
+
                     }
                 }
             });
@@ -174,7 +178,7 @@ $(document).ready(function() {
                                 CKEDITOR.replace('editor' + block_id);
                             }
                         }
-                        
+
                         $('#block-infos-modal').modal('hide');
                     } else {
 
@@ -188,7 +192,7 @@ $(document).ready(function() {
     $('body').on('click', '.block-delete', function() {
         if (confirm('Are you sure that you want to delete this block ?')) {
             var block_id = $(this).attr('data-id');
-            
+
             var data = {
                 'ID': block_id,
                 '_token': $('input[name="_token"]').val()
@@ -256,7 +260,7 @@ $(document).ready(function() {
 
         var block_selector = '#content .block[data-id="' + block_id + '"]';
         $(block_selector).find('.title').trigger('click');
-        
+
         scrollTo(block_selector);
     });
 });
@@ -299,4 +303,36 @@ function scrollTo(selector) {
     $('html, body').animate({
         scrollTop: $(selector).offset().top
     }, 500);
+}
+
+function init_block_resizable() {
+    $('#structure .block').resizable({
+        containment: ".areas-wrapper",
+        handles: "e",
+        autoHide: true,
+        resize: function(e, ui) {
+            var block = ui.element;
+            var parent = block.parent();
+            var width = Math.ceil((block.width() / parent.width()) * columns);
+
+            if (width < 2) width = 2;
+            block.removeClass('col-xs-' + block.attr('data-width')).addClass('col-xs-' + width);
+            block.attr('data-width', width);
+            block.find('.width_value').text(width);
+            block.removeAttr('style');
+        },
+        stop: function(e, ui) {
+            var block = ui.element;
+            var input_data = {
+                'ID': block.attr('data-id'),
+                'width': block.attr('data-width'),
+                '_token': $('input[name="_token"]').val()
+            }
+            $.ajax({
+                type: "POST",
+                url: route_blocks_update_infos,
+                data: input_data,
+            });
+        }
+    });
 }
