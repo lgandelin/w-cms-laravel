@@ -1,1 +1,1 @@
-<textarea name="html" class="ckeditor" id="editor{{ $block->ID }}">{{ $block->html }}</textarea>
+<textarea name="html" @if (isset($block))class="ckeditor"@endif id="editor-@if (isset($block)){{ $block->ID }}@else new @endif">@if (isset($block)){{ $block->html }}@endif</textarea>

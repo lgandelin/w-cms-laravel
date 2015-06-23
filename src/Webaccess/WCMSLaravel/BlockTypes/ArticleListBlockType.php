@@ -8,7 +8,6 @@ class ArticleListBlockType
         $this->code = 'article_list';
         $this->name = trans('w-cms-laravel::blocks.article_list_block');
         $this->content_view = 'w-cms-laravel::back.editorial.pages.blocks.content.article_list';
-        $this->template_view = 'w-cms-laravel::back.editorial.pages.blocks.templates.article_list';
         $this->front_view = 'blocks.standard.article_list';
         $this->model_class = '\Webaccess\WCMSLaravel\Models\Blocks\ArticleListBlock';
         $this->order = 6;
