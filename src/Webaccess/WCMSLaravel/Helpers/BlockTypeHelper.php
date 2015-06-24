@@ -39,27 +39,6 @@ class BlockTypeHelper
         return null;
     }
 
-    public function getTemplateView($code) {
-        if ($blockType = $this->getBlockType($code))
-            return $blockType->template_view;
-
-        return null;
-    }
-
-    public function getUpdateContentMethod($code, BlockModel $blockModel, Block $block) {
-        if ($blockType = $this->getBlockType($code))
-            return $blockType->getUpdateContentMethod($blockModel, $block);
-
-        return null;
-    }
-
-    public function getEntityFromModelMethod($code, BlockModel $blockModel) {
-        if ($blockType = $this->getBlockType($code))
-            return $blockType->getEntityFromModelMethod($blockModel);
-
-        return null;
-    }
-
     public function getBlockTypes()
     {
         usort($this->blockTypes, function ($a, $b) {
