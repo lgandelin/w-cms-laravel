@@ -82,6 +82,7 @@ label {
     .pages-interface #content .area .child-block .title {
       cursor: default; }
   .pages-interface #content .area .opening-status {
+    margin-right: 10px;
     float: right; }
 
 .pages-interface #content .child-area {

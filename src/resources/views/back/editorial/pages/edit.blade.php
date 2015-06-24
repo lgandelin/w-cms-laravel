@@ -49,7 +49,7 @@
                 </div>
 
                 <div style="display: none">
-                    @foreach (BlockType::getAll() as $code => $blockType)
+                    @foreach ($block_types as $blockType)
                         @if ($blockType->content_view)
                             <div id="block-template-{{ $blockType->code }}">
                                 @include($blockType->content_view)

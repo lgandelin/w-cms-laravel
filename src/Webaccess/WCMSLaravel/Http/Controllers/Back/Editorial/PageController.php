@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use CMS\Context;
 use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
 use CMS\Interactors\Articles\GetArticlesInteractor;
@@ -88,7 +89,10 @@ class PageController extends AdminController
             \App::make('BlockTypesVariable')->addVariable('medias', (new GetMediasInteractor())->getAll(true));
             \App::make('BlockTypesVariable')->addVariable('media_formats', (new GetMediaFormatsInteractor())->getAll(true));
 
-		    return view('w-cms-laravel::back.editorial.pages.edit', \App::make('BlockTypesVariable')->getVariables());
+            $params = \App::make('BlockTypesVariable')->getVariables();
+            $params['block_types'] = Context::getRepository('block_type')->findAll();
+
+		    return view('w-cms-laravel::back.editorial.pages.edit', $params);
 
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());

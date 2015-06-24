@@ -28,7 +28,7 @@
                         <span class="title">
                             <span class="width_value">{{ $block->width }}</span>
                             <span class="block-name">{{ $block->name }}</span>
-                            <span class="type">{{ $block->type }}</span>
+                            <span class="type">{{ $block->type->code }}</span>
                             @if (!$block->masterBlockID)
                                 <span data-id="{{ $block->ID }}" class="block-delete glyphicon glyphicon-remove"></span>
                                 <span style="display: none" data-id="{{ $block->ID }}" class="block-move glyphicon glyphicon-move"></span>
@@ -154,7 +154,7 @@
                         <label>{{ trans('w-cms-laravel::pages.block_type') }}</label>
                         <select class="type form-control" autocomplete="off">
                             <option value="">{{ trans('w-cms-laravel::blocks.choose_block_type') }}</option>
-                            @foreach (BlockType::getAll() as $blockType)
+                            @foreach ($block_types as $blockType)
                                 <option value="{{ $blockType->code }}">{{ $blockType->name }}</option>
                             @endforeach
                         </select>

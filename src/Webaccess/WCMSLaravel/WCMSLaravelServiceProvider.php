@@ -6,16 +6,10 @@ use CMS\Context;
 use CMS\Events\Events;
 use Illuminate\Support\ServiceProvider;
 
-use Webaccess\WCMSLaravel\BlockTypes\ArticleBlockType;
-use Webaccess\WCMSLaravel\BlockTypes\ArticleListBlockType;
-use Webaccess\WCMSLaravel\BlockTypes\MediaBlockType;
-use Webaccess\WCMSLaravel\BlockTypes\MenuBlockType;
-use Webaccess\WCMSLaravel\BlockTypes\ViewBlockType;
+use Webaccess\WCMSLaravel\Commands\CreateStandardBlockTypesCommand;
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
 use Webaccess\WCMSLaravel\Helpers\AdminMenu;
-use Webaccess\WCMSLaravel\Helpers\BlockTypeHelper;
-use Webaccess\WCMSLaravel\BlockTypes\HTMLBlockType;
 use Webaccess\WCMSLaravel\Helpers\BlockTypesVariable;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
 use Webaccess\WCMSLaravel\Helpers\Theme;
@@ -30,6 +24,7 @@ use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentBlockRepository;
+use Webaccess\WCMSLaravel\Repositories\EloquentBlockTypeRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentLangRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMediaFormatRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMediaRepository;
@@ -69,14 +64,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
             __DIR__.'/../../public/back' => base_path('/public/vendor/w-cms-laravel/back')
         ], 'back_assets');
 
-        //Add standard block types
-        $this->app->make('block_type')->addBlockType(new HTMLBlockType());
-        $this->app->make('block_type')->addBlockType(new MenuBlockType());
-        $this->app->make('block_type')->addBlockType(new ViewBlockType());
-        $this->app->make('block_type')->addBlockType(new MediaBlockType());
-        $this->app->make('block_type')->addBlockType(new ArticleBlockType());
-        $this->app->make('block_type')->addBlockType(new ArticleListBlockType());
-
         //Load the theme
         Theme::load();
     }
@@ -107,12 +94,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         });
         $loader->alias('Shortcut', 'Webaccess\WCMSLaravel\Facades\Shortcut');
 
-        $this->app->singleton('block_type', function()
-        {
-            return new BlockTypeHelper();
-        });
-        $loader->alias('BlockType', 'Webaccess\WCMSLaravel\Facades\BlockType');
-
         $loader->alias('Form', 'Illuminate\Html\FormFacade');
         $loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
 
@@ -124,8 +105,12 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
             return new CreateUserCommand();
         });
 
+        $this->app->bind('CreateStandardBlockTypesCommand', function() {
+            return new CreateStandardBlockTypesCommand();
+        });
+
         $this->commands(
-            array('CreateUserCommand')
+            array('CreateUserCommand', 'CreateStandardBlockTypesCommand')
         );
 
         $this->app->bind('EventDispatcher', function() {
@@ -147,6 +132,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         Context::addRepository('media', new EloquentMediaRepository());
         Context::addRepository('media_format', new EloquentMediaFormatRepository());
         Context::addRepository('user', new EloquentUserRepository());
+        Context::addRepository('block_type', new EloquentBlockTypeRepository());
 
         Context::addRepository('block_html', new EloquentBlockHTMLRepository());
         Context::addRepository('block_menu', new EloquentBlockMenuRepository());
