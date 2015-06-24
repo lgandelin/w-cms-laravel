@@ -20,7 +20,7 @@ class EloquentBlockMediaRepository
         return $block;
     }
 
-    public function saveBlock(BlockModel $blockModel, Block $block) {
+    public function saveBlock(Block $block, BlockModel $blockModel) {
         $blockable = ($blockModel->blockable) ? $blockModel->blockable : new MediaBlock();
         $blockable->media_id = $block->getMediaID();
         $blockable->media_link = $block->getMediaLink();

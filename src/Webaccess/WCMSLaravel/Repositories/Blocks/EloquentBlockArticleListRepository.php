@@ -20,7 +20,7 @@ class EloquentBlockArticleListRepository
         return $block;
     }
 
-    public function saveBlock(BlockModel $blockModel, Block $block) {
+    public function saveBlock(Block $block, BlockModel $blockModel) {
         $blockable = ($blockModel->blockable) ? $blockModel->blockable : new ArticleListBlock();
         $blockable->article_list_category_id = $block->getArticleListCategoryID();
         $blockable->article_list_order = $block->getArticleListOrder();

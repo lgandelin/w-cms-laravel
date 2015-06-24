@@ -18,7 +18,7 @@ class EloquentBlockArticleRepository
         return $block;
     }
 
-    public function saveBlock(BlockModel $blockModel, Block $block) {
+    public function saveBlock(Block $block, BlockModel $blockModel) {
         $blockable = ($blockModel->blockable) ? $blockModel->blockable : new ArticleBlock();
         $blockable->article_id = $block->getArticleID();
         $blockable->save();

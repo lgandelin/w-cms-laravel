@@ -18,7 +18,7 @@ class EloquentBlockViewRepository
         return $block;
     }
 
-    public function saveBlock(BlockModel $blockModel, Block $block) {
+    public function saveBlock(Block $block, BlockModel $blockModel) {
         $blockable = ($blockModel->blockable) ? $blockModel->blockable : new ViewBlock();
         $blockable->view_path = $block->getViewPath();
         $blockable->save();

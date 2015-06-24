@@ -25,7 +25,7 @@ class BlockTypeHelper
     public function getAll()
     {
         usort($this->blockTypes, function ($a, $b) {
-            return ($a->order < $b->order);
+            return ($a->order > $b->order);
         });
 
         return $this->blockTypes;

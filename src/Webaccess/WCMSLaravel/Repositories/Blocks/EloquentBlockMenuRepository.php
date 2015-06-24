@@ -18,7 +18,7 @@ class EloquentBlockMenuRepository
         return $block;
     }
 
-    public function saveBlock(BlockModel $blockModel, Block $block) {
+    public function saveBlock(Block $block, BlockModel $blockModel) {
         $blockable = ($blockModel->blockable) ? $blockModel->blockable : new MenuBlock();
         $blockable->menu_id = $block->getMenuID();
         $blockable->save();
