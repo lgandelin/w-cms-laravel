@@ -1,19 +1,20 @@
-<div class="form-group">
-    <label>{{ trans('w-cms-laravel::pages.block_article_list_category') }}</label>
-    <select name="article_list_category_id" class="article_list_category_id form-control" autocomplete="off">
-        <option value="">{{ trans('w-cms-laravel::pages.choose_article_list_category') }}</option>
-        @if (isset($article_categories))
-            @foreach ($article_categories as $category)
-                <option value="{{ $category->ID }}" @if (isset($block->article_list_category_id) && $block->article_list_category_id == $category->ID) selected="selected" @endif>{{ $category->name }}</option>
-            @endforeach
-        @endif
-    </select>
-</div>
+@include ('w-cms-laravel::back.editorial.includes.fields.select_field', [
+    'label' => trans('w-cms-laravel::pages.block_article_list_category'),
+    'name' => 'article_list_category_id',
+    'class' => 'article_list_category_id',
+    'default_option_name' => trans('w-cms-laravel::pages.choose_article_list_category'),
+    'items' => $article_categories,
+    'value' => (isset($block->articleListCategoryID)) ? $block->articleListCategoryID : null,
+    'item_property_name' => 'name'
+])
 
-<div class="form-group">
-    <label>{{ trans('w-cms-laravel::pages.block_article_list_number') }}</label>
-    <input name="article_list_number" type="text" class="form-control article_list_number" placeholder="{{ trans('w-cms-laravel::pages.block_article_list_number') }}" value="@if (isset($block)){{ $block->article_list_number }}@endif" autocomplete="off" />
-</div>
+@include ('w-cms-laravel::back.editorial.includes.fields.text_field', [
+    'label' => trans('w-cms-laravel::pages.block_article_list_number'),
+    'name' => 'article_list_number',
+    'class' => 'article_list_number',
+    'placeholder' => trans('w-cms-laravel::pages.block_article_list_number'),
+    'value' => (isset($block)) ? $block->article_list_number : ''
+])
 
 <div class="form-group">
     <label>{{ trans('w-cms-laravel::pages.block_article_list_order') }}</label>

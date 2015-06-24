@@ -1,1 +1,6 @@
-<textarea name="html" @if (isset($block))class="ckeditor"@endif id="editor-@if (isset($block)){{ $block->ID }}@else new @endif">@if (isset($block)){{ $block->html }}@endif</textarea>
+@include ('w-cms-laravel::back.editorial.includes.fields.editor_field', [
+    'divID' => (isset($block)) ? 'editor-' . $block->ID : 'editor-new-field',
+    'html' => (isset($block)) ? $block->html : '',
+    'new' => (isset($block) && $block->ID) ? true : false,
+    'name' => 'html'
+])

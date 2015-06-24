@@ -15,4 +15,6 @@ return array(
     'left' => 'Gauche',
     'center' => 'Centre',
     'right' => 'Droite',
+    'content' => 'Contenu',
+    'default_option_name' => 'Choisissez une valeur',
 );

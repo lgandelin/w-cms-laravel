@@ -1,25 +1,22 @@
-<div class="form-group">
-    <label>{{ trans('w-cms-laravel::blocks.media_block') }}</label>
+@include ('w-cms-laravel::back.editorial.includes.fields.media_field', [
+    'divID' => (isset($block)) ? 'block-' . $block->ID : 'block-media-id',
+    'media' => (isset($block) && isset($block->content) && isset($block->content->media)) ? $block->content->media : null
+])
 
-    @include ('w-cms-laravel::back.editorial.includes.media_field', [
-        'divID' => (isset($block)) ? 'block-' . $block->ID : 'block-media-id',
-        'media' => (isset($block) && isset($block->content) && isset($block->content->media)) ? $block->content->media : null
-    ])
-</div>
+@include ('w-cms-laravel::back.editorial.includes.fields.select_field', [
+    'label' => trans('w-cms-laravel::pages.block_media_format'),
+    'name' => 'media_format_id',
+    'class' => 'media_format_id',
+    'default_option_name' => trans('w-cms-laravel::pages.choose_media_format'),
+    'items' => $media_formats,
+    'value' => (isset($block->mediaFormatID)) ? $block->mediaFormatID : null,
+    'item_property_name' => 'name',
+])
 
-<div class="form-group">
-    <label for="media_format_id">{{ trans('w-cms-laravel::pages.block_media_format') }}</label>
-    <select name="media_format_id" class="media_format_id form-control" autocomplete="off">
-        <option value="">{{ trans('w-cms-laravel::pages.choose_media_format') }}</option>
-        @if (isset($media_formats))
-            @foreach ($media_formats as $media_format)
-                <option value="{{ $media_format->ID }}" @if (isset($block->media_format_id) && $block->media_format_id == $media_format->ID) selected="selected" @endif>{{ $media_format->name }} ({{ $media_format->width }} x {{ $media_format->height}})</option>
-            @endforeach
-        @endif
-    </select>
-</div>
-
-<div class="form-group">
-    <label>{{ trans('w-cms-laravel::pages.block_media_link') }}</label>
-    <input name="media_link" type="text" class="form-control media_link" placeholder="{{ trans('w-cms-laravel::pages.block_media_link') }}" value="@if (isset($block)){{ $block->mediaLink }}@endif" autocomplete="off" />
-</div>
+@include ('w-cms-laravel::back.editorial.includes.fields.text_field', [
+    'label' => trans('w-cms-laravel::pages.block_media_link'),
+    'name' => 'media_link',
+    'class' => 'media_link',
+    'placeholder' => trans('w-cms-laravel::pages.block_media_link'),
+    'value' => (isset($block)) ? $block->mediaLink : ''
+])

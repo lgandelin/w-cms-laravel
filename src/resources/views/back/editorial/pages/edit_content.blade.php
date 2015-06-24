@@ -84,5 +84,5 @@
 </div>
 <!-- CONTENT -->
 
-@include ('w-cms-laravel::back.editorial.includes.media_modal')
-@include ('w-cms-laravel::back.editorial.includes.new_media_modal')
+@include ('w-cms-laravel::back.editorial.includes.modals.media_modal')
+@include ('w-cms-laravel::back.editorial.includes.modals.new_media_modal')

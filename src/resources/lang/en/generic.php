@@ -15,4 +15,6 @@ return array(
     'left' => 'Left',
     'center' => 'Center',
     'right' => 'Right',
+    'content' => 'Content',
+    'default_option_name' => 'Choose a value',
 );
