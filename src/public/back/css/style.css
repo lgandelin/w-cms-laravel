@@ -57,7 +57,7 @@ label {
 
 .pages-interface #content .area {
   background: #eee;
-  padding: 10px;
+  padding: 10px 0 10px 10px;
   border: 1px solid #ccc;
   margin-bottom: 20px; }
   .pages-interface #content .area .content {
@@ -273,13 +273,13 @@ label {
   max-width: 100%;
   display: block; }
 
-.media-edit .btn-file {
+.btn-file {
   display: inline-block;
   vertical-align: middle;
   position: relative;
   overflow: hidden; }
 
-.media-edit .btn-file input[type=file] {
+.btn-file input[type=file] {
   position: absolute;
   top: 0;
   right: 0;
@@ -1055,8 +1055,8 @@ label {
 
 .ui-resizable-e {
   cursor: e-resize;
-  width: 7px;
-  right: -5px;
+  width: 10px;
+  right: -8px;
   top: 0;
   height: 100%; }
 
