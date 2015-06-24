@@ -9,7 +9,6 @@ class MediaBlockType
         $this->name = trans('w-cms-laravel::blocks.media_block');
         $this->content_view = 'w-cms-laravel::back.editorial.pages.blocks.media';
         $this->front_view = 'blocks.standard.media';
-        $this->model_class = '\Webaccess\WCMSLaravel\Models\Blocks\MediaBlock';
         $this->order = 4;
     }
 }

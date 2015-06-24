@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Repositories;
 
+use CMS\Context;
 use CMS\Entities\Block;
 use CMS\Repositories\BlockRepositoryInterface;
 use Webaccess\WCMSLaravel\Models\Block as BlockModel;
@@ -99,10 +100,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->is_master = $block->getIsMaster();
         $blockModel->is_ghost = $block->getIsGhost();
 
-        $className = \App::make('block_type')->get($blockModel->type)->model_class;
-        $model = new $className;
-
-        $model->updateContent($blockModel, $block);
+        Context::getRepository('block_' . $blockModel->type)->saveBlock($block, $blockModel);
 
         return $blockModel->save();
     }
@@ -126,10 +124,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
 
     private static function createBlockFromModel(BlockModel $blockModel)
     {
-        $className = \App::make('block_type')->get($blockModel->type)->model_class;
-        $model = new $className;
-
-        $block = $model->getEntity($blockModel);
+        $block = Context::getRepository('block_' . $blockModel->type)->getBlock($blockModel);
 
         $block->setID($blockModel->id);
         $block->setName($blockModel->name);

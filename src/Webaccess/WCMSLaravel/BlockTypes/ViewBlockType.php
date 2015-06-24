@@ -9,7 +9,6 @@ class ViewBlockType
         $this->name = trans('w-cms-laravel::blocks.view_block');
         $this->content_view = 'w-cms-laravel::back.editorial.pages.blocks.view';
         $this->front_view = 'blocks.standard.view';
-        $this->model_class = '\Webaccess\WCMSLaravel\Models\Blocks\ViewBlock';
         $this->order = 3;
     }
 }

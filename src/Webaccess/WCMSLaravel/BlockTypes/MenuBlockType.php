@@ -9,7 +9,6 @@ class MenuBlockType
         $this->name = trans('w-cms-laravel::blocks.navigation_block');
         $this->content_view = 'w-cms-laravel::back.editorial.pages.blocks.menu';
         $this->front_view = 'blocks.standard.menu';
-        $this->model_class = '\Webaccess\WCMSLaravel\Models\Blocks\MenuBlock';
         $this->order = 2;
     }
 } 

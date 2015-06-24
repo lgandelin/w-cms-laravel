@@ -20,6 +20,12 @@ use Webaccess\WCMSLaravel\Helpers\BlockTypesVariable;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
 use Webaccess\WCMSLaravel\Helpers\Theme;
 use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
+use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleListRepository;
+use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleRepository;
+use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockHTMLRepository;
+use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockMediaRepository;
+use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockMenuRepository;
+use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockViewRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
@@ -141,5 +147,12 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         Context::addRepository('media', new EloquentMediaRepository());
         Context::addRepository('media_format', new EloquentMediaFormatRepository());
         Context::addRepository('user', new EloquentUserRepository());
+
+        Context::addRepository('block_html', new EloquentBlockHTMLRepository());
+        Context::addRepository('block_menu', new EloquentBlockMenuRepository());
+        Context::addRepository('block_article', new EloquentBlockArticleRepository());
+        Context::addRepository('block_article_list', new EloquentBlockArticleListRepository());
+        Context::addRepository('block_media', new EloquentBlockMediaRepository());
+        Context::addRepository('block_view', new EloquentBlockViewRepository());
     }
 }
