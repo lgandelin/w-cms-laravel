@@ -49,10 +49,10 @@
                 </div>
 
                 <div style="display: none">
-                    @foreach (BlockType::getBlockTypes() as $code => $type)
-                        @if (BlockType::getContentView($code))
-                            <div id="block-template-{{ $type->code }}">
-                                @include(BlockType::getContentView($code))
+                    @foreach (BlockType::getAll() as $code => $blockType)
+                        @if ($blockType->content_view)
+                            <div id="block-template-{{ $blockType->code }}">
+                                @include($blockType->content_view)
                             </div>
                         @endif
                     @endforeach

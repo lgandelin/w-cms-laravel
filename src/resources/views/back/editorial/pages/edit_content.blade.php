@@ -61,8 +61,8 @@
                         @endif
                     </span>
                     <div class="content">
-                        @if (BlockType::getContentView($block->type))
-                            @include (BlockType::getContentView($block->type))
+                        @if (BlockType::get($block->type)->content_view)
+                            @include (BlockType::get($block->type)->content_view)
                         @endif
 
                         <!-- Save -->

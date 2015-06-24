@@ -2,9 +2,6 @@
 
 namespace Webaccess\WCMSLaravel\Helpers;
 
-use CMS\Entities\Block;
-use Webaccess\WCMSLaravel\Models\Block as BlockModel;
-
 class BlockTypeHelper
 {
     private $blockTypes;
@@ -18,31 +15,17 @@ class BlockTypeHelper
         $this->blockTypes[$blockType->code]= $blockType;
     }
 
-    public function getBlockType($code) {
+    public function get($code) {
         if (isset($this->blockTypes[$code]))
             return $this->blockTypes[$code];
 
         return null;
     }
 
-    public function getFrontView($code) {
-        if ($blockType = $this->getBlockType($code))
-            return $blockType->front_view;
-
-        return false;
-    }
-
-    public function getContentView($code) {
-        if ($blockType = $this->getBlockType($code))
-            return $blockType->content_view;
-
-        return null;
-    }
-
-    public function getBlockTypes()
+    public function getAll()
     {
         usort($this->blockTypes, function ($a, $b) {
-            return strcmp($a->order, $b->order);
+            return ($a->order < $b->order);
         });
 
         return $this->blockTypes;
