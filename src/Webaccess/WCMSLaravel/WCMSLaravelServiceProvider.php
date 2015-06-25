@@ -104,6 +104,10 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
             return new CreateUserCommand();
         });
 
+        $this->commands(
+            array('CreateUserCommand')
+        );
+
         $this->app->bind('EventDispatcher', function() {
             $eventDispatcher = new CMSLaravelEventManager();
             $eventDispatcher->addListener(Events::DELETE_AREA, array(new DeleteAreaListener(), 'onDeleteArea'));

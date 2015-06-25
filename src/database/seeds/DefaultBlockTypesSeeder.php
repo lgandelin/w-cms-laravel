@@ -4,12 +4,10 @@ use CMS\Entities\BlockType;
 use CMS\Context;
 use Illuminate\Database\Seeder;
 
-class StandardBlockTypesSeeder extends Seeder {
+class DefaultBlockTypesSeeder extends Seeder {
 
     public function run()
     {
-        DB::table('block_types')->delete();
-
         $blockTypes = [
             ['code' => 'html', 'name' => 'Block HTML', 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.html', 'front_view' => 'blocks.standard.html', 'order' => 1],
             ['code' => 'menu', 'name' => 'Block Menu', 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.menu', 'front_view' => 'blocks.standard.menu', 'order' => 2],
