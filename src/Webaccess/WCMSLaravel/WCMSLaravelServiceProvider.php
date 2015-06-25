@@ -7,7 +7,7 @@ use CMS\Events\Events;
 use Illuminate\Support\ServiceProvider;
 
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
-use Webaccess\WCMSLaravel\Commands\GenerateThemeCommand;
+use Webaccess\WCMSLaravel\Commands\CreateThemeCommand;
 use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
 use Webaccess\WCMSLaravel\Helpers\AdminMenu;
 use Webaccess\WCMSLaravel\Helpers\BlockTypesVariable;
@@ -102,7 +102,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         });
 
         $this->app->bind('GenerateThemeCommand', function() {
-            return new GenerateThemeCommand();
+            return new CreateThemeCommand();
         });
 
         $this->commands(

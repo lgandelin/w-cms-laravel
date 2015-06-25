@@ -3,8 +3,9 @@
 namespace Webaccess\WCMSLaravel\Commands;
 
 use Illuminate\Console\Command;
+use Webaccess\WCMSLaravel\Models\Website;
 
-class GenerateThemeCommand extends Command
+class CreateThemeCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -37,6 +38,12 @@ class GenerateThemeCommand extends Command
      */
     public function handle()
     {
-        exec('mkdir -p themes && cd themes && git clone -b develop https://github.com/lgandelin/w-cms-base-theme.git ' . $this->argument('theme'));
+        $theme = $this->argument('theme');
+        exec('mkdir -p themes && cd themes && git clone -b develop https://github.com/lgandelin/w-cms-base-theme.git ' . $theme);
+        if (!$website = Website::first()) {
+            $website = new Website();
+        }
+        $website->theme = $theme;
+        $website->save();
     }
 }

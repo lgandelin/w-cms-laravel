@@ -11,6 +11,7 @@ class CreateWebsiteTable extends Migration {
 		    $table->increments('id');
 		    $table->string('name');
 		    $table->string('url');
+		    $table->string('theme');
 		    $table->timestamps();
 		});
 	}
