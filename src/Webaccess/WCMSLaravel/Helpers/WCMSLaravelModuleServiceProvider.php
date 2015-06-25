@@ -13,7 +13,7 @@ class WCMSLaravelModuleServiceProvider extends ServiceProvider
         $config['moduleConfigFolder'] = 'config/';
         $config['moduleViewsFolder'] = 'resources/views/';
         $config['moduleLangsFolder'] = 'resources/lang/';
-        $config['moduleMigrationsFolder'] = 'database/migrations/';
+        $config['moduleDatabaseFolder'] = 'database/';
         $config['moduleAssetsFolder'] = 'resources/assets/';
         $config['themeViewsFolder'] = 'views/modules/';
         $config['themeLangsFolder'] = 'lang/modules/';
@@ -61,10 +61,10 @@ class WCMSLaravelModuleServiceProvider extends ServiceProvider
             ], 'back_assets');
         }
 
-        if (is_dir($prefixFolder . $config['moduleMigrationsFolder'])) {
+        if (is_dir($prefixFolder . $config['moduleDatabaseFolder'])) {
             $this->publishes([
-                $prefixFolder . $config['moduleMigrationsFolder'] => base_path('/database/migrations')
-            ], 'migrations');
+                $prefixFolder . $config['moduleDatabaseFolder'] => base_path('/database')
+            ], 'database');
         }
 
         Module::load($moduleName);

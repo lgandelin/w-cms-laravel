@@ -1,47 +1,15 @@
 <?php
 
-namespace Webaccess\WCMSLaravel\Commands;
-
-use CMS\Context;
-use CMS\Interactors\Users\CreateUserInteractor;
-use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 use CMS\Entities\BlockType;
+use CMS\Context;
+use Illuminate\Database\Seeder;
 
-class CreateStandardBlockTypesCommand extends Command {
+class StandardBlockTypesSeeder extends Seeder {
 
-    /**
-     * The console command name.
-     *
-     * @var string
-     */
-    protected $name = 'block_types:create_standard_types';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Create a user in the database and generates a password';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function run()
     {
-        parent::__construct();
-    }
+        DB::table('block_types')->delete();
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function fire()
-    {
         $blockTypes = [
             ['code' => 'html', 'name' => 'Block HTML', 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.html', 'front_view' => 'blocks.standard.html', 'order' => 1],
             ['code' => 'menu', 'name' => 'Block Menu', 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.menu', 'front_view' => 'blocks.standard.menu', 'order' => 2],
@@ -59,22 +27,8 @@ class CreateStandardBlockTypesCommand extends Command {
             $blockType->setFrontView($type['front_view']);
             $blockType->setOrder($type['order']);
 
-            if (Context::getRepository('block_type')->createBlockType($blockType)) {
-                $this->info('Block type "' . $blockType->getCode() . '" successfully created');
-            }
+            Context::getRepository('block_type')->createBlockType($blockType);
+            $this->command->info('Block type [' . $blockType->getCode() . '] inserted successfully !');
         }
     }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return array(
-            //array('login', InputArgument::REQUIRED, 'The user login'),
-        );
-    }
-
 }

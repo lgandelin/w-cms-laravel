@@ -6,7 +6,6 @@ use CMS\Context;
 use CMS\Events\Events;
 use Illuminate\Support\ServiceProvider;
 
-use Webaccess\WCMSLaravel\Commands\CreateStandardBlockTypesCommand;
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
 use Webaccess\WCMSLaravel\Helpers\AdminMenu;
@@ -57,8 +56,8 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         ], 'config');
 
         $this->publishes([
-            __DIR__.'/../../database/migrations/' => base_path('/database/migrations')
-        ], 'migrations');
+            __DIR__.'/../../database/' => base_path('/database')
+        ], 'database');
 
         $this->publishes([
             __DIR__.'/../../public/back' => base_path('/public/vendor/w-cms-laravel/back')
@@ -104,14 +103,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         $this->app->bind('CreateUserCommand', function() {
             return new CreateUserCommand();
         });
-
-        $this->app->bind('CreateStandardBlockTypesCommand', function() {
-            return new CreateStandardBlockTypesCommand();
-        });
-
-        $this->commands(
-            array('CreateUserCommand', 'CreateStandardBlockTypesCommand')
-        );
 
         $this->app->bind('EventDispatcher', function() {
             $eventDispatcher = new CMSLaravelEventManager();
