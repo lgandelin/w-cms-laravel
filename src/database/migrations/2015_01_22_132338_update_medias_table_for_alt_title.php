@@ -12,7 +12,7 @@ class UpdateMediasTableForAltTitle extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('medias', function($table) {
+        Schema::table('w_cms_medias', function($table) {
             $table->string('alt')->after('file_name')->nullable();
             $table->string('title')->after('alt')->nullable();
         });
@@ -25,7 +25,7 @@ class UpdateMediasTableForAltTitle extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('medias', function($table) {
+        Schema::table('w_cms_medias', function($table) {
             $table->dropColumn('alt');
             $table->dropColumn('title');
         });

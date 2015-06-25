@@ -16,4 +16,9 @@ class Theme
             throw new \Exception('The theme folder [' . Shortcut::get_theme() . '] is missing in ' . base_path() . '/themes/');
         }
     }
+
+    public static function get()
+    {
+        return env('W_CMS_THEME', 'w-cms-base-theme');
+    }
 }

@@ -4,7 +4,7 @@ namespace Webaccess\WCMSLaravel\Models;
 
 class ArticleCategory extends \Eloquent {
 
-    protected $table = 'article_categories';
+    protected $table = 'w_cms_article_categories';
     protected $fillable = array('name', 'description', 'lang_id');
 
 }

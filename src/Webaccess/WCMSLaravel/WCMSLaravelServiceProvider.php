@@ -12,7 +12,6 @@ use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
 use Webaccess\WCMSLaravel\Helpers\AdminMenu;
 use Webaccess\WCMSLaravel\Helpers\BlockTypesVariable;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
-use Webaccess\WCMSLaravel\Helpers\Theme;
 use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
 use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleListRepository;
 use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleRepository;
@@ -63,9 +62,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         $this->publishes([
             __DIR__.'/../../public/back' => base_path('/public/vendor/w-cms-laravel/back')
         ], 'back_assets');
-
-        //Load the theme
-        Theme::load();
     }
 
     /**

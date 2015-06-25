@@ -12,7 +12,7 @@ class UpdateLangsTableAddCode extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('langs', function($table) {
+        Schema::table('w_cms_langs', function($table) {
             $table->string('code')->after('prefix')->nullable();
         });
 	}
@@ -24,7 +24,7 @@ class UpdateLangsTableAddCode extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('langs', function($table) {
+        Schema::table('w_cms_langs', function($table) {
             $table->dropColumn('text');
         });
 	}

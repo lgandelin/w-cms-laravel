@@ -4,7 +4,7 @@ namespace Webaccess\WCMSLaravel\Models;
 
 class MenuItem extends \Eloquent {
 
-    protected $table = 'menu_items';
+    protected $table = 'w_cms_menu_items';
     protected $fillable = array('label', 'order');
 
     public function page()

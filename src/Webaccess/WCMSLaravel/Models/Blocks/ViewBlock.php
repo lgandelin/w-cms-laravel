@@ -4,7 +4,7 @@ namespace Webaccess\WCMSLaravel\Models\Blocks;
 
 class ViewBlock extends \Eloquent
 {
-    protected $table = 'blocks_view';
+    protected $table = 'w_cms_blocks_view';
     protected $fillable = array('view_path');
 
     public function block() {

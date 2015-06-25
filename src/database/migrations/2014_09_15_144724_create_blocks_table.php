@@ -12,7 +12,7 @@ class CreateBlocksTable extends Migration {
      */
     public function up()
     {
-        Schema::create('blocks', function($table) {
+        Schema::create('w_cms_blocks', function($table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->integer('width')->nullable();
@@ -36,7 +36,7 @@ class CreateBlocksTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('blocks');
+        Schema::drop('w_cms_blocks');
     }
 
 }

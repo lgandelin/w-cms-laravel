@@ -12,7 +12,7 @@ class CreateBlocksArticleListTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('blocks_article_list', function($table) {
+		Schema::create('w_cms_blocks_article_list', function($table) {
             $table->increments('id');
             $table->integer('article_list_category_id')->nullable();
             $table->integer('article_list_number')->nullable();
@@ -28,7 +28,7 @@ class CreateBlocksArticleListTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('blocks_article_list');
+		Schema::drop('w_cms_blocks_article_list');
 	}
 
 }

@@ -12,7 +12,7 @@ class CreateMediaBlocksTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('blocks_media', function($table) {
+		Schema::create('w_cms_blocks_media', function($table) {
             $table->increments('id');
             $table->integer('media_id')->nullable();
             $table->string('media_link')->nullable();
@@ -28,7 +28,7 @@ class CreateMediaBlocksTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('blocks_media');
+		Schema::drop('w_cms_blocks_media');
 	}
 
 }

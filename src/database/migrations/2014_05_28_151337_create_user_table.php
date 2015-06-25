@@ -12,7 +12,7 @@ class CreateUserTable extends Migration {
      */
     public function up()
     {
-        Schema::create('users', function($table) {
+        Schema::create('w_cms_users', function($table) {
             $table->increments('id');
 
             $table->string('login')->nullable();
@@ -33,7 +33,7 @@ class CreateUserTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::drop('w_cms_users');
     }
 
 }

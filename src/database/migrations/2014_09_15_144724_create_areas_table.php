@@ -12,7 +12,7 @@ class CreateAreasTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('areas', function($table) {
+        Schema::create('w_cms_areas', function($table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->integer('width')->nullable();
@@ -32,7 +32,7 @@ class CreateAreasTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('areas');
+        Schema::drop('w_cms_areas');
 	}
 
 }

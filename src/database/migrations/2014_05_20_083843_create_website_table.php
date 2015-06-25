@@ -7,7 +7,7 @@ class CreateWebsiteTable extends Migration {
 
 	public function up()
 	{
-		Schema::create('websites', function($table) {
+		Schema::create('w_cms_websites', function($table) {
 		    $table->increments('id');
 		    $table->string('name');
 		    $table->string('url');
@@ -17,7 +17,7 @@ class CreateWebsiteTable extends Migration {
 
 	public function down()
 	{
-		Schema::drop('websites');
+		Schema::drop('w_cms_websites');
 	}
 
 }

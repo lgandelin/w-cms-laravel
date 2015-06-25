@@ -12,7 +12,7 @@ class CreateMenuItemsTable extends Migration {
      */
     public function up()
     {
-        Schema::create('menu_items', function($table) {
+        Schema::create('w_cms_menu_items', function($table) {
             $table->increments('id');
             $table->string('label')->nullable();
             $table->integer('order')->nullable();
@@ -32,7 +32,7 @@ class CreateMenuItemsTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('menu_items');
+        Schema::drop('w_cms_menu_items');
     }
 
 }

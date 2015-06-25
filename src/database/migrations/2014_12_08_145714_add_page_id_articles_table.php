@@ -12,7 +12,7 @@ class AddPageIdArticlesTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('articles', function($table) {
+        Schema::table('w_cms_articles', function($table) {
             $table->integer('page_id')->after('author_id')->nullable();
         });
 	}
@@ -24,7 +24,7 @@ class AddPageIdArticlesTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('blocks', function($table)
+        Schema::table('w_cms_articles', function($table)
         {
             $table->dropColumn('page_id');
         });

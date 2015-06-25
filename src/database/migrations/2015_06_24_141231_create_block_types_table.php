@@ -12,7 +12,7 @@ class CreateBlockTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('block_types', function($table) {
+        Schema::create('w_cms_block_types', function($table) {
             $table->increments('id');
             $table->string('code')->nullable();
             $table->string('name')->nullable();
@@ -30,6 +30,6 @@ class CreateBlockTypesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('block_types');
+        Schema::drop('w_cms_block_types');
     }
 }

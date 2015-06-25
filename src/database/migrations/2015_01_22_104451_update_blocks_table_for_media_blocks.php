@@ -12,7 +12,7 @@ class UpdateBlocksTableForMediaBlocks extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('blocks', function($table) {
+        Schema::table('w_cms_blocks', function($table) {
             $table->integer('media_id')->after('article_list_order')->nullable();
         });
 	}
@@ -24,7 +24,7 @@ class UpdateBlocksTableForMediaBlocks extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('blocks', function($table)
+        Schema::table('w_cms_blocks', function($table)
         {
             $table->dropColumn('media_id');
         });

@@ -4,7 +4,7 @@ namespace Webaccess\WCMSLaravel\Models\Blocks;
 
 class MenuBlock extends \Eloquent
 {
-    protected $table = 'blocks_menu';
+    protected $table = 'w_cms_blocks_menu';
     protected $fillable = array('menu_id');
 
     public function block() {

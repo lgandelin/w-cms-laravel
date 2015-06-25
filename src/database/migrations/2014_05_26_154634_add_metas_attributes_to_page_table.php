@@ -12,7 +12,7 @@ class AddMetasAttributesToPageTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('pages', function(Blueprint $table)
+		Schema::table('w_cms_pages', function(Blueprint $table)
 		{
 		    $table->string('meta_title')->nullable();
 		    $table->string('meta_description')->nullable();
@@ -27,7 +27,7 @@ class AddMetasAttributesToPageTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('pages', function(Blueprint $table)
+		Schema::table('w_cms_pages', function(Blueprint $table)
 		{
 			//
 		});

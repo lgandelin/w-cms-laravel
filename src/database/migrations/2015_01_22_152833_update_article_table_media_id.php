@@ -12,7 +12,7 @@ class UpdateArticleTableMediaId extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('articles', function($table) {
+        Schema::table('w_cms_articles', function($table) {
             $table->integer('media_id')->after('page_id')->nullable();
         });
 	}
@@ -24,7 +24,7 @@ class UpdateArticleTableMediaId extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('articles', function($table) {
+        Schema::table('w_cms_articles', function($table) {
             $table->dropColumn('media_id');
         });
 	}

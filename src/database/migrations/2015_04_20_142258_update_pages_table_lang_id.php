@@ -12,7 +12,7 @@ class UpdatePagesTableLangId extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('pages', function($table) {
+        Schema::table('w_cms_pages', function($table) {
             $table->integer('lang_id')->after('uri')->nullable();
             $table->dropColumn('text');
         });
@@ -25,7 +25,7 @@ class UpdatePagesTableLangId extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('pages', function($table) {
+        Schema::table('w_cms_pages', function($table) {
             $table->dropColumn('media_format_id');
         });
 	}

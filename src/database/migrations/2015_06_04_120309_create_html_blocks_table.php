@@ -12,7 +12,7 @@ class CreateHtmlBlocksTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('blocks_html', function($table) {
+        Schema::create('w_cms_blocks_html', function($table) {
             $table->increments('id');
             $table->text('html')->nullable();
             $table->timestamps();
@@ -26,7 +26,7 @@ class CreateHtmlBlocksTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('blocks_html');
+        Schema::drop('w_cms_blocks_html');
 	}
 
 }

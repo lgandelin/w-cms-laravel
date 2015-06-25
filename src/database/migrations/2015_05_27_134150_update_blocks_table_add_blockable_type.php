@@ -12,7 +12,7 @@ class UpdateBlocksTableAddBlockableType extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('blocks', function($table) {
+        Schema::table('w_cms_blocks', function($table) {
             $table->integer('blockable_id')->after('type')->nullable();
             $table->string('blockable_type')->after('blockable_id')->nullable();
         });
@@ -25,7 +25,7 @@ class UpdateBlocksTableAddBlockableType extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('blocks', function($table) {
+        Schema::table('w_cms_blocks', function($table) {
             $table->dropColumn('blockable_id');
             $table->dropColumn('blockable_type');
         });

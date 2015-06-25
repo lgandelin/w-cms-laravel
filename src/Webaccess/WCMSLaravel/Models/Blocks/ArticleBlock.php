@@ -4,7 +4,7 @@ namespace Webaccess\WCMSLaravel\Models\Blocks;
 
 class ArticleBlock extends \Eloquent
 {
-    protected $table = 'blocks_article';
+    protected $table = 'w_cms_blocks_article';
     protected $fillable = array('article_id');
 
     public function block() {

@@ -12,11 +12,11 @@ class UpdateArticlesTablesAddLangId extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('articles', function($table) {
+        Schema::table('w_cms_articles', function($table) {
             $table->integer('lang_id')->after('text')->nullable();
         });
 
-        Schema::table('article_categories', function($table) {
+        Schema::table('w_cms_article_categories', function($table) {
             $table->integer('lang_id')->after('description')->nullable();
         });
 	}
@@ -28,11 +28,11 @@ class UpdateArticlesTablesAddLangId extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('articles', function($table) {
+        Schema::table('w_cms_articles', function($table) {
             $table->dropColumn('lang_id');
         });
 
-        Schema::table('article_categories', function($table) {
+        Schema::table('w_cms_article_categories', function($table) {
             $table->dropColumn('lang_id');
         });
 	}

@@ -12,7 +12,7 @@ class CreatePageTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('pages', function($table) {
+		Schema::create('w_cms_pages', function($table) {
 		    $table->increments('id');
 
 		    $table->string('name')->nullable();
@@ -30,7 +30,7 @@ class CreatePageTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('pages');
+		Schema::drop('w_cms_pages');
 	}
 
 }

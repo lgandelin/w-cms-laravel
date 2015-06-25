@@ -12,7 +12,7 @@ class CreateMediasTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('medias', function($table) {
+        Schema::create('w_cms_medias', function($table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('file_name')->nullable();
@@ -27,7 +27,7 @@ class CreateMediasTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('medias');
+        Schema::drop('w_cms_medias');
 	}
 
 }

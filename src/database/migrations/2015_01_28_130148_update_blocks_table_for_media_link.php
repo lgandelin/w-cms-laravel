@@ -12,7 +12,7 @@ class UpdateBlocksTableForMediaLink extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('blocks', function($table) {
+        Schema::table('w_cms_blocks', function($table) {
             $table->string('media_link')->after('media_id')->nullable();
         });
 	}
@@ -24,7 +24,7 @@ class UpdateBlocksTableForMediaLink extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('blocks', function($table) {
+        Schema::table('w_cms_blocks', function($table) {
             $table->dropColumn('media_link');
         });
 	}

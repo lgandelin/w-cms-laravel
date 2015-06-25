@@ -12,7 +12,7 @@ class CreateArticleCategoriesTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('article_categories', function($table) {
+        Schema::create('w_cms_article_categories', function($table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->text('description')->nullable();
@@ -27,7 +27,7 @@ class CreateArticleCategoriesTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('article_categories');
+        Schema::drop('w_cms_article_categories');
 	}
 
 }

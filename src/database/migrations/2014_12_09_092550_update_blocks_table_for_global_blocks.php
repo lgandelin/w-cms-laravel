@@ -12,7 +12,7 @@ class UpdateBlocksTableForGlobalBlocks extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('blocks', function($table) {
+        Schema::table('w_cms_blocks', function($table) {
             $table->boolean('is_global')->after('article_list_order')->nullable();
             $table->integer('block_reference_id')->after('is_global')->nullable();
         });
@@ -25,7 +25,7 @@ class UpdateBlocksTableForGlobalBlocks extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('blocks', function($table)
+        Schema::table('w_cms_blocks', function($table)
         {
             $table->dropColumn('is_global');
             $table->dropColumn('block_reference_id');

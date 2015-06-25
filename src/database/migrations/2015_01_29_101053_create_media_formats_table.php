@@ -12,7 +12,7 @@ class CreateMediaFormatsTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('media_formats', function($table) {
+        Schema::create('w_cms_media_formats', function($table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->integer('width')->nullable();
@@ -28,7 +28,7 @@ class CreateMediaFormatsTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('media_formats');
+        Schema::drop('w_cms_media_formats');
 	}
 
 }

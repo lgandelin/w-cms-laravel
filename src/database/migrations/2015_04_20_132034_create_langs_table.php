@@ -12,7 +12,7 @@ class CreateLangsTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('langs', function($table) {
+        Schema::create('w_cms_langs', function($table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('prefix')->nullable();
@@ -28,7 +28,7 @@ class CreateLangsTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('langs');
+        Schema::drop('w_cms_langs');
 	}
 
 }
