@@ -13,7 +13,7 @@ class UpdateBlocksTableForGlobalBlocks extends Migration {
 	public function up()
 	{
         Schema::table('w_cms_blocks', function($table) {
-            $table->boolean('is_global')->after('article_list_order')->nullable();
+            $table->boolean('is_global')->after('area_id')->nullable();
             $table->integer('block_reference_id')->after('is_global')->nullable();
         });
 	}
