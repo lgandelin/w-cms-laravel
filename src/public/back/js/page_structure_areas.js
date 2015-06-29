@@ -57,6 +57,8 @@ $(document).ready(function() {
                 'class': $('#area-infos-modal .class').val(),
                 'is_master': $('#area-infos-modal input[name="area_is_master"]:checked').val(),
                 'page_id': $(this).attr('data-page-id'),
+                'order': 999,
+                'display': 1,
                 '_token': $('input[name="_token"]').val()
             };
 
