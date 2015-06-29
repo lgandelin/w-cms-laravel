@@ -24,15 +24,10 @@ class AreaController extends AdminController
 
     public function create()
     {
-        $areaStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'width' => \Input::get('width'),
-            'height' => \Input::get('height'),
-            'class' => \Input::get('class'),
-            'order' => 999,
-            'is_master' => \Input::get('is_master'),
-            'page_id' => \Input::get('page_id'),
-        ]);
+        $areaStructure = new DataStructure();
+        foreach (\Input::all() as $key => $value) {
+            $areaStructure->$key = $value;
+        }
 
         try {
             $areaID = (new CreateAreaInteractor())->run($areaStructure);
