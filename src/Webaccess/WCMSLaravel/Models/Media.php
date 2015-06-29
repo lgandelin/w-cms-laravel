@@ -4,6 +4,6 @@ namespace Webaccess\WCMSLaravel\Models;
 
 class Media extends \Eloquent {
 
-    protected $table = 'medias';
+    protected $table = 'w_cms_medias';
     protected $fillable = array('name', 'alt', 'title', 'file_name');
 }

@@ -49,9 +49,11 @@
                 </div>
 
                 <div style="display: none">
-                    @foreach (BlockType::getBlockTypes() as $code => $type)
-                        @if (BlockType::getTemplateView($code))
-                            @include(BlockType::getTemplateView($code))
+                    @foreach ($block_types as $blockType)
+                        @if ($blockType->content_view)
+                            <div id="block-template-{{ $blockType->code }}">
+                                @include($blockType->content_view)
+                            </div>
                         @endif
                     @endforeach
                 </div>

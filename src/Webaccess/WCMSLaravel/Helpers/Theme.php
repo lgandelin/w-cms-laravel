@@ -2,18 +2,24 @@
 
 namespace Webaccess\WCMSLaravel\Helpers;
 
-use Webaccess\WCMSLaravel\Facades\Shortcut;
+use Webaccess\WCMSLaravel\Models\Website;
 
 class Theme
 {
     public static function load()
     {
-        $themeFolder = base_path() . '/themes/' . Shortcut::get_theme();
+        $theme = self::get();
+        $themeFolder = base_path() . '/themes/' . $theme;
         if (is_dir($themeFolder)) {
-            \View::addNamespace(Shortcut::get_theme(), $themeFolder . '/views');
-            \Lang::addNamespace(Shortcut::get_theme(), $themeFolder . '/lang');
+            \View::addNamespace($theme, $themeFolder . '/views');
+            \Lang::addNamespace($theme, $themeFolder . '/lang');
         } else {
-            throw new \Exception('The theme folder [' . Shortcut::get_theme() . '] is missing in ' . base_path() . '/themes/');
+            throw new \Exception('The theme folder [' . $theme . '] is missing in ' . base_path() . '/themes/');
         }
+    }
+
+    public static function get()
+    {
+        return Website::first()->theme;
     }
 }

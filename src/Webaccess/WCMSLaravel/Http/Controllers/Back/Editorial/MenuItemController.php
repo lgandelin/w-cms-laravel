@@ -66,7 +66,7 @@ class MenuItemController extends AdminController
         $menuItems = json_decode(\Input::get('menu_items'));
         for ($i = 0; $i < sizeof($menuItems ); $i++) {
             $menuItemID = preg_replace('/mi-/', '', $menuItems[$i]);
-            $menuItemStructure = new MenuItemStructure([
+            $menuItemStructure = new DataStructure([
                 'order' => $i + 1,
             ]);
 

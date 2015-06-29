@@ -8,9 +8,4 @@ class ShortcutHelper
     {
         return env('W_CMS_UPLOADS_FOLDER', 'uploads/');
     }
-
-    public static function get_theme()
-    {
-        return env('W_CMS_THEME', 'w-cms-base-theme');
-    }
 } 

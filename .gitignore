@@ -5,3 +5,4 @@ composer.lock
 *.scssc
 .idea
 behat.yml
+node_modules

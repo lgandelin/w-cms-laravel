@@ -53,7 +53,7 @@ class CreateUserCommand extends Command {
             'email' => '',
         ]);
         
-        $userStructure = (new CreateUserInteractor())->run($userStructure);
+        (new CreateUserInteractor())->run($userStructure);
 
         $this->info('User successfullly created with following password : ' . $password);
 	}

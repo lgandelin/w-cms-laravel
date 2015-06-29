@@ -1,0 +1,99 @@
+.medias-list {
+	
+	overflow: hidden;
+	margin-bottom: 30px;
+
+	li {
+		width: 200px;
+		height: auto;
+		list-style: none;
+		float: left;
+		margin: 20px 20px 0 0;
+		position: relative;
+
+		.media-name {
+			display: block;
+			margin: 5px 0;
+
+			text-align: center;
+			font-weight: bold;
+		}
+
+		.media-delete {
+			display: none;
+
+			position: absolute;
+			top: 10px;
+			right: 10px;
+
+			font-size: 18px;
+			color: white;
+		}
+	}
+
+	li:hover {
+		.media-delete {
+			display: block;
+		}
+	}
+}
+
+.modal-full {
+    width: 65%;
+}
+
+.media-edit {
+	.media-thumbnail {
+		width: 500px;
+
+		margin-bottom: 20px;
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+	}	
+
+	.media-name {
+		width: 400px;
+	}
+
+	.media-path {
+		width: 250px;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.media-format {
+		.media-format-image {
+			img {
+				max-width:100%;
+				display: block;
+			}
+		}
+	}
+}
+
+.btn-file {
+    display: inline-block;
+    vertical-align: middle;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

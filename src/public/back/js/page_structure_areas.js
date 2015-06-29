@@ -1,7 +1,10 @@
+var columns = 12;
+
 $(document).ready(function() {
 
-	//Drag and drop initialization
+    //Drag and drop initialization
     init_area_sortable();
+    init_area_resizable();
 
     //Create area
     $('body').on('click', '.page-content-create-area', function() {
@@ -35,10 +38,10 @@ $(document).ready(function() {
                     $(modal).find('.height').val(data.area.height);
                     $(modal).find('.class').val(data.area.class);
                     $(modal).find('#area_is_master_' + data.area.is_master).attr('checked', 'checked');
-                    
+
                     $(modal).modal('show');
                 } else {
-                    
+
                 }
             }
         });
@@ -54,6 +57,8 @@ $(document).ready(function() {
                 'class': $('#area-infos-modal .class').val(),
                 'is_master': $('#area-infos-modal input[name="area_is_master"]:checked').val(),
                 'page_id': $(this).attr('data-page-id'),
+                'order': 999,
+                'display': 1,
                 '_token': $('input[name="_token"]').val()
             };
 
@@ -71,9 +76,10 @@ $(document).ready(function() {
                         button.val('Submit');
 
                         //Create area in "Structure" tab
-                        var area_content = '<div id="a-'+ data.area.ID + '" data-width="' + data.area.width + '" data-id="' + data.area.ID + '" class="area col-xs-' + data.area.width + '" data-display="0"><div class="area_color"><span class="title"><span class="area-name">' + data.area.name + '</span> <span class="area_width">[<span class="width_value">' + data.area.width + '</span>]</span><span data-id="' + data.area.ID + '" class="area-delete glyphicon glyphicon-remove"></span><span style="display: none" data-id="' + data.area.ID + '" class="area-move glyphicon glyphicon-move"></span><span data-id="' + data.area.ID + '" class="area-display area-hidden glyphicon glyphicon-eye-open"></span><span data-id="' + data.area.ID + '" class="area-update glyphicon glyphicon-pencil"></span><span data-id="' + data.area.ID + '" class="area-create-block glyphicon glyphicon-plus"></span></span></div></div>';
+                        var area_content = '<div id="a-'+ data.area.ID + '" data-width="' + data.area.width + '" data-id="' + data.area.ID + '" class="area col-xs-' + data.area.width + '" data-display="1"><div class="area_color"><span class="title"><span class="area-name">' + data.area.name + '</span> <span class="width_value">' + data.area.width + '</span><span data-id="' + data.area.ID + '" class="area-delete glyphicon glyphicon-remove"></span><span style="display: none" data-id="' + data.area.ID + '" class="area-move glyphicon glyphicon-move"></span><span data-id="' + data.area.ID + '" class="area-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.area.ID + '" class="area-update glyphicon glyphicon-pencil"></span><span data-id="' + data.area.ID + '" class="area-create-block glyphicon glyphicon-plus"></span></span></div></div>';
                         $('#structure > .areas-wrapper').append(area_content);
                         init_area_sortable();
+                        init_area_resizable();
                         init_block_sortable();
 
                         //Create area in "Content" tab
@@ -83,7 +89,7 @@ $(document).ready(function() {
                         //Close the modal
                         $('#area-infos-modal').modal('hide');
                     } else {
-                        
+
                     }
                 }
             });
@@ -116,7 +122,7 @@ $(document).ready(function() {
                         //Update area in "Structure" tab
                         area.removeClass().addClass('area col-xs-' + input_data.width);
                         area.attr('data-width', input_data.width);
-                        area.find('.area_width .width_value').text(input_data.width);
+                        area.find('.width_value').text(input_data.width);
                         area.find('.area-name').text(input_data.name);
 
                         //Update area in "Content" tab
@@ -125,7 +131,7 @@ $(document).ready(function() {
                         //Close the modal
                         $('#area-infos-modal').modal('hide');
                     } else {
-                        
+
                     }
                 }
             });
@@ -136,7 +142,7 @@ $(document).ready(function() {
     $('body').on('click', '.area-delete', function() {
         if (confirm('Are you sure that you want to delete this area ?')) {
             var area_id = $(this).attr('data-id');
-            
+
             var data = {
                 'ID': area_id,
                 '_token': $('input[name="_token"]').val()
@@ -165,7 +171,7 @@ $(document).ready(function() {
     $('body').on('click', '.area-display', function() {
         var area_id = $(this).attr('data-id');
         var area = $('#structure .area[data-id="' + area_id + '"]');
-        
+
         var data = {
             'ID': area_id,
             'display': ((1 + parseInt(area.attr('data-display'))) % 2),
@@ -199,7 +205,7 @@ $(document).ready(function() {
 });
 
 function init_area_sortable() {
-     $( ".areas-wrapper" ).sortable({
+    $( ".areas-wrapper" ).sortable({
         placeholder: 'sortable-placeholder area',
         items: '.area',
         start: function(event, ui) {
@@ -225,5 +231,37 @@ function init_area_sortable() {
             });
         },
         tolerance: 'pointer'
+    });
+}
+
+function init_area_resizable() {
+    $('#structure .area').resizable({
+        containment: ".areas-wrapper",
+        handles: "e",
+        autoHide: true,
+        resize: function(e, ui) {
+            var area = ui.element;
+            var parent = area.parent();
+            var width = Math.ceil((area.width() / parent.width()) * columns);
+
+            if (width < 2) width = 2;
+            area.removeClass('col-xs-' + area.attr('data-width')).addClass('col-xs-' + width);
+            area.attr('data-width', width);
+            area.find('.width_value').first().text(width);
+            area.removeAttr('style');
+        },
+        stop: function(e, ui) {
+            var area = ui.element;
+            var input_data = {
+                'ID': area.attr('data-id'),
+                'width': area.attr('data-width'),
+                '_token': $('input[name="_token"]').val()
+            }
+            $.ajax({
+                type: "POST",
+                url: route_areas_update_infos,
+                data: input_data,
+            });
+        }
     });
 }

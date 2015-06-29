@@ -52,7 +52,8 @@
                 @foreach ($area->blocks as $block)
                 <div class="block @if ($block->masterBlockID) child-block @endif" data-id="{{ $block->ID }}" data-type="{{ $block->type }}">
                     <span class="title">
-                        <span class="block_name">{{ $block->name }}</span> <span class="type">({{ $block->type }})</span>
+                        <span class="block_name">{{ $block->name }}</span>
+                        <span class="type">{{ $block->type->code }}</span>
                         @if ($block->masterBlockID)
                             <span class="glyphicon glyphicon-exclamation-sign disabled"></span>
                         @else
@@ -60,8 +61,8 @@
                         @endif
                     </span>
                     <div class="content">
-                        @if (BlockType::getContentView($block->type))
-                            @include (BlockType::getContentView($block->type))
+                        @if ($block->type->content_view)
+                            @include ($block->type->content_view)
                         @endif
 
                         <!-- Save -->
@@ -83,5 +84,5 @@
 </div>
 <!-- CONTENT -->
 
-@include ('w-cms-laravel::back.editorial.includes.media_modal')
-@include ('w-cms-laravel::back.editorial.includes.new_media_modal')
+@include ('w-cms-laravel::back.editorial.includes.modals.media_modal')
+@include ('w-cms-laravel::back.editorial.includes.modals.new_media_modal')
