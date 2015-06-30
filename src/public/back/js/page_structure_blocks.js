@@ -102,6 +102,9 @@ $(document).ready(function() {
 
                         var block_template = $('#block-template-' + data.block.type).html();
                         if (block_template) {
+                            var n = Math.floor((Math.random() * 99999) + 1);
+                            block_template = block_template.replace(/#/gi, n);
+
                             block_content += block_template;
                             block_content += '<div class="submit_wrapper"><input data-id="' + data.block.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + data.block.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                         }

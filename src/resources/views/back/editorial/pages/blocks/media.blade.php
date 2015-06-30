@@ -1,5 +1,5 @@
 @include ('w-cms-laravel::back.editorial.includes.fields.media_field', [
-    'divID' => (isset($block)) ? 'block-' . $block->ID : 'block-media-id',
+    'divID' => (isset($block)) ? 'block-' . $block->ID : 'block-#',
     'media' => (isset($block) && isset($block->content) && isset($block->content->media)) ? $block->content->media : null
 ])
 
