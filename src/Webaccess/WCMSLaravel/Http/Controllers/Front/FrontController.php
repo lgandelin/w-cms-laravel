@@ -18,8 +18,15 @@ class FrontController extends Controller
         $uri = ($uri != '/') ? '/' . $uri : '/';
         $theme = Theme::get();
 
+        if (!\Cache::has($uri)) {
+            $page = (new GetPageContentInteractor())->run($uri, true);
+            \Cache::put($uri, $page, 24 * 60);
+        } else {
+            $page = \Cache::get($uri);
+        }
+
         return view($theme . '::index', [
-            'page' => (new GetPageContentInteractor())->run($uri, true),
+            'page' => $page,
             'theme' => $theme
         ]);
     }
