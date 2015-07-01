@@ -100,7 +100,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
         $blockModel->is_master = $block->getIsMaster();
         $blockModel->is_ghost = $block->getIsGhost();
 
-        Context::getRepository('block_' . $blockModel->type)->saveBlock($block, $blockModel);
+        Context::get('block_' . $blockModel->type)->saveBlock($block, $blockModel);
 
         return $blockModel->save();
     }
@@ -124,7 +124,7 @@ class EloquentBlockRepository implements BlockRepositoryInterface
 
     private static function createBlockFromModel(BlockModel $blockModel)
     {
-        $block = Context::getRepository('block_' . $blockModel->type)->getBlock($blockModel);
+        $block = Context::get('block_' . $blockModel->type)->getBlock($blockModel);
 
         $block->setID($blockModel->id);
         $block->setName($blockModel->name);

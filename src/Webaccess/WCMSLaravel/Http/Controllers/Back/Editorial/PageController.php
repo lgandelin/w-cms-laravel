@@ -81,16 +81,16 @@ class PageController extends AdminController
                 }
             }
 
-            \App::make('BlockTypesVariable')->addVariable('page', $page);
-            \App::make('BlockTypesVariable')->addVariable('menus', (new GetMenusInteractor())->getAll($this->getLangID(), true));
-            \App::make('BlockTypesVariable')->addVariable('articles', (new GetArticlesInteractor())->getAll(null, null, null, $this->getLangID(), true));
-            \App::make('BlockTypesVariable')->addVariable('article_categories', (new GetArticleCategoriesInteractor())->getAll($this->getLangID(), true));
-            \App::make('BlockTypesVariable')->addVariable('global_blocks', (new GetBlocksInteractor())->getGlobalBlocks(true));
-            \App::make('BlockTypesVariable')->addVariable('medias', (new GetMediasInteractor())->getAll(true));
-            \App::make('BlockTypesVariable')->addVariable('media_formats', (new GetMediaFormatsInteractor())->getAll(true));
+            Context::addTo('block_variables', 'page', $page);
+            Context::addTo('block_variables', 'menus', (new GetMenusInteractor())->getAll($this->getLangID(), true));
+            Context::addTo('block_variables', 'articles', (new GetArticlesInteractor())->getAll(null, null, null, $this->getLangID(), true));
+            Context::addTo('block_variables', 'article_categories', (new GetArticleCategoriesInteractor())->getAll($this->getLangID(), true));
+            Context::addTo('block_variables', 'global_blocks', (new GetBlocksInteractor())->getGlobalBlocks(true));
+            Context::addTo('block_variables', 'medias', (new GetMediasInteractor())->getAll(true));
+            Context::addTo('block_variables', 'media_formats', (new GetMediaFormatsInteractor())->getAll(true));
 
-            $params = \App::make('BlockTypesVariable')->getVariables();
-            $params['block_types'] = Context::getRepository('block_type')->findAll();
+            $params = Context::get('block_variables');
+            $params['block_types'] = Context::get('block_type')->findAll();
 
 		    return view('w-cms-laravel::back.editorial.pages.edit', $params);
 

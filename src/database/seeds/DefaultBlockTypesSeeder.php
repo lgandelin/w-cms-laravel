@@ -25,7 +25,7 @@ class DefaultBlockTypesSeeder extends Seeder {
             $blockType->setFrontView($type['front_view']);
             $blockType->setOrder($type['order']);
 
-            Context::getRepository('block_type')->createBlockType($blockType);
+            Context::get('block_type')->createBlockType($blockType);
             $this->command->info('Block type [' . $blockType->getCode() . '] inserted successfully !');
         }
     }

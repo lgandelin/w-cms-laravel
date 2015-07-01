@@ -10,7 +10,6 @@ use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Commands\CreateThemeCommand;
 use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
 use Webaccess\WCMSLaravel\Helpers\AdminMenu;
-use Webaccess\WCMSLaravel\Helpers\BlockTypesVariable;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
 use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
 use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleListRepository;
@@ -76,11 +75,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
             return new AdminMenu();
         });
 
-        $this->app->singleton('BlockTypesVariable', function()
-        {
-            return new BlockTypesVariable();
-        });
-
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
 
         //Facades
@@ -117,24 +111,24 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         });
 
         //Init Context
-        Context::addRepository('page', new EloquentPageRepository());
-        Context::addRepository('area', new EloquentAreaRepository());
-        Context::addRepository('lang', new EloquentLangRepository());
-        Context::addRepository('block', new EloquentBlockRepository());
-        Context::addRepository('menu', new EloquentMenuRepository());
-        Context::addRepository('menu_item', new EloquentMenuItemRepository());
-        Context::addRepository('article', new EloquentArticleRepository());
-        Context::addRepository('article_category', new EloquentArticleCategoryRepository());
-        Context::addRepository('media', new EloquentMediaRepository());
-        Context::addRepository('media_format', new EloquentMediaFormatRepository());
-        Context::addRepository('user', new EloquentUserRepository());
-        Context::addRepository('block_type', new EloquentBlockTypeRepository());
+        Context::add('page', new EloquentPageRepository());
+        Context::add('area', new EloquentAreaRepository());
+        Context::add('lang', new EloquentLangRepository());
+        Context::add('block', new EloquentBlockRepository());
+        Context::add('menu', new EloquentMenuRepository());
+        Context::add('menu_item', new EloquentMenuItemRepository());
+        Context::add('article', new EloquentArticleRepository());
+        Context::add('article_category', new EloquentArticleCategoryRepository());
+        Context::add('media', new EloquentMediaRepository());
+        Context::add('media_format', new EloquentMediaFormatRepository());
+        Context::add('user', new EloquentUserRepository());
+        Context::add('block_type', new EloquentBlockTypeRepository());
 
-        Context::addRepository('block_html', new EloquentBlockHTMLRepository());
-        Context::addRepository('block_menu', new EloquentBlockMenuRepository());
-        Context::addRepository('block_article', new EloquentBlockArticleRepository());
-        Context::addRepository('block_article_list', new EloquentBlockArticleListRepository());
-        Context::addRepository('block_media', new EloquentBlockMediaRepository());
-        Context::addRepository('block_view', new EloquentBlockViewRepository());
+        Context::add('block_html', new EloquentBlockHTMLRepository());
+        Context::add('block_menu', new EloquentBlockMenuRepository());
+        Context::add('block_article', new EloquentBlockArticleRepository());
+        Context::add('block_article_list', new EloquentBlockArticleListRepository());
+        Context::add('block_media', new EloquentBlockMediaRepository());
+        Context::add('block_view', new EloquentBlockViewRepository());
     }
 }

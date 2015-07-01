@@ -13,4 +13,4 @@ class DeleteAreaListener
 
         Log::info('Area successfully deleted : ID=' . $area->getID() . ' - Name=' . $area->getName());
     }
-} 
+}

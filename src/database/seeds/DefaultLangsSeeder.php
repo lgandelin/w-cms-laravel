@@ -20,7 +20,7 @@ class DefaultLangsSeeder extends Seeder {
             $lang->setPrefix($l['prefix']);
             $lang->setIsDefault($l['is_default']);
 
-            Context::getRepository('lang')->createLang($lang);
+            Context::get('lang')->createLang($lang);
             $this->command->info('Lang [' . $lang->getCode() . '] inserted successfully !');
         }
     }
