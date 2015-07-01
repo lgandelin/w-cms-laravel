@@ -9,9 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Commands\CreateThemeCommand;
 use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
-use Webaccess\WCMSLaravel\Helpers\AdminMenu;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
-use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
 use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleListRepository;
 use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleRepository;
 use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockHTMLRepository;
@@ -70,11 +68,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app->singleton('AdminMenu', function()
-        {
-            return new AdminMenu();
-        });
-
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
 
         //Facades
@@ -102,13 +95,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         $this->commands(
             array('CreateUserCommand', 'GenerateThemeCommand')
         );
-
-        $this->app->bind('EventDispatcher', function() {
-            $eventDispatcher = new CMSLaravelEventManager();
-            $eventDispatcher->addListener(Events::DELETE_AREA, array(new DeleteAreaListener(), 'onDeleteArea'));
-
-            return $eventDispatcher;
-        });
 
         //Init Context
         Context::add('page', new EloquentPageRepository());
