@@ -1,11 +1,17 @@
 @extends('w-cms-laravel::back.master')
 
 @section('page_title')
-{{ trans('w-cms-laravel::header.medias_create') }}
+    {{ trans('w-cms-laravel::header.medias_create') }}
 @stop
 
 @section('page_name')
-{{ trans('w-cms-laravel::header.medias_create') }}
+    {{ trans('w-cms-laravel::header.medias_create') }}
+@stop
+
+@section('javascripts')
+    @parent
+    {!! HTML::script('vendor/w-cms-laravel/back/vendor/cropper-master/dist/cropper.js') !!}
+    {!! HTML::script('vendor/w-cms-laravel/back/js/medias.js') !!}
 @stop
 
 @section('content')

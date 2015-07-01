@@ -100,6 +100,7 @@
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		{!! HTML::script('vendor/w-cms-laravel/back/vendor/bootstrap/js/bootstrap.min.js') !!}
 		{!! HTML::script('vendor/w-cms-laravel/back/vendor/ckeditor/ckeditor.js') !!}
+		{!! HTML::script('vendor/w-cms-laravel/back/js/includes.js') !!}
 
         <script type="text/javascript">
             var route_pages_update_infos = "{{ route('back_pages_update_infos') }}";

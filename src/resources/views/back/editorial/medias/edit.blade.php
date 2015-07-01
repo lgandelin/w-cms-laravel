@@ -1,20 +1,21 @@
 @extends('w-cms-laravel::back.master')
 
 @section('page_title')
-{{ trans('w-cms-laravel::header.medias_edit') }} > {{ $media->name }}
+    {{ trans('w-cms-laravel::header.medias_edit') }} > {{ $media->name }}
 @stop
 
 @section('page_name')
-{{ trans('w-cms-laravel::header.medias_edit') }} > {{ $media->name }}
+    {{ trans('w-cms-laravel::header.medias_edit') }} > {{ $media->name }}
 @stop
 
 @section('stylesheets')
-{!! HTML::style('vendor/w-cms-laravel/back/vendor/cropper-master/dist/cropper.min.css') !!}
+    {!! HTML::style('vendor/w-cms-laravel/back/vendor/cropper-master/dist/cropper.min.css') !!}
 @stop
 
 @section('javascripts')
-{!! HTML::script('vendor/w-cms-laravel/back/vendor/cropper-master/dist/cropper.js') !!}
-{!! HTML::script('vendor/w-cms-laravel/back/js/medias.js') !!}
+    @parent
+    {!! HTML::script('vendor/w-cms-laravel/back/vendor/cropper-master/dist/cropper.js') !!}
+    {!! HTML::script('vendor/w-cms-laravel/back/js/medias.js') !!}
 @stop
 
 @section('content')
