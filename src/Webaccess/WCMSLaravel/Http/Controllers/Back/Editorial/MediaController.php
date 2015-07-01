@@ -53,7 +53,7 @@ class MediaController extends AdminController
     public function edit($mediaID)
     {
         try {
-            $media = (new GetMediaInteractor())->getMediaByID($mediaID, true);
+            $media = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
 
             return view('w-cms-laravel::back.editorial.medias.edit', [
                 'media' => $media,
@@ -75,7 +75,7 @@ class MediaController extends AdminController
             $fileName = $mediaID . '.' . $type;
         }
 
-        $oldMedia = (new GetMediaInteractor())->getMediaByID($mediaID, true);
+        $oldMedia = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
 
         $mediaStructure = new DataStructure([
             'name' => \Input::get('name'),
@@ -190,7 +190,7 @@ class MediaController extends AdminController
         $x = \Input::get('x');
         $y = \Input::get('y');
 
-        $media = (new GetMediaInteractor())->getMediaByID($mediaID, true);
+        $media = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
         $mediaFormat = (new GetMediaFormatInteractor())->getMediaFormatByID($mediaFormatID, true);
 
         $fileName = $media->fileName;
