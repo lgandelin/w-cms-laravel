@@ -5,11 +5,11 @@
 @stop
 
 @section('javascripts')
+    @parent
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 	{!! HTML::script('vendor/w-cms-laravel/back/js/page_content.js') !!}
 	{!! HTML::script('vendor/w-cms-laravel/back/js/page_structure_areas.js') !!}
 	{!! HTML::script('vendor/w-cms-laravel/back/js/page_structure_blocks.js') !!}
-	{!! HTML::script('vendor/w-cms-laravel/back/js/includes.js') !!}
 @stop
 
 @section('content')
