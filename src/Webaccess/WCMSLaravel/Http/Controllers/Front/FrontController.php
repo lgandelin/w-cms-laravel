@@ -18,9 +18,12 @@ class FrontController extends Controller
         $uri = ($uri != '/') ? '/' . $uri : '/';
         $theme = Theme::get();
 
-        if (!\Cache::has($uri)) {
+        if (!\Cache::has($uri) || env('CACHE_ENABLED') === false) {
             $page = (new GetPageContentInteractor())->run($uri, true);
-            \Cache::put($uri, $page, 24 * 60);
+
+            if (env('CACHE_ENABLED')) {
+                \Cache::put($uri, $page, 24 * 60);
+            }
         } else {
             $page = \Cache::get($uri);
         }
