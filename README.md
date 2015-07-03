@@ -1,7 +1,7 @@
 ##W CMS - Laravel package
 
 
-W CMS is a web application created to provide a complete content management system, easy to use and to help people writing their content.
+W CMS is a web application created to provide a complete and easy way to manage users web pages.
 
 **This repository is the Laravel package created for the [W CMS - Core package](https://github.com/lgandelin/w-cms-core).**
 
@@ -11,67 +11,72 @@ W CMS is a web application created to provide a complete content management syst
 - SEO implementation
 - Multilingual
 - Page architecture divided in Areas and Blocks, with dynamic reorganization (size, drag and drop)
-- Page templates
-- Multiple types of Blocks : HMTL, Menus, Articles, Galleries, Custom ...
-- User management for the back-office, with roles and permissions
+- Image management (crop, compression, automatic sizes...)
+- Mutliple types of Blocks (HMTL, Images, Menus, Files, Articles, Galleries, Custom ...)
+-  Users permissions management
 
 
 ##Requirements
 
-- Laravel 4
-- PHP 5.4
+- PHP 5.5.9
+- MySQL database
 
 
 ##Installation
 
-1. Install Laravel :
+###Laravel installation
 
-        composer create-project laravel/laravel your-application --prefer-dist
+1. Create a new Laravel application :
 
-        
-2. Add the package to your composer.json file :
+        composer create-project laravel/laravel --prefer-dist your-app
 
-        "require": {
-            "webaccess/w-cms-laravel": "dev-master"
-        }
+2. Setup the database configuration in your .env file
 
-    and update your composer dependencies :
+3. Set the application namespace :
+
+        cd your-app && php artisan app:name YourApp
+
+4. Remove the base routes file content (in app/Http/routes.php)
+
+
+###W CMS Laravel package installation
+
+1. In your composer.json file, add the following line in the require section :
+
+        "webaccess/w-cms-laravel": "dev-master"
+
+    then update composer dependencies with :
 
         composer update
 
-
-3. Add the CMS service provider in your app.file to enable the package :
+2. Add the W CMS Laravel service provider in your config/app.php file to enable the package :
     
-        'providers' => array(
+        'providers' => [
                 [...],
-                'Webaccess\WCMSLaravel\WCMSLaravelServiceProvider',
-        ),
+                Webaccess\WCMSLaravel\WCMSLaravelServiceProvider::class,
+        ],
 
  
-4. Configure your app.php and your environment
+3. Run the following commands. Be sure to replace your "theme name" with our own.
 
-5. Execute the package migration to update your database :
+        php artisan vendor:publish &&
+        composer dump-autoload &&
+        php artisan migrate &&
+        php artisan db:seed --class=DefaultLangsSeeder &&
+        php artisan db:seed --class=DefaultBlockTypesSeeder &&
+        php artisan db:seed --class=SamplePageDataSeeder &&
+        php artisan users:create admin &&
+        php artisan theme:create your-theme-name
 
-        php artisan migrate --package=webaccess/w-cms-laravel
+    The commands will publish all the necessary files in your application, migrate the database and populate it with sample data. Finally, it will create the "admin" user, generate a password for you, and create a new theme.
 
-6. Publish the package assets :
+4. In your config/auth.php file, set the "driver" field to "database", and the "table" field to "w_cms_users"
 
-        php artisan asset:publish
-
-7.  Execute the package seeds :
-
-        php artisan db:seed --class=WCMSSeeder
 
 ##Usage
 
-- Front page : http://your-application.dev/ (your web root)
-- Back-office interface : http://your-application.dev/admin
-    - **Login** : jdoe
-    - **Password** : 111aaa
-
-
-##Roadmap
-Please go the the [W CMS - Core package](https://github.com/lgandelin/w-cms-core/blob/master/ROADMAP.md).
+- Front page : http://your-app.dev/ (your web root)
+- Admin interface : http://your-app.dev/admin (log in with the info provided in 3.)
 
 
 ##License
