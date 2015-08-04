@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Commands\CreateThemeCommand;
+use Webaccess\WCMSLaravel\Commands\PublishThemeCommand;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
 use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleListRepository;
 use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleRepository;
@@ -91,8 +92,12 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
             return new CreateThemeCommand();
         });
 
+        $this->app->bind('PublishThemeCommand', function() {
+            return new PublishThemeCommand();
+        });
+
         $this->commands(
-            array('CreateUserCommand', 'GenerateThemeCommand')
+            array('CreateUserCommand', 'GenerateThemeCommand', 'PublishThemeCommand')
         );
 
         //Init Context
