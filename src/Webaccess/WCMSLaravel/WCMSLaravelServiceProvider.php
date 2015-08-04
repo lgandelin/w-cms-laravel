@@ -8,7 +8,6 @@ use Illuminate\Support\ServiceProvider;
 
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Commands\CreateThemeCommand;
-use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
 use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleListRepository;
 use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleRepository;

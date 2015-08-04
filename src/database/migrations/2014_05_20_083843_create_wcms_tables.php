@@ -9,9 +9,9 @@ class CreateWCMSTables extends Migration {
 	{
 		Schema::create('w_cms_websites', function($table) {
 		    $table->increments('id');
-		    $table->string('name');
-		    $table->string('url');
-		    $table->string('theme');
+		    $table->string('name')->nullable();
+		    $table->string('url')->nullable();
+		    $table->string('theme')->nullable();
 		    $table->timestamps();
 		});
 
@@ -36,8 +36,8 @@ class CreateWCMSTables extends Migration {
             $table->string('password')->nullable();
             $table->string('last_name')->nullable();
             $table->string('first_name')->nullable();
-            $table->string('remember_token', 64);
-            $table->boolean('is_admin');
+            $table->string('remember_token', 64)->nullable();
+            $table->boolean('is_admin')->nullable();
             $table->timestamps();
         });
 
