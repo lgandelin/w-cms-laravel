@@ -65,14 +65,14 @@
                         <!-- EDITORIAL -->
 
                         <!-- STRUCTURE -->
-                        <li class="dropdown">
+                        <!--<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('w-cms-laravel::header.structure') }} <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ route('back_structure') }}"><span class="icon glyphicon glyphicon-tower"></span>{{ trans('w-cms-laravel::header.structure') }}</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{{ route('back_global_blocks_index') }}"><span class="icon glyphicon glyphicon-th"></span>{{ trans('w-cms-laravel::header.blocks') }}</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                         <!-- STRUCTURE -->
 
                         <!-- GENERAL -->
