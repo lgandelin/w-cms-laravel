@@ -3,11 +3,11 @@
 namespace Webaccess\WCMSLaravel;
 
 use CMS\Context;
-use CMS\Events\Events;
 use Illuminate\Support\ServiceProvider;
 
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Commands\CreateThemeCommand;
+use Webaccess\WCMSLaravel\Commands\InitCommand;
 use Webaccess\WCMSLaravel\Commands\PublishThemeCommand;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
 use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleListRepository;
@@ -96,8 +96,12 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
             return new PublishThemeCommand();
         });
 
+        $this->app->bind('InitCommand', function() {
+            return new InitCommand();
+        });
+
         $this->commands(
-            array('CreateUserCommand', 'GenerateThemeCommand', 'PublishThemeCommand')
+            array('CreateUserCommand', 'GenerateThemeCommand', 'PublishThemeCommand', 'InitCommand')
         );
 
         //Init Context

@@ -3,8 +3,6 @@
 namespace Webaccess\WCMSLaravel\Commands;
 
 use Illuminate\Console\Command;
-use Webaccess\WCMSLaravel\Helpers\Theme;
-use Webaccess\WCMSLaravel\Helpers\WCMSLaravelModuleServiceProvider;
 
 class PublishThemeCommand extends Command
 {

@@ -39,7 +39,7 @@ class CreateThemeCommand extends Command
     public function handle()
     {
         $theme = $this->argument('theme');
-        exec('mkdir -p themes && cd themes && git clone -b develop https://github.com/lgandelin/w-cms-base-theme.git ' . $theme);
+        exec('mkdir -p themes && cd themes && curl -L -o w-cms-base-theme-develop.tar.gz https://github.com/lgandelin/w-cms-base-theme/archive/develop.tar.gz && tar xzf w-cms-base-theme-develop.tar.gz && mv w-cms-base-theme-develop ' . $theme . ' && rm w-cms-base-theme-develop.tar.gz');
         if (!$website = Website::first()) {
             $website = new Website();
         }
