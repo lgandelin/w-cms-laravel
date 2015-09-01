@@ -71,10 +71,8 @@ class LangController extends AdminController
             (new UpdateLangInteractor())->run($langID, $langStructure);
             return \Redirect::route('back_langs_index');
         } catch (\Exception $e) {
-            return view('w-cms-laravel::back.general.langs.edit', [
-                'error' => $e->getMessage(),
-                'lang' => $langStructure
-            ]);
+            \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_langs_index');
         }
     }
 

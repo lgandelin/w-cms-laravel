@@ -34,7 +34,8 @@ class PageController extends AdminController
 	public function create()
 	{
 		return view('w-cms-laravel::back.editorial.pages.create', [
-            'master_pages' => (new GetPagesInteractor())->getMasterPages(true),
+            //'master_pages' => (new GetPagesInteractor())->getMasterPages(true),
+            'master_pages' => [],
         ]);
 	}
 
@@ -67,7 +68,7 @@ class PageController extends AdminController
 
 	public function edit($pageID)
 	{
-		try {
+		//try {
             $page = (new GetPageInteractor())->getPageByID($pageID, true);
             $areas = (new GetAreasInteractor())->getAll($pageID, true);
 
@@ -90,14 +91,14 @@ class PageController extends AdminController
             Context::addTo('block_variables', 'media_formats', (new GetMediaFormatsInteractor())->getAll(true));
 
             $params = Context::get('block_variables');
-            $params['block_types'] = Context::get('block_type')->findAll();
+            $params['block_types'] = Context::get('block_type')->findAll(true);
 
 		    return view('w-cms-laravel::back.editorial.pages.edit', $params);
 
-		} catch (\Exception $e) {
+		/*} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());
             return \Redirect::route('back_pages_index');
-		}
+		}*/
 	}
 
     public function update_infos()

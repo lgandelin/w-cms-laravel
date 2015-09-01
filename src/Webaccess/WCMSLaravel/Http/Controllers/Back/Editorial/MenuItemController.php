@@ -26,7 +26,6 @@ class MenuItemController extends AdminController
         try {
             $menuItemID = (new CreateMenuItemInteractor())->run($menuItemStructure);
             $menuItem = (new GetMenuItemInteractor())->getMenuItemByID($menuItemID, true);
-
             return json_encode(array('success' => true, 'menu_item' => $menuItem->toArray()));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));

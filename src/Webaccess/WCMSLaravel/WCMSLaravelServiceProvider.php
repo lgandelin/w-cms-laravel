@@ -2,7 +2,6 @@
 
 namespace Webaccess\WCMSLaravel;
 
-use CMS\Context;
 use Illuminate\Support\ServiceProvider;
 
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
@@ -10,24 +9,7 @@ use Webaccess\WCMSLaravel\Commands\CreateThemeCommand;
 use Webaccess\WCMSLaravel\Commands\InitCommand;
 use Webaccess\WCMSLaravel\Commands\PublishThemeCommand;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleListRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockHTMLRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockMediaRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockMenuRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockViewRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentBlockRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentBlockTypeRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentLangRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMediaFormatRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMediaRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMenuItemRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentUserRepository;
+
 
 class WCMSLaravelServiceProvider extends ServiceProvider {
 
@@ -103,26 +85,5 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         $this->commands(
             array('CreateUserCommand', 'GenerateThemeCommand', 'PublishThemeCommand', 'InitCommand')
         );
-
-        //Init Context
-        Context::add('page', new EloquentPageRepository());
-        Context::add('area', new EloquentAreaRepository());
-        Context::add('lang', new EloquentLangRepository());
-        Context::add('block', new EloquentBlockRepository());
-        Context::add('menu', new EloquentMenuRepository());
-        Context::add('menu_item', new EloquentMenuItemRepository());
-        Context::add('article', new EloquentArticleRepository());
-        Context::add('article_category', new EloquentArticleCategoryRepository());
-        Context::add('media', new EloquentMediaRepository());
-        Context::add('media_format', new EloquentMediaFormatRepository());
-        Context::add('user', new EloquentUserRepository());
-        Context::add('block_type', new EloquentBlockTypeRepository());
-
-        Context::add('block_html', new EloquentBlockHTMLRepository());
-        Context::add('block_menu', new EloquentBlockMenuRepository());
-        Context::add('block_article', new EloquentBlockArticleRepository());
-        Context::add('block_article_list', new EloquentBlockArticleListRepository());
-        Context::add('block_media', new EloquentBlockMediaRepository());
-        Context::add('block_view', new EloquentBlockViewRepository());
     }
 }
