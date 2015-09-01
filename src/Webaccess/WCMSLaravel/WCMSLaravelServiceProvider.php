@@ -28,6 +28,10 @@ use Webaccess\WCMSLaravel\Repositories\EloquentMenuItemRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentUserRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONAreaRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONBlockRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONLangRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONPageRepository;
 
 class WCMSLaravelServiceProvider extends ServiceProvider {
 
@@ -105,10 +109,14 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         );
 
         //Init Context
-        Context::add('page', new EloquentPageRepository());
-        Context::add('area', new EloquentAreaRepository());
-        Context::add('lang', new EloquentLangRepository());
-        Context::add('block', new EloquentBlockRepository());
+        //Context::add('page', new EloquentPageRepository());
+        //Context::add('area', new EloquentAreaRepository());
+        //Context::add('lang', new EloquentLangRepository());
+        //Context::add('block', new EloquentBlockRepository());
+        Context::add('page', new JSONPageRepository());
+        Context::add('area', new JSONAreaRepository());
+        Context::add('block', new JSONBlockRepository());
+        Context::add('lang', new JSONLangRepository());
         Context::add('menu', new EloquentMenuRepository());
         Context::add('menu_item', new EloquentMenuItemRepository());
         Context::add('article', new EloquentArticleRepository());
@@ -119,6 +127,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         Context::add('block_type', new EloquentBlockTypeRepository());
 
         Context::add('block_html', new EloquentBlockHTMLRepository());
+        //Context::add('block_html', new JSONBlockHTMLRepository());
         Context::add('block_menu', new EloquentBlockMenuRepository());
         Context::add('block_article', new EloquentBlockArticleRepository());
         Context::add('block_article_list', new EloquentBlockArticleListRepository());

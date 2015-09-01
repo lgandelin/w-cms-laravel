@@ -34,7 +34,8 @@ class PageController extends AdminController
 	public function create()
 	{
 		return view('w-cms-laravel::back.editorial.pages.create', [
-            'master_pages' => (new GetPagesInteractor())->getMasterPages(true),
+            //'master_pages' => (new GetPagesInteractor())->getMasterPages(true),
+            'master_pages' => [],
         ]);
 	}
 
