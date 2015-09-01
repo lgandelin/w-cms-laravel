@@ -10,36 +10,24 @@ use Webaccess\WCMSLaravel\Commands\CreateThemeCommand;
 use Webaccess\WCMSLaravel\Commands\InitCommand;
 use Webaccess\WCMSLaravel\Commands\PublishThemeCommand;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleListRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockHTMLRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockMediaRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockMenuRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockViewRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentBlockRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentBlockTypeRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentLangRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMediaFormatRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMediaRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMenuItemRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentUserRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONAreaRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONArticleCategoryRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONArticleRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONBlockRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONBlockTypeRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONLangRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONMediaFormatRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONMediaRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONMenuItemRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONMenuRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONPageRepository;
-use Webaccess\WCMSLaravel\Repositories\JSONUserRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\Blocks\JSONBlockArticleListRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\Blocks\JSONBlockArticleRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\Blocks\JSONBlockHTMLRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\Blocks\JSONBlockMediaRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\Blocks\JSONBlockMenuRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\Blocks\JSONBlockViewRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONAreaRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONArticleCategoryRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONArticleRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONBlockRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONBlockTypeRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONLangRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONMediaFormatRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONMediaRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONMenuItemRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONMenuRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONPageRepository;
+use Webaccess\WCMSLaravel\Repositories\JSON\JSONUserRepository;
 
 class WCMSLaravelServiceProvider extends ServiceProvider {
 
@@ -116,22 +104,17 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
             array('CreateUserCommand', 'GenerateThemeCommand', 'PublishThemeCommand', 'InitCommand')
         );
 
-        //Init Context
-        //Context::add('page', new EloquentPageRepository());
-        //Context::add('area', new EloquentAreaRepository());
-        //Context::add('lang', new EloquentLangRepository());
-        //Context::add('media', new EloquentMediaRepository());
-        //Context::add('media_format', new EloquentMediaFormatRepository());
-        //Context::add('menu', new EloquentMenuRepository());
-        //Context::add('menu_item', new EloquentMenuItemRepository());
-        //Context::add('user', new EloquentUserRepository());
-        //Context::add('block_type', new EloquentBlockTypeRepository());
-        //Context::add('article', new EloquentArticleRepository());
-        //Context::add('article_category', new EloquentArticleCategoryRepository());
+        //Init repositories
+        Context::add('block_html', new JSONBlockHTMLRepository());
+        Context::add('block_menu', new JSONBlockMenuRepository());
+        Context::add('block_article', new JSONBlockArticleRepository());
+        Context::add('block_article_list', new JSONBlockArticleListRepository());
+        Context::add('block_media', new JSONBlockMediaRepository());
+        Context::add('block_view', new JSONBlockViewRepository());
 
         Context::add('page', new JSONPageRepository());
         Context::add('area', new JSONAreaRepository());
-        Context::add('block', new EloquentBlockRepository()); //TODO
+        Context::add('block', new JSONBlockRepository());
         Context::add('lang', new JSONLangRepository());
         Context::add('menu', new JSONMenuRepository());
         Context::add('menu_item', new JSONMenuItemRepository());
@@ -141,12 +124,5 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         Context::add('user', new JSONUserRepository());
         Context::add('article_category', new JSONArticleCategoryRepository());
         Context::add('block_type', new JSONBlockTypeRepository());
-
-        Context::add('block_html', new EloquentBlockHTMLRepository()); //TODO
-        Context::add('block_menu', new EloquentBlockMenuRepository()); //TODO
-        Context::add('block_article', new EloquentBlockArticleRepository()); //TODO
-        Context::add('block_article_list', new EloquentBlockArticleListRepository()); //TODO
-        Context::add('block_media', new EloquentBlockMediaRepository()); //TODO
-        Context::add('block_view', new EloquentBlockViewRepository()); //TODO
     }
 }
