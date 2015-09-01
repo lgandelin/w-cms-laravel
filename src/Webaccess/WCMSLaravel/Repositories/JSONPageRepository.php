@@ -76,7 +76,6 @@ class JSONPageRepository implements PageRepositoryInterface
         $this->counter++;
         $page->setID($this->counter);
         $this->pages[]= $page;
-
         $this->writeToJSON();
 
         return $this->counter;

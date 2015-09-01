@@ -29,9 +29,17 @@ use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
 use Webaccess\WCMSLaravel\Repositories\EloquentUserRepository;
 use Webaccess\WCMSLaravel\Repositories\JSONAreaRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONArticleCategoryRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONArticleRepository;
 use Webaccess\WCMSLaravel\Repositories\JSONBlockRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONBlockTypeRepository;
 use Webaccess\WCMSLaravel\Repositories\JSONLangRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONMediaFormatRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONMediaRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONMenuItemRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONMenuRepository;
 use Webaccess\WCMSLaravel\Repositories\JSONPageRepository;
+use Webaccess\WCMSLaravel\Repositories\JSONUserRepository;
 
 class WCMSLaravelServiceProvider extends ServiceProvider {
 
@@ -112,26 +120,33 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         //Context::add('page', new EloquentPageRepository());
         //Context::add('area', new EloquentAreaRepository());
         //Context::add('lang', new EloquentLangRepository());
-        //Context::add('block', new EloquentBlockRepository());
+        //Context::add('media', new EloquentMediaRepository());
+        //Context::add('media_format', new EloquentMediaFormatRepository());
+        //Context::add('menu', new EloquentMenuRepository());
+        //Context::add('menu_item', new EloquentMenuItemRepository());
+        //Context::add('user', new EloquentUserRepository());
+        //Context::add('block_type', new EloquentBlockTypeRepository());
+        //Context::add('article', new EloquentArticleRepository());
+        //Context::add('article_category', new EloquentArticleCategoryRepository());
+
         Context::add('page', new JSONPageRepository());
         Context::add('area', new JSONAreaRepository());
-        Context::add('block', new JSONBlockRepository());
+        Context::add('block', new EloquentBlockRepository()); //TODO
         Context::add('lang', new JSONLangRepository());
-        Context::add('menu', new EloquentMenuRepository());
-        Context::add('menu_item', new EloquentMenuItemRepository());
-        Context::add('article', new EloquentArticleRepository());
-        Context::add('article_category', new EloquentArticleCategoryRepository());
-        Context::add('media', new EloquentMediaRepository());
-        Context::add('media_format', new EloquentMediaFormatRepository());
-        Context::add('user', new EloquentUserRepository());
-        Context::add('block_type', new EloquentBlockTypeRepository());
+        Context::add('menu', new JSONMenuRepository());
+        Context::add('menu_item', new JSONMenuItemRepository());
+        Context::add('media', new JSONMediaRepository());
+        Context::add('media_format', new JSONMediaFormatRepository());
+        Context::add('article', new JSONArticleRepository());
+        Context::add('user', new JSONUserRepository());
+        Context::add('article_category', new JSONArticleCategoryRepository());
+        Context::add('block_type', new JSONBlockTypeRepository());
 
-        Context::add('block_html', new EloquentBlockHTMLRepository());
-        //Context::add('block_html', new JSONBlockHTMLRepository());
-        Context::add('block_menu', new EloquentBlockMenuRepository());
-        Context::add('block_article', new EloquentBlockArticleRepository());
-        Context::add('block_article_list', new EloquentBlockArticleListRepository());
-        Context::add('block_media', new EloquentBlockMediaRepository());
-        Context::add('block_view', new EloquentBlockViewRepository());
+        Context::add('block_html', new EloquentBlockHTMLRepository()); //TODO
+        Context::add('block_menu', new EloquentBlockMenuRepository()); //TODO
+        Context::add('block_article', new EloquentBlockArticleRepository()); //TODO
+        Context::add('block_article_list', new EloquentBlockArticleListRepository()); //TODO
+        Context::add('block_media', new EloquentBlockMediaRepository()); //TODO
+        Context::add('block_view', new EloquentBlockViewRepository()); //TODO
     }
 }

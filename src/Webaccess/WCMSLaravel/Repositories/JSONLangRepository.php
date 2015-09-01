@@ -48,7 +48,6 @@ class JSONLangRepository implements LangRepositoryInterface
         $this->counter++;
         $lang->setID($this->counter);
         $this->langs[]= $lang;
-
         $this->writeToJSON();
 
         return $this->counter;

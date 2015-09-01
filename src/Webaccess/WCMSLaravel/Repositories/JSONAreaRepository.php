@@ -36,6 +36,10 @@ class JSONAreaRepository implements AreaRepositoryInterface
             }
         }
 
+        usort($areas, function($a, $b) {
+            return ($a->getOrder() < $b->getOrder()) ? -1 : 1;
+        });
+
         return $areas;
     }
 
@@ -54,7 +58,6 @@ class JSONAreaRepository implements AreaRepositoryInterface
         $this->counter++;
         $area->setID($this->counter);
         $this->areas[]= $area;
-
         $this->writeToJSON();
 
         return $this->counter;

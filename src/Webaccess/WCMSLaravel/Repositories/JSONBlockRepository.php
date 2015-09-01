@@ -59,7 +59,6 @@ class JSONBlockRepository implements BlockRepositoryInterface
         $this->counter++;
         $block->setID($this->counter);
         $this->blocks[]= $block;
-
         $this->writeToJSON();
 
         return $this->counter;
