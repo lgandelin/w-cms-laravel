@@ -3,6 +3,9 @@
 namespace Webaccess\WCMSLaravel\Commands;
 
 use Illuminate\Console\Command;
+use CMS\Fixtures\BlockTypesFixtures;
+use CMS\Fixtures\LangsFixtures;
+use CMS\Fixtures\PagesFixtures;
 
 class InitCommand extends Command
 {
@@ -37,10 +40,9 @@ class InitCommand extends Command
      */
     public function handle()
     {
-        $this->call('migrate');
-        $this->call('db:seed', array('--class' => 'DefaultLangsSeeder'));
-        $this->call('db:seed', array('--class' => 'DefaultBlockTypesSeeder'));
-        $this->call('db:seed', array('--class' => 'SamplePageDataSeeder'));
+        BlockTypesFixtures::run();
+        LangsFixtures::run();
+        PagesFixtures::run();
 
         $this->info('Application successfully initialized');
     }
