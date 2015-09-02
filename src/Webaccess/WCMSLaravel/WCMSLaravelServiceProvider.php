@@ -35,10 +35,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         ], 'config');
 
         $this->publishes([
-            __DIR__.'/../../database/' => base_path('/database')
-        ], 'database');
-
-        $this->publishes([
             __DIR__.'/../../public/back' => base_path('/public/vendor/w-cms-laravel/back')
         ], 'back_assets');
     }
