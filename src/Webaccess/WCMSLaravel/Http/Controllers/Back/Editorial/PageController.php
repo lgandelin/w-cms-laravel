@@ -2,23 +2,23 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Context;
-use CMS\Interactors\Areas\GetAreasInteractor;
-use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
-use CMS\Interactors\Articles\GetArticlesInteractor;
-use CMS\Interactors\Blocks\GetBlocksInteractor;
-use CMS\Interactors\Langs\GetLangInteractor;
-use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
-use CMS\Interactors\Medias\GetMediasInteractor;
-use CMS\Interactors\Menus\GetMenusInteractor;
-use CMS\Interactors\Pages\CreatePageFromMasterInteractor;
-use CMS\Interactors\Pages\CreatePageInteractor;
-use CMS\Interactors\Pages\DeletePageInteractor;
-use CMS\Interactors\Pages\DuplicatePageInteractor;
-use CMS\Interactors\Pages\GetPageInteractor;
-use CMS\Interactors\Pages\GetPagesInteractor;
-use CMS\Interactors\Pages\UpdatePageInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Context;
+use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
+use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
+use Webaccess\WCMSCore\Interactors\Articles\GetArticlesInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\GetMediasInteractor;
+use Webaccess\WCMSCore\Interactors\Menus\GetMenusInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\CreatePageFromMasterInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\CreatePageInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\DeletePageInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\DuplicatePageInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\GetPageInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\GetPagesInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\UpdatePageInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class PageController extends AdminController

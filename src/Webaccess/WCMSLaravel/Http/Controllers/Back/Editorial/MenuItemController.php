@@ -2,11 +2,11 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Interactors\MenuItems\CreateMenuItemInteractor;
-use CMS\Interactors\MenuItems\DeleteMenuItemInteractor;
-use CMS\Interactors\MenuItems\GetMenuItemInteractor;
-use CMS\Interactors\MenuItems\UpdateMenuItemInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Interactors\MenuItems\CreateMenuItemInteractor;
+use Webaccess\WCMSCore\Interactors\MenuItems\DeleteMenuItemInteractor;
+use Webaccess\WCMSCore\Interactors\MenuItems\GetMenuItemInteractor;
+use Webaccess\WCMSCore\Interactors\MenuItems\UpdateMenuItemInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class MenuItemController extends AdminController

@@ -2,12 +2,12 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Interactors\ArticleCategories\CreateArticleCategoryInteractor;
-use CMS\Interactors\ArticleCategories\DeleteArticleCategoryInteractor;
-use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
-use CMS\Interactors\ArticleCategories\GetArticleCategoryInteractor;
-use CMS\Interactors\ArticleCategories\UpdateArticleCategoryInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Interactors\ArticleCategories\CreateArticleCategoryInteractor;
+use Webaccess\WCMSCore\Interactors\ArticleCategories\DeleteArticleCategoryInteractor;
+use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
+use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoryInteractor;
+use Webaccess\WCMSCore\Interactors\ArticleCategories\UpdateArticleCategoryInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class ArticleCategoryController extends AdminController

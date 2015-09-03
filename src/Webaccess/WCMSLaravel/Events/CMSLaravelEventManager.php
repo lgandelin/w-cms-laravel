@@ -2,8 +2,8 @@
 
 namespace Webaccess\WCMSLaravel\Events;
 
-use CMS\Events\EventInterface;
-use CMS\Events\EventManagerInterface;
+use Webaccess\WCMSCore\Events\EventInterface;
+use Webaccess\WCMSCore\Events\EventManagerInterface;
 use Illuminate\Support\Facades\Event;
 
 class CMSLaravelEventManager implements EventManagerInterface

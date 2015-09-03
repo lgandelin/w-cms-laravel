@@ -22,8 +22,8 @@
         "webaccess/w-cms-core": "0.9.2"
     },
     "autoload": {
-        "psr-0": {
-            "Webaccess\\WCMSLaravel\\": "src/"
+        "psr-4": {
+            "Webaccess\\WCMSLaravel\\": "src/Webaccess/WCMSLaravel"
         }
     },
     "minimum-stability": "dev"

@@ -2,12 +2,12 @@
 
 namespace Webaccess\WCMSLaravel\Commands;
 
-use CMS\Interactors\Users\CreateUserInteractor;
+use Webaccess\WCMSCore\Interactors\Users\CreateUserInteractor;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-use CMS\DataStructure;
+use Webaccess\WCMSCore\DataStructure;
 
 class CreateUserCommand extends Command {
 

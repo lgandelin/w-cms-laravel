@@ -2,7 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Front;
 
-use CMS\Interactors\Pages\GetPageContentInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\GetPageContentInteractor;
 use Illuminate\Routing\Controller;
 use Webaccess\WCMSLaravel\Helpers\Theme;
 

@@ -3,9 +3,9 @@
 namespace Webaccess\WCMSLaravel\Commands;
 
 use Illuminate\Console\Command;
-use CMS\Fixtures\BlockTypesFixtures;
-use CMS\Fixtures\LangsFixtures;
-use CMS\Fixtures\PagesFixtures;
+use Webaccess\WCMSCore\Fixtures\BlockTypesFixtures;
+use Webaccess\WCMSCore\Fixtures\LangsFixtures;
+use Webaccess\WCMSCore\Fixtures\PagesFixtures;
 
 class InitCommand extends Command
 {

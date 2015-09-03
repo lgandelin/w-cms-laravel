@@ -2,12 +2,12 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Interactors\MediaFormats\CreateMediaFormatInteractor;
-use CMS\Interactors\MediaFormats\DeleteMediaFormatInteractor;
-use CMS\Interactors\MediaFormats\GetMediaFormatInteractor;
-use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
-use CMS\Interactors\MediaFormats\UpdateMediaFormatInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Interactors\MediaFormats\CreateMediaFormatInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFormats\DeleteMediaFormatInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFormats\UpdateMediaFormatInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class MediaFormatController extends AdminController

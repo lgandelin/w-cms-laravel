@@ -2,12 +2,12 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Interactors\Blocks\CreateBlockInteractor;
-use CMS\Interactors\Blocks\DeleteBlockInteractor;
-use CMS\Interactors\Blocks\GetBlockInteractor;
-use CMS\Interactors\Blocks\UpdateBlockInteractor;
-use CMS\Interactors\Blocks\UpdateBlockTypeInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Interactors\Blocks\CreateBlockInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\DeleteBlockInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\GetBlockInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\UpdateBlockInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\UpdateBlockTypeInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class BlockController extends AdminController

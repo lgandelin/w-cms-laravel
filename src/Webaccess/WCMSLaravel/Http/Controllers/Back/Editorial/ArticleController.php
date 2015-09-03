@@ -2,21 +2,21 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
-use CMS\Interactors\ArticleCategories\GetArticleCategoryInteractor;
-use CMS\Interactors\Articles\CreateArticleInteractor;
-use CMS\Interactors\Articles\DeleteArticleInteractor;
-use CMS\Interactors\Articles\GetArticleInteractor;
-use CMS\Interactors\Articles\GetArticlesInteractor;
-use CMS\Interactors\Articles\UpdateArticleInteractor;
-use CMS\Interactors\Medias\GetMediasInteractor;
-use CMS\Interactors\Pages\CreatePageFromMasterInteractor;
-use CMS\Interactors\Pages\GetPageInfoFromMasterInteractor;
-use CMS\Interactors\Pages\GetPageInteractor;
-use CMS\Interactors\Pages\GetPagesInteractor;
-use CMS\Interactors\Users\GetUserInteractor;
-use CMS\DataStructure;
-use CMS\Structures\Blocks\ArticleBlockStructure;
+use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
+use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoryInteractor;
+use Webaccess\WCMSCore\Interactors\Articles\CreateArticleInteractor;
+use Webaccess\WCMSCore\Interactors\Articles\DeleteArticleInteractor;
+use Webaccess\WCMSCore\Interactors\Articles\GetArticleInteractor;
+use Webaccess\WCMSCore\Interactors\Articles\GetArticlesInteractor;
+use Webaccess\WCMSCore\Interactors\Articles\UpdateArticleInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\GetMediasInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\CreatePageFromMasterInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\GetPageInfoFromMasterInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\GetPageInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\GetPagesInteractor;
+use Webaccess\WCMSCore\Interactors\Users\GetUserInteractor;
+use Webaccess\WCMSCore\DataStructure;
+use Webaccess\WCMSCore\Structures\Blocks\ArticleBlockStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class ArticleController extends AdminController

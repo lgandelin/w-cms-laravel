@@ -2,9 +2,9 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back;
 
-use CMS\Context;
-use CMS\Interactors\Langs\GetLangInteractor;
-use CMS\Interactors\Langs\GetLangsInteractor;
+use Webaccess\WCMSCore\Context;
+use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\GetLangsInteractor;
 use Illuminate\Routing\Controller;
 
 class AdminController extends Controller

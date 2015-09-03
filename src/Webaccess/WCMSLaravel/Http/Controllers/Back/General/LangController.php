@@ -2,12 +2,12 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\General;
 
-use CMS\Interactors\Langs\CreateLangInteractor;
-use CMS\Interactors\Langs\DeleteLangInteractor;
-use CMS\Interactors\Langs\GetLangInteractor;
-use CMS\Interactors\Langs\GetLangsInteractor;
-use CMS\Interactors\Langs\UpdateLangInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Interactors\Langs\CreateLangInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\DeleteLangInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\GetLangsInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\UpdateLangInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class LangController extends AdminController
