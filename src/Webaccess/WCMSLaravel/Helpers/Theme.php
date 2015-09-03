@@ -2,6 +2,8 @@
 
 namespace Webaccess\WCMSLaravel\Helpers;
 
+use Webaccess\WCMSCore\Context;
+
 class Theme
 {
     public static function load()
@@ -18,6 +20,6 @@ class Theme
 
     public static function get()
     {
-        return 'my-theme';
+        return Context::get('theme')->findSelectedThemeIdentifier();
     }
 }

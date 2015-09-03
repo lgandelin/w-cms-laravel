@@ -8,6 +8,7 @@ use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Commands\CreateThemeCommand;
 use Webaccess\WCMSLaravel\Commands\InitCommand;
 use Webaccess\WCMSLaravel\Commands\PublishThemeCommand;
+use Webaccess\WCMSLaravel\Commands\SelectThemeCommand;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
 
 
@@ -78,8 +79,12 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
             return new InitCommand();
         });
 
+        $this->app->bind('SelectThemeCommand', function() {
+            return new SelectThemeCommand();
+        });
+
         $this->commands(
-            array('CreateUserCommand', 'GenerateThemeCommand', 'PublishThemeCommand', 'InitCommand')
+            array('CreateUserCommand', 'GenerateThemeCommand', 'PublishThemeCommand', 'InitCommand', 'SelectThemeCommand')
         );
     }
 }
