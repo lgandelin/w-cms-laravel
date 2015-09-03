@@ -2,14 +2,14 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Interactors\MediaFormats\GetMediaFormatInteractor;
-use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
-use CMS\Interactors\Medias\CreateMediaInteractor;
-use CMS\Interactors\Medias\DeleteMediaInteractor;
-use CMS\Interactors\Medias\GetMediaInteractor;
-use CMS\Interactors\Medias\GetMediasInteractor;
-use CMS\Interactors\Medias\UpdateMediaInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\CreateMediaInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\DeleteMediaInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\GetMediaInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\GetMediasInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\UpdateMediaInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use Webaccess\WCMSLaravel\Facades\Shortcut;
@@ -53,7 +53,7 @@ class MediaController extends AdminController
     public function edit($mediaID)
     {
         try {
-            $media = (new GetMediaInteractor())->getMediaByID($mediaID, true);
+            $media = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
 
             return view('w-cms-laravel::back.editorial.medias.edit', [
                 'media' => $media,
@@ -75,7 +75,7 @@ class MediaController extends AdminController
             $fileName = $mediaID . '.' . $type;
         }
 
-        $oldMedia = (new GetMediaInteractor())->getMediaByID($mediaID, true);
+        $oldMedia = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
 
         $mediaStructure = new DataStructure([
             'name' => \Input::get('name'),
@@ -190,7 +190,7 @@ class MediaController extends AdminController
         $x = \Input::get('x');
         $y = \Input::get('y');
 
-        $media = (new GetMediaInteractor())->getMediaByID($mediaID, true);
+        $media = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
         $mediaFormat = (new GetMediaFormatInteractor())->getMediaFormatByID($mediaFormatID, true);
 
         $fileName = $media->fileName;

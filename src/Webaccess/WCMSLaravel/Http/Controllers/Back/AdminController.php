@@ -2,8 +2,9 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back;
 
-use CMS\Interactors\Langs\GetLangInteractor;
-use CMS\Interactors\Langs\GetLangsInteractor;
+use Webaccess\WCMSCore\Context;
+use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\GetLangsInteractor;
 use Illuminate\Routing\Controller;
 
 class AdminController extends Controller
@@ -19,7 +20,7 @@ class AdminController extends Controller
         //Global variables
         \View::share('user', \Auth::user());
         \View::share('langs', (new GetLangsInteractor())->getAll(true));
-        \View::share('editorial_menu_items', \App::make('AdminMenu')->getItems());
+        \View::share('editorial_menu_items', Context::get('editorial_menu_items'));
 
         if (!\Session::has('lang_id')) {
             \Session::put('lang_id', (new GetLangInteractor())->getDefaultLangID());

@@ -2,8 +2,6 @@
 
 namespace Webaccess\WCMSLaravel\Helpers;
 
-use Webaccess\WCMSLaravel\Models\Website;
-
 class Theme
 {
     public static function load()
@@ -20,6 +18,6 @@ class Theme
 
     public static function get()
     {
-        return Website::first()->theme;
+        return 'my-theme';
     }
 }

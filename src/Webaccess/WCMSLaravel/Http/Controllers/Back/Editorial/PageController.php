@@ -2,23 +2,23 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Context;
-use CMS\Interactors\Areas\GetAreasInteractor;
-use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
-use CMS\Interactors\Articles\GetArticlesInteractor;
-use CMS\Interactors\Blocks\GetBlocksInteractor;
-use CMS\Interactors\Langs\GetLangInteractor;
-use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
-use CMS\Interactors\Medias\GetMediasInteractor;
-use CMS\Interactors\Menus\GetMenusInteractor;
-use CMS\Interactors\Pages\CreatePageFromMasterInteractor;
-use CMS\Interactors\Pages\CreatePageInteractor;
-use CMS\Interactors\Pages\DeletePageInteractor;
-use CMS\Interactors\Pages\DuplicatePageInteractor;
-use CMS\Interactors\Pages\GetPageInteractor;
-use CMS\Interactors\Pages\GetPagesInteractor;
-use CMS\Interactors\Pages\UpdatePageInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Context;
+use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
+use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
+use Webaccess\WCMSCore\Interactors\Articles\GetArticlesInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\GetMediasInteractor;
+use Webaccess\WCMSCore\Interactors\Menus\GetMenusInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\CreatePageFromMasterInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\CreatePageInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\DeletePageInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\DuplicatePageInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\GetPageInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\GetPagesInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\UpdatePageInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class PageController extends AdminController
@@ -34,7 +34,8 @@ class PageController extends AdminController
 	public function create()
 	{
 		return view('w-cms-laravel::back.editorial.pages.create', [
-            'master_pages' => (new GetPagesInteractor())->getMasterPages(true),
+            //'master_pages' => (new GetPagesInteractor())->getMasterPages(true),
+            'master_pages' => [],
         ]);
 	}
 
@@ -67,7 +68,7 @@ class PageController extends AdminController
 
 	public function edit($pageID)
 	{
-		try {
+		//try {
             $page = (new GetPageInteractor())->getPageByID($pageID, true);
             $areas = (new GetAreasInteractor())->getAll($pageID, true);
 
@@ -81,23 +82,23 @@ class PageController extends AdminController
                 }
             }
 
-            \App::make('BlockTypesVariable')->addVariable('page', $page);
-            \App::make('BlockTypesVariable')->addVariable('menus', (new GetMenusInteractor())->getAll($this->getLangID(), true));
-            \App::make('BlockTypesVariable')->addVariable('articles', (new GetArticlesInteractor())->getAll(null, null, null, $this->getLangID(), true));
-            \App::make('BlockTypesVariable')->addVariable('article_categories', (new GetArticleCategoriesInteractor())->getAll($this->getLangID(), true));
-            \App::make('BlockTypesVariable')->addVariable('global_blocks', (new GetBlocksInteractor())->getGlobalBlocks(true));
-            \App::make('BlockTypesVariable')->addVariable('medias', (new GetMediasInteractor())->getAll(true));
-            \App::make('BlockTypesVariable')->addVariable('media_formats', (new GetMediaFormatsInteractor())->getAll(true));
+            Context::addTo('block_variables', 'page', $page);
+            Context::addTo('block_variables', 'menus', (new GetMenusInteractor())->getAll($this->getLangID(), true));
+            Context::addTo('block_variables', 'articles', (new GetArticlesInteractor())->getAll(null, null, null, $this->getLangID(), true));
+            Context::addTo('block_variables', 'article_categories', (new GetArticleCategoriesInteractor())->getAll($this->getLangID(), true));
+            Context::addTo('block_variables', 'global_blocks', (new GetBlocksInteractor())->getGlobalBlocks(true));
+            Context::addTo('block_variables', 'medias', (new GetMediasInteractor())->getAll(true));
+            Context::addTo('block_variables', 'media_formats', (new GetMediaFormatsInteractor())->getAll(true));
 
-            $params = \App::make('BlockTypesVariable')->getVariables();
-            $params['block_types'] = Context::getRepository('block_type')->findAll();
+            $params = Context::get('block_variables');
+            $params['block_types'] = Context::get('block_type')->findAll(true);
 
 		    return view('w-cms-laravel::back.editorial.pages.edit', $params);
 
-		} catch (\Exception $e) {
+		/*} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());
             return \Redirect::route('back_pages_index');
-		}
+		}*/
 	}
 
     public function update_infos()

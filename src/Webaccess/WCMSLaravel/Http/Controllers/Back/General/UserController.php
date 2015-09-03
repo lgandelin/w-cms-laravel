@@ -2,12 +2,12 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\General;
 
-use CMS\Interactors\Users\CreateUserInteractor;
-use CMS\Interactors\Users\DeleteUserInteractor;
-use CMS\Interactors\Users\GetUserInteractor;
-use CMS\Interactors\Users\GetUsersInteractor;
-use CMS\Interactors\Users\UpdateUserInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Interactors\Users\CreateUserInteractor;
+use Webaccess\WCMSCore\Interactors\Users\DeleteUserInteractor;
+use Webaccess\WCMSCore\Interactors\Users\GetUserInteractor;
+use Webaccess\WCMSCore\Interactors\Users\GetUsersInteractor;
+use Webaccess\WCMSCore\Interactors\Users\UpdateUserInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class UserController extends AdminController

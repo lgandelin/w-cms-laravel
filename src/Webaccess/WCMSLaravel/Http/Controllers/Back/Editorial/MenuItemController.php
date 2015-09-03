@@ -2,11 +2,11 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Interactors\MenuItems\CreateMenuItemInteractor;
-use CMS\Interactors\MenuItems\DeleteMenuItemInteractor;
-use CMS\Interactors\MenuItems\GetMenuItemInteractor;
-use CMS\Interactors\MenuItems\UpdateMenuItemInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Interactors\MenuItems\CreateMenuItemInteractor;
+use Webaccess\WCMSCore\Interactors\MenuItems\DeleteMenuItemInteractor;
+use Webaccess\WCMSCore\Interactors\MenuItems\GetMenuItemInteractor;
+use Webaccess\WCMSCore\Interactors\MenuItems\UpdateMenuItemInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class MenuItemController extends AdminController
@@ -26,7 +26,6 @@ class MenuItemController extends AdminController
         try {
             $menuItemID = (new CreateMenuItemInteractor())->run($menuItemStructure);
             $menuItem = (new GetMenuItemInteractor())->getMenuItemByID($menuItemID, true);
-
             return json_encode(array('success' => true, 'menu_item' => $menuItem->toArray()));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));

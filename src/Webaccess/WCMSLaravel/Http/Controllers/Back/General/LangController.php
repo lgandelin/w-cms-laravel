@@ -2,12 +2,12 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\General;
 
-use CMS\Interactors\Langs\CreateLangInteractor;
-use CMS\Interactors\Langs\DeleteLangInteractor;
-use CMS\Interactors\Langs\GetLangInteractor;
-use CMS\Interactors\Langs\GetLangsInteractor;
-use CMS\Interactors\Langs\UpdateLangInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Interactors\Langs\CreateLangInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\DeleteLangInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\GetLangsInteractor;
+use Webaccess\WCMSCore\Interactors\Langs\UpdateLangInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class LangController extends AdminController
@@ -71,10 +71,8 @@ class LangController extends AdminController
             (new UpdateLangInteractor())->run($langID, $langStructure);
             return \Redirect::route('back_langs_index');
         } catch (\Exception $e) {
-            return view('w-cms-laravel::back.general.langs.edit', [
-                'error' => $e->getMessage(),
-                'lang' => $langStructure
-            ]);
+            \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_langs_index');
         }
     }
 

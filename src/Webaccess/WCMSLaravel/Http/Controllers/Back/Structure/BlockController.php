@@ -2,24 +2,24 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Structure;
 
-use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
-use CMS\Interactors\Articles\GetArticlesInteractor;
-use CMS\Interactors\Blocks\CreateBlockInteractor;
-use CMS\Interactors\Blocks\DeleteBlockInteractor;
-use CMS\Interactors\Blocks\GetBlockInteractor;
-use CMS\Interactors\Blocks\GetBlocksInteractor;
-use CMS\Interactors\Blocks\UpdateBlockInteractor;
-use CMS\Interactors\MediaFormats\GetMediaFormatsInteractor;
-use CMS\Interactors\Medias\GetMediaInteractor;
-use CMS\Interactors\Medias\GetMediasInteractor;
-use CMS\Interactors\Menus\GetMenusInteractor;
-use CMS\Structures\Blocks\ArticleBlockStructure;
-use CMS\Structures\Blocks\ArticleListBlockStructure;
-use CMS\Structures\Blocks\HTMLBlockStructure;
-use CMS\Structures\Blocks\MediaBlockStructure;
-use CMS\Structures\Blocks\MenuBlockStructure;
-use CMS\Structures\Blocks\ViewFileBlockStructure;
-use CMS\Structures\BlockStructure;
+use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
+use Webaccess\WCMSCore\Interactors\Articles\GetArticlesInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\CreateBlockInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\DeleteBlockInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\GetBlockInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\UpdateBlockInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\GetMediaInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\GetMediasInteractor;
+use Webaccess\WCMSCore\Interactors\Menus\GetMenusInteractor;
+use Webaccess\WCMSCore\Structures\Blocks\ArticleBlockStructure;
+use Webaccess\WCMSCore\Structures\Blocks\ArticleListBlockStructure;
+use Webaccess\WCMSCore\Structures\Blocks\HTMLBlockStructure;
+use Webaccess\WCMSCore\Structures\Blocks\MediaBlockStructure;
+use Webaccess\WCMSCore\Structures\Blocks\MenuBlockStructure;
+use Webaccess\WCMSCore\Structures\Blocks\ViewFileBlockStructure;
+use Webaccess\WCMSCore\Structures\BlockStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class BlockController extends AdminController

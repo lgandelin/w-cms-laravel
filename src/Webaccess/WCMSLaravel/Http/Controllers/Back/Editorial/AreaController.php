@@ -2,11 +2,11 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use CMS\Interactors\Areas\CreateAreaInteractor;
-use CMS\Interactors\Areas\DeleteAreaInteractor;
-use CMS\Interactors\Areas\GetAreaInteractor;
-use CMS\Interactors\Areas\UpdateAreaInteractor;
-use CMS\DataStructure;
+use Webaccess\WCMSCore\Interactors\Areas\CreateAreaInteractor;
+use Webaccess\WCMSCore\Interactors\Areas\DeleteAreaInteractor;
+use Webaccess\WCMSCore\Interactors\Areas\GetAreaInteractor;
+use Webaccess\WCMSCore\Interactors\Areas\UpdateAreaInteractor;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class AreaController extends AdminController

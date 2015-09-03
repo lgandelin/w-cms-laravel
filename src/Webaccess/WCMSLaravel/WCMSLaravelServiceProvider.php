@@ -2,35 +2,14 @@
 
 namespace Webaccess\WCMSLaravel;
 
-use CMS\Context;
-use CMS\Events\Events;
 use Illuminate\Support\ServiceProvider;
 
 use Webaccess\WCMSLaravel\Commands\CreateUserCommand;
 use Webaccess\WCMSLaravel\Commands\CreateThemeCommand;
-use Webaccess\WCMSLaravel\Events\CMSLaravelEventManager;
-use Webaccess\WCMSLaravel\Helpers\AdminMenu;
-use Webaccess\WCMSLaravel\Helpers\BlockTypesVariable;
+use Webaccess\WCMSLaravel\Commands\InitCommand;
+use Webaccess\WCMSLaravel\Commands\PublishThemeCommand;
 use Webaccess\WCMSLaravel\Helpers\ShortcutHelper;
-use Webaccess\WCMSLaravel\Listeners\DeleteAreaListener;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleListRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockArticleRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockHTMLRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockMediaRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockMenuRepository;
-use Webaccess\WCMSLaravel\Repositories\Blocks\EloquentBlockViewRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentAreaRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentArticleCategoryRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentArticleRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentBlockRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentBlockTypeRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentLangRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMediaFormatRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMediaRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMenuItemRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentMenuRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentPageRepository;
-use Webaccess\WCMSLaravel\Repositories\EloquentUserRepository;
+
 
 class WCMSLaravelServiceProvider extends ServiceProvider {
 
@@ -56,10 +35,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
         ], 'config');
 
         $this->publishes([
-            __DIR__.'/../../database/' => base_path('/database')
-        ], 'database');
-
-        $this->publishes([
             __DIR__.'/../../public/back' => base_path('/public/vendor/w-cms-laravel/back')
         ], 'back_assets');
     }
@@ -71,16 +46,6 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app->singleton('AdminMenu', function()
-        {
-            return new AdminMenu();
-        });
-
-        $this->app->singleton('BlockTypesVariable', function()
-        {
-            return new BlockTypesVariable();
-        });
-
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
 
         //Facades
@@ -105,36 +70,16 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
             return new CreateThemeCommand();
         });
 
-        $this->commands(
-            array('CreateUserCommand', 'GenerateThemeCommand')
-        );
-
-        $this->app->bind('EventDispatcher', function() {
-            $eventDispatcher = new CMSLaravelEventManager();
-            $eventDispatcher->addListener(Events::DELETE_AREA, array(new DeleteAreaListener(), 'onDeleteArea'));
-
-            return $eventDispatcher;
+        $this->app->bind('PublishThemeCommand', function() {
+            return new PublishThemeCommand();
         });
 
-        //Init Context
-        Context::addRepository('page', new EloquentPageRepository());
-        Context::addRepository('area', new EloquentAreaRepository());
-        Context::addRepository('lang', new EloquentLangRepository());
-        Context::addRepository('block', new EloquentBlockRepository());
-        Context::addRepository('menu', new EloquentMenuRepository());
-        Context::addRepository('menu_item', new EloquentMenuItemRepository());
-        Context::addRepository('article', new EloquentArticleRepository());
-        Context::addRepository('article_category', new EloquentArticleCategoryRepository());
-        Context::addRepository('media', new EloquentMediaRepository());
-        Context::addRepository('media_format', new EloquentMediaFormatRepository());
-        Context::addRepository('user', new EloquentUserRepository());
-        Context::addRepository('block_type', new EloquentBlockTypeRepository());
+        $this->app->bind('InitCommand', function() {
+            return new InitCommand();
+        });
 
-        Context::addRepository('block_html', new EloquentBlockHTMLRepository());
-        Context::addRepository('block_menu', new EloquentBlockMenuRepository());
-        Context::addRepository('block_article', new EloquentBlockArticleRepository());
-        Context::addRepository('block_article_list', new EloquentBlockArticleListRepository());
-        Context::addRepository('block_media', new EloquentBlockMediaRepository());
-        Context::addRepository('block_view', new EloquentBlockViewRepository());
+        $this->commands(
+            array('CreateUserCommand', 'GenerateThemeCommand', 'PublishThemeCommand', 'InitCommand')
+        );
     }
 }
