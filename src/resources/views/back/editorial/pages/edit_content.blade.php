@@ -81,6 +81,7 @@
         @endif
     </div>
     <!-- Blocks content -->
+    <input type="button" class="btn-publish btn btn-success pull-right" value="{{ trans('w-cms-laravel::generic.publish') }}" data-page-uri="{{ $page->uri }}" />
 </div>
 <!-- CONTENT -->
 

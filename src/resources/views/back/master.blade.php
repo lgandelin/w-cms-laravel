@@ -105,6 +105,7 @@
         <script type="text/javascript">
             var route_pages_update_infos = "{{ route('back_pages_update_infos') }}";
             var route_pages_update_seo = "{{ route('back_pages_update_seo') }}";
+            var route_pages_clear_cache = "{{ route('back_pages_clear_cache') }}";
 
             var route_areas_get_infos = "{{ route('back_areas_get_infos') }}";
             var route_areas_update_infos = "{{ route('back_areas_update_infos') }}";

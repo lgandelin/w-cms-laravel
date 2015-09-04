@@ -129,4 +129,19 @@ $(document).ready(function() {
         $(this).closest('.content').hide();
         $(this).closest('.block').find('.opening-status').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
     });
+
+    $('body').on('click', '.btn-publish', function() {
+        var data = {
+            'uri': $(this).data('page-uri'),
+            '_token': $('input[name="_token"]').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: route_pages_clear_cache,
+            data: data,
+            success: function(data) {
+            }
+        });
+    });
 });
