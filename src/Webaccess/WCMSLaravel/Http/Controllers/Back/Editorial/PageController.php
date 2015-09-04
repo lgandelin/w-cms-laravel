@@ -157,4 +157,11 @@ class PageController extends AdminController
             return \Redirect::route('back_pages_index');
         }
     }
+
+    public function clear_cache()
+    {
+        if (env('CACHE_ENABLED')) {
+            \Cache::forget(\Input::get('uri'));
+        }
+    }
 }

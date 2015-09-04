@@ -19,6 +19,7 @@ Route::post('/admin/editorial/pages/update_page_infos', array('as' => 'back_page
 Route::post('/admin/editorial/pages/update_page_seo', array('as' => 'back_pages_update_seo', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@update_seo'));
 Route::get('/admin/editorial/pages/delete/{pageID}', array('as' => 'back_pages_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@delete'));
 Route::get('/admin/editorial/pages/duplicate/{pageID}', array('as' => 'back_pages_duplicate', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@duplicate'));
+Route::post('/admin/editorial/pages/clear_cache', array('as' => 'back_pages_clear_cache', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@clear_cache'));
 
 //BACK > EDITORIAL > PAGES > AREAS
 Route::get('/admin/editorial/areas/get_infos/{areaID?}', array('as' => 'back_areas_get_infos', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\AreaController@get_infos'));

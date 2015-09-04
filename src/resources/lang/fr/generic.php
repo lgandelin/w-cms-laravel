@@ -17,4 +17,5 @@ return array(
     'right' => 'Droite',
     'content' => 'Contenu',
     'default_option_name' => 'Choisissez une valeur',
+    'publish' => 'Publier',
 );

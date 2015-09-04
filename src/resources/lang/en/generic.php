@@ -17,4 +17,5 @@ return array(
     'right' => 'Right',
     'content' => 'Content',
     'default_option_name' => 'Choose a value',
+    'publish' => 'Publish',
 );

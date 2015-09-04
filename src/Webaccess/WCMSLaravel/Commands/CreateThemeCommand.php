@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Commands;
 
+use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Entities\Theme;
 use Illuminate\Console\Command;
 
@@ -38,11 +39,12 @@ class CreateThemeCommand extends Command
      */
     public function handle()
     {
-        $theme = $this->argument('theme');
-        exec('mkdir -p themes && cd themes && curl -L -o w-cms-base-theme-develop.tar.gz https://github.com/lgandelin/w-cms-base-theme/archive/develop.tar.gz && tar xzf w-cms-base-theme-develop.tar.gz && mv w-cms-base-theme-develop ' . $theme . ' && rm w-cms-base-theme-develop.tar.gz');
+        $themeName = $this->argument('theme');
+        exec('mkdir -p themes && cd themes && curl -L -o w-cms-base-theme-develop.tar.gz https://github.com/lgandelin/w-cms-base-theme/archive/develop.tar.gz && tar xzf w-cms-base-theme-develop.tar.gz && mv w-cms-base-theme-develop ' . $themeName . ' && rm w-cms-base-theme-develop.tar.gz');
 
         $theme = new Theme();
-        $theme->setIdentifier($theme);
-        $theme->setIsSelected(true);
+        $theme->setIdentifier($themeName);
+
+        Context::get('theme')->createTheme($theme);
     }
 }
