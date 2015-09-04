@@ -44,6 +44,9 @@
                         @endif
                     </select>
                 </div>
+                <div class="form-group col-xs-6">
+                </div>
+            </div>
 
             <div class="form-group">
                 <label for="summary">{{ trans('w-cms-laravel::articles.summary') }}</label>
@@ -55,7 +58,7 @@
                 <textarea rows="10" class="form-control ckeditor" id="text" name="text">{{{ $article->text or ''}}}</textarea>
             </div>
 
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label>{{ trans('w-cms-laravel::articles.media') }}</label>
                 <select name="media_id" class="media_id form-control" autocomplete="off">
                     <option value="">{{ trans('w-cms-laravel::pages.choose_media') }}</option>
@@ -65,7 +68,7 @@
                         @endforeach
                     @endif
                 </select>
-            </div>
+            </div>-->
 
             <div class="form-group">
                 <label for="text">{{ trans('w-cms-laravel::articles.publication_date') }}</label>
@@ -73,7 +76,7 @@
             </div>
 
             @if ($user)
-            <input type="hidden" name="author_id" value="{{ $user->id }}" />
+            <input type="hidden" name="author_id" value="{{ $user->ID }}" />
             @endif
 
             <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
