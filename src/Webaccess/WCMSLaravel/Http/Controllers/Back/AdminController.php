@@ -13,12 +13,13 @@ class AdminController extends Controller
     {
         $this->beforeFilter(function()
         {
-            if (\Auth::guest())
+            if (!\Session::has('user')) {
                 return \Redirect::to('admin/login');
+            }
         }, array('except' => ['login_index', 'login']));
 
         //Global variables
-        \View::share('user', \Auth::user());
+        \View::share('user', \Session::get('user'));
         \View::share('langs', (new GetLangsInteractor())->getAll(true));
         \View::share('editorial_menu_items', Context::get('editorial_menu_items'));
 
