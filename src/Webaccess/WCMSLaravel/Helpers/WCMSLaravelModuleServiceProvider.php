@@ -8,7 +8,7 @@ class WCMSLaravelModuleServiceProvider extends ServiceProvider
 {
     protected function initModule($module, $prefixFolder)
     {
-        $themeFolder = 'themes/' . Theme::get() . '/';
+        $themeFolder = 'themes/' . \Shortcut::get_theme() . '/';
         $config['moduleConfigFolder'] = 'config/';
         $config['moduleViewsFolder'] = 'resources/views/';
         $config['moduleLangsFolder'] = 'resources/lang/';
@@ -66,7 +66,6 @@ class WCMSLaravelModuleServiceProvider extends ServiceProvider
             ], 'database');
         }
 
-        $themeFolder = base_path() . '/themes/' . Theme::get();
         \Lang::addNamespace('w-cms-laravel-' . $module, $themeFolder . '/lang/modules/' . $module);
         \Lang::addNamespace('w-cms-laravel-' . $module . '-back', base_path('resources/lang/vendor/' . $module . '/'));
 

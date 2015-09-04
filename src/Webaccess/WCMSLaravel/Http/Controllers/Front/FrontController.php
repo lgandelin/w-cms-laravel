@@ -10,13 +10,13 @@ class FrontController extends Controller
 {
     public function __construct()
     {
-        Theme::load();
+        self::loadTheme();
     }
 
     public function index($uri = null)
     {
         $uri = ($uri != '/') ? '/' . $uri : '/';
-        $theme = Theme::get();
+        $theme = \Shortcut::get_theme();
 
         if (!\Cache::has($uri) || env('CACHE_ENABLED') === false) {
             $page = (new GetPageContentInteractor())->run($uri, true);
@@ -32,5 +32,17 @@ class FrontController extends Controller
             'page' => $page,
             'theme' => $theme
         ]);
+    }
+
+    public static function loadTheme()
+    {
+        $theme = \Shortcut::get_theme();
+        $themeFolder = base_path() . '/themes/' . $theme;
+        if (is_dir($themeFolder)) {
+            \View::addNamespace($theme, $themeFolder . '/views');
+            \Lang::addNamespace($theme, $themeFolder . '/lang');
+        } else {
+            throw new \Exception('The theme folder [' . $theme . '] is missing in ' . base_path() . '/themes/');
+        }
     }
 }
