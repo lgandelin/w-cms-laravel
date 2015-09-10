@@ -45,6 +45,6 @@ class CreateThemeCommand extends Command
         $theme = new Theme();
         $theme->setIdentifier($themeName);
 
-        Context::get('theme')->createTheme($theme);
+        Context::get('theme_repository')->createTheme($theme);
     }
 }

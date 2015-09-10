@@ -91,7 +91,7 @@ class PageController extends AdminController
             Context::addTo('block_variables', 'media_formats', (new GetMediaFormatsInteractor())->getAll(true));
 
             $params = Context::get('block_variables');
-            $params['block_types'] = Context::get('block_type')->findAll(true);
+            $params['block_types'] = Context::get('block_type_repository')->findAll(true);
 
 		    return view('w-cms-laravel::back.editorial.pages.edit', $params);
 
