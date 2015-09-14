@@ -4,13 +4,8 @@ namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
 use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
-use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
-use Webaccess\WCMSCore\Interactors\Articles\GetArticlesInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
 use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
-use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
-use Webaccess\WCMSCore\Interactors\Medias\GetMediasInteractor;
-use Webaccess\WCMSCore\Interactors\Menus\GetMenusInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\CreatePageFromMasterInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\CreatePageInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\DeletePageInteractor;
@@ -68,7 +63,7 @@ class PageController extends AdminController
 
 	public function edit($pageID)
 	{
-		//try {
+		try {
             $page = (new GetPageInteractor())->getPageByID($pageID, true);
             $areas = (new GetAreasInteractor())->getAll($pageID, true);
 
@@ -76,29 +71,24 @@ class PageController extends AdminController
                 foreach ($areas as $area) {
                     $area->blocks = (new GetBlocksInteractor())->getAllByAreaID($area->ID, true);
                     foreach ($area->blocks as $i => $block) {
+                        if (isset($block->type->back_controller) && $block->type->back_controller != '') {
+                            $block->back_view_html = (new $block->type->back_controller)->getBackView($block);
+                        }
+
                         $area->blocks[$i]= $block;
                     }
                     $page->areas[]= $area;
                 }
             }
 
-            Context::addTo('block_variables', 'page', $page);
-            Context::addTo('block_variables', 'menus', (new GetMenusInteractor())->getAll($this->getLangID(), true));
-            Context::addTo('block_variables', 'articles', (new GetArticlesInteractor())->getAll(null, null, null, $this->getLangID(), true));
-            Context::addTo('block_variables', 'article_categories', (new GetArticleCategoriesInteractor())->getAll($this->getLangID(), true));
-            Context::addTo('block_variables', 'global_blocks', (new GetBlocksInteractor())->getGlobalBlocks(true));
-            Context::addTo('block_variables', 'medias', (new GetMediasInteractor())->getAll(true));
-            Context::addTo('block_variables', 'media_formats', (new GetMediaFormatsInteractor())->getAll(true));
-
-            $params = Context::get('block_variables');
-            $params['block_types'] = Context::get('block_type_repository')->findAll(true);
-
-		    return view('w-cms-laravel::back.editorial.pages.edit', $params);
-
-		/*} catch (\Exception $e) {
+		    return view('w-cms-laravel::back.editorial.pages.edit', [
+                'block_types' => Context::get('block_type_repository')->findAll(true),
+                'page' => $page,
+            ]);
+		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());
             return \Redirect::route('back_pages_index');
-		}*/
+		}
 	}
 
     public function update_infos()

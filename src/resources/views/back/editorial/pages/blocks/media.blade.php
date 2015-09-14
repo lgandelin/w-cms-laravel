@@ -8,7 +8,7 @@
     'name' => 'media_format_id',
     'class' => 'media_format_id',
     'default_option_name' => trans('w-cms-laravel::pages.choose_media_format'),
-    'items' => $media_formats,
+    'items' => isset($media_formats) ? $media_formats : null,
     'value' => (isset($block->mediaFormatID)) ? $block->mediaFormatID : null,
     'item_property_name' => 'name',
 ])
