@@ -66,10 +66,10 @@ class WCMSLaravelModuleServiceProvider extends ServiceProvider
             ], 'database');
         }
 
-        \Lang::addNamespace('w-cms-laravel-' . $module, $themeFolder . '/lang/modules/' . $module);
+        \Lang::addNamespace('w-cms-laravel-' . $module, base_path($themeFolder . 'lang/modules/' . $module));
         \Lang::addNamespace('w-cms-laravel-' . $module . '-back', base_path('resources/lang/vendor/' . $module . '/'));
 
-        \View::addNamespace('w-cms-laravel-' . $module, $themeFolder . '/views/modules/' . $module);
+        \View::addNamespace('w-cms-laravel-' . $module, base_path($themeFolder . 'views/modules/' . $module));
         \View::addNamespace('w-cms-laravel-' . $module . '-back', base_path('resources/views/vendor/' . $module . '/'));
     }
 

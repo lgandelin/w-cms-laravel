@@ -22,7 +22,7 @@ class FrontController extends Controller
             $page = (new GetPageContentInteractor())->run($uri, true);
 
             if (env('CACHE_ENABLED')) {
-                \Cache::put($uri, $page, 24 * 60);
+                \Cache::put($uri, $page, env('CACHE_DURATION'));
             }
         } else {
             $page = \Cache::get($uri);

@@ -13,6 +13,6 @@ class ShortcutHelper
 
     public static function get_theme()
     {
-        return Context::get('theme')->findSelectedThemeIdentifier();
+        return Context::get('theme_repository')->findSelectedThemeIdentifier();
     }
 } 

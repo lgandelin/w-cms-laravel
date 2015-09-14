@@ -36,6 +36,8 @@ return array(
     'block_media' => 'Media',
     'block_media_link' => 'Media link',
     'block_media_format' => 'Media format',
+    'block_controller_class_path' => 'Class path (namespace)',
+    'block_controller_method' => 'Method',
     'block_alignment' => 'Alignment',
 
     'no_page_created_yet' => 'No page created yet',

@@ -42,30 +42,33 @@
                     </select>
                 </div>
 
-                @if (!$article->pageID)
-                    <div class="form-group col-xs-6">
-                        <label for="page_id">{{ trans('w-cms-laravel::articles.article_page_associated') }}</label>
-
-                        <select class="form-control" autocomplete="off" name="page_id">
-                            <option value="">{{ trans('w-cms-laravel::articles.choose_page') }}</option>
-                            @if (isset($master_pages))
-                                @foreach ($master_pages as $page)
-                                    <option value="{{ $page->ID }}" @if (isset($article->pageID) && $article->pageID == $page->ID) selected="selected" @endif>{{ $page->name }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                        <input type="hidden" name="create_associated_page" value="1" />
-                    </div>
-                @else
-                    <div class="form-group col-xs-6">
-                        <br/>
-                        <a href="{{ route('back_pages_edit', array('id' => $article->pageID)) }}">{{ trans('w-cms-laravel::articles.article_go_to_page_associated') }}</a>
-
-                        <input type="hidden" name="page_id" value="{{ $article->pageID }}" />
-                        <input type="hidden" name="create_associated_page" value="0" />
-                    </div>
-                @endif
+                <div class="form-group col-xs-6">
+                </div>
             </div>
+
+            <!--@if (!$article->pageID)
+                <div class="form-group col-xs-6">
+                    <label for="page_id">{{ trans('w-cms-laravel::articles.article_page_associated') }}</label>
+
+                    <select class="form-control" autocomplete="off" name="page_id">
+                        <option value="">{{ trans('w-cms-laravel::articles.choose_page') }}</option>
+                        @if (isset($master_pages))
+                            @foreach ($master_pages as $page)
+                                <option value="{{ $page->ID }}" @if (isset($article->pageID) && $article->pageID == $page->ID) selected="selected" @endif>{{ $page->name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    <input type="hidden" name="create_associated_page" value="1" />
+                </div>
+            @else
+                <div class="form-group col-xs-6">
+                    <br/>
+                    <a href="{{ route('back_pages_edit', array('id' => $article->pageID)) }}">{{ trans('w-cms-laravel::articles.article_go_to_page_associated') }}</a>
+
+                    <input type="hidden" name="page_id" value="{{ $article->pageID }}" />
+                    <input type="hidden" name="create_associated_page" value="0" />
+                </div>
+            @endif-->
 
             <div class="form-group">
                 <label for="summary">{{ trans('w-cms-laravel::articles.summary') }}</label>
@@ -77,7 +80,7 @@
                 <textarea class="form-control ckeditor" id="text" name="text">{{{ $article->text or ''}}}</textarea>
             </div>
 
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label>{{ trans('w-cms-laravel::articles.media') }}</label>
                 <select name="media_id" class="media_id form-control" autocomplete="off">
                     <option value="">{{ trans('w-cms-laravel::pages.choose_media') }}</option>
@@ -87,7 +90,7 @@
                     @endforeach
                     @endif
                 </select>
-            </div>
+            </div>-->
 
             <div class="form-group">
                 <label for="text">{{ trans('w-cms-laravel::articles.publication_date') }}</label>

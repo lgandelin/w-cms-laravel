@@ -36,6 +36,8 @@ return array(
     'block_media' => 'Média',
     'block_media_link' => 'Lien sur média',
     'block_media_format ' => 'Format de média',
+    'block_controller_class_path' => 'Chemin de la classe (namespace)',
+    'block_controller_method' => 'Méthode',
     'block_alignment' => 'Alignement',
 
     'no_page_created_yet' => 'Aucune page créée',

@@ -2,6 +2,9 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back;
 
+use Webaccess\WCMSCore\Interactors\Users\GetUserInteractor;
+use Webaccess\WCMSCore\Interactors\Users\LoginUserInteractor;
+
 class DashboardController extends AdminController
 {
     public function index()
@@ -16,13 +19,18 @@ class DashboardController extends AdminController
 
     public function login()
     {
-		$credentials = [
-            'login' =>  \Input::get('login'),
-            'password' =>  \Input::get('password')
-        ];
+        $login = \Input::get('login');
+        $password = \Input::get('password');
 
-        if (\Input::get('login') && \Auth::attempt($credentials))
-            return \Redirect::intended('admin');
+        try {
+            if ((new LoginUserInteractor())->run($login, $password)) {
+                \Session::put('user', (new GetUserInteractor())->getUserByLogin($login, true));
+
+                return \Redirect::intended('admin');
+            }
+        } catch(\Exception $e) {
+
+        }
 
         return \Redirect::intended('admin/login');
     }

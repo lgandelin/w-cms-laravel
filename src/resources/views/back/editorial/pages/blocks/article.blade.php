@@ -3,7 +3,7 @@
     'name' => 'article_id',
     'class' => 'article_id',
     'default_option_name' => trans('w-cms-laravel::pages.choose_article'),
-    'items' => $articles,
+    'items' => isset($articles) ? $articles : null,
     'value' => (isset($block->articleID)) ? $block->articleID : null,
     'item_property_name' => 'title'
 ])

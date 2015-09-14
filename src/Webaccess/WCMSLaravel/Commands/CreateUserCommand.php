@@ -47,7 +47,7 @@ class CreateUserCommand extends Command {
 
 		$userStructure = new DataStructure([
             'login' => $login,
-            'password' => \Hash::make($password),
+            'password' => sha1($password),
             'last_name' => '',
             'first_name' => '',
             'email' => '',

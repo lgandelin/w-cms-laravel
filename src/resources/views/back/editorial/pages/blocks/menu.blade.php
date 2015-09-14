@@ -3,7 +3,7 @@
     'name' => 'menu_id',
     'class' => 'menu_id',
     'default_option_name' => trans('w-cms-laravel::pages.choose_menu'),
-    'items' => $menus,
+    'items' => isset($menus) ? $menus : null,
     'value' => (isset($block->menuID)) ? $block->menuID : null,
     'item_property_name' => 'name'
 ])

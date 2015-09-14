@@ -3,7 +3,7 @@
     'name' => 'article_list_category_id',
     'class' => 'article_list_category_id',
     'default_option_name' => trans('w-cms-laravel::pages.choose_article_list_category'),
-    'items' => $article_categories,
+    'items' => isset($article_categories) ? $article_categories : null,
     'value' => (isset($block->articleListCategoryID)) ? $block->articleListCategoryID : null,
     'item_property_name' => 'name'
 ])

@@ -50,7 +50,7 @@
 
             <div class="content">
                 @foreach ($area->blocks as $block)
-                <div class="block @if ($block->masterBlockID) child-block @endif" data-id="{{ $block->ID }}" data-type="{{ $block->type }}">
+                <div class="block @if (isset($block->masterBlockID) && $block->masterBlockID) child-block @endif" data-id="{{ $block->ID }}" data-type="{{ $block->type->code }}">
                     <span class="title">
                         <span class="block_name">{{ $block->name }}</span>
                         <span class="type">{{ $block->type->code }}</span>
@@ -61,8 +61,10 @@
                         @endif
                     </span>
                     <div class="content">
-                        @if ($block->type->content_view)
-                            @include ($block->type->content_view)
+                        @if (isset($block->back_view_html))
+                            {!! $block->back_view_html !!}
+                        @elseif (isset($block->type->back_view))
+                            @include ($block->type->back_view)
                         @endif
 
                         <!-- Save -->
