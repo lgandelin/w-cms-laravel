@@ -61,8 +61,8 @@
                         @endif
                     </span>
                     <div class="content">
-                        @if (isset($block->back_view_html))
-                            {!! $block->back_view_html !!}
+                        @if (isset($block->form))
+                            {!! $block->form !!}
                         @elseif (isset($block->type->back_view))
                             @include ($block->type->back_view)
                         @endif

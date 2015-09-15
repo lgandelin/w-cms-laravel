@@ -72,7 +72,7 @@ class PageController extends AdminController
                     $area->blocks = (new GetBlocksInteractor())->getAllByAreaID($area->ID, true);
                     foreach ($area->blocks as $i => $block) {
                         if (isset($block->type->back_controller) && $block->type->back_controller != '') {
-                            $block->back_view_html = (new $block->type->back_controller)->getBackView($block);
+                            $block->form = (new $block->type->back_controller)->getForm($block);
                         }
 
                         $area->blocks[$i]= $block;

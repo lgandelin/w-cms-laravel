@@ -1,14 +1,14 @@
 <?php
 
-namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\Blocks;
+namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\BlockForms;
 
 use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSCore\Interactors\Menus\GetMenusInteractor;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
-class MenuBlockController extends AdminController
+class MenuBlockFormController extends AdminController
 {
-    public function getBackView(DataStructure $block)
+    public function getForm(DataStructure $block)
     {
         return view('w-cms-laravel::back.editorial.pages.blocks.menu', [
             'block' => $block,
