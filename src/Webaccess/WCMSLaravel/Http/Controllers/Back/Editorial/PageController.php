@@ -6,6 +6,8 @@ use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
 use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\GetMediasInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\CreatePageFromMasterInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\CreatePageInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\DeletePageInteractor;
@@ -83,6 +85,8 @@ class PageController extends AdminController
 
 		    return view('w-cms-laravel::back.editorial.pages.edit', [
                 'block_types' => Context::get('block_type_repository')->findAll(true),
+                'medias' => (new GetMediasInteractor())->getAll(true),
+                'media_formats' => (new GetMediaFormatsInteractor())->getAll(true),
                 'page' => $page,
             ]);
 		} catch (\Exception $e) {
