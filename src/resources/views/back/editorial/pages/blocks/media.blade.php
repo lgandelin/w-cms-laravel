@@ -1,6 +1,6 @@
 @include ('w-cms-laravel::back.editorial.includes.fields.media_field', [
-    'divID' => (isset($block)) ? 'block-' . $block->ID : 'block-#',
-    'media' => (isset($block) && isset($block->content) && isset($block->content->media)) ? $block->content->media : null
+    'divID' => (isset($block->ID)) ? 'block-' . $block->ID : 'block-#',
+    'media' => (isset($block->media)) ? $block->media : null
 ])
 
 @include ('w-cms-laravel::back.editorial.includes.fields.select_field', [
@@ -18,5 +18,5 @@
     'name' => 'media_link',
     'class' => 'media_link',
     'placeholder' => trans('w-cms-laravel::pages.block_media_link'),
-    'value' => (isset($block)) ? $block->mediaLink : ''
+    'value' => (isset($block->mediaLink)) ? $block->mediaLink : ''
 ])
