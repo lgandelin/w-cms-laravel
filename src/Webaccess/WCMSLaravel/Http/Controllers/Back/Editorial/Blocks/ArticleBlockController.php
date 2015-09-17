@@ -8,7 +8,7 @@ use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class ArticleBlockController extends AdminController
 {
-    public function getBackView(DataStructure $block)
+    public function index(DataStructure $block)
     {
         return view('w-cms-laravel::back.editorial.pages.blocks.article', [
             'block' => $block,

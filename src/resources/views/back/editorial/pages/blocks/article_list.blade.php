@@ -13,11 +13,11 @@
     'name' => 'article_list_number',
     'class' => 'article_list_number',
     'placeholder' => trans('w-cms-laravel::pages.block_article_list_number'),
-    'value' => (isset($block)) ? $block->article_list_number : ''
+    'value' => (isset($block->article_list_number)) ? $block->article_list_number : ''
 ])
 
 <div class="form-group">
     <label>{{ trans('w-cms-laravel::pages.block_article_list_order') }}</label>
-    <input type="radio" value="asc" name="article_list_order" class="article_list_order_asc" @if (isset($block) && $block->article_list_order == 'asc')checked @endif autocomplete="off" /> {{ trans('w-cms-laravel::generic.ascending') }}
-    <input type="radio" value="desc" name="article_list_order" class="article_list_order_desc" @if (isset($block) && $block->article_list_order == 'desc')checked @endif autocomplete="off" /> {{ trans('w-cms-laravel::generic.descending') }}
+    <input type="radio" value="asc" name="article_list_order" class="article_list_order_asc" @if (isset($block->article_list_order) && $block->article_list_order == 'asc')checked @endif autocomplete="off" /> {{ trans('w-cms-laravel::generic.ascending') }}
+    <input type="radio" value="desc" name="article_list_order" class="article_list_order_desc" @if (isset($block->article_list_order) && $block->article_list_order == 'desc')checked @endif autocomplete="off" /> {{ trans('w-cms-laravel::generic.descending') }}
 </div>

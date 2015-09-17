@@ -56,6 +56,7 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
                 'Webaccess\WCMSLaravel\Commands\CreateThemeCommand',
                 'Webaccess\WCMSLaravel\Commands\PublishThemeCommand',
                 'Webaccess\WCMSLaravel\Commands\SelectThemeCommand',
+                'Webaccess\WCMSLaravel\Commands\CreateBlockTypeCommand',
             ]
         );
     }

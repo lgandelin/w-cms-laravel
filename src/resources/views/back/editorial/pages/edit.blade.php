@@ -50,9 +50,9 @@
 
                 <div style="display: none">
                     @foreach ($block_types as $blockType)
-                        @if ($blockType->back_view)
+                        @if (isset($blockType->back_content))
                             <div id="block-template-{{ $blockType->code }}">
-                                @include($blockType->back_view)
+                                {!! $blockType->back_content !!}
                             </div>
                         @endif
                     @endforeach

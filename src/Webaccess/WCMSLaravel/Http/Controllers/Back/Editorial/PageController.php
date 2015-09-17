@@ -6,6 +6,8 @@ use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
 use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
+use Webaccess\WCMSCore\Interactors\Medias\GetMediasInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\CreatePageFromMasterInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\CreatePageInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\DeletePageInteractor;
@@ -70,19 +72,30 @@ class PageController extends AdminController
             if ($areas) {
                 foreach ($areas as $area) {
                     $area->blocks = (new GetBlocksInteractor())->getAllByAreaID($area->ID, true);
-                    foreach ($area->blocks as $i => $block) {
-                        if (isset($block->type->back_controller) && $block->type->back_controller != '') {
-                            $block->back_view_html = (new $block->type->back_controller)->getBackView($block);
+                    foreach ($area->blocks as $block) {
+                        if ($block->type->back_controller) {
+                            $block->back_content = (new $block->type->back_controller)->index($block);
+                        } elseif ($block->type->back_view) {
+                            $block->back_content = view($block->type->back_view, ['block' => $block])->render();
                         }
-
-                        $area->blocks[$i]= $block;
                     }
                     $page->areas[]= $area;
                 }
             }
 
+            $blockTypes = Context::get('block_type_repository')->findAll(true);
+            foreach ($blockTypes as $blockType) {
+                if ($blockType->back_controller) {
+                    $blockType->back_content = (new $blockType->back_controller)->index(new DataStructure());
+                } elseif ($blockType->back_view) {
+                    $blockType->back_content = view($blockType->back_view)->render();
+                }
+            }
+
 		    return view('w-cms-laravel::back.editorial.pages.edit', [
-                'block_types' => Context::get('block_type_repository')->findAll(true),
+                'block_types' => $blockTypes,
+                'medias' => (new GetMediasInteractor())->getAll(true),
+                'media_formats' => (new GetMediaFormatsInteractor())->getAll(true),
                 'page' => $page,
             ]);
 		} catch (\Exception $e) {
