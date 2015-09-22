@@ -2,9 +2,9 @@
 
 namespace Webaccess\WCMSLaravel\Commands;
 
-use Webaccess\WCMSCore\Context;
-use Webaccess\WCMSCore\Entities\Theme;
+use Webaccess\WCMSCore\DataStructure;
 use Illuminate\Console\Command;
+use Webaccess\WCMSCore\Interactors\Themes\CreateThemeInteractor;
 
 class CreateThemeCommand extends Command
 {
@@ -40,11 +40,15 @@ class CreateThemeCommand extends Command
     public function handle()
     {
         $themeName = $this->argument('theme');
-        exec('mkdir -p themes && cd themes && curl -L -o w-cms-base-theme-develop.tar.gz https://github.com/lgandelin/w-cms-base-theme/archive/develop.tar.gz && tar xzf w-cms-base-theme-develop.tar.gz && mv w-cms-base-theme-develop ' . $themeName . ' && rm w-cms-base-theme-develop.tar.gz');
 
-        $theme = new Theme();
-        $theme->setIdentifier($themeName);
+        $themeStructure = new DataStructure();
+        $themeStructure->identifier = $themeName;
 
-        Context::get('theme_repository')->createTheme($theme);
+        try {
+            (new CreateThemeInteractor())->run($themeStructure);
+            exec('mkdir -p themes && cd themes && curl -L -o w-cms-base-theme-develop.tar.gz https://github.com/lgandelin/w-cms-base-theme/archive/develop.tar.gz && tar xzf w-cms-base-theme-develop.tar.gz && mv w-cms-base-theme-develop ' . $themeName . ' && rm w-cms-base-theme-develop.tar.gz');
+        } catch(\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 }

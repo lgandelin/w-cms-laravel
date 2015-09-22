@@ -3,7 +3,9 @@
 namespace Webaccess\WCMSLaravel\Commands;
 
 use Illuminate\Console\Command;
+use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSCore\Fixtures\BlockTypesFixtures;
+use Webaccess\WCMSCore\Interactors\BlockTypes\CreateBlockTypeInteractor;
 
 class CreateBlockTypeCommand extends Command
 {
@@ -38,31 +40,37 @@ class CreateBlockTypeCommand extends Command
      */
     public function handle()
     {
-        $code = $this->ask('Enter the "code" field');
-        $name = $this->ask('Enter the "name" field');
-        $entity = $this->ask('Enter the "entity" namespace (ex: CMS\Blocks\MyBlock');
+        $blockTypeStructure = new DataStructure();
 
-        $backController = null;
+        $blockTypeStructure->code = $this->ask('Enter the "code" field');
+        $blockTypeStructure->name = $this->ask('Enter the "name" field');
+        $blockTypeStructure->entity = $this->ask('Enter the "entity" namespace (ex: CMS\Blocks\MyBlock');
+
+        $blockTypeStructure->back_controller = null;
         if ($this->confirm('Do you need a "back controller" field ? [y|n]')) {
-            $backController = $this->ask('Enter the "back controller" namespace');
+            $blockTypeStructure->back_controller = $this->ask('Enter the "back controller" namespace');
         }
 
-        $backView = null;
+        $blockTypeStructure->back_view = null;
         if ($this->confirm('Do you need a "back view" field ? [y|n]')) {
-            $backView = $this->ask('Enter the "back view" field');
+            $blockTypeStructure->back_view = $this->ask('Enter the "back view" field');
         }
 
-        $frontController = null;
+        $blockTypeStructure->front_controller = null;
         if ($this->confirm('Do you need a "front controller" field ? [y|n]')) {
-            $frontController = $this->ask('Enter the "front controller" namespace');
+            $blockTypeStructure->front_controller = $this->ask('Enter the "front controller" namespace');
         }
 
-        $frontView = null;
+        $blockTypeStructure->front_view = null;
         if ($this->confirm('Do you need a "front view" field ? [y|n]')) {
-            $frontView = $this->ask('Enter the "front view" field');
+            $blockTypeStructure->front_view = $this->ask('Enter the "front view" field');
         }
 
-        BlockTypesFixtures::addBlockType($code, $name, $entity, $backController, $backView, $frontController, $frontView, null);
-        $this->info('Block type successfully inserted !');
+        try {
+            (new CreateBlockTypeInteractor())->run($blockTypeStructure);
+            $this->info('Block type successfully inserted !');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
+use Webaccess\WCMSCore\Interactors\BlockTypes\GetBlockTypesInteractor;
 use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
 use Webaccess\WCMSCore\Interactors\Medias\GetMediasInteractor;
@@ -83,7 +83,7 @@ class PageController extends AdminController
                 }
             }
 
-            $blockTypes = Context::get('block_type_repository')->findAll(true);
+            $blockTypes = (new GetBlockTypesInteractor())->getAll(true);
             foreach ($blockTypes as $blockType) {
                 if ($blockType->back_controller) {
                     $blockType->back_content = (new $blockType->back_controller)->index(new DataStructure());

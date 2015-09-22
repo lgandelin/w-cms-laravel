@@ -2,7 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Helpers;
 
-use Webaccess\WCMSCore\Context;
+use Webaccess\WCMSCore\Interactors\Themes\GetThemeInteractor;
 
 class ShortcutHelper
 {
@@ -13,6 +13,12 @@ class ShortcutHelper
 
     public static function get_theme()
     {
-        return Context::get('theme_repository')->findSelectedThemeIdentifier();
+        try {
+            return (new GetThemeInteractor())->getThemeSelected(true)->identifier;
+        } catch(\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        return false;
     }
-} 
+}
