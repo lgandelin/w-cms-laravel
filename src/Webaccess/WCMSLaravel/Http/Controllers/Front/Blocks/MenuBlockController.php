@@ -25,7 +25,7 @@ class MenuBlockController
         $menu->items = $menuItems;
         $block->menu = $menu;
 
-        return view(\Shortcut::get_theme() . '::blocks.standard.menu', [
+        return view(\Shortcut::getTheme() . '::blocks.standard.menu', [
             'block' => $block,
         ])->render();
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webaccess\WCMSLaravel\Commands;
+namespace Webaccess\WCMSLaravel\Commands\Themes;
 
 use Illuminate\Console\Command;
 
@@ -11,7 +11,7 @@ class PublishThemeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'theme:publish {theme}';
+    protected $signature = 'w-cms:theme_publish {theme}';
 
     /**
      * The console command description.
@@ -37,8 +37,8 @@ class PublishThemeCommand extends Command
      */
     public function handle()
     {
-        $theme = $this->argument('theme');
-        $themeFolder = 'themes/' . $theme . '/';
+        $themeIdentifier = $this->argument('theme');
+        $themeFolder = 'themes/' . $themeIdentifier . '/';
 
         if (is_dir(base_path($themeFolder . 'assets/css'))) $this->recurse_copy(base_path($themeFolder . 'assets/css'), base_path('public/css'));
         if (is_dir(base_path($themeFolder . 'assets/img'))) $this->recurse_copy(base_path($themeFolder . 'assets/img'), base_path('public/img'));

@@ -1,10 +1,9 @@
 <?php
 
-namespace Webaccess\WCMSLaravel\Commands;
+namespace Webaccess\WCMSLaravel\Commands\BlockTypes;
 
 use Illuminate\Console\Command;
 use Webaccess\WCMSCore\DataStructure;
-use Webaccess\WCMSCore\Fixtures\BlockTypesFixtures;
 use Webaccess\WCMSCore\Interactors\BlockTypes\CreateBlockTypeInteractor;
 
 class CreateBlockTypeCommand extends Command
@@ -14,7 +13,7 @@ class CreateBlockTypeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'w-cms:create_block_type';
+    protected $signature = 'w-cms:block_type_create';
 
     /**
      * The console command description.

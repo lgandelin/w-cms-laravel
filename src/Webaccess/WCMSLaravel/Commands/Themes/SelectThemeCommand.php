@@ -1,6 +1,6 @@
 <?php
 
-namespace Webaccess\WCMSLaravel\Commands;
+namespace Webaccess\WCMSLaravel\Commands\Themes;
 
 use Illuminate\Console\Command;
 use Webaccess\WCMSCore\Interactors\Themes\SelectThemeInteractor;
@@ -12,7 +12,7 @@ class SelectThemeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'theme:select {theme}';
+    protected $signature = 'w-cms:theme_select {theme}';
 
     /**
      * The console command description.
@@ -38,8 +38,13 @@ class SelectThemeCommand extends Command
      */
     public function handle()
     {
-        $theme = $this->argument('theme');
+        $themeIdentifier = $this->argument('theme');
 
-        (new SelectThemeInteractor())->run($theme);
+        try {
+            (new SelectThemeInteractor())->run($themeIdentifier);
+            $this->info('Theme "' . $themeIdentifier . '" selected successfully !');
+        } catch(\Exception $e) {
+            $this->error($e->getMessage());
+        }
     }
 }

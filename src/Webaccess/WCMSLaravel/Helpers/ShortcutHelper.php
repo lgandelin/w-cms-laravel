@@ -11,10 +11,13 @@ class ShortcutHelper
         return env('W_CMS_UPLOADS_FOLDER', 'uploads/');
     }
 
-    public static function get_theme()
+    public static function getTheme()
     {
         try {
-            return (new GetThemeInteractor())->getThemeSelected(true)->identifier;
+            if ($theme = (new GetThemeInteractor())->getThemeSelected(true)) {
+
+                return $theme->identifier;
+            }
         } catch(\Exception $e) {
             dd($e->getMessage());
         }

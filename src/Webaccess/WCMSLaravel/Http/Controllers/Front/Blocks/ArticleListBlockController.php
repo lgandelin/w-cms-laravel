@@ -21,7 +21,7 @@ class ArticleListBlockController
                 $article->media = (new GetMediaInteractor())->getMediaByID($article->mediaID, null, true);
         }
 
-        return view(\Shortcut::get_theme() . '::blocks.standard.article_list', [
+        return view(\Shortcut::getTheme() . '::blocks.standard.article_list', [
             'block' => $block,
         ])->render();
     }

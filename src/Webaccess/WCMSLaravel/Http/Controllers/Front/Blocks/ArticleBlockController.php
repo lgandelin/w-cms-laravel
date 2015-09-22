@@ -12,7 +12,7 @@ class ArticleBlockController
             $block->article = (new GetArticleInteractor())->getArticleByID($block->articleID, true);
         }
 
-        return view(\Shortcut::get_theme() . '::blocks.standard.article', [
+        return view(\Shortcut::getTheme() . '::blocks.standard.article', [
             'block' => $block,
         ])->render();
     }
