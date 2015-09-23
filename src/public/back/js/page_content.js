@@ -45,6 +45,7 @@ $(document).ready(function() {
         var meta_title = $('#meta_title').val();
         var meta_description = $('#meta_description').val();
         var meta_keywords = $('#meta_keywords').val();
+        var is_indexed = $('input[name=is_indexed]:checked').val();
 
         var data = {
             'ID': page_id,
@@ -52,6 +53,7 @@ $(document).ready(function() {
             'meta_title': meta_title,
             'meta_description': meta_description,
             'meta_keywords': meta_keywords,
+            'is_indexed': (is_indexed === "true"),
             '_token': $('input[name="_token"]').val()
         };
 

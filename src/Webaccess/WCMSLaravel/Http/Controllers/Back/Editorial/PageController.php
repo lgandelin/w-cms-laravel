@@ -128,7 +128,8 @@ class PageController extends AdminController
             'uri' => \Input::get('uri'),
             'meta_title' => \Input::get('meta_title'),
             'meta_description' => \Input::get('meta_description'),
-            'meta_keywords' => \Input::get('meta_keywords')
+            'meta_keywords' => \Input::get('meta_keywords'),
+            'is_indexed' => filter_var(\Input::get('is_indexed'), FILTER_VALIDATE_BOOLEAN)
         ]);
 
         try {
