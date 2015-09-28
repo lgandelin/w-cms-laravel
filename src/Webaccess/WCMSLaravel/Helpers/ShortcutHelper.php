@@ -14,9 +14,16 @@ class ShortcutHelper
     public static function getTheme()
     {
         try {
-            if ($theme = (new GetThemeInteractor())->getThemeSelected(true)) {
+            if (!\Cache::has('current-theme') || env('CACHE_ENABLED') === false) {
+                $theme = (new GetThemeInteractor())->getThemeSelected(true);
 
-                return $theme->identifier;
+                if (env('CACHE_ENABLED')) {
+                    \Cache::put('current-theme', $theme->identifier, env('CACHE_DURATION'));
+                }
+
+                return $theme ? $theme->identifier : false;
+            } else {
+                return \Cache::get('current-theme');
             }
         } catch(\Exception $e) {
             dd($e->getMessage());
