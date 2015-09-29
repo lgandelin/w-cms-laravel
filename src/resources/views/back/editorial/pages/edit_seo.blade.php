@@ -32,7 +32,7 @@
     <!-- Meta robots -->
     <div class="form-group">
         <label for="meta_robots">{{ trans('w-cms-laravel::pages.meta_robots') }}</label>
-        {{ trans('w-cms-laravel::generic.yes') }} <input type="radio" name="is_indexed" @if ($page->is_indexed === true)checked="checked"@endif autocomplete="off" value="true">&nbsp;&nbsp;
+        {{ trans('w-cms-laravel::generic.yes') }} <input type="radio" name="is_indexed" @if ($page->is_indexed == "" || $page->is_indexed === true)checked="checked"@endif autocomplete="off" value="true">&nbsp;&nbsp;
         {{ trans('w-cms-laravel::generic.no') }} <input type="radio" name="is_indexed" @if ($page->is_indexed === false)checked="checked"@endif autocomplete="off" value="false">
     </div>
     <!-- Meta robots -->

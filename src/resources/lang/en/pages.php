@@ -16,6 +16,7 @@ return array(
     'meta_keywords' => 'Meta keywords',
     'meta_robots' => 'Index page ?',
     'master_page' => 'Master page',
+    'is_visible' => 'Display page ?',
 
     'area_name' => 'Name',
     'area_width' => 'Width',
@@ -47,6 +48,7 @@ return array(
     'add_area' => 'Add an area',
 
     'choose_menu' => 'Choose a menu',
+    'choose_article' => 'Choose an article',
     'choose_article_list_category' => 'Choose an article category',
     'choose_global_block' => 'Choose a global block',
     'choose_master_page' => 'Choose a master page',

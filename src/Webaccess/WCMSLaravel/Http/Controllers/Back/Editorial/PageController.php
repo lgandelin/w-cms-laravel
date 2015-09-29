@@ -45,7 +45,8 @@ class PageController extends AdminController
 		    'lang_id' => $this->getLangID(),
 		    'identifier' => \Input::get('identifier'),
             'master_page_id' => \Input::get('master_page_id'),
-            'is_master' => \Input::get('is_master')
+            'is_master' => \Input::get('is_master'),
+            'is_visible' => \Input::get('is_visible'),
 		]);
 
 		try {
@@ -111,6 +112,7 @@ class PageController extends AdminController
             'name' => \Input::get('name'),
             'identifier' => \Input::get('identifier'),
             'is_master' => \Input::get('is_master'),
+            'is_visible' => \Input::get('is_visible'),
         ]);
 
         try {

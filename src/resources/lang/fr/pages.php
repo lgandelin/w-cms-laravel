@@ -16,6 +16,7 @@ return array(
     'meta_keywords' => 'Meta keywords',
     'meta_robots' => 'Indexer la page ?',
     'master_page' => 'Master page',
+    'is_visible' => 'Afficher la page ?',
 
     'area_name' => 'Nom',
     'area_width' => 'Largeur',
@@ -31,7 +32,7 @@ return array(
     'block_menu' => 'Menu',
     'block_view_file' => 'Fichier "View"',
     'block_article' => 'Article',
-    'block_article_list_category' => 'Categorie d\'articles',
+    'block_article_list_category' => 'Catégorie d\'articles',
     'block_article_list_number' => 'Nombre d\'articles',
     'block_article_list_order' => 'Ordre',
     'block_media' => 'Média',
