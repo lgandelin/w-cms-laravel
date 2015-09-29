@@ -65,7 +65,7 @@
                     <div>
                         <h2>Formats</h2>
                         @foreach ($media_formats as $media_format)
-                        <div class="form-group media-format" data-media-format-id="{{ $media_format->ID }}" data-width="{{ $media_format->width }}" data-height="{{ $media_format->height }}">
+                        <div class="form-group media-format" data-media-format-id="{{ $media_format->ID }}" data-width="{{ $media_format->width }}" data-height="{{ $media_format->height }}" data-preserve-ratio="{{ $media_format->preserveRatio }}">
                             <label for="">{{ $media_format->name }} ({{ $media_format->width }} x {{ $media_format->height }})</label>
                             <div class="media-format-image">
                                 <img src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media_format->width . '_' . $media_format->height . '_' . $media->fileName) }}?date={{ time() }}" />

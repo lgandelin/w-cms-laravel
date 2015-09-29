@@ -16,12 +16,13 @@ $(document).ready(function() {
         var media_format = $(this).closest('.media-format');
         var width = media_format.attr('data-width');
         var height = media_format.attr('data-height');
+        var preserve_ratio = media_format.attr('data-preserve-ratio');
         var $image = $('.media-image-to-crop');
 
         $('.btn-valid-crop').attr('data-media-format-id', media_format.attr('data-media-format-id'));
 
         $image.cropper({
-            aspectRatio: width / height,
+            aspectRatio: (preserve_ratio > 0) ? (width / height) : false,
             data: {
                 width: width,
                 height: height

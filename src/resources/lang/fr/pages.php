@@ -57,4 +57,6 @@ return array(
 
     'is_master' => 'Maître',
     'is_ghost' => 'Fantôme',
+
+    'no_associated_media' => 'Pas de média associé',
 );
