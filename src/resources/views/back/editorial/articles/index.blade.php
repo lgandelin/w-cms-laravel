@@ -15,44 +15,44 @@
             <li class="active">{{ trans('w-cms-laravel::header.articles') }}</li>
         </ol>
 
-        <h1 class="article-header">{{ trans('w-cms-laravel::header.articles') }}</h1>
+        <h1 class="page-header">{{ trans('w-cms-laravel::header.articles') }}</h1>
 
         @if (isset($error))
-        <div class="alert alert-danger">{{ $error }}</div>
+            <div class="alert alert-danger">{{ $error }}</div>
         @endif
 
         @if ($articles)
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>{{ trans('w-cms-laravel::articles.title') }}</th>
-                    <th>{{ trans('w-cms-laravel::articles.category') }}</th>
-                    <th>{{ trans('w-cms-laravel::articles.author') }}</th>
-                    <th>{{ trans('w-cms-laravel::articles.article_page_associated') }}</th>
-                    <th>{{ trans('w-cms-laravel::generic.action') }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($articles as $article)
-                <tr>
-                    <td>{{{ $article->ID or ''}}}</td>
-                    <td>{{ $article->title }}</td>
-                    <td>@if (isset($article->category)){{ $article->category->name }} @endif</td>
-                    <td>@if (isset($article->author)){{ $article->author->first_name }} {{ $article->author->last_name }}@endif</td>
-                    <td>@if (isset($article->page))<a target="_blank" href="{{ route('front_page_index', array('uri' => $article->page->uri)) }}">{{ $article->page->name }}</a>@endif</td>
-                    <td>
-                        <a class="btn btn-default" href="{{ route('back_articles_edit', array($article->ID)) }}" title="{{ $article->title }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
-                        <a class="btn btn-danger" href="{{ route('back_articles_delete', array($article->ID)) }}" title="{{ $article->title }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
-                    </td>
-                </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ trans('w-cms-laravel::articles.title') }}</th>
+                        <th>{{ trans('w-cms-laravel::articles.category') }}</th>
+                        <th>{{ trans('w-cms-laravel::articles.author') }}</th>
+                        <th>{{ trans('w-cms-laravel::articles.article_page_associated') }}</th>
+                        <th>{{ trans('w-cms-laravel::generic.action') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($articles as $article)
+                    <tr>
+                        <td>{{{ $article->ID or ''}}}</td>
+                        <td>{{ $article->title }}</td>
+                        <td>@if (isset($article->category)){{ $article->category->name }} @endif</td>
+                        <td>@if (isset($article->author)){{ $article->author->first_name }} {{ $article->author->last_name }}@endif</td>
+                        <td>@if (isset($article->page))<a target="_blank" href="{{ route('front_page_index', array('uri' => $article->page->uri)) }}">{{ $article->page->name }}</a>@endif</td>
+                        <td>
+                            <a class="btn btn-default" href="{{ route('back_articles_edit', array($article->ID)) }}" title="{{ $article->title }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
+                            <a class="btn btn-danger" href="{{ route('back_articles_delete', array($article->ID)) }}" title="{{ $article->title }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         @else
-            {{ trans('w-cms-laravel::articles.no_article_created_yet') }}
+            <p>{{ trans('w-cms-laravel::articles.no_article_created_yet') }}</p>
         @endif
 
         <a class="btn btn-primary" href="{{ route('back_articles_create') }}" title="{{ trans('w-cms-laravel::generic.create') }}">{{ trans('w-cms-laravel::generic.create') }}</a>

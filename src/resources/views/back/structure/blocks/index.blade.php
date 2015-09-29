@@ -48,7 +48,7 @@
             </table>
         </div>
         @else
-        {{ trans('w-cms-laravel::blocks.no_block_created_yet') }}
+            <p>{{ trans('w-cms-laravel::blocks.no_block_created_yet') }}</p>
         @endif
 
         <a class="btn btn-primary" href="{{ route('back_global_blocks_create') }}" title="{{ trans('w-cms-laravel::generic.create') }}">{{ trans('w-cms-laravel::generic.create') }}</a>

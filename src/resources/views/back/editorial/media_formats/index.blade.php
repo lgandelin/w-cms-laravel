@@ -15,42 +15,42 @@
             <li class="active">{{ trans('w-cms-laravel::header.media_formats') }}</li>
         </ol>
 
-        <h1 class="media_format-header">{{ trans('w-cms-laravel::header.media_formats') }}</h1>
+        <h1 class="page-header">{{ trans('w-cms-laravel::header.media_formats') }}</h1>
 
         @if (isset($error))
-        <div class="alert alert-danger">{{ $error }}</div>
+            <div class="alert alert-danger">{{ $error }}</div>
         @endif
 
         @if ($media_formats)
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>{{ trans('w-cms-laravel::media_formats.name') }}</th>
-                    <th>{{ trans('w-cms-laravel::media_formats.width') }}</th>
-                    <th>{{ trans('w-cms-laravel::media_formats.height') }}</th>
-                    <th>{{ trans('w-cms-laravel::generic.action') }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($media_formats as $media_format)
-                <tr>
-                    <td>{{{ $media_format->ID or '' }}}</td>
-                    <td>{{ $media_format->name }}</td>
-                    <td>{{ $media_format->width}}</td>
-                    <td>{{ $media_format->height}}</td>
-                    <td>
-                        <a class="btn btn-default" href="{{ route('back_media_formats_edit', array($media_format->ID)) }}" title="{{ $media_format->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
-                        <a class="btn btn-danger" href="{{ route('back_media_formats_delete', array($media_format->ID)) }}" title="{{ $media_format->name }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
-                    </td>
-                </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ trans('w-cms-laravel::media_formats.name') }}</th>
+                        <th>{{ trans('w-cms-laravel::media_formats.width') }}</th>
+                        <th>{{ trans('w-cms-laravel::media_formats.height') }}</th>
+                        <th>{{ trans('w-cms-laravel::generic.action') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($media_formats as $media_format)
+                    <tr>
+                        <td>{{{ $media_format->ID or '' }}}</td>
+                        <td>{{ $media_format->name }}</td>
+                        <td>{{ $media_format->width}}</td>
+                        <td>{{ $media_format->height}}</td>
+                        <td>
+                            <a class="btn btn-default" href="{{ route('back_media_formats_edit', array($media_format->ID)) }}" title="{{ $media_format->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
+                            <a class="btn btn-danger" href="{{ route('back_media_formats_delete', array($media_format->ID)) }}" title="{{ $media_format->name }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         @else
-        {{ trans('w-cms-laravel::media_formats.no_media_format_created_yet') }}
+            <p>{{ trans('w-cms-laravel::media_formats.no_media_format_created_yet') }}</p>
         @endif
 
         <a class="btn btn-primary" href="{{ route('back_media_formats_create') }}" title="{{ trans('w-cms-laravel::generic.create') }}">{{ trans('w-cms-laravel::generic.create') }}</a>
