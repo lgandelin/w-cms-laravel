@@ -1,6 +1,6 @@
 <?php
 
-namespace Webaccess\WCMSLaravel\Commands;
+namespace Webaccess\WCMSLaravel\Commands\Users;
 
 use Webaccess\WCMSCore\Interactors\Users\CreateUserInteractor;
 use Illuminate\Console\Command;
@@ -16,14 +16,14 @@ class CreateUserCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $name = 'users:create';
+	protected $name = 'w-cms:user_create';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Create a user in the database and generates a password';
+	protected $description = 'Create an admin user and generate a password';
 
 	/**
 	 * Create a new command instance.

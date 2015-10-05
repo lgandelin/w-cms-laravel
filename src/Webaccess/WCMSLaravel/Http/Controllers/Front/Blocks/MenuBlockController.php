@@ -11,21 +11,19 @@ class MenuBlockController
 {
     public function index(DataStructure $block)
     {
-        if (!$block->menuID) {
-            throw new \Exception('Menu not found');
+        if ($block->menuID) {
+            $menu = (new GetMenuInteractor())->getMenuByID($block->menuID, true);
+            $menuItems = (new GetMenuItemsInteractor())->getAll($block->menuID, true);
+
+            foreach ($menuItems as $menuItem)
+                if (isset($menuItem->pageID))
+                    $menuItem->page = (new GetPageInteractor())->getPageByID($menuItem->pageID, true);
+
+            $menu->items = $menuItems;
+            $block->menu = $menu;
         }
 
-        $menu = (new GetMenuInteractor())->getMenuByID($block->menuID, true);
-        $menuItems = (new GetMenuItemsInteractor())->getAll($block->menuID, true);
-
-        foreach ($menuItems as $menuItem)
-            if (isset($menuItem->pageID))
-                $menuItem->page = (new GetPageInteractor())->getPageByID($menuItem->pageID, true);
-
-        $menu->items = $menuItems;
-        $block->menu = $menu;
-
-        return view(\Shortcut::get_theme() . '::blocks.standard.menu', [
+        return view(\Shortcut::getTheme() . '::blocks.standard.menu', [
             'block' => $block,
         ])->render();
     }

@@ -15,6 +15,14 @@
     </div>
     <!-- Identifier -->
 
+    <!-- Is visible -->
+    <div class="form-group">
+        <label for="meta_robots">{{ trans('w-cms-laravel::pages.is_visible') }}</label>
+        {{ trans('w-cms-laravel::generic.yes') }} <input type="radio" name="is_visible" @if ($page->is_visible == "" || $page->is_visible === true)checked="checked"@endif autocomplete="off" value="true">&nbsp;&nbsp;
+        {{ trans('w-cms-laravel::generic.no') }} <input type="radio" name="is_visible" @if ($page->is_visible === false)checked="checked"@endif autocomplete="off" value="false">
+    </div>
+    <!-- Is visible -->
+
     <!-- Is master
     <div class="form-group">
         <label for="is_master">{{ trans('w-cms-laravel::pages.master_page') }}</label>

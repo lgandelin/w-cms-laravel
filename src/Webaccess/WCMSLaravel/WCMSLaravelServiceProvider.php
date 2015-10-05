@@ -52,11 +52,14 @@ class WCMSLaravelServiceProvider extends ServiceProvider {
 
         $this->commands([
                 'Webaccess\WCMSLaravel\Commands\InitCommand',
-                'Webaccess\WCMSLaravel\Commands\CreateUserCommand',
-                'Webaccess\WCMSLaravel\Commands\CreateThemeCommand',
-                'Webaccess\WCMSLaravel\Commands\PublishThemeCommand',
-                'Webaccess\WCMSLaravel\Commands\SelectThemeCommand',
-                'Webaccess\WCMSLaravel\Commands\CreateBlockTypeCommand',
+                'Webaccess\WCMSLaravel\Commands\Users\CreateUserCommand',
+                'Webaccess\WCMSLaravel\Commands\BlockTypes\CreateBlockTypeCommand',
+                'Webaccess\WCMSLaravel\Commands\BlockTypes\DeleteBlockTypeCommand',
+                'Webaccess\WCMSLaravel\Commands\BlockTypes\ListBlockTypesCommand',
+                'Webaccess\WCMSLaravel\Commands\Themes\CreateThemeCommand',
+                'Webaccess\WCMSLaravel\Commands\Themes\PublishThemeCommand',
+                'Webaccess\WCMSLaravel\Commands\Themes\SelectThemeCommand',
+                'Webaccess\WCMSLaravel\Commands\Themes\DeleteThemeCommand',
             ]
         );
     }

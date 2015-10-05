@@ -1,17 +1,19 @@
 $(document).ready(function() {
 
-	//Save page infos
+    //Save page infos
     $('.page-content-save-infos').click(function() {
         var page_id = $(this).attr('data-id');
         var name = $('#name').val();
         var identifier = $('#identifier').val();
         var is_master = $('input[name="is_master"]:checked').val();
+        var is_visible = $('input[name="is_visible"]:checked').val();
 
         var data = {
             'ID': page_id,
             'name': name,
             'identifier': identifier,
             'is_master': is_master,
+            'is_visible': is_visible,
             '_token': $('input[name="_token"]').val()
         };
 
@@ -45,6 +47,7 @@ $(document).ready(function() {
         var meta_title = $('#meta_title').val();
         var meta_description = $('#meta_description').val();
         var meta_keywords = $('#meta_keywords').val();
+        var is_indexed = $('input[name=is_indexed]:checked').val();
 
         var data = {
             'ID': page_id,
@@ -52,6 +55,7 @@ $(document).ready(function() {
             'meta_title': meta_title,
             'meta_description': meta_description,
             'meta_keywords': meta_keywords,
+            'is_indexed': (is_indexed == "true"),
             '_token': $('input[name="_token"]').val()
         };
 
@@ -120,7 +124,7 @@ $(document).ready(function() {
         });
     });
 
-     $('body').on('click', '.area:not(.child-area) > .title, .block:not(.child-block) > .title', function() {
+    $('body').on('click', '.area:not(.child-area) > .title, .block:not(.child-block) > .title', function() {
         $(this).next().toggle();
         $(this).find('> .opening-status').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
     });

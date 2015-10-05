@@ -8,7 +8,7 @@
                 @if (isset($media))
                     <a target="_blank" title="{{ trans('w-cms-laravel::generic.edit') }}" href="{{ route('back_medias_edit', ['id' => $media->ID]) }}">{{ $media->name }}</a>
                 @else
-                    Pas de média associé
+                    {{ trans('w-cms-laravel::pages.no_associated_media') }}
                 @endif
             </span>
         </div>

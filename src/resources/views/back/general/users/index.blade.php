@@ -27,7 +27,8 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>{{ trans('w-cms-laravel::users.complete_name') }}</th>
+                    <th>{{ trans('w-cms-laravel::users.login') }}</th>
+                    <th>{{ trans('w-cms-laravel::users.name') }}</th>
                     <th>{{ trans('w-cms-laravel::generic.action') }}</th>
                 </tr>
                 </thead>
@@ -35,6 +36,7 @@
                 @foreach ($users as $user)
                 <tr>
                     <td>{{{ $user->ID or ''}}}</td>
+                    <td>{{ $user->login }}</td>
                     <td>{{ $user->last_name }} {{ $user->first_name }}</td>
                     <td>
                         <a class="btn btn-default" href="{{ route('back_users_edit', array($user->ID)) }}" title="{{ $user->last_name }} {{ $user->first_name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>

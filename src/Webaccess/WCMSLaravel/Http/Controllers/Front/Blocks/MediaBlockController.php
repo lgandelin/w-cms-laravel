@@ -9,9 +9,11 @@ class MediaBlockController
 {
     public function index(DataStructure $block)
     {
-        $block->media = (new GetMediaInteractor())->getMediaByID($block->mediaID, $block->mediaFormatID, true);
+        if ($block->mediaID) {
+            $block->media = (new GetMediaInteractor())->getMediaByID($block->mediaID, $block->mediaFormatID, true);
+        }
 
-        return view(\Shortcut::get_theme() . '::blocks.standard.media', [
+        return view(\Shortcut::getTheme() . '::blocks.standard.media', [
             'block' => $block,
         ])->render();
     }

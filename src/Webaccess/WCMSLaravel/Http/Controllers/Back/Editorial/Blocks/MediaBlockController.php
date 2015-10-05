@@ -3,6 +3,7 @@
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\Blocks;
 
 use Webaccess\WCMSCore\DataStructure;
+use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
 use Webaccess\WCMSCore\Interactors\Medias\GetMediaInteractor;
 
 class MediaBlockController
@@ -14,6 +15,7 @@ class MediaBlockController
         }
 
         return view('w-cms-laravel::back.editorial.pages.blocks.media', [
+            'media_formats' => (new GetMediaFormatsInteractor())->getAll(true),
             'block' => $block,
         ])->render();
     }

@@ -2,9 +2,9 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
+use Webaccess\WCMSCore\Interactors\BlockTypes\GetBlockTypesInteractor;
 use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
 use Webaccess\WCMSCore\Interactors\Medias\GetMediasInteractor;
@@ -45,7 +45,8 @@ class PageController extends AdminController
 		    'lang_id' => $this->getLangID(),
 		    'identifier' => \Input::get('identifier'),
             'master_page_id' => \Input::get('master_page_id'),
-            'is_master' => \Input::get('is_master')
+            'is_master' => \Input::get('is_master'),
+            'is_visible' => \Input::get('is_visible'),
 		]);
 
 		try {
@@ -83,7 +84,7 @@ class PageController extends AdminController
                 }
             }
 
-            $blockTypes = Context::get('block_type_repository')->findAll(true);
+            $blockTypes = (new GetBlockTypesInteractor())->getAll(true);
             foreach ($blockTypes as $blockType) {
                 if ($blockType->back_controller) {
                     $blockType->back_content = (new $blockType->back_controller)->index(new DataStructure());
@@ -111,6 +112,7 @@ class PageController extends AdminController
             'name' => \Input::get('name'),
             'identifier' => \Input::get('identifier'),
             'is_master' => \Input::get('is_master'),
+            'is_visible' => \Input::get('is_visible'),
         ]);
 
         try {
@@ -128,7 +130,8 @@ class PageController extends AdminController
             'uri' => \Input::get('uri'),
             'meta_title' => \Input::get('meta_title'),
             'meta_description' => \Input::get('meta_description'),
-            'meta_keywords' => \Input::get('meta_keywords')
+            'meta_keywords' => \Input::get('meta_keywords'),
+            'is_indexed' => filter_var(\Input::get('is_indexed'), FILTER_VALIDATE_BOOLEAN)
         ]);
 
         try {

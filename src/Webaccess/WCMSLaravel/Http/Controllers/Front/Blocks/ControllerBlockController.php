@@ -15,7 +15,7 @@ class ControllerBlockController
             $block->content = $controller->$method();
         }
 
-        return view(\Shortcut::get_theme() . '::blocks.standard.controller', [
+        return view(\Shortcut::getTheme() . '::blocks.standard.controller', [
             'block' => $block,
         ])->render();
     }

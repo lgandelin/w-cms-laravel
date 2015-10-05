@@ -15,10 +15,10 @@
             <li class="active">{{ trans('w-cms-laravel::header.medias') }}</li>
         </ol>
 
-        <h1 class="media-header">{{ trans('w-cms-laravel::header.medias') }}</h1>
+        <h1 class="page-header">{{ trans('w-cms-laravel::header.medias') }}</h1>
 
         @if (isset($error))
-        <div class="alert alert-danger">{{ $error }}</div>
+            <div class="alert alert-danger">{{ $error }}</div>
         @endif
 
         @if ($medias)
@@ -34,7 +34,7 @@
                 @endforeach
             </ul>
         @else
-        {{ trans('w-cms-laravel::medias.no_media_created_yet') }}
+            <p>{{ trans('w-cms-laravel::medias.no_media_created_yet') }}</p>
         @endif
 
         <a class="btn btn-primary" href="{{ route('back_medias_create') }}" title="{{ trans('w-cms-laravel::generic.create') }}">{{ trans('w-cms-laravel::generic.create') }}</a>
