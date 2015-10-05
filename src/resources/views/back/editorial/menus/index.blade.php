@@ -18,7 +18,7 @@
             <h1 class="page-header">{{ trans('w-cms-laravel::header.menus') }}</h1>
                 
             @if (isset($error))
-                <div class="alert alert-danger">{{ $error }}</div>
+                 <div class="alert alert-danger">{{ $error }}</div>
             @endif
             
             @if ($menus)
@@ -34,17 +34,17 @@
                         </thead>
                         <tbody>
                             @foreach ($menus as $menu)
-                            <tr>
-                                <td>{{{ $menu->ID or '' }}}</td>
-                                <td>{{ $menu->name }}</td>
-                                <td>{{ $menu->identifier }}</td>
-                                <td>
-                                    <a class="btn btn-default" href="{{ route('back_menus_edit', array($menu->ID)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
-                                    <a class="btn btn-default" href="{{ route('back_menus_duplicate', array($menu->ID)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.duplicate') }}</a>
-                                    <a class="btn btn-danger" href="{{ route('back_menus_delete', array($menu->ID)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
-                                </td>
-                            </tr>
-                        @endforeach
+                                <tr>
+                                    <td>{{{ $menu->ID or '' }}}</td>
+                                    <td>{{ $menu->name }}</td>
+                                    <td>{{ $menu->identifier }}</td>
+                                    <td>
+                                        <a class="btn btn-default" href="{{ route('back_menus_edit', array($menu->ID)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
+                                        <a class="btn btn-default" href="{{ route('back_menus_duplicate', array($menu->ID)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.duplicate') }}</a>
+                                        <a class="btn btn-danger" href="{{ route('back_menus_delete', array($menu->ID)) }}" title="{{ $menu->name }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

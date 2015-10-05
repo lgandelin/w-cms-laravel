@@ -33,17 +33,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($article_categories as $article_category)
-                    <tr>
-                        <td>{{{ $article_category->ID or ''}}}</td>
-                        <td>{{ $article_category->name }}</td>
-                        <td>{{ $article_category->description }}</td>
-                        <td>
-                            <a class="btn btn-default" href="{{ route('back_article_categories_edit', array($article_category->ID)) }}" title="{{ $article_category->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
-                            <a class="btn btn-danger" href="{{ route('back_article_categories_delete', array($article_category->ID)) }}" title="{{ $article_category->name }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
-                        </td>
-                    </tr>
-                    @endforeach
+                        @foreach ($article_categories as $article_category)
+                            <tr>
+                                <td>{{{ $article_category->ID or ''}}}</td>
+                                <td>{{ $article_category->name }}</td>
+                                <td>{{ $article_category->description }}</td>
+                                <td>
+                                    <a class="btn btn-default" href="{{ route('back_article_categories_edit', array($article_category->ID)) }}" title="{{ $article_category->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
+                                    <a class="btn btn-danger" href="{{ route('back_article_categories_delete', array($article_category->ID)) }}" title="{{ $article_category->name }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

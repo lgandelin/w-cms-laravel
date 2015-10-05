@@ -19,6 +19,7 @@
 			
 			@if (isset($error))
                 <div class="alert alert-danger">{{ $error }}</div>
+
             @endif
 
 			@if ($pages)
@@ -36,19 +37,19 @@
                         </thead>
                         <tbody>
                             @foreach ($pages as $page)
-                            <tr>
-                                <td>{{{ $page->ID or ''}}}</td>
-                                <td>{{ $page->name }}</td>
-                                <td>{{ $page->identifier }}</td>
-                                <td><a href="{{ route('front_page_index', array($page->uri)) }}" target="_blank" title="{{ $page->name }}">{{ $page->uri }}</a></td>
-                                <!--<td width="200" align="center" style="vertical-align: middle">@if ($page->is_master)<span class="glyphicon glyphicon-ok is_master_page"></span>@endif</td>-->
-                                <td>
-                                    <a class="btn btn-default" href="{{ route('back_pages_edit', array($page->ID)) }}" title="{{ $page->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
-                                    <a class="btn btn-default" href="{{ route('back_pages_duplicate', array($page->ID)) }}" title="{{ $page->name }}">{{ trans('w-cms-laravel::generic.duplicate') }}</a>
-                                    <a class="btn btn-danger" href="{{ route('back_pages_delete', array($page->ID)) }}" title="{{ $page->name }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
-                                </td>
-                            </tr>
-                        @endforeach
+                                <tr>
+                                    <td>{{{ $page->ID or ''}}}</td>
+                                    <td>{{ $page->name }}</td>
+                                    <td>{{ $page->identifier }}</td>
+                                    <td><a href="{{ route('front_page_index', array($page->uri)) }}" target="_blank" title="{{ $page->name }}">{{ $page->uri }}</a></td>
+                                    <!--<td width="200" align="center" style="vertical-align: middle">@if ($page->is_master)<span class="glyphicon glyphicon-ok is_master_page"></span>@endif</td>-->
+                                    <td>
+                                        <a class="btn btn-default" href="{{ route('back_pages_edit', array($page->ID)) }}" title="{{ $page->name }}">{{ trans('w-cms-laravel::generic.edit') }}</a>
+                                        <a class="btn btn-default" href="{{ route('back_pages_duplicate', array($page->ID)) }}" title="{{ $page->name }}">{{ trans('w-cms-laravel::generic.duplicate') }}</a>
+                                        <a class="btn btn-danger" href="{{ route('back_pages_delete', array($page->ID)) }}" title="{{ $page->name }}">{{ trans('w-cms-laravel::generic.delete') }}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
