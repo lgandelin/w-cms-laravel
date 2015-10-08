@@ -68,7 +68,7 @@ class PageController extends AdminController
 	{
 		try {
             $page = (new GetPageInteractor())->getPageByID($pageID, true);
-            $areas = (new GetAreasInteractor())->getAll($pageID, true);
+            $areas = (new GetAreasInteractor())->getByPageIDAndVersionNumber($pageID, $page->draft_version_number, true);
 
             if ($areas) {
                 foreach ($areas as $area) {

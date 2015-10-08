@@ -47,6 +47,11 @@
         @endif
     </div>
 
+    <p>
+        <strong>Version number : </strong> <span class="badge">{{ $page->version_number }}</span><br/>
+        <strong>Draft version number : </strong> <span class="badge">{{ $page->draft_version_number }}</span>
+    </p>
+
     <!-- Create area -->
     <div class="form-group">
         <input type="button" data-id="{{ $page->ID }}" class="page-content-create-area btn btn-success" value="{{ trans('w-cms-laravel::pages.add_area') }}" />
