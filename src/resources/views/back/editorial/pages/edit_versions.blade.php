@@ -24,8 +24,8 @@
                     <td>
                         @if ($page->version_number != $i)
                             <a class="btn btn-primary" target="_blank" href="{{ route('front_page_index_preview', ['uri' => $page->uri, 'version_number' => $i]) }}" title="">{{ trans('w-cms-laravel::generic.preview') }}</a>
-                            <a class="btn btn-success" href="#" title="">{{ trans('w-cms-laravel::generic.publish') }}</a>
-                            <a class="btn btn-danger" href="#" title="">{{ trans('w-cms-laravel::generic.delete') }}</a>
+                            <a class="btn btn-success" href="{{ route('back_pages_publish_page_version', ['page_id' => $page->ID, 'version_number' => $i]) }}" title="">{{ trans('w-cms-laravel::generic.publish') }}</a>
+                            <a class="btn btn-danger" href="{{ route('back_pages_delete_page_version', ['page_id' => $page->ID, 'version_number' => $i]) }}" title="">{{ trans('w-cms-laravel::generic.delete') }}</a>
                         @endif
                     </td>
                 </tr>

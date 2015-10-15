@@ -16,6 +16,8 @@ use Webaccess\WCMSCore\Interactors\Pages\GetPageInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\GetPagesInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\UpdatePageInteractor;
 use Webaccess\WCMSCore\DataStructure;
+use Webaccess\WCMSCore\Interactors\Versions\DeletePageVersionInteractor;
+use Webaccess\WCMSCore\Interactors\Versions\PublishPageVersionInteractor;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class PageController extends AdminController
@@ -168,6 +170,28 @@ class PageController extends AdminController
     {
         if (env('CACHE_ENABLED')) {
             \Cache::forget(\Input::get('uri'));
+        }
+    }
+
+    public function publish_page_version($pageID, $versionNumber)
+    {
+        try {
+            (new PublishPageVersionInteractor())->run($pageID, $versionNumber);
+            return \Redirect::route('back_pages_edit', array('page_id' => $pageID));
+        } catch (\Exception $e) {
+            \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_pages_index');
+        }
+    }
+
+    public function delete_page_version($pageID, $versionNumber)
+    {
+        try {
+            (new DeletePageVersionInteractor())->run($pageID, $versionNumber);
+            return \Redirect::route('back_pages_edit', array('page_id' => $pageID));
+        } catch (\Exception $e) {
+            \Session::flash('error', $e->getMessage());
+            return \Redirect::route('back_pages_index');
         }
     }
 }
