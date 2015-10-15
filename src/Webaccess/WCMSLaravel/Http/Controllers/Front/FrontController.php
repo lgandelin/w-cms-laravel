@@ -18,7 +18,7 @@ class FrontController extends Controller
         $uri = ($uri != '/') ? '/' . $uri : '/';
 
         if (!\Cache::has($uri) || env('CACHE_ENABLED') === false) {
-            $page = (new GetPageContentInteractor())->run($uri, true);
+            $page = (new GetPageContentInteractor())->run($uri, false, true);
 
             if (env('CACHE_ENABLED')) {
                 \Cache::put($uri, $page, env('CACHE_DURATION'));
@@ -26,6 +26,19 @@ class FrontController extends Controller
         } else {
             $page = \Cache::get($uri);
         }
+        $theme = ShortcutHelper::getTheme();
+
+        return view($theme . '::index', [
+            'page' => $page,
+            'theme' => $theme
+        ]);
+    }
+
+    public function index_preview($versionNumber = false, $uri = null)
+    {
+        $uri = ($uri != '/') ? '/' . $uri : '/';
+
+        $page = (new GetPageContentInteractor())->run($uri, $versionNumber, true);
         $theme = ShortcutHelper::getTheme();
 
         return view($theme . '::index', [

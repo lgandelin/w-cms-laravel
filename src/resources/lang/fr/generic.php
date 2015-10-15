@@ -18,6 +18,7 @@ return array(
     'content' => 'Contenu',
     'default_option_name' => 'Choisissez une valeur',
     'publish' => 'Publier',
+    'preview' => 'Prévisualiser',
     'yes' => 'Oui',
     'no' => 'Non',
 );

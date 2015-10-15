@@ -124,6 +124,12 @@ Route::get('/admin/structure/blocks/edit/{id}', array('as' => 'back_global_block
 Route::post('/admin/structure/blocks/update', array('as' => 'back_global_blocks_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@update'));
 Route::get('/admin/structure/blocks/delete/{id}', array('as' => 'back_global_blocks_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@delete'));
 
+
+Route::get('/preview/{version}/{uri?}', [
+    'as' => 'front_page_index_preview',
+    'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Front\FrontController@index_preview'
+]);
+
 //FRONT
 Route::get('{uri?}', [
     'as' => 'front_page_index',

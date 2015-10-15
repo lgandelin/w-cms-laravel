@@ -56,7 +56,7 @@
     <div class="form-group">
         <input type="button" data-id="{{ $page->ID }}" class="page-content-create-area btn btn-success" value="{{ trans('w-cms-laravel::pages.add_area') }}" />
         <a class="btn btn-default" href="{{ route('back_pages_index') }}" title="{{ trans('w-cms-laravel::header.pages') }}">{{ trans('w-cms-laravel::generic.cancel') }}</a>
-        <input type="button" class="btn-publish btn btn-success pull-right" value="{{ trans('w-cms-laravel::generic.publish') }}" data-page-uri="{{ $page->uri }}" />
+        <!--<input type="button" class="btn-publish btn btn-success pull-right" value="{{ trans('w-cms-laravel::generic.publish') }}" data-page-uri="{{ $page->uri }}" />-->
     </div>
     <!-- Create area -->
 
