@@ -5,31 +5,33 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Version date</th>
+                    <th>Numéro</th>
+                    <th>Modification date</th>
                     <th>State</th>
                     <th>Action</th>
                 </tr>
             </thead>
-            @for ($i = 1; $i <= $page->draft_version_number; $i++)
+            @foreach ($versions as $version)
                 <tr>
-                    <td>{{ $i }}</td>
-                    <td>{{ date('d/m/Y H:i') }}</td>
+                    <td>{{ $version->ID }}</td>
+                    <td>{{ $version->number }}</td>
+                    <td>{{ $version->updatedDate }}</td>
                     <td style="vertical-align: middle">
-                        @if ($page->version_number == $i)
+                        @if ($page->versionID == $version->ID)
                             <span class="label label-success">Published</span>
-                        @elseif ($page->draft_version_number == $i)
+                        @elseif ($page->draftVersionID == $version->ID)
                             <span class="label label-info">Draft</span>
                         @endif
                     </td>
                     <td>
-                        @if ($page->version_number != $i)
-                            <a class="btn btn-primary" target="_blank" href="{{ route('front_page_index_preview', ['uri' => $page->uri, 'version_number' => $i]) }}" title="">{{ trans('w-cms-laravel::generic.preview') }}</a>
-                            <a class="btn btn-success" href="{{ route('back_pages_publish_page_version', ['page_id' => $page->ID, 'version_number' => $i]) }}" title="">{{ trans('w-cms-laravel::generic.publish') }}</a>
-                            <a class="btn btn-danger" href="{{ route('back_pages_delete_page_version', ['page_id' => $page->ID, 'version_number' => $i]) }}" title="">{{ trans('w-cms-laravel::generic.delete') }}</a>
+                        @if ($page->versionID != $version->ID)
+                            <a class="btn btn-primary" target="_blank" href="{{ route('front_page_index_preview', ['uri' => $page->uri, 'version_number' => $version->ID]) }}" title="">{{ trans('w-cms-laravel::generic.preview') }}</a>
+                            <a class="btn btn-success" href="{{ route('back_pages_publish_page_version', ['page_id' => $page->ID, 'version_number' => $version->ID]) }}" title="">{{ trans('w-cms-laravel::generic.publish') }}</a>
+                            <a class="btn btn-danger" href="{{ route('back_pages_delete_page_version', ['page_id' => $page->ID, 'version_number' => $version->ID]) }}" title="">{{ trans('w-cms-laravel::generic.delete') }}</a>
                         @endif
                     </td>
                 </tr>
-            @endfor
+            @endforeach
         </table>
     </div>
 </div>

@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
 use Webaccess\WCMSCore\Interactors\BlockTypes\GetBlockTypesInteractor;
@@ -70,7 +71,9 @@ class PageController extends AdminController
 	{
 		try {
             $page = (new GetPageInteractor())->getPageByID($pageID, true);
-            $areas = (new GetAreasInteractor())->getByPageIDAndVersionNumber($pageID, $page->draft_version_number, true);
+            $currentVersion = Context::get('version_repository')->findByID($page->versionID);
+            $draftVersion = Context::get('version_repository')->findByID($page->draftVersionID);
+            $areas = (new GetAreasInteractor())->getByPageIDAndVersionNumber($pageID, $draftVersion->getNumber(), true);
 
             if ($areas) {
                 foreach ($areas as $area) {
@@ -95,11 +98,20 @@ class PageController extends AdminController
                 }
             }
 
+            $versionsObjects = Context::get('version_repository')->findByPageID($pageID);
+            $versions = [];
+            foreach ($versionsObjects as $version) {
+                $versions[]= $version->toStructure();
+            }
+
 		    return view('w-cms-laravel::back.editorial.pages.edit', [
                 'block_types' => $blockTypes,
                 'medias' => (new GetMediasInteractor())->getAll(true),
                 'media_formats' => (new GetMediaFormatsInteractor())->getAll(true),
                 'page' => $page,
+                'versions' => $versions,
+                'current_version' => $currentVersion->toStructure(),
+                'draft_version' => $draftVersion->toStructure(),
             ]);
 		} catch (\Exception $e) {
 			\Session::flash('error', $e->getMessage());

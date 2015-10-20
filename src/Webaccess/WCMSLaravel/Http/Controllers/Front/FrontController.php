@@ -34,11 +34,11 @@ class FrontController extends Controller
         ]);
     }
 
-    public function index_preview($versionNumber = false, $uri = null)
+    public function index_preview($versionID = false, $uri = null)
     {
         $uri = ($uri != '/') ? '/' . $uri : '/';
 
-        $page = (new GetPageContentInteractor())->run($uri, $versionNumber, true);
+        $page = (new GetPageContentInteractor())->run($uri, $versionID, true);
         $theme = ShortcutHelper::getTheme();
 
         return view($theme . '::index', [

@@ -48,8 +48,8 @@
     </div>
 
     <p>
-        <strong>Version number : </strong> <span class="badge">{{ $page->version_number }}</span><br/>
-        <strong>Draft version number : </strong> <span class="badge">{{ $page->draft_version_number }}</span>
+        <strong>Version number : </strong> <span class="badge">{{ $current_version->number }}</span><br/>
+        <strong>Draft version number : </strong> <span class="badge">{{ $draft_version->number }}</span>
     </p>
 
     <!-- Create area -->
