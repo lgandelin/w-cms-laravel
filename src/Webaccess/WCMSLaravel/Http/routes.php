@@ -20,6 +20,8 @@ Route::post('/admin/editorial/pages/update_page_seo', array('as' => 'back_pages_
 Route::get('/admin/editorial/pages/delete/{pageID}', array('as' => 'back_pages_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@delete'));
 Route::get('/admin/editorial/pages/duplicate/{pageID}', array('as' => 'back_pages_duplicate', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@duplicate'));
 Route::post('/admin/editorial/pages/clear_cache', array('as' => 'back_pages_clear_cache', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@clear_cache'));
+Route::get('/admin/editorial/pages/publish_page_version/{pageID}/{versionNumber}', array('as' => 'back_pages_publish_page_version', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@publish_page_version'));
+Route::get('/admin/editorial/pages/delete_page_version/{pageID}/{versionNumber}', array('as' => 'back_pages_delete_page_version', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@delete_page_version'));
 
 //BACK > EDITORIAL > PAGES > AREAS
 Route::get('/admin/editorial/areas/get_infos/{areaID?}', array('as' => 'back_areas_get_infos', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\AreaController@get_infos'));
@@ -123,6 +125,12 @@ Route::post('/admin/structure/blocks/store', array('as' => 'back_global_blocks_s
 Route::get('/admin/structure/blocks/edit/{id}', array('as' => 'back_global_blocks_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@edit'));
 Route::post('/admin/structure/blocks/update', array('as' => 'back_global_blocks_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@update'));
 Route::get('/admin/structure/blocks/delete/{id}', array('as' => 'back_global_blocks_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@delete'));
+
+
+Route::get('/preview/{version}/{uri?}', [
+    'as' => 'front_page_index_preview',
+    'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Front\FrontController@index_preview'
+]);
 
 //FRONT
 Route::get('{uri?}', [

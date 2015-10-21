@@ -18,6 +18,7 @@ return array(
     'content' => 'Content',
     'default_option_name' => 'Choose a value',
     'publish' => 'Publish',
+    'preview' => 'Preview',
     'yes' => 'Yes',
     'no' => 'No',
 );
