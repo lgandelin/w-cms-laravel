@@ -101,6 +101,19 @@ label {
   margin-top: 5px;
   font-weight: bold; }
 
+.pages-interface #structure .areas-wrapper {
+  position: relative; }
+
+.pages-interface #structure .update-in-progress {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  opacity: 0.75;
+  background: #fff url("../img/spinner.gif") no-repeat center center;
+  z-index: 9999999; }
+
 .pages-interface #structure .title {
   font-weight: bold;
   display: block;

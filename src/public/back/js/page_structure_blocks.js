@@ -28,11 +28,15 @@ $(document).ready(function() {
 
         var block = $('.block[data-id="' + block_id + '"]');
 
+        $('.areas-wrapper .update-in-progress').show();
+
         $.ajax({
             type: "GET",
             url: route_blocks_get_infos + '/' + block_id,
             success: function(data) {
                 data = JSON.parse(data);
+
+                $('.areas-wrapper .update-in-progress').hide();
 
                 var is_master = (data.block.is_master) ? data.block.is_master : 0;
                 var is_ghost = (data.block.is_ghost) ? data.block.is_ghost : 0;
@@ -70,9 +74,9 @@ $(document).ready(function() {
                 'type': $('#block-infos-modal .type').val(),
                 'class': $('#block-infos-modal .class').val(),
                 'alignment': $('#block-infos-modal input[name="block_alignment"]:checked').val(),
-                'is_master': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
-                'is_ghost': $('#block-infos-modal input[name="block_is_ghost"]:checked').val(),
-                'area_id': $(this).attr('data-area-id'),
+                'isMaster': $('#block-infos-modal input[name="block_is_master"]:checked').val(),
+                'isGhost': $('#block-infos-modal input[name="block_is_ghost"]:checked').val(),
+                'areaID': $(this).attr('data-area-id'),
                 'order': 999,
                 'display': 1,
                 '_token': $('input[name="_token"]').val()
@@ -93,7 +97,7 @@ $(document).ready(function() {
 
                         //Create block in "Structure" tab
                         var block_content = '<div id="b-' + data.block.ID + '" data-id="' + data.block.ID + '" class="block col-xs-' + data.block.width + ' align-' + data.block.alignment + '" data-display="1" data-width="' + data.block.width + '"><div class="block_color"><span class="title"><span class="width_value">' + data.block.width + '</span><span class="block-name">' + data.block.name + '</span> <span class="type">' + data.block.type + '</span><span data-id="' + data.block.ID + '" class="block-delete glyphicon glyphicon-remove"></span><span style="display: none" data-id="' + data.block.ID + '" class="block-move glyphicon glyphicon-move"></span><span data-id="' + data.block.ID + '" class="block-display glyphicon glyphicon-eye-open"></span><span data-id="' + data.block.ID + '" class="block-update glyphicon glyphicon-cog"></span><span data-id="' + data.block.ID + '" class="block-go-to-content glyphicon glyphicon-pencil"></span></span></div></div>';
-                        $('#structure .area[data-id="' + input_data.area_id + '"] .area_color').append(block_content);
+                        $('#structure .area[data-id="' + input_data.areaID + '"] .area_color').append(block_content);
                         init_block_sortable();
                         init_block_resizable();
 
@@ -109,7 +113,7 @@ $(document).ready(function() {
                             block_content += '<div class="submit_wrapper"><input data-id="' + data.block.ID + '" class="page-content-save-block btn btn-success" value="Submit" type="button"><input data-id="' + data.block.ID + '" class="page-content-close-block btn btn-default" value="Close" type="button"></div></div></div>';
                         }
 
-                        $('#content .area[data-id="' + input_data.area_id + '"] > .content').append(block_content);
+                        $('#content .area[data-id="' + input_data.areaID + '"] > .content').append(block_content);
 
                         $('#content .block[data-id="' + data.block.ID + '"] .content textarea').each(function(index, value) {
                             $(this).attr('id', 'editor' + data.block.ID + '-' + index).addClass('ckeditor');
@@ -119,6 +123,10 @@ $(document).ready(function() {
                         $('#block-infos-modal').modal('hide');
                     } else {
 
+                    }
+
+                    if (data.new_page_version) {
+                        reload_page_new_version();
                     }
                 }
             });
@@ -186,6 +194,10 @@ $(document).ready(function() {
                     } else {
 
                     }
+
+                    if (data.new_page_version) {
+                        reload_page_new_version();
+                    }
                 }
             });
         }
@@ -201,6 +213,8 @@ $(document).ready(function() {
                 '_token': $('input[name="_token"]').val()
             };
 
+            $('.areas-wrapper .update-in-progress').show();
+
             $.ajax({
                 type: "POST",
                 url: route_blocks_delete,
@@ -208,12 +222,18 @@ $(document).ready(function() {
                 success: function(data) {
                     data = JSON.parse(data);
 
+                    $('.areas-wrapper .update-in-progress').hide();
+
                     if (data.success) {
                         $('.block[data-id="' + block_id + '"]').remove();
                     } else {
                         var label_error = $('<p class="alert alert-danger">' + data.error + '</p>');
                         $('#structure .areas-wrapper').after(label_error);
                         label_error.fadeIn().delay(2000).fadeOut();
+                    }
+
+                    if (data.new_page_version) {
+                        reload_page_new_version();
                     }
                 }
             });
@@ -230,6 +250,8 @@ $(document).ready(function() {
             'display': ((1 + parseInt(block.attr('data-display'))) % 2),
             '_token': $('input[name="_token"]').val()
         };
+
+        $('.areas-wrapper .update-in-progress').show();
 
         $.ajax({
             type: "POST",
@@ -251,6 +273,12 @@ $(document).ready(function() {
                     var label_error = $('<p class="alert alert-danger">' + data.error + '</p>');
                     $('#structure .blocks-wrapper').after(label_error);
                     label_error.fadeIn().delay(2000).fadeOut();
+                }
+
+                $('.areas-wrapper .update-in-progress').hide();
+
+                if (data.new_page_version) {
+                    reload_page_new_version();
                 }
             }
         });
@@ -292,10 +320,19 @@ function init_block_sortable() {
                 '_token': $('input[name="_token"]').val()
             }
 
+            $('.areas-wrapper .update-in-progress').show();
+
             $.ajax({
                 data: data,
                 type: 'POST',
-                url: route_blocks_update_order
+                url: route_blocks_update_order,
+                success: function(data) {
+                    $('.areas-wrapper .update-in-progress').hide();
+                    data = JSON.parse(data);
+                    if (data.new_page_version) {
+                        reload_page_new_version();
+                    }
+                },
             });
         },
         tolerance: 'pointer'
@@ -331,11 +368,26 @@ function init_block_resizable() {
                 'width': block.attr('data-width'),
                 '_token': $('input[name="_token"]').val()
             }
+
+            $('.areas-wrapper .update-in-progress').show();
             $.ajax({
                 type: "POST",
                 url: route_blocks_update_infos,
                 data: input_data,
+                success: function(data) {
+                    $('.areas-wrapper .update-in-progress').hide();
+
+                    data = JSON.parse(data);
+                    if (data.new_page_version) {
+                        reload_page_new_version();
+                    }
+                }
             });
         }
     });
+}
+
+function reload_page_new_version() {
+    alert('New version detected, the page is going to reload');
+    window.location.reload()
 }

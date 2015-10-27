@@ -31,10 +31,10 @@ class BlockController extends AdminController
         }
 
         try {
-            $blockID = (new CreateBlockInteractor())->run($blockStructure);
+            list($blockID, $newPageVersion) = (new CreateBlockInteractor())->run($blockStructure);
             $block = (new GetBlockInteractor())->getBlockByID($blockID, true);
 
-            return json_encode(array('success' => true, 'block' => $block->toArray()));
+            return json_encode(array('success' => true, 'block' => $block->toArray(), 'new_page_version' => $newPageVersion));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
@@ -50,8 +50,8 @@ class BlockController extends AdminController
         }
 
         try {
-            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
-            return json_encode(array('success' => true));
+            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure);
+            return json_encode(array('success' => true, 'new_page_version' => $newPageVersion));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
@@ -71,8 +71,8 @@ class BlockController extends AdminController
         }
 
         try {
-            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
-            return json_encode(array('success' => true));
+            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure);
+            return json_encode(array('success' => true, 'new_page_version' => $newPageVersion));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
@@ -83,13 +83,14 @@ class BlockController extends AdminController
         try {
             $blockID = \Input::get('block_id');
             $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
-            $blockStructure->area_id = \Input::get('area_id');
+            $blockStructure->areaID = \Input::get('area_id');
 
-            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
+            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure);
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
 
+        $newPageVersion = false;
         $blocks = json_decode(\Input::get('blocks'));
         for ($i = 0; $i < sizeof($blocks); $i++) {
             $blockID = preg_replace('/b-/', '', $blocks[$i]);
@@ -97,13 +98,13 @@ class BlockController extends AdminController
             $blockStructure->order = $i + 1;
 
             try {
-                (new UpdateBlockInteractor())->run($blockID, $blockStructure);
+                (new UpdateBlockInteractor())->run($blockID, $blockStructure, false);
             } catch (\Exception $e) {
                 return json_encode(array('success' => false, 'error' => $e->getMessage()));
             }
         }
 
-        return json_encode(array('success' => true));
+        return json_encode(array('success' => true, 'new_page_version' => $newPageVersion));
     }
 
     public function display()
@@ -113,8 +114,8 @@ class BlockController extends AdminController
             $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
             $blockStructure->display = \Input::get('display');
 
-            (new UpdateBlockInteractor())->run($blockID, $blockStructure);
-            return json_encode(array('success' => true));
+            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure);
+            return json_encode(array('success' => true, 'new_page_version' => $newPageVersion));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
@@ -125,8 +126,8 @@ class BlockController extends AdminController
         $blockID = \Input::get('ID');
 
         try {
-            (new DeleteBlockInteractor())->run($blockID);
-            return json_encode(array('success' => true));
+            $newPageVersion = (new DeleteBlockInteractor())->run($blockID);
+            return json_encode(array('success' => true, 'new_page_version' => $newPageVersion));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }

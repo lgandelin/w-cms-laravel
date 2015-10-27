@@ -30,10 +30,10 @@ class AreaController extends AdminController
         }
 
         try {
-            $areaID = (new CreateAreaInteractor())->run($areaStructure);
+            list($areaID, $newPageVersion) = (new CreateAreaInteractor())->run($areaStructure);
             $area = (new GetAreaInteractor())->getAreaByID($areaID, true);
 
-            return json_encode(array('success' => true, 'area' => $area->toArray()));
+            return json_encode(array('success' => true, 'area' => $area->toArray(), 'new_page_version' => $newPageVersion));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
@@ -52,8 +52,8 @@ class AreaController extends AdminController
         ]);
 
         try {
-            (new UpdateAreaInteractor())->run($areaID, $areaStructure);
-            return json_encode(array('success' => true));
+            $newPageVersion = (new UpdateAreaInteractor())->run($areaID, $areaStructure);
+            return json_encode(array('success' => true, 'new_page_version' => $newPageVersion));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
@@ -61,6 +61,7 @@ class AreaController extends AdminController
 
     public function update_order()
     {
+        $newPageVersion = false;
         $areas = json_decode(\Input::get('areas'));
         for ($i = 0; $i < sizeof($areas); $i++) {
             $areaID = preg_replace('/a-/', '', $areas[$i]);
@@ -70,13 +71,15 @@ class AreaController extends AdminController
             ]);
 
             try {
-                (new UpdateAreaInteractor())->run($areaID, $areaStructure);
+                if ((new UpdateAreaInteractor())->run($areaID, $areaStructure)) {
+                    $newPageVersion = true;
+                }
             } catch (\Exception $e) {
                 return json_encode(array('success' => false, 'error' => $e->getMessage()));
             }
         }
 
-        return json_encode(array('success' => true));
+        return json_encode(array('success' => true, 'new_page_version' => $newPageVersion));
     }
 
     public function display()
@@ -87,8 +90,8 @@ class AreaController extends AdminController
                 'display'=> \Input::get('display')
             ]);
 
-            (new UpdateAreaInteractor())->run($areaID, $areaStructure);
-            return json_encode(array('success' => true));
+            $newPageVersion = (new UpdateAreaInteractor())->run($areaID, $areaStructure);
+            return json_encode(array('success' => true, 'new_page_version' => $newPageVersion));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
@@ -99,8 +102,8 @@ class AreaController extends AdminController
         $areaID = \Input::get('ID');
 
         try {
-            (new DeleteAreaInteractor())->run($areaID);
-            return json_encode(array('success' => true));
+            $newPageVersion = (new DeleteAreaInteractor())->run($areaID);
+            return json_encode(array('success' => true, 'new_page_version' => $newPageVersion));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }

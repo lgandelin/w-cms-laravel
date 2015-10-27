@@ -3,6 +3,7 @@
     <p><strong>{{ trans('w-cms-laravel::pages.structure') }}</strong></p>
 
     <div class="row areas-wrapper">
+        <div class="update-in-progress" style="display: none"></div>
         @if (isset($page->areas))
         @foreach ($page->areas as $area)
         <div id="a-{{ $area->ID }}" data-id="{{ $area->ID }}" class="area col-xs-{{ $area->width }}" data-width="{{ $area->width }}" data-display="{{ $area->display }}">
