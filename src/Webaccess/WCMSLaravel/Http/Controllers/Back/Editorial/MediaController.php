@@ -20,9 +20,16 @@ class MediaController extends AdminController
     public function index()
     {
         return view('w-cms-laravel::back.editorial.medias.index', [
-            'medias' => (new GetMediasInteractor())->getAll(true),
+            //'medias' => (new GetMediasInteractor())->getAll(true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
+    }
+
+    public function getAll()
+    {
+        return response()->json(
+            (new GetMediasInteractor())->getAllByMediaFolder(0, true)
+        );
     }
 
     public function create()

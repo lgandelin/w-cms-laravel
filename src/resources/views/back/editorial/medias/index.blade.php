@@ -21,7 +21,7 @@
             <div class="alert alert-danger">{{ $error }}</div>
         @endif
 
-        @if ($medias)
+        {{--@if ($medias)
             <ul class="medias-list">
                 @foreach ($medias as $media)
                     <li>
@@ -35,7 +35,9 @@
             </ul>
         @else
             <p>{{ trans('w-cms-laravel::medias.no_media_created_yet') }}</p>
-        @endif
+        @endif--}}
+
+        <div id="medias-library"></div>
 
         <a class="btn btn-primary" href="{{ route('back_medias_create') }}" title="{{ trans('w-cms-laravel::generic.create') }}">{{ trans('w-cms-laravel::generic.create') }}</a>
 
@@ -43,4 +45,14 @@
     </div>
 </div>
 
+@stop
+
+@section('javascripts')
+    {!! HTML::script('vendor/w-cms-laravel/back/js/medias.js') !!}
+
+    <script>
+    $(document).ready(function() {
+        load_medias_library();
+    });
+    </script>
 @stop

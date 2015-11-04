@@ -66,3 +66,16 @@ $(document).ready(function() {
         });
     });
 });
+
+function load_medias_library() {
+    $.ajax({
+        url: route_get_medias,
+        type: "GET",
+        cache: false,
+        success: function(data)
+        {
+            console.log('ok')
+            console.log(data)
+        }
+    });
+}
