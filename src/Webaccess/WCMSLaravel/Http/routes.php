@@ -75,15 +75,16 @@ Route::post('/admin/editorial/menu_items/delete', array('as' => 'back_menu_items
 Route::get('/admin/editorial/medias', array('as' => 'back_medias_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@index'));
 Route::get('/admin/editorial/medias/create', array('as' => 'back_medias_create', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@create'));
 Route::post('/admin/editorial/medias/store', array('as' => 'back_medias_store', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@store'));
-Route::get('/admin/editorial/medias/edit/{mediaID}', array('as' => 'back_medias_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@edit'));
+Route::get('/admin/editorial/medias/edit/{mediaID?}', array('as' => 'back_medias_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@edit'));
 Route::post('/admin/editorial/medias/update', array('as' => 'back_medias_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@update'));
-Route::get('/admin/editorial/medias/delete/{mediaID}', array('as' => 'back_medias_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@delete'));
+Route::get('/admin/editorial/medias/delete/{mediaID?}', array('as' => 'back_medias_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@delete'));
 Route::get('/admin/editorial/medias/duplicate/{mediaID}', array('as' => 'back_medias_duplicate', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@duplicate'));
 
 Route::post('/admin/editorial/medias/upload', array('as' => 'back_medias_upload', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@upload'));
 Route::post('/admin/editorial/medias/create_and_upload', array('as' => 'back_medias_create_and_upload', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@create_and_upload'));
 Route::post('/admin/editorial/medias/crop', array('as' => 'back_medias_crop', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@crop'));
-Route::get('/admin/editorial/medias/get_all', array('as' => 'back_medias_get', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@getAll'));
+Route::get('/admin/editorial/medias/get_all{mediaFolderID?}', array('as' => 'back_medias_get', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@getAll'));
+
 
 //BACK > EDITORIAL > MEDIA FORMATS
 Route::get('/admin/editorial/media_formats', array('as' => 'back_media_formats_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@index'));
@@ -92,6 +93,15 @@ Route::post('/admin/editorial/media_formats/store', array('as' => 'back_media_fo
 Route::get('/admin/editorial/media_formats/edit/{media_formatID}', array('as' => 'back_media_formats_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@edit'));
 Route::post('/admin/editorial/media_formats/update', array('as' => 'back_media_formats_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@update'));
 Route::get('/admin/editorial/media_formats/delete/{media_formatID}', array('as' => 'back_media_formats_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@delete'));
+
+
+//BACK > EDITORIAL > MEDIA FOLDERS
+Route::get('/admin/editorial/media_folders', array('as' => 'back_media_folders_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@index'));
+Route::get('/admin/editorial/media_folders/create', array('as' => 'back_media_folders_create', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@create'));
+Route::post('/admin/editorial/media_folders/store', array('as' => 'back_media_folders_store', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@store'));
+Route::get('/admin/editorial/media_folders/edit/{media_folderID}', array('as' => 'back_media_folders_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@edit'));
+Route::post('/admin/editorial/media_folders/update', array('as' => 'back_media_folders_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@update'));
+Route::get('/admin/editorial/media_folders/delete/{media_folderID}', array('as' => 'back_media_folders_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@delete'));
 
 
 //BACK > GENERAL
@@ -119,7 +129,6 @@ Route::get('/admin/general/langs/change/{id}', array('as' => 'back_lang_change',
 Route::get('/admin/structure', array('as' => 'back_structure', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\StructureController@index'));
 
 //BACK > STRUCTURE > BLOCKS
-
 Route::get('/admin/structure/blocks', array('as' => 'back_global_blocks_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@index'));
 Route::get('/admin/structure/blocks/create', array('as' => 'back_global_blocks_create', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@create'));
 Route::post('/admin/structure/blocks/store', array('as' => 'back_global_blocks_store', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@store'));

@@ -72,10 +72,24 @@ function load_medias_library() {
         url: route_get_medias,
         type: "GET",
         cache: false,
+        dataType: 'JSON',
         success: function(data)
         {
-            console.log('ok')
-            console.log(data)
+            for (var i in data) {
+                var media = data[i];
+                if (media.fileName) {
+                    $('#medias-library').append(get_template("media-template", media));
+                } else {
+                    $('#medias-library').append(get_template("media-folder-template", media));
+                }
+            }
         }
     });
+}
+
+function get_template(template, variables) {
+    var source = $("#" + template).html();
+    var template = Handlebars.compile(source);
+
+    return template(variables)
 }

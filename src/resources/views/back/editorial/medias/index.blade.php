@@ -37,7 +37,9 @@
             <p>{{ trans('w-cms-laravel::medias.no_media_created_yet') }}</p>
         @endif--}}
 
-        <div id="medias-library"></div>
+        <ul class="medias-list" id="medias-library">
+
+        </ul>
 
         <a class="btn btn-primary" href="{{ route('back_medias_create') }}" title="{{ trans('w-cms-laravel::generic.create') }}">{{ trans('w-cms-laravel::generic.create') }}</a>
 
@@ -45,14 +47,35 @@
     </div>
 </div>
 
+<script id="media-template" type="text/x-handlebars-template">
+    <li>
+        <a href="{{ route('back_medias_edit') }}/@{{ ID }}" class="thumbnail">
+            <img src="{{ asset(Shortcut::get_uploads_folder()) }}/@{{ ID }}/@{{ fileName }}" width="250" height="250" />
+            <span class="media-name">@{{ name }}</span>
+        </a>
+        <a href="{{ route('back_medias_delete') }}/@{{ ID }}" class="glyphicon glyphicon-remove media-delete"></a>
+    </li>
+</script>
+
+<script id="media-folder-template" type="text/x-handlebars-template">
+    <li>
+        <a href="{{ route('back_medias_edit') }}/@{{ ID }}" class="thumbnail">
+            <div style="background: #ccc; height: 130px">
+                <span class="media-name" style="padding-top: 100px">@{{ name }}</span>
+            </div>
+        </a>
+        <a href="{{ route('back_medias_delete') }}/@{{ ID }}" class="glyphicon glyphicon-remove media-delete"></a>
+    </li>
+</script>
+
 @stop
 
 @section('javascripts')
     {!! HTML::script('vendor/w-cms-laravel/back/js/medias.js') !!}
 
     <script>
-    $(document).ready(function() {
-        load_medias_library();
-    });
+        $(document).ready(function() {
+            load_medias_library();
+        });
     </script>
 @stop
