@@ -2,7 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
-use Webaccess\WCMSCore\Interactors\MediaFolders\CreateMediaFolderInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFolders\GetMediaFolderInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFolders\GetMediaFoldersInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
@@ -27,12 +27,20 @@ class MediaController extends AdminController
         ]);
     }
 
-    public function getAll($mediaFolderID = 0)
+    public function getAll()
     {
+        $mediaFolderID = \Input::get('mediaFolderID');
+        if ($mediaFolderID) {
+            $mediaFolder = (new GetMediaFolderInteractor())->getMediaFolderByID($mediaFolderID, true);
+        }
+
         return response()->json(
-            array_merge(
-                (new GetMediasInteractor())->getAllByMediaFolder($mediaFolderID, true),
-                (new GetMediaFoldersInteractor())->getAllByMediaFolder($mediaFolderID, true)
+            array(
+                'medias' => array_merge(
+                    (new GetMediasInteractor())->getAllByMediaFolder($mediaFolderID, true),
+                    (new GetMediaFoldersInteractor())->getAllByMediaFolder($mediaFolderID, true)
+                ),
+                'mediaFolder' => (isset($mediaFolder) ? $mediaFolder : null),
             )
         );
     }

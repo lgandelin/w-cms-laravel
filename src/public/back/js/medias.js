@@ -67,25 +67,48 @@ $(document).ready(function() {
     });
 });
 
-function load_medias_library() {
+$('.medias-list').on('click', '.media-folder', function(e) {
+    e.preventDefault();
+    load_medias_library($(this).data('media-folder-id'));
+});
+
+$('.medias-list .btn-back').click(function(e) {
+    e.preventDefault();
+    load_medias_library($('#parent-media-folder-id').val());
+});
+
+function load_medias_library(mediaFolderID) {
+    $("#medias-library .update-in-progress").show();
+
     $.ajax({
         url: route_get_medias,
         type: "GET",
         cache: false,
         dataType: 'JSON',
+        data: {
+            mediaFolderID: mediaFolderID
+        },
         success: function(data)
         {
-            for (var i in data) {
-                var media = data[i];
+            if (data.mediaFolder && data.mediaFolder.parentID !== "") {
+                $('#parent-media-folder-id').val(data.mediaFolder.parentID);
+            }
+            $("#medias-library .medias li").remove();
+            $("#medias-library .update-in-progress").hide();
+
+            for (var i in data.medias) {
+                var media = data.medias[i];
                 if (media.fileName) {
-                    $('#medias-library').append(get_template("media-template", media));
+                    $('#medias-library .medias').append(get_template("media-template", media));
                 } else {
-                    $('#medias-library').append(get_template("media-folder-template", media));
+                    $('#medias-library .medias').append(get_template("media-folder-template", media));
                 }
             }
         }
     });
 }
+
+
 
 function get_template(template, variables) {
     var source = $("#" + template).html();

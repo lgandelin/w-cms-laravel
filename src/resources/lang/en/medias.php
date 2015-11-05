@@ -9,5 +9,6 @@ return array(
     'file_name' => 'File name',
     'no_media_created_yet' => 'No media created yet',
     'crop' => 'Crop',
-    'media_formats' => 'Media formats'
+    'media_formats' => 'Media formats',
+    'breadcrumb_root' => 'Root',
 );

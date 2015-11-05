@@ -37,9 +37,17 @@
             <p>{{ trans('w-cms-laravel::medias.no_media_created_yet') }}</p>
         @endif--}}
 
-        <ul class="medias-list" id="medias-library">
-
-        </ul>
+        <div class="medias-list" id="medias-library">
+            <div class="update-in-progress" style="display: none"></div>
+            <ol class="breadcrumb">
+                <li class="active">{{ trans('w-cms-laravel::medias.breadcrumb_root') }}</li>
+            </ol>
+            <ul class="medias"></ul>
+            <input type="hidden" id="parent-media-folder-id" value="0" />
+            <div style="clear:both; margin-bottom: 30px">
+                <a href="" class="btn-back btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span></a>
+            </div>
+        </div>
 
         <a class="btn btn-primary" href="{{ route('back_medias_create') }}" title="{{ trans('w-cms-laravel::generic.create') }}">{{ trans('w-cms-laravel::generic.create') }}</a>
 
@@ -48,7 +56,7 @@
 </div>
 
 <script id="media-template" type="text/x-handlebars-template">
-    <li>
+    <li class="">
         <a href="{{ route('back_medias_edit') }}/@{{ ID }}" class="thumbnail">
             <img src="{{ asset(Shortcut::get_uploads_folder()) }}/@{{ ID }}/@{{ fileName }}" width="250" height="250" />
             <span class="media-name">@{{ name }}</span>
@@ -58,13 +66,16 @@
 </script>
 
 <script id="media-folder-template" type="text/x-handlebars-template">
-    <li>
-        <a href="{{ route('back_medias_edit') }}/@{{ ID }}" class="thumbnail">
-            <div style="background: #ccc; height: 130px">
-                <span class="media-name" style="padding-top: 100px">@{{ name }}</span>
+    <li class="media-folder" data-media-folder-id="@{{ ID }}" data-parent-media-folder-id="@{{ parentID }}">
+        <a href="" class="thumbnail">
+            <div>
+                <span class="folder" style="width: 100%; height: 108px; display: block; background: #ededed; text-align: center">
+                    <span style="color: #fefefe; display: inline-block; text-align: center; font-size: 40px; margin-top: 30px" class="glyphicon glyphicon-folder-open"></span>
+                </span>
+                <span class="media-name" style="">@{{ name }}</span>
             </div>
         </a>
-        <a href="{{ route('back_medias_delete') }}/@{{ ID }}" class="glyphicon glyphicon-remove media-delete"></a>
+        <a href="{{ route('back_media_folders_delete') }}/@{{ ID }}" class="glyphicon glyphicon-remove media-delete"></a>
     </li>
 </script>
 
@@ -75,7 +86,7 @@
 
     <script>
         $(document).ready(function() {
-            load_medias_library();
+            load_medias_library(0);
         });
     </script>
 @stop

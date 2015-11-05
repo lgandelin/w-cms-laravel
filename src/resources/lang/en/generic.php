@@ -21,4 +21,5 @@ return array(
     'preview' => 'Preview',
     'yes' => 'Yes',
     'no' => 'No',
+    'back' => 'Back',
 );

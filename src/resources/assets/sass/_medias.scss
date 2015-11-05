@@ -1,41 +1,56 @@
+.update-in-progress {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    opacity: 0.75;
+    background: #fff url("../img/spinner.gif") no-repeat center center;
+    z-index: 9999999;
+}
+
 .medias-list {
-	
-	overflow: hidden;
-	margin-bottom: 30px;
+    position: relative;
+    ul {
+        overflow: hidden;
+        margin-bottom: 30px;
+        margin-left: 0;
+        padding-left: 0;
 
-	li {
-		width: 200px;
-		height: auto;
-		list-style: none;
-		float: left;
-		margin: 20px 20px 0 0;
-		position: relative;
+        li {
+            width: 200px;
+            height: auto;
+            list-style: none;
+            float: left;
+            margin: 20px 20px 0 0;
+            position: relative;
 
-		.media-name {
-			display: block;
-			margin: 5px 0;
+            .media-name {
+                display: block;
+                margin: 5px 0;
 
-			text-align: center;
-			font-weight: bold;
-		}
+                text-align: center;
+                font-weight: bold;
+            }
 
-		.media-delete {
-			display: none;
+            .media-delete {
+                display: none;
 
-			position: absolute;
-			top: 10px;
-			right: 10px;
+                position: absolute;
+                top: 10px;
+                right: 10px;
 
-			font-size: 18px;
-			color: white;
-		}
-	}
+                font-size: 18px;
+                color: white;
+            }
+        }
 
-	li:hover {
-		.media-delete {
-			display: block;
-		}
-	}
+        li:hover {
+            .media-delete {
+                display: block;
+            }
+        }
+    }
 }
 
 .modal-full {
