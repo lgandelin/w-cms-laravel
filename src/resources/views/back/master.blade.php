@@ -136,6 +136,7 @@
             var route_media_create_and_upload = "{{ route('back_medias_create_and_upload') }}";
             var route_media_crop = "{{ route('back_medias_crop') }}";
             var route_get_medias = "{{ route('back_medias_get') }}";
+            var route_change_media_folder = "{{ route('back_medias_change_media_folder') }}";
 
             var route_medias_folder_create = "{{ route('back_media_folders_store') }}";
             var route_medias_folder_delete = "{{ route('back_media_folders_delete') }}";

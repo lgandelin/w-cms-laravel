@@ -84,6 +84,7 @@ Route::post('/admin/editorial/medias/upload', array('as' => 'back_medias_upload'
 Route::post('/admin/editorial/medias/create_and_upload', array('as' => 'back_medias_create_and_upload', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@create_and_upload'));
 Route::post('/admin/editorial/medias/crop', array('as' => 'back_medias_crop', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@crop'));
 Route::get('/admin/editorial/medias/get_all/{mediaFolderID?}', array('as' => 'back_medias_get', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@getAll'));
+Route::post('/admin/editorial/medias/change_media_folder', array('as' => 'back_medias_change_media_folder', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@changeMediaFolder'));
 
 
 //BACK > EDITORIAL > MEDIA FORMATS

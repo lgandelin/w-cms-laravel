@@ -58,6 +58,28 @@ class MediaController extends AdminController
         }
     }
 
+    public function changeMediaFolder()
+    {
+        try {
+            $mediaID = \Input::get('mediaID');
+            $mediaFolderID = \Input::get('mediaFolderID');
+
+            $dataStructure = new DataStructure([
+                'mediaFolderID' => $mediaFolderID,
+            ]);
+
+            (new UpdateMediaInteractor())->run($mediaID, $dataStructure);
+
+            return response()->json(
+                array(
+                    'mediaID' => $mediaID,
+                )
+            );
+        } catch(\Exception $e) {
+            dd($e->getMessage());
+        }
+    }
+
     public function create()
     {
         return view('w-cms-laravel::back.editorial.medias.create');

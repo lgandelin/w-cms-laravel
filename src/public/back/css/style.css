@@ -259,7 +259,6 @@ label {
   margin-bottom: 40px;
   border-bottom: 1px solid #eee; }
   .medias-list ul {
-    overflow: hidden;
     margin-bottom: 0;
     margin-left: 0;
     padding-left: 0; }
@@ -298,6 +297,14 @@ label {
       display: block; }
     .medias-list ul li:hover .folder-icon {
       color: #2A6496; }
+    .medias-list ul .ui-state-draggable-hover .thumbnail {
+      border: 1px solid orange; }
+    .medias-list ul .ui-state-draggable-hover .folder {
+      background: #f0e5d0; }
+      .medias-list ul .ui-state-draggable-hover .folder .folder-icon {
+        color: orange; }
+    .medias-list ul .ui-draggable-dragging {
+      opacity: 0.5; }
 
 .panel-create-folder {
   float: left;

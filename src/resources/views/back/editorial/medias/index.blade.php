@@ -102,7 +102,8 @@
 
 <script id="media-template" type="text/x-handlebars-template">
     <li class="media" data-media-id="@{{ ID }}">
-        <a href="{{ route('back_medias_edit') }}/@{{ ID }}" class="thumbnail">
+        {{--<a href="{{ route('back_medias_edit') }}/@{{ ID }}" class="thumbnail">--}}
+        <a href="#" class="thumbnail">
             <img src="{{ asset(Shortcut::get_uploads_folder()) }}/@{{ ID }}/@{{ fileName }}" width="250" height="250" />
             <span class="media-name">@{{ name }}</span>
         </a>
@@ -127,6 +128,7 @@
 @stop
 
 @section('javascripts')
+    {!! HTML::script('https://code.jquery.com/ui/1.11.3/jquery-ui.js') !!}
     {!! HTML::script('vendor/w-cms-laravel/back/js/medias.js') !!}
 
     <script>

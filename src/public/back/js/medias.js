@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     /*$('input[type="file"]').on('change', (function(e) {
         var files = e.target.files;
         var media_id = $('input[name="ID"]').val();
@@ -57,6 +58,9 @@ $(document).ready(function() {
                 $('#alt').val("");
                 $('#new-media-name').val("");
                 $('.new-media-preview').empty();
+
+                init_media_draggable_image_into_media_folder();
+                init_media_droppable_into_media_folder();
             }
         });
     });
@@ -151,6 +155,8 @@ $('.btn-create-folder').click(function(e) {
                 $("#new-folder-name").val("");
                 $("#medias-library .update-in-progress").hide();
                 $('#medias-library .media-folders').append(get_template("media-folder-template", data.mediaFolder));
+
+                init_media_droppable_into_media_folder();
             }
         }
     });
@@ -255,6 +261,9 @@ function load_medias_library(mediaFolderID) {
             if (data.mediaFolder && data.mediaFolder.name) {
                 $('.medias-list .breadcrumb').append($('<li data-media-folder-id="' + data.mediaFolder.ID + '">' + data.mediaFolder.name + '</li>').addClass('active'));
             }
+
+            init_media_draggable_image_into_media_folder();
+            init_media_droppable_into_media_folder();
         }
     });
 }
@@ -264,4 +273,49 @@ function get_template(template, variables) {
     var template = Handlebars.compile(source);
 
     return template(variables)
+}
+
+function init_media_draggable_image_into_media_folder()
+{
+    $('.medias .media').draggable({
+        cursor: "move",
+        placeholder: 'sortable-placeholder',
+        zIndex: 25,
+        revert: true,
+        refreshPositions: true
+    });
+}
+
+function init_media_droppable_into_media_folder()
+{
+    var dropOptions = {
+        hoverClass: 'ui-state-draggable-hover',
+        accept: '.medias .media',
+        drop: function(event, ui) {
+            var mediaID = ui.draggable.data('media-id');
+            var mediaFolderID = $(this).data('media-folder-id');
+
+            var data = {
+                mediaID: mediaID,
+                mediaFolderID: mediaFolderID,
+                _token: $('input[name="_token"]').val()
+            }
+            $('.media[data-media-id="' + mediaID + '"]').fadeOut();
+
+            $.ajax({
+                url: route_change_media_folder,
+                type: "POST",
+                cache: false,
+                dataType: 'JSON',
+                data: data,
+                success: function(data)
+                {
+
+                }
+            });
+        }
+    };
+
+    //Init droppable from uploaded files to sequence
+    $('.media-folder').droppable(dropOptions);
 }

@@ -20,7 +20,6 @@
     border-bottom: 1px solid #eee;
 
     ul {
-        overflow: hidden;
         margin-bottom: 0;
         margin-left: 0;
         padding-left: 0;
@@ -77,6 +76,24 @@
             .folder-icon {
                 color: $blue;
             }
+        }
+
+        .ui-state-draggable-hover {
+            .thumbnail {
+                border: 1px solid orange;
+            }
+
+            .folder {
+                background: #f0e5d0;
+
+                .folder-icon {
+                    color: orange;
+                }
+            }
+        }
+
+        .ui-draggable-dragging {
+            opacity: 0.5;
         }
     }
 }
