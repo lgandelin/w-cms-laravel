@@ -37,8 +37,8 @@ class MediaController extends AdminController
         return response()->json(
             array(
                 'medias' => array_merge(
-                    (new GetMediasInteractor())->getAllByMediaFolder($mediaFolderID, true),
-                    (new GetMediaFoldersInteractor())->getAllByMediaFolder($mediaFolderID, true)
+                    (new GetMediaFoldersInteractor())->getAllByMediaFolder($mediaFolderID, true),
+                    (new GetMediasInteractor())->getAllByMediaFolder($mediaFolderID, true)
                 ),
                 'mediaFolder' => (isset($mediaFolder) ? $mediaFolder : null),
             )

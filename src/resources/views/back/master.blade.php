@@ -135,7 +135,8 @@
             var route_media_crop = "{{ route('back_medias_crop') }}";
             var route_get_medias = "{{ route('back_medias_get') }}";
 
-            var route_media_folders_delete = "{{ route('back_media_folders_delete') }}";
+            var route_medias_folder_create = "{{ route('back_media_folders_store') }}";
+            var route_medias_folder_delete = "{{ route('back_media_folders_delete') }}";
         </script>
 
 		@yield('javascripts')

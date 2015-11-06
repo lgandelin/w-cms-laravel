@@ -4,6 +4,7 @@ namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
 use Webaccess\WCMSCore\Interactors\MediaFolders\CreateMediaFolderInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFolders\DeleteMediaFolderInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFolders\GetMediaFolderInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFolders\UpdateMediaFolderInteractor;
 use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
@@ -19,13 +20,20 @@ class MediaFolderController extends AdminController
 
         try {
             $mediaFolderID = (new CreateMediaFolderInteractor())->run($mediaFolderStructure);
+            $mediaFolder = (new GetMediaFolderInteractor())->getMediaFolderByID($mediaFolderID, true);
+            //return \Redirect::route('back_media_folders_edit', array('mediaFolderID' => $mediaFolderID));
 
-            return \Redirect::route('back_media_folders_edit', array('mediaFolderID' => $mediaFolderID));
+            return \Response::json(
+                array(
+                    'mediaFolder' => $mediaFolder,
+                    'success' => true
+                )
+            );
         } catch (\Exception $e) {
-            return view('w-cms-laravel::back.editorial.media_folders.create', [
+            /*return view('w-cms-laravel::back.editorial.media_folders.create', [
                 'error' => $e->getMessage(),
                 'media_folder' => $mediaFolderStructure
-            ]);
+            ]);*/
         }
     }
 
@@ -40,21 +48,30 @@ class MediaFolderController extends AdminController
         try {
             (new UpdateMediaFolderInteractor())->run($mediaFolderID, $mediaFolderStructure);
 
-            return \Redirect::route('back_media_folders_edit', array('ID' => $mediaFolderID));
+            //return \Redirect::route('back_media_folders_edit', array('ID' => $mediaFolderID));
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
-            return \Redirect::route('back_media_folders_index');
+            //return \Redirect::route('back_media_folders_index');
         }
     }
 
-    public function delete($mediaFolderID)
+    public function delete()
     {
+        $mediaFolderID = \Input::get('ID');
         try {
             (new DeleteMediaFolderInteractor())->run($mediaFolderID);
-            return \Redirect::route('back_media_folders_index');
+
+            return \Response::json(
+                array(
+                    'mediaFolderID' => $mediaFolderID,
+                    'success' => true
+                )
+            );
+
+            //return \Redirect::route('back_media_folders_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
-            return \Redirect::route('back_media_folders_index');
+            //return \Redirect::route('back_media_folders_index');
         }
     }
 

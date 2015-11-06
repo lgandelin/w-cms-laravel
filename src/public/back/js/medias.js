@@ -1,6 +1,5 @@
 $(document).ready(function() {
-
-    $("input").on('change', (function(e) {
+    $('input[type="file"]').on('change', (function(e) {
         var files = e.target.files;
         var media_id = $('input[name="ID"]').val();
         var image_file = files[0];
@@ -67,14 +66,67 @@ $(document).ready(function() {
     });
 });
 
-$('.medias-list').on('click', '.media-folder', function(e) {
+$('.medias-list').on('click', '.media-folder .folder', function(e) {
     e.preventDefault();
-    load_medias_library($(this).data('media-folder-id'));
+    load_medias_library($(this).closest(".media-folder").data("media-folder-id"));
 });
 
 $('.medias-list .btn-back').click(function(e) {
     e.preventDefault();
     load_medias_library($('#parent-media-folder-id').val());
+});
+
+$('.btn-create-folder').click(function(e) {
+    e.preventDefault();
+
+    var data = {
+        name: $("#new-folder-name").val(),
+        parent_id: $("#current-media-folder-id").val(),
+        _token: $('input[name="_token"]').val(),
+    }
+
+    $("#medias-library .update-in-progress").show();
+
+    $.ajax({
+        url: route_medias_folder_create,
+        type: "POST",
+        data: data,
+        cache: false,
+        success: function(data)
+        {
+            if (data.success) {
+                $("#new-folder-name").val("");
+                $("#medias-library .update-in-progress").hide();
+                $('#medias-library .medias').append(get_template("media-folder-template", data.mediaFolder));
+            }
+        }
+    });
+});
+
+$('.medias-list').on('click', '.media-folder .btn-delete-folder', function(e) {
+    e.preventDefault();
+    var ID = $(this).closest(".media-folder").attr("data-media-folder-id");
+
+    var data = {
+        ID: ID,
+        _token: $('input[name="_token"]').val(),
+    }
+
+    $("#medias-library .update-in-progress").show();
+
+    $.ajax({
+        url: route_medias_folder_delete + "/" + ID,
+        type: "POST",
+        data: data,
+        cache: false,
+        success: function(data)
+        {
+            $("#medias-library .update-in-progress").hide();
+            if (data.success) {
+                $('.media-folder[data-media-folder-id="' + data.mediaFolderID + '"]').remove();
+            }
+        }
+    });
 });
 
 function load_medias_library(mediaFolderID) {
@@ -92,6 +144,7 @@ function load_medias_library(mediaFolderID) {
         {
             if (data.mediaFolder && data.mediaFolder.parentID !== "") {
                 $('#parent-media-folder-id').val(data.mediaFolder.parentID);
+                $('#current-media-folder-id').val(data.mediaFolder.ID);
             }
             $("#medias-library .medias li").remove();
             $("#medias-library .update-in-progress").hide();
@@ -107,8 +160,6 @@ function load_medias_library(mediaFolderID) {
         }
     });
 }
-
-
 
 function get_template(template, variables) {
     var source = $("#" + template).html();

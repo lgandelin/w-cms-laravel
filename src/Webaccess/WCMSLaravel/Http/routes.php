@@ -96,12 +96,12 @@ Route::get('/admin/editorial/media_formats/delete/{media_formatID}', array('as' 
 
 
 //BACK > EDITORIAL > MEDIA FOLDERS
-Route::get('/admin/editorial/media_folders', array('as' => 'back_media_folders_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@index'));
-Route::get('/admin/editorial/media_folders/create', array('as' => 'back_media_folders_create', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@create'));
-Route::post('/admin/editorial/media_folders/store', array('as' => 'back_media_folders_store', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@store'));
-Route::get('/admin/editorial/media_folders/edit/{mediaFolderID}', array('as' => 'back_media_folders_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@edit'));
-Route::post('/admin/editorial/media_folders/update', array('as' => 'back_media_folders_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@update'));
-Route::get('/admin/editorial/media_folders/delete/{mediaFolderID?}', array('as' => 'back_media_folders_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@delete'));
+Route::get('/admin/editorial/media_folders', array('as' => 'back_media_folders_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@index'));
+Route::get('/admin/editorial/media_folders/create', array('as' => 'back_media_folders_create', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@create'));
+Route::post('/admin/editorial/media_folders/store', array('as' => 'back_media_folders_store', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@store'));
+Route::get('/admin/editorial/media_folders/edit/{mediaFolderID}', array('as' => 'back_media_folders_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@edit'));
+Route::post('/admin/editorial/media_folders/update', array('as' => 'back_media_folders_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@update'));
+Route::post('/admin/editorial/media_folders/delete/{mediaFolderID?}', array('as' => 'back_media_folders_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@delete'));
 
 
 //BACK > GENERAL
