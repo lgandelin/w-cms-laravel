@@ -29,20 +29,33 @@ class MediaController extends AdminController
 
     public function getAll()
     {
-        $mediaFolderID = \Input::get('mediaFolderID');
-        if ($mediaFolderID) {
-            $mediaFolder = (new GetMediaFolderInteractor())->getMediaFolderByID($mediaFolderID, true);
-        }
+        try {
+            $mediaFolderID = \Input::get('mediaFolderID');
+            $breadcrumb = [];
+            if ($mediaFolderID) {
+                $mediaFolder = (new GetMediaFolderInteractor())->getMediaFolderByID($mediaFolderID, true);
+                $folder = clone $mediaFolder;
 
-        return response()->json(
-            array(
-                'medias' => array_merge(
-                    (new GetMediaFoldersInteractor())->getAllByMediaFolder($mediaFolderID, true),
-                    (new GetMediasInteractor())->getAllByMediaFolder($mediaFolderID, true)
-                ),
-                'mediaFolder' => (isset($mediaFolder) ? $mediaFolder : null),
-            )
-        );
+                while ($folder->parentID != 0) {
+                    $folder = (new GetMediaFolderInteractor())->getMediaFolderByID($folder->parentID, true);
+                    array_unshift($breadcrumb, $folder);
+                }
+            }
+            array_unshift($breadcrumb, ['ID' => 0, 'name' => 'Root']);
+
+            return response()->json(
+                array(
+                    'medias' => array_merge(
+                        (new GetMediaFoldersInteractor())->getAllByMediaFolder($mediaFolderID, true),
+                        (new GetMediasInteractor())->getAllByMediaFolder($mediaFolderID, true)
+                    ),
+                    'mediaFolder' => (isset($mediaFolder) ? $mediaFolder : null),
+                    'breadcrumb' => $breadcrumb,
+                )
+            );
+        } catch(\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 
     public function create()
@@ -145,18 +158,26 @@ class MediaController extends AdminController
         }
     }
 
-    public function delete($mediaID)
+    public function delete()
     {
+        $mediaID = \Input::get('ID');
         try {
             (new DeleteMediaInteractor())->run($mediaID);
 
             array_map('unlink', glob($this->getMediaFolder($mediaID) . '*'));
             rmdir($this->getMediaFolder($mediaID));
 
-            return \Redirect::route('back_medias_index');
+            return response()->json(
+                array(
+                    'success' => true,
+                    'mediaID' => $mediaID,
+                )
+            );
+
+            //return \Redirect::route('back_medias_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
-            return \Redirect::route('back_medias_index');
+            //return \Redirect::route('back_medias_index');
         }
     }
 

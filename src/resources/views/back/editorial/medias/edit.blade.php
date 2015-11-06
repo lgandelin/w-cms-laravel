@@ -88,7 +88,7 @@
                         <div class="media-thumbnail">
                             <img src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->fileName) }}" />
                         </div>
-                        <span class="btn  btn-primary btn-file">
+                        <span class="btn btn-primary btn-file">
                             {{ trans('w-cms-laravel::generic.browse') }} <input type="file" name="image">
                         </span>
                     </div>

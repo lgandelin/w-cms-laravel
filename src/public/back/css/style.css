@@ -268,7 +268,7 @@ label {
       height: auto;
       list-style: none;
       float: left;
-      margin: 20px 20px 0 0;
+      margin: 20px 20px 0 0 !important;
       position: relative; }
       .medias-list ul li .media-name {
         display: block;

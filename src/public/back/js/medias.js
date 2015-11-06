@@ -182,6 +182,37 @@ $('.medias-list').on('click', '.media-folder .btn-delete-folder', function(e) {
     });
 });
 
+$('.medias').on('click', '.media .media-delete', function(e) {
+    e.preventDefault();
+    var ID = $(this).closest(".media").attr("data-media-id");
+
+    var data = {
+        ID: ID,
+        _token: $('input[name="_token"]').val()
+    }
+
+    $("#medias-library .update-in-progress").show();
+
+    $.ajax({
+        url: route_medias_delete,
+        type: "POST",
+        data: data,
+        cache: false,
+        success: function(data)
+        {
+            $("#medias-library .update-in-progress").hide();
+            if (data.success) {
+                $('.media[data-media-id="' + data.mediaID + '"]').remove();
+            }
+        }
+    });
+});
+
+$('.medias-list .breadcrumb').on('click', 'li', function(e) {
+    e.preventDefault();
+    load_medias_library($(this).attr('data-media-folder-id'));
+});
+
 function load_medias_library(mediaFolderID) {
     $("#medias-library .update-in-progress").show();
 
@@ -214,6 +245,15 @@ function load_medias_library(mediaFolderID) {
                 } else {
                     $('#medias-library .media-folders').append(get_template("media-folder-template", media));
                 }
+            }
+
+            //Update breadcrumb
+            $('.medias-list .breadcrumb').empty();
+            for (var i in data.breadcrumb) {
+                $('.medias-list .breadcrumb').append($('<li data-media-folder-id="' + data.breadcrumb[i].ID + '"><a href="">' + data.breadcrumb[i].name + '</a></li>'));
+            }
+            if (data.mediaFolder && data.mediaFolder.name) {
+                $('.medias-list .breadcrumb').append($('<li data-media-folder-id="' + data.mediaFolder.ID + '">' + data.mediaFolder.name + '</li>').addClass('active'));
             }
         }
     });

@@ -101,12 +101,12 @@
 </div>
 
 <script id="media-template" type="text/x-handlebars-template">
-    <li>
+    <li class="media" data-media-id="@{{ ID }}">
         <a href="{{ route('back_medias_edit') }}/@{{ ID }}" class="thumbnail">
             <img src="{{ asset(Shortcut::get_uploads_folder()) }}/@{{ ID }}/@{{ fileName }}" width="250" height="250" />
             <span class="media-name">@{{ name }}</span>
         </a>
-        <a href="{{ route('back_medias_delete') }}/@{{ ID }}" class="glyphicon glyphicon-remove media-delete"></a>
+        <a href="#" class="glyphicon glyphicon-remove media-delete"></a>
     </li>
 </script>
 
