@@ -9,11 +9,19 @@
     z-index: 9999999;
 }
 
+.media-folders, .medias {
+    float: left;
+}
+
 .medias-list {
     position: relative;
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #eee;
+
     ul {
         overflow: hidden;
-        margin-bottom: 30px;
+        margin-bottom: 0;
         margin-left: 0;
         padding-left: 0;
 
@@ -74,9 +82,14 @@
 }
 
 .panel-create-folder {
+    float: left;
     width:330px;
-    clear: both;
-    margin-top: 40px;
+}
+
+.panel-create-media {
+    margin-right: 40px;
+    float: left;
+    width:330px;
 }
 
 .modal-full {

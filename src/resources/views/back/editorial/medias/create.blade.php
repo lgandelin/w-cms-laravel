@@ -29,7 +29,7 @@
         <h1 class="page-header">{{ trans('w-cms-laravel::header.medias_create') }}</h1>
 
         @if (isset($error))
-        <div class="alert alert-danger">{{ $error }}</div>
+            <div class="alert alert-danger">{{ $error }}</div>
         @endif
 
         {!! Form::open(array('url' => route('back_medias_store'), 'method' => 'post', 'enctype' => 'multipart/form-data')) !!}

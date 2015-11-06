@@ -1,14 +1,67 @@
 $(document).ready(function() {
-    $('input[type="file"]').on('change', (function(e) {
+    /*$('input[type="file"]').on('change', (function(e) {
         var files = e.target.files;
         var media_id = $('input[name="ID"]').val();
         var image_file = files[0];
 
         upload_image(media_id, image_file);
-    }));
+    }));*/
+
+    $('.panel-create-media').on('change', function(e) {
+        var files = e.target.files;
+        var image_file = files[0];
+
+        var data = new FormData();
+        data.append('image', image_file);
+        data.append('_token', $('input[name="_token"]').val());
+
+        $.ajax({
+            url: route_media_upload,
+            type: "POST",
+            data:  data,
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(data)
+            {
+                $('.new-media-preview').empty();
+                $('.new-media-preview').append($('<img/>').attr('src', data.fileName).css('max-width', '100%').css('margin-bottom', '10px').addClass('thumbnail'));
+                $('#new-media-name').val(data.baseFileName);
+            }
+        });
+    });
+
+    $('.btn-create-media').click(function(e) {
+        e.preventDefault();
+        $("#medias-library .update-in-progress").show();
+
+        var data = {
+            fileName: $('.new-media-preview img').attr('src'),
+            name: $('#new-media-name').val(),
+            title: $('.media-title').val(),
+            alt: $('.media-alt').val(),
+            _token: $('input[name="_token"]').val(),
+            mediaFolderID: $('#current-media-folder-id').val(),
+        }
+
+        $.ajax({
+            url: route_media_store,
+            type: "POST",
+            data:  data,
+            cache: false,
+            success: function(data)
+            {
+                $("#medias-library .update-in-progress").hide();
+                $('#medias-library .medias').append(get_template("media-template", data.media));
+                $('#title').val("");
+                $('#alt').val("");
+                $('#new-media-name').val("");
+                $('.new-media-preview').empty();
+            }
+        });
+    });
 
     $('.media-edit').on('click', '.btn-activate-crop', function() {
-
         var modal = $('#crop-medias-modal');
         $(modal).modal('show');
 
@@ -97,7 +150,7 @@ $('.btn-create-folder').click(function(e) {
             if (data.success) {
                 $("#new-folder-name").val("");
                 $("#medias-library .update-in-progress").hide();
-                $('#medias-library .medias').append(get_template("media-folder-template", data.mediaFolder));
+                $('#medias-library .media-folders').append(get_template("media-folder-template", data.mediaFolder));
             }
         }
     });
@@ -109,7 +162,7 @@ $('.medias-list').on('click', '.media-folder .btn-delete-folder', function(e) {
 
     var data = {
         ID: ID,
-        _token: $('input[name="_token"]').val(),
+        _token: $('input[name="_token"]').val()
     }
 
     $("#medias-library .update-in-progress").show();
@@ -145,8 +198,13 @@ function load_medias_library(mediaFolderID) {
             if (data.mediaFolder && data.mediaFolder.parentID !== "") {
                 $('#parent-media-folder-id').val(data.mediaFolder.parentID);
                 $('#current-media-folder-id').val(data.mediaFolder.ID);
+                $('.btn-back').show();
+            } else {
+                $('.btn-back').hide();
             }
+
             $("#medias-library .medias li").remove();
+            $("#medias-library .media-folders li").remove();
             $("#medias-library .update-in-progress").hide();
 
             for (var i in data.medias) {
@@ -154,7 +212,7 @@ function load_medias_library(mediaFolderID) {
                 if (media.fileName) {
                     $('#medias-library .medias').append(get_template("media-template", media));
                 } else {
-                    $('#medias-library .medias').append(get_template("media-folder-template", media));
+                    $('#medias-library .media-folders').append(get_template("media-folder-template", media));
                 }
             }
         }

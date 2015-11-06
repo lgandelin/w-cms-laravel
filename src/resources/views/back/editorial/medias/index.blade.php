@@ -42,28 +42,60 @@
             <ol class="breadcrumb">
                 <li class="active">{{ trans('w-cms-laravel::medias.breadcrumb_root') }}</li>
             </ol>
+            <ul class="media-folders"></ul>
             <ul class="medias"></ul>
             <input type="hidden" id="current-media-folder-id" value="0" />
             <input type="hidden" id="parent-media-folder-id" value="0" />
-            <div style="clear:both; margin-bottom: 30px">
-                <a href="" class="btn-back btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span></a>
+            <div style="clear:both">
+                <a href="" class="btn-back btn btn-primary" style="display: none"><span class="glyphicon glyphicon-arrow-left"></span></a>
             </div>
-            <div>
+            <!--<div>
                 <a class="btn btn-primary" href="{{ route('back_medias_create') }}" title="{{ trans('w-cms-laravel::generic.create') }}">{{ trans('w-cms-laravel::generic.create') }}</a>
                 <a class="btn btn-primary" href="{{ route('back_media_formats_index') }}" title="{{ trans('w-cms-laravel::medias.media_formats') }}">{{ trans('w-cms-laravel::medias.media_formats') }}</a>
+            </div>-->
+        </div>
+
+        <div class="panel-create-media panel panel-default">
+            <div class="panel-body">
+                <h3 style="margin-top:0">Create a media</h3>
+
+                <div class="form-group">
+                    <label for="">File</label>
+                    <span class="new-media-preview"></span>
+                    <span class="btn  btn-primary btn-file">
+                        {{ trans('w-cms-laravel::generic.browse') }} <input type="file" name="image">
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Name</label>
+                    <input type="text" class="form-control" id="new-media-name" autocomplete="off" placeholder="Name" style="width:300px" />
+                </div>
+
+                <div class="form-group">
+                    <label for="alt">{{ trans('w-cms-laravel::medias.alt') }}</label>
+                    <input autocomplete="off" type="text" class="form-control media-alt" id="alt" name="alt" placeholder="{{ trans('w-cms-laravel::medias.alt') }}" value="" />
+                </div>
+
+                <div class="form-group">
+                    <label for="title">{{ trans('w-cms-laravel::medias.title') }}</label>
+                    <input autocomplete="off" type="text" class="form-control media-title" id="title" name="title" placeholder="{{ trans('w-cms-laravel::medias.title') }}" value="" />
+                </div>
+                <a class="btn btn-success btn-create-media" href="" title="{{ trans('w-cms-laravel::generic.create') }} media">{{ trans('w-cms-laravel::generic.create') }} media</a>
             </div>
         </div>
 
         <div class="panel-create-folder panel panel-default">
             <div class="panel-body">
-                    <h3 style="margin-top:0">Create a folder</h3>
-                    <div class="form-group">
-                        <label for="">Name</label>
-                        <input type="text" class="form-control" id="new-folder-name" autocomplete="off" placeholder="Name" style="width:300px" />
-                    </div>
-                    <a class="btn btn-success btn-create-folder" href="" title="{{ trans('w-cms-laravel::generic.create') }} folder">{{ trans('w-cms-laravel::generic.create') }} folder</a>
+                <h3 style="margin-top:0">Create a folder</h3>
+                <div class="form-group">
+                    <label for="">Name</label>
+                    <input type="text" class="form-control" id="new-folder-name" autocomplete="off" placeholder="Name" style="width:300px" />
+                </div>
+                <a class="btn btn-success btn-create-folder" href="" title="{{ trans('w-cms-laravel::generic.create') }} folder">{{ trans('w-cms-laravel::generic.create') }} folder</a>
             </div>
         </div>
+
     </div>
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 </div>

@@ -250,11 +250,17 @@ label {
   background: #fff url("../img/spinner.gif") no-repeat center center;
   z-index: 9999999; }
 
+.media-folders, .medias {
+  float: left; }
+
 .medias-list {
-  position: relative; }
+  position: relative;
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #eee; }
   .medias-list ul {
     overflow: hidden;
-    margin-bottom: 30px;
+    margin-bottom: 0;
     margin-left: 0;
     padding-left: 0; }
     .medias-list ul li {
@@ -294,9 +300,13 @@ label {
       color: #2A6496; }
 
 .panel-create-folder {
-  width: 330px;
-  clear: both;
-  margin-top: 40px; }
+  float: left;
+  width: 330px; }
+
+.panel-create-media {
+  margin-right: 40px;
+  float: left;
+  width: 330px; }
 
 .modal-full {
   width: 65%; }

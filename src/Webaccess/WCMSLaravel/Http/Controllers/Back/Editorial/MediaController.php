@@ -52,21 +52,40 @@ class MediaController extends AdminController
 
     public function store()
     {
+        $fileName = basename(\Input::get('fileName'));
+
         $mediaStructure = new DataStructure([
             'name' => \Input::get('name'),
             'alt' => \Input::get('alt'),
             'title' => \Input::get('title'),
+            'mediaFolderID' => \Input::get('mediaFolderID'),
         ]);
 
         try {
-            $mediaID = (new CreateMediaInteractor())->run($mediaStructure);
+            if ($mediaID = (new CreateMediaInteractor())->run($mediaStructure)) {
+                if (!is_dir($this->getMediaFolder($mediaID))) {
+                    mkdir($this->getMediaFolder($mediaID));
+                }
+                File::move(public_path() . '/' . Shortcut::get_uploads_folder() . 'temp/' . $fileName, $this->getMediaFolder($mediaID) . $fileName);
 
-            return \Redirect::route('back_medias_edit', array('mediaID' => $mediaID));
+                $mediaStructure = new DataStructure([
+                    'fileName' => basename($fileName),
+                ]);
+                (new UpdateMediaInteractor())->run($mediaID, $mediaStructure);
+
+                $media = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
+            }
+
+            return response()->json(
+                array(
+                    'media' => (isset($media) ? $media : null),
+                )
+            );
         } catch (\Exception $e) {
-            return view('w-cms-laravel::back.editorial.medias.create', [
+            /*return view('w-cms-laravel::back.editorial.medias.create', [
                 'error' => $e->getMessage(),
                 'media' => $mediaStructure
-            ]);
+            ]);*/
         }
     }
 
@@ -141,7 +160,7 @@ class MediaController extends AdminController
         }
     }
 
-    public function upload()
+    /*public function upload()
     {
         $mediaID = \Input::get('ID');
         $fileName = \Input::file('image')->getClientOriginalName();
@@ -159,6 +178,29 @@ class MediaController extends AdminController
                     'image' => asset(Shortcut::get_uploads_folder() . $mediaID . '/' . $fileName),
                     'fileName' => $fileName,
                     'media_format_images' => $mediaFormatsImages
+                )
+            );
+        } catch (\Exception $e) {
+            \Session::flash('error', $e->getMessage());
+            return \Response::json(
+                array(
+                    'fileName' => $e->getMessage(),
+                )
+            );
+        }
+    }*/
+
+    public function upload()
+    {
+        $fileName = \Input::file('image')->getClientOriginalName();
+
+        try {
+            \Input::file('image')->move(public_path() . '/' . Shortcut::get_uploads_folder() . 'temp/', $fileName);
+
+            return \Response::json(
+                array(
+                    'fileName' => asset(Shortcut::get_uploads_folder() . 'temp/' . $fileName),
+                    'baseFileName' => basename($fileName),
                 )
             );
         } catch (\Exception $e) {
