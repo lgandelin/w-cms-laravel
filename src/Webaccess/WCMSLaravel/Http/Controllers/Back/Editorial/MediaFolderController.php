@@ -37,6 +37,28 @@ class MediaFolderController extends AdminController
         }
     }
 
+    public function moveInMediaFolder()
+    {
+        try {
+            $mediaFolderID = \Input::get('mediaFolderID');
+            $parentMediaFolderID = \Input::get('parentMediaFolderID');
+
+            $dataStructure = new DataStructure([
+                'parentID' => $parentMediaFolderID,
+            ]);
+
+            (new UpdateMediaFolderInteractor())->run($mediaFolderID, $dataStructure);
+
+            return response()->json(
+                array(
+                    '$mediaFolderID' => $mediaFolderID,
+                )
+            );
+        } catch(\Exception $e) {
+            dd($e->getMessage());
+        }
+    }
+
     public function update()
     {
         $mediaFolderID = \Input::get('ID');

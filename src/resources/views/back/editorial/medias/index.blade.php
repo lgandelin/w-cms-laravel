@@ -102,8 +102,7 @@
 
 <script id="media-template" type="text/x-handlebars-template">
     <li class="media" data-media-id="@{{ ID }}">
-        {{--<a href="{{ route('back_medias_edit') }}/@{{ ID }}" class="thumbnail">--}}
-        <a href="#" class="thumbnail">
+        <a href="{{ route('back_medias_edit') }}/@{{ ID }}" class="thumbnail">
             <img src="{{ asset(Shortcut::get_uploads_folder()) }}/@{{ ID }}/@{{ fileName }}" width="250" height="250" />
             <span class="media-name">@{{ name }}</span>
         </a>

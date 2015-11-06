@@ -58,7 +58,7 @@ class MediaController extends AdminController
         }
     }
 
-    public function changeMediaFolder()
+    public function moveInMediaFolder()
     {
         try {
             $mediaID = \Input::get('mediaID');

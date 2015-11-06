@@ -305,6 +305,8 @@ label {
         color: orange; }
     .medias-list ul .ui-draggable-dragging {
       opacity: 0.5; }
+    .medias-list ul .media-name {
+      cursor: move; }
 
 .panel-create-folder {
   float: left;
