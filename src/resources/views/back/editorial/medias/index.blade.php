@@ -21,22 +21,6 @@
             <div class="alert alert-danger">{{ $error }}</div>
         @endif
 
-        {{--@if ($medias)
-            <ul class="medias-list">
-                @foreach ($medias as $media)
-                    <li>
-                        <a href="{{ route('back_medias_edit', $media->ID) }}" class="thumbnail">
-                            <img src="{{ asset(Shortcut::get_uploads_folder() . $media->ID . '/' . $media->fileName) }}" width="250" height="250" />
-                            <span class="media-name">{{ $media->name }}</span>
-                        </a>
-                        <a href="{{ route('back_medias_delete', $media->ID) }}" class="glyphicon glyphicon-remove media-delete"></a>
-                    </li>
-                @endforeach
-            </ul>
-        @else
-            <p>{{ trans('w-cms-laravel::medias.no_media_created_yet') }}</p>
-        @endif--}}
-
         <div class="medias-list" id="medias-library">
             <div class="update-in-progress" style="display: none"></div>
             <ol class="breadcrumb">
@@ -55,33 +39,22 @@
             </div>-->
         </div>
 
+        <div class="medias-list" id="temp-medias-library" style="display: none">
+            <h3 style="margin-top: 0">Temporary medias</h3>
+            <div class="update-in-progress" style="display: none"></div>
+            <ul class="medias"></ul>
+        </div>
+
         <div class="panel-create-media panel panel-default">
             <div class="panel-body">
-                <h3 style="margin-top:0">Create a media</h3>
+                <h3 style="margin-top:0">Upload medias</h3>
 
                 <div class="form-group">
-                    <label for="">File</label>
-                    <span class="new-media-preview"></span>
-                    <span class="btn  btn-primary btn-file">
-                        {{ trans('w-cms-laravel::generic.browse') }} <input type="file" name="image">
+                    <label for="">Files</label>
+                    <span class="btn btn-success btn-file">
+                        {{ trans('w-cms-laravel::generic.browse') }} <input type="file" name="image" multiple>
                     </span>
                 </div>
-
-                <div class="form-group">
-                    <label for="">Name</label>
-                    <input type="text" class="form-control" id="new-media-name" autocomplete="off" placeholder="Name" style="width:300px" />
-                </div>
-
-                <div class="form-group">
-                    <label for="alt">{{ trans('w-cms-laravel::medias.alt') }}</label>
-                    <input autocomplete="off" type="text" class="form-control media-alt" id="alt" name="alt" placeholder="{{ trans('w-cms-laravel::medias.alt') }}" value="" />
-                </div>
-
-                <div class="form-group">
-                    <label for="title">{{ trans('w-cms-laravel::medias.title') }}</label>
-                    <input autocomplete="off" type="text" class="form-control media-title" id="title" name="title" placeholder="{{ trans('w-cms-laravel::medias.title') }}" value="" />
-                </div>
-                <a class="btn btn-success btn-create-media" href="" title="{{ trans('w-cms-laravel::generic.create') }} media">{{ trans('w-cms-laravel::generic.create') }} media</a>
             </div>
         </div>
 
@@ -121,6 +94,31 @@
             </div>
         </a>
         <a href="#" class="glyphicon glyphicon-remove media-delete btn-delete-folder"></a>
+    </li>
+</script>
+
+<script id="temp-media-template" type="text/x-handlebars-template">
+    <li class="temp-media">
+        <div class="thumbnail">
+            <img src="@{{ fileName }}" width="200" height="150" />
+        </div>
+
+        <div class="form-group">
+            <label for="">Name</label>
+            <input type="text" class="form-control new-media-name" autocomplete="off" placeholder="Name" style="width:100%" value="@{{ baseFileName }}" />
+        </div>
+
+        <div class="form-group">
+            <label for="alt">{{ trans('w-cms-laravel::medias.alt') }}</label>
+            <input autocomplete="off" type="text" class="form-control new-media-alt" id="alt" name="alt" placeholder="{{ trans('w-cms-laravel::medias.alt') }}" value="" />
+        </div>
+
+        <div class="form-group">
+            <label for="title">{{ trans('w-cms-laravel::medias.title') }}</label>
+            <input autocomplete="off" type="text" class="form-control new-media-title" id="title" name="title" placeholder="{{ trans('w-cms-laravel::medias.title') }}" value="" />
+        </div>
+        <a class="btn btn-success btn-create-media" href="#" title="{{ trans('w-cms-laravel::generic.create') }} media">{{ trans('w-cms-laravel::generic.create') }} media</a>
+        <a class="btn btn-danger btn-cancel-media" href="#" title="{{ trans('w-cms-laravel::generic.cancel') }} media">{{ trans('w-cms-laravel::generic.cancel') }}</a>
     </li>
 </script>
 

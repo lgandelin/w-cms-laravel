@@ -6,11 +6,11 @@
     position: absolute;
     opacity: 0.75;
     background: #fff url("../img/spinner.gif") no-repeat center center;
-    z-index: 9999999;
+    z-index: 555;
 }
 
 .media-folders, .medias {
-    float: left;
+    //float: left;
 }
 
 .medias-list {
@@ -26,7 +26,7 @@
 
         li {
             width: 200px;
-            height: auto;
+            height: 160px;
             list-style: none;
             float: left;
             margin: 20px 20px 0 0 !important;
@@ -102,6 +102,22 @@
     }
 }
 
+#temp-medias-library {
+    overflow: hidden;
+    min-height: 150px;
+
+    .media {
+        width: auto !important;
+        margin-bottom: 25px !important;
+    }
+
+    .temp-media {
+        height: auto !important;
+    }
+    
+    .update-in-progress {
+    }
+}
 .panel-create-folder {
     float: left;
     width:330px;
