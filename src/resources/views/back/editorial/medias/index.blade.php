@@ -40,9 +40,10 @@
         </div>
 
         <div class="medias-list" id="temp-medias-library" style="display: none">
-            <h3 style="margin-top: 0">Temporary medias</h3>
+            <h3 style="margin-top: 0">Uploading ...</h3>
             <div class="update-in-progress" style="display: none"></div>
-            <ul class="medias"></ul>
+            <ul class="medias" style="overflow: hidden; margin-bottom: 30px"></ul>
+            <a class="btn btn-success btn-create-all-medias" href="#" style="text-align: center; display: inline-block">Valid all</a>
         </div>
 
         <div class="panel-create-media panel panel-default">
@@ -117,7 +118,7 @@
             <label for="title">{{ trans('w-cms-laravel::medias.title') }}</label>
             <input autocomplete="off" type="text" class="form-control new-media-title" id="title" name="title" placeholder="{{ trans('w-cms-laravel::medias.title') }}" value="" />
         </div>
-        <a class="btn btn-success btn-create-media" href="#" title="{{ trans('w-cms-laravel::generic.create') }} media">{{ trans('w-cms-laravel::generic.create') }} media</a>
+        <a class="btn btn-success btn-create-media" href="#" title="{{ trans('w-cms-laravel::generic.create') }} media">{{ trans('w-cms-laravel::generic.create') }}</a>
         <a class="btn btn-danger btn-cancel-media" href="#" title="{{ trans('w-cms-laravel::generic.cancel') }} media">{{ trans('w-cms-laravel::generic.cancel') }}</a>
     </li>
 </script>
