@@ -15,7 +15,6 @@
 @section('javascripts')
     @parent
     {!! HTML::script('vendor/w-cms-laravel/back/vendor/cropper-master/dist/cropper.js') !!}
-    {!! HTML::script('vendor/w-cms-laravel/back/js/medias.js') !!}
 @stop
 
 @section('content')
@@ -55,6 +54,11 @@
                         <input autocomplete="off" type="text" class="form-control media-title" id="title" name="title" placeholder="{{ trans('w-cms-laravel::medias.title') }}" value="{{ $media->title }}" />
                     </div>
 
+                    <div class="form-group">
+                        <label for="">{{ trans('w-cms-laravel::medias.file_name') }}</label>
+                        <input autocomplete="off" type="text" class="form-control" id="file_name" name="file_name" placeholder="{{ trans('w-cms-laravel::medias.file_name') }}" value="{{ $media->fileName }}" />
+                    </div>
+
                     <input type="submit" class="btn btn-success" value="{{ trans('w-cms-laravel::generic.submit') }}" />
                     <a class="btn btn-default" href="{{ route('back_medias_index') }}" name="{{ trans('w-cms-laravel::header.medias') }}">{{ trans('w-cms-laravel::generic.cancel') }}</a>
 
@@ -91,11 +95,6 @@
                         <span class="btn btn-primary btn-file">
                             {{ trans('w-cms-laravel::generic.browse') }} <input type="file" name="image">
                         </span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="">{{ trans('w-cms-laravel::medias.file_name') }}</label>
-                        <input autocomplete="off" type="text" class="form-control" id="file_name" name="file_name" placeholder="{{ trans('w-cms-laravel::medias.file_name') }}" value="{{ $media->fileName }}" />
                     </div>
 
                 </div>

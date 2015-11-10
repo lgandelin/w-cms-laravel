@@ -54,6 +54,7 @@
                                 <li><a href="{{ route('back_articles_index') }}"><span class="icon glyphicon glyphicon-font"></span>{{ trans('w-cms-laravel::header.articles') }}</a></li>
                                 <li><a href="{{ route('back_menus_index') }}"><span class="icon glyphicon glyphicon-align-justify"></span>{{ trans('w-cms-laravel::header.menus') }}</a></li>
                                 <li><a href="{{ route('back_medias_index') }}"><span class="icon glyphicon glyphicon-picture"></span>{{ trans('w-cms-laravel::header.medias') }}</a></li>
+                                <li><a href="{{ route('back_media_formats_index') }}"><span class="icon glyphicon glyphicon-inbox"></span>{{ trans('w-cms-laravel::header.media_formats') }}</a></li>
 
                                 @if ($editorial_menu_items)
                                     @foreach ($editorial_menu_items as $menu_item)
@@ -102,6 +103,8 @@
 		{!! HTML::script('vendor/w-cms-laravel/back/vendor/ckeditor/ckeditor.js') !!}
 		{!! HTML::script('vendor/w-cms-laravel/back/js/includes.js') !!}
 		{!! HTML::script('vendor/w-cms-laravel/back/js/handlebars-v4.0.4.js') !!}
+        {!! HTML::script('https://code.jquery.com/ui/1.11.3/jquery-ui.js') !!}
+        {!! HTML::script('vendor/w-cms-laravel/back/js/medias.js') !!}
 
         <script type="text/javascript">
             var route_pages_update_infos = "{{ route('back_pages_update_infos') }}";
