@@ -109,6 +109,21 @@ class MediaController extends AdminController
                 (new UpdateMediaInteractor())->run($mediaID, $mediaStructure);
 
                 $media = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
+
+                //Media formats
+                $mediaFormats = (new GetMediaFormatsInteractor())->getAll(true);
+                if (is_array($mediaFormats) && sizeof($mediaFormats) > 0) {
+                    foreach ($mediaFormats as $mediaFormat) {
+                        $media = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
+                        $fileName = $media->fileName;
+                        $newFileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName;
+
+                        $manager = new ImageManager();
+                        $image = $manager->make($this->getMediaFolder($mediaID) . $fileName);
+                        $image->resize($mediaFormat->width, $mediaFormat->height)
+                            ->save($this->getMediaFolder($mediaID) . $newFileName);
+                    }
+                }
             }
 
             return response()->json(
