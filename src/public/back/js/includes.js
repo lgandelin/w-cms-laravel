@@ -113,3 +113,10 @@ function create_and_upload_image(image_url, media_name, media_alt, media_title) 
         }
     });
 }
+
+function get_template(template, variables) {
+    var source = $("#" + template).html();
+    var template = Handlebars.compile(source);
+
+    return template(variables)
+}

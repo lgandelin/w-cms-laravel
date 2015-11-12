@@ -45,6 +45,7 @@
                     @include('w-cms-laravel::back.editorial.pages.edit_versions')
                     @include('w-cms-laravel::back.editorial.pages.edit_seo')
 
+                    <input type="hidden" id="page_id" value="{{ $page->ID }}" />
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 </div>
 

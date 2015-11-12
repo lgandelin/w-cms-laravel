@@ -302,13 +302,6 @@ function load_medias_library(mediaFolderID) {
     });
 }
 
-function get_template(template, variables) {
-    var source = $("#" + template).html();
-    var template = Handlebars.compile(source);
-
-    return template(variables)
-}
-
 function init_media_draggable()
 {
     $('.medias .media').draggable({

@@ -117,6 +117,7 @@
             var route_areas_update_order = "{{ route('back_areas_update_order') }}";
             var route_areas_display = "{{ route('back_areas_display') }}";
             var route_areas_delete = "{{ route('back_areas_delete') }}";
+            var route_areas_get = "{{ route('back_areas_get') }}";
 
             var route_blocks_get_infos = "{{ route('back_blocks_get_infos') }}";
             var route_blocks_update_infos = "{{ route('back_blocks_update_infos') }}";

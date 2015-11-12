@@ -388,6 +388,31 @@ function init_block_resizable() {
 }
 
 function reload_page_new_version() {
-    alert('New version detected, the page is going to reload');
-    window.location.reload()
+    $('#structure .update-in-progress').show();
+    $.ajax({
+        type: "POST",
+        url: route_areas_get,
+        data: {
+            pageID: $('#page_id').val(),
+            '_token': $('input[name="_token"]').val()
+        },
+        success: function(data) {
+            data = JSON.parse(data);
+
+            if (data.success) {
+                $('#structure .area').remove();
+
+                for (var i in data.areas) {
+                    var area = data.areas[i];
+                    console.log(area)
+                    var template = get_template('area-structure-template', area);
+                    console.log(template)
+                    $('.areas-wrapper').append(template);
+                }
+            }
+
+            $('.areas-wrapper .update-in-progress').hide();
+
+        }
+    });
 }

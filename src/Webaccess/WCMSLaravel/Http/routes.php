@@ -30,6 +30,7 @@ Route::post('/admin/editorial/areas/create_area', array('as' => 'back_areas_crea
 Route::post('/admin/editorial/areas/delete_area', array('as' => 'back_areas_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\AreaController@delete'));
 Route::post('/admin/editorial/areas/update_areas_order', array('as' => 'back_areas_update_order', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\AreaController@update_order'));
 Route::post('/admin/editorial/areas/display_area', array('as' => 'back_areas_display', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\AreaController@display'));
+Route::post('/admin/editorial/areas/get/', array('as' => 'back_areas_get', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\AreaController@get'));
 
 //BACK > EDITORIAL > PAGES > BLOCKS
 Route::get('/admin/editorial/blocks/get_infos/{blockID?}', array('as' => 'back_blocks_get_infos', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\BlockController@get_infos'));
