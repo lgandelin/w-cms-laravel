@@ -36,3 +36,19 @@
     </div>
 </div>
 <!-- VERSIONS -->
+
+<script id="version-row-template" type="text/x-handlebars-template">
+    <tr>
+        <td>@{{ ID }}</td>
+        <td>@{{ number }}</td>
+        <td></td>
+        <td style="vertical-align: middle">
+            <span class="label label-info">Draft</span>
+        </td>
+        <td>
+            <a class="btn btn-primary" target="_blank" href="{{ route('front_page_index_preview') }}/@{{ ID }}" title="">{{ trans('w-cms-laravel::generic.preview') }}</a>
+            <a class="btn btn-success" href="{{ route('back_pages_publish_page_version') }}/@{{ pageID }}/@{{ ID }}" title="">{{ trans('w-cms-laravel::generic.publish') }}</a>
+            <a class="btn btn-danger" href="{{ route('back_pages_delete_page_version') }}/@{{ pageID }}/@{{ ID }}" title="">{{ trans('w-cms-laravel::generic.delete') }}</a>
+        </td>
+    </tr>
+</script>

@@ -126,7 +126,7 @@ $(document).ready(function() {
                     }
 
                     if (data.new_page_version) {
-                        reload_page_new_version();
+                        reload_page_new_version(data.version);
                     }
                 }
             });
@@ -196,7 +196,7 @@ $(document).ready(function() {
                     }
 
                     if (data.new_page_version) {
-                        reload_page_new_version();
+                        reload_page_new_version(data.version);
                     }
                 }
             });
@@ -233,7 +233,7 @@ $(document).ready(function() {
                     }
 
                     if (data.new_page_version) {
-                        reload_page_new_version();
+                        reload_page_new_version(data.version);
                     }
                 }
             });
@@ -278,7 +278,7 @@ $(document).ready(function() {
                 $('.areas-wrapper .update-in-progress').hide();
 
                 if (data.new_page_version) {
-                    reload_page_new_version();
+                    reload_page_new_version(data.version);
                 }
             }
         });
@@ -330,7 +330,7 @@ function init_block_sortable() {
                     $('.areas-wrapper .update-in-progress').hide();
                     data = JSON.parse(data);
                     if (data.new_page_version) {
-                        reload_page_new_version();
+                        reload_page_new_version(data.version);
                     }
                 },
             });
@@ -379,7 +379,7 @@ function init_block_resizable() {
 
                     data = JSON.parse(data);
                     if (data.new_page_version) {
-                        reload_page_new_version();
+                        reload_page_new_version(data.version);
                     }
                 }
             });
@@ -387,8 +387,12 @@ function init_block_resizable() {
     });
 }
 
-function reload_page_new_version() {
+function reload_page_new_version(version) {
     $('#structure .update-in-progress').show();
+
+    //Add version if necessary
+    var template = get_template('version-row-template', version);
+    $('#versions table tbody').append(template);
 
     $.ajax({
         type: "POST",
