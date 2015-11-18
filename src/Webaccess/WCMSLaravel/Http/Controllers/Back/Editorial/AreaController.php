@@ -29,10 +29,15 @@ class AreaController extends AdminController
     {
         $pageID = \Input::get('pageID');
         $page = (new GetPageInteractor())->getPageByID($pageID, true);
-        $draftVersion = Context::get('version_repository')->findByID($page->versionID);
+        $draftVersion = Context::get('version_repository')->findByID($page->draftVersionID);
 
         try {
             $areas = (new GetAreasInteractor())->getByPageIDAndVersionNumber($pageID, $draftVersion->getNumber(), true);
+            foreach ($areas as $area) {
+                if (!$area->display) {
+                    $area->hidden = true;
+                }
+            }
 
             return json_encode(array('success' => true, 'areas' => $areas));
         } catch (\Exception $e) {

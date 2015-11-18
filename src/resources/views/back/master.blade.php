@@ -126,6 +126,7 @@
             var route_blocks_update_order = "{{ route('back_blocks_update_order') }}";
             var route_blocks_display = "{{ route('back_blocks_display') }}";
             var route_blocks_delete = "{{ route('back_blocks_delete') }}";
+            var route_blocks_get = "{{ route('back_blocks_get') }}";
 
             var route_menu_items_create = "{{ route('back_menu_items_create') }}";
             var route_menu_items_get_infos = "{{ route('back_menu_items_get_infos') }}";

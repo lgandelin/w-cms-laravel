@@ -65,28 +65,6 @@
     @include('w-cms-laravel::back.editorial.pages.modals.blocks')
 </div>
 
-<script id="block-structure-template" type="text/x-handlebars-template">
-    <div id="b-@{{ ID }}" data-id="@{{ ID }}" class="block col-xs-@{{ width }} align-@{{ alignment }}" data-width="@{{ width }}" data-display="@{{ display }}">
-        <div class="block_color @{{#if masterBlockID}} child-block @{{/if}}">
-            <span class="title">
-                <span class="width_value">@{{ width }}</span>
-                <span class="block-name">@{{ name }}</span>
-                <span class="type">@{{ type->code }}</span>
-                @{{#if !masterBlockID}}
-                    <span data-id="@{{ ID }}" class="block-delete glyphicon glyphicon-remove"></span>
-                    <span style="display: none" data-id="@{{ ID }}" class="block-move glyphicon glyphicon-move"></span>
-                    <span data-id="@{{ ID }}" class="block-display @{{#if display}} block-hidden @{{/if}} glyphicon glyphicon-eye-open"></span>
-                    <span data-id="@{{ ID }}" class="block-update glyphicon glyphicon-cog"></span>
-                    <span data-id="@{{ ID }}" class="block-go-to-content glyphicon glyphicon-pencil"></span>
-                @{{else}}
-                    <span class="glyphicon glyphicon-exclamation-sign disabled"></span>
-                @{{/if}}
-            </span>
-        </div>
-    </div>
-</script>
-
-
 <script id="area-structure-template" type="text/x-handlebars-template">
     <div id="a-@{{ ID }}" data-id="@{{ ID }}" class="area col-xs-@{{ width }}" data-width="@{{ width }}" data-display="@{{ display }}">
         <div class="area_color @{{#if masterAreaID}} child-area @{{/if}}">
@@ -95,9 +73,26 @@
                 <span class="area-name">@{{ name }}</span>
                 <span data-id="@{{ ID }}" class="area-delete glyphicon glyphicon-remove"></span>
                 <span style="display: none" data-id="@{{ ID }}" class="area-move glyphicon glyphicon-move"></span>
-                <span data-id="@{{ ID }}" class="area-display glyphicon glyphicon-eye-open"></span>
+                <span data-id="@{{ ID }}" class="area-display glyphicon glyphicon-eye-open @{{#if hidden}} area-hidden @{{/if}}"></span>
                 <span data-id="@{{ ID }}" class="area-update glyphicon glyphicon-cog"></span>
                 <span data-id="@{{ ID }}" class="area-create-block glyphicon glyphicon-plus"></span>
+            </span>
+        </div>
+    </div>
+</script>
+
+<script id="block-structure-template" type="text/x-handlebars-template">
+    <div id="b-@{{ ID }}" data-id="@{{ ID }}" class="block col-xs-@{{ width }} align-@{{ alignment }}" data-width="@{{ width }}" data-display="@{{ display }}">
+        <div class="block_color @{{#if masterBlockID}} child-block @{{/if}}">
+            <span class="title">
+                <span class="width_value">@{{ width }}</span>
+                <span class="block-name">@{{ name }}</span>
+                <span class="type">@{{ type.code }}</span>
+                <span data-id="@{{ ID }}" class="block-delete glyphicon glyphicon-remove"></span>
+                <span style="display: none" data-id="@{{ ID }}" class="block-move glyphicon glyphicon-move"></span>
+                <span data-id="@{{ ID }}" class="block-display glyphicon glyphicon-eye-open @{{#if hidden}} block-hidden @{{/if}}"></span>
+                <span data-id="@{{ ID }}" class="block-update glyphicon glyphicon-cog"></span>
+                <span data-id="@{{ ID }}" class="block-go-to-content glyphicon glyphicon-pencil"></span>
             </span>
         </div>
     </div>

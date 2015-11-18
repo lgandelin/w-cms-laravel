@@ -5,6 +5,7 @@ namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 use Webaccess\WCMSCore\Interactors\Blocks\CreateBlockInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\DeleteBlockInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlockInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\UpdateBlockInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\UpdateBlockTypeInteractor;
 use Webaccess\WCMSCore\DataStructure;
@@ -18,6 +19,24 @@ class BlockController extends AdminController
             $block = (new GetBlockInteractor())->getBlockByID($blockID, true);
 
             return json_encode(array('success' => true, 'block' => $block->toArray()));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+
+    public function get()
+    {
+        $areaID = \Input::get('areaID');
+
+        try {
+            $blocks = (new GetBlocksInteractor())->getAllByAreaID($areaID, true);
+            foreach ($blocks as $block) {
+                if (!$block->display) {
+                    $block->hidden = true;
+                }
+            }
+
+            return json_encode(array('success' => true, 'blocks' => $blocks, 'areaID' => $areaID));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }

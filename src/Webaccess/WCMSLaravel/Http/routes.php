@@ -40,6 +40,7 @@ Route::post('/admin/editorial/blocks/update_infos', array('as' => 'back_blocks_u
 Route::post('/admin/editorial/blocks/delete', array('as' => 'back_blocks_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\BlockController@delete'));
 Route::post('/admin/editorial/blocks/update_order', array('as' => 'back_blocks_update_order', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\BlockController@update_order'));
 Route::post('/admin/editorial/blocks/display', array('as' => 'back_blocks_display', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\BlockController@display'));
+Route::post('/admin/editorial/blocks/get/', array('as' => 'back_blocks_get', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\BlockController@get'));
 
 //BACK > EDITORIAL > ARTICLES
 Route::get('/admin/editorial/articles', array('as' => 'back_articles_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\ArticleController@index'));
