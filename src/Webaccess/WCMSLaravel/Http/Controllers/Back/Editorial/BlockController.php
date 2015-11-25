@@ -52,10 +52,11 @@ class BlockController extends AdminController
         }
 
         try {
+            $areaID = $blockStructure->areaID;
             list($blockID, $newPageVersion) = (new CreateBlockInteractor())->run($blockStructure);
             $block = (new GetBlockInteractor())->getBlockByID($blockID, true);
 
-            $page = (new GetPageInteractor())->getPageFromBlockID($blockID);
+            $page = (new GetPageInteractor())->getPageFromAreaID($areaID);
             $version = Context::get('version_repository')->findByID($page->getDraftVersionID());
 
             return json_encode(array('success' => true, 'block' => $block->toArray(), 'new_page_version' => $newPageVersion, 'version' => $version->toStructure()->toArray()));
