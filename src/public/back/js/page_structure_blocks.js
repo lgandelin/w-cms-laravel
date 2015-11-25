@@ -126,7 +126,7 @@ $(document).ready(function() {
                     }
 
                     if (data.new_page_version) {
-                        reload_page_new_version();
+                        reload_page_new_version(data.version);
                     }
                 }
             });
@@ -196,7 +196,7 @@ $(document).ready(function() {
                     }
 
                     if (data.new_page_version) {
-                        reload_page_new_version();
+                        reload_page_new_version(data.version);
                     }
                 }
             });
@@ -233,7 +233,7 @@ $(document).ready(function() {
                     }
 
                     if (data.new_page_version) {
-                        reload_page_new_version();
+                        reload_page_new_version(data.version);
                     }
                 }
             });
@@ -278,7 +278,7 @@ $(document).ready(function() {
                 $('.areas-wrapper .update-in-progress').hide();
 
                 if (data.new_page_version) {
-                    reload_page_new_version();
+                    reload_page_new_version(data.version);
                 }
             }
         });
@@ -330,7 +330,7 @@ function init_block_sortable() {
                     $('.areas-wrapper .update-in-progress').hide();
                     data = JSON.parse(data);
                     if (data.new_page_version) {
-                        reload_page_new_version();
+                        reload_page_new_version(data.version);
                     }
                 },
             });
@@ -379,7 +379,7 @@ function init_block_resizable() {
 
                     data = JSON.parse(data);
                     if (data.new_page_version) {
-                        reload_page_new_version();
+                        reload_page_new_version(data.version);
                     }
                 }
             });
@@ -387,7 +387,62 @@ function init_block_resizable() {
     });
 }
 
-function reload_page_new_version() {
-    alert('New version detected, the page is going to reload');
-    window.location.reload()
+function reload_page_new_version(version) {
+    $('#structure .update-in-progress').show();
+
+    //Add version if necessary
+    var template = get_template('version-row-template', version);
+    $('#versions table tbody').append(template);
+
+    $.ajax({
+        type: "POST",
+        url: route_areas_get,
+        data: {
+            pageID: $('#page_id').val(),
+            '_token': $('input[name="_token"]').val()
+        },
+        success: function(data) {
+            data = JSON.parse(data);
+
+            if (data.success) {
+                $('#structure .area').remove();
+
+                for (var i in data.areas) {
+                    var area = data.areas[i];
+                    var template = get_template('area-structure-template', area);
+                    $('.areas-wrapper').append(template);
+
+                    $.ajax({
+                        type: "POST",
+                        url: route_blocks_get,
+                        data: {
+                            areaID: area.ID,
+                            '_token': $('input[name="_token"]').val()
+                        },
+                        success: function(data) {
+                            data = JSON.parse(data);
+
+                            if (data.success) {
+                                for (var j in data.blocks) {
+                                    var block = data.blocks[j];
+                                    var template = get_template('block-structure-template', block);
+                                    $('#a-' + data.areaID + ' .area_color').append(template);
+
+                                    if (j == data.blocks.length - 1) {
+                                        $('.areas-wrapper .update-in-progress').hide();
+
+                                        init_block_sortable();
+                                        init_block_resizable();
+
+                                        init_area_sortable();
+                                        init_area_resizable();
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    });
 }

@@ -20,8 +20,8 @@ Route::post('/admin/editorial/pages/update_page_seo', array('as' => 'back_pages_
 Route::get('/admin/editorial/pages/delete/{pageID}', array('as' => 'back_pages_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@delete'));
 Route::get('/admin/editorial/pages/duplicate/{pageID}', array('as' => 'back_pages_duplicate', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@duplicate'));
 Route::post('/admin/editorial/pages/clear_cache', array('as' => 'back_pages_clear_cache', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@clear_cache'));
-Route::get('/admin/editorial/pages/publish_page_version/{pageID}/{versionNumber}', array('as' => 'back_pages_publish_page_version', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@publish_page_version'));
-Route::get('/admin/editorial/pages/delete_page_version/{pageID}/{versionNumber}', array('as' => 'back_pages_delete_page_version', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@delete_page_version'));
+Route::get('/admin/editorial/pages/publish_page_version/{pageID?}/{versionNumber?}', array('as' => 'back_pages_publish_page_version', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@publish_page_version'));
+Route::get('/admin/editorial/pages/delete_page_version/{pageID?}/{versionNumber?}', array('as' => 'back_pages_delete_page_version', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\PageController@delete_page_version'));
 
 //BACK > EDITORIAL > PAGES > AREAS
 Route::get('/admin/editorial/areas/get_infos/{areaID?}', array('as' => 'back_areas_get_infos', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\AreaController@get_infos'));
@@ -30,6 +30,7 @@ Route::post('/admin/editorial/areas/create_area', array('as' => 'back_areas_crea
 Route::post('/admin/editorial/areas/delete_area', array('as' => 'back_areas_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\AreaController@delete'));
 Route::post('/admin/editorial/areas/update_areas_order', array('as' => 'back_areas_update_order', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\AreaController@update_order'));
 Route::post('/admin/editorial/areas/display_area', array('as' => 'back_areas_display', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\AreaController@display'));
+Route::post('/admin/editorial/areas/get/', array('as' => 'back_areas_get', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\AreaController@get'));
 
 //BACK > EDITORIAL > PAGES > BLOCKS
 Route::get('/admin/editorial/blocks/get_infos/{blockID?}', array('as' => 'back_blocks_get_infos', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\BlockController@get_infos'));
@@ -39,6 +40,7 @@ Route::post('/admin/editorial/blocks/update_infos', array('as' => 'back_blocks_u
 Route::post('/admin/editorial/blocks/delete', array('as' => 'back_blocks_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\BlockController@delete'));
 Route::post('/admin/editorial/blocks/update_order', array('as' => 'back_blocks_update_order', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\BlockController@update_order'));
 Route::post('/admin/editorial/blocks/display', array('as' => 'back_blocks_display', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\BlockController@display'));
+Route::post('/admin/editorial/blocks/get/', array('as' => 'back_blocks_get', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\BlockController@get'));
 
 //BACK > EDITORIAL > ARTICLES
 Route::get('/admin/editorial/articles', array('as' => 'back_articles_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\ArticleController@index'));
@@ -75,14 +77,17 @@ Route::post('/admin/editorial/menu_items/delete', array('as' => 'back_menu_items
 Route::get('/admin/editorial/medias', array('as' => 'back_medias_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@index'));
 Route::get('/admin/editorial/medias/create', array('as' => 'back_medias_create', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@create'));
 Route::post('/admin/editorial/medias/store', array('as' => 'back_medias_store', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@store'));
-Route::get('/admin/editorial/medias/edit/{mediaID}', array('as' => 'back_medias_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@edit'));
+Route::get('/admin/editorial/medias/edit/{mediaID?}', array('as' => 'back_medias_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@edit'));
 Route::post('/admin/editorial/medias/update', array('as' => 'back_medias_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@update'));
-Route::get('/admin/editorial/medias/delete/{mediaID}', array('as' => 'back_medias_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@delete'));
+Route::post('/admin/editorial/medias/delete', array('as' => 'back_medias_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@delete'));
 Route::get('/admin/editorial/medias/duplicate/{mediaID}', array('as' => 'back_medias_duplicate', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@duplicate'));
 
 Route::post('/admin/editorial/medias/upload', array('as' => 'back_medias_upload', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@upload'));
 Route::post('/admin/editorial/medias/create_and_upload', array('as' => 'back_medias_create_and_upload', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@create_and_upload'));
 Route::post('/admin/editorial/medias/crop', array('as' => 'back_medias_crop', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@crop'));
+Route::get('/admin/editorial/medias/get_all/{mediaFolderID?}', array('as' => 'back_medias_get', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@getAll'));
+Route::post('/admin/editorial/medias/move_media_in_media_folder', array('as' => 'back_medias_move_in_media_folder', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaController@moveInMediaFolder'));
+
 
 //BACK > EDITORIAL > MEDIA FORMATS
 Route::get('/admin/editorial/media_formats', array('as' => 'back_media_formats_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@index'));
@@ -91,6 +96,16 @@ Route::post('/admin/editorial/media_formats/store', array('as' => 'back_media_fo
 Route::get('/admin/editorial/media_formats/edit/{media_formatID}', array('as' => 'back_media_formats_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@edit'));
 Route::post('/admin/editorial/media_formats/update', array('as' => 'back_media_formats_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@update'));
 Route::get('/admin/editorial/media_formats/delete/{media_formatID}', array('as' => 'back_media_formats_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFormatController@delete'));
+
+
+//BACK > EDITORIAL > MEDIA FOLDERS
+Route::get('/admin/editorial/media_folders', array('as' => 'back_media_folders_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@index'));
+Route::get('/admin/editorial/media_folders/create', array('as' => 'back_media_folders_create', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@create'));
+Route::post('/admin/editorial/media_folders/store', array('as' => 'back_media_folders_store', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@store'));
+Route::get('/admin/editorial/media_folders/edit/{mediaFolderID}', array('as' => 'back_media_folders_edit', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@edit'));
+Route::post('/admin/editorial/media_folders/update', array('as' => 'back_media_folders_update', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@update'));
+Route::post('/admin/editorial/media_folders/delete', array('as' => 'back_media_folders_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@delete'));
+Route::post('/admin/editorial/media_formats/move_media_folder_in_media_folder', array('as' => 'back_media_folders_move_in_media_folder', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial\MediaFolderController@moveInMediaFolder'));
 
 
 //BACK > GENERAL
@@ -118,7 +133,6 @@ Route::get('/admin/general/langs/change/{id}', array('as' => 'back_lang_change',
 Route::get('/admin/structure', array('as' => 'back_structure', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\StructureController@index'));
 
 //BACK > STRUCTURE > BLOCKS
-
 Route::get('/admin/structure/blocks', array('as' => 'back_global_blocks_index', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@index'));
 Route::get('/admin/structure/blocks/create', array('as' => 'back_global_blocks_create', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@create'));
 Route::post('/admin/structure/blocks/store', array('as' => 'back_global_blocks_store', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@store'));
@@ -127,7 +141,7 @@ Route::post('/admin/structure/blocks/update', array('as' => 'back_global_blocks_
 Route::get('/admin/structure/blocks/delete/{id}', array('as' => 'back_global_blocks_delete', 'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Back\Structure\BlockController@delete'));
 
 
-Route::get('/preview/{version}/{uri?}', [
+Route::get('/preview/{version?}/{uri?}', [
     'as' => 'front_page_index_preview',
     'uses' => 'Webaccess\WCMSLaravel\Http\Controllers\Front\FrontController@index_preview'
 ]);

@@ -2,6 +2,8 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Webaccess\WCMSCore\Interactors\MediaFolders\GetMediaFolderInteractor;
+use Webaccess\WCMSCore\Interactors\MediaFolders\GetMediaFoldersInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatsInteractor;
 use Webaccess\WCMSCore\Interactors\Medias\CreateMediaInteractor;
@@ -20,9 +22,62 @@ class MediaController extends AdminController
     public function index()
     {
         return view('w-cms-laravel::back.editorial.medias.index', [
-            'medias' => (new GetMediasInteractor())->getAll(true),
+            //'medias' => (new GetMediasInteractor())->getAll(true),
             'error' => (\Session::has('error')) ? \Session::get('error') : null
         ]);
+    }
+
+    public function getAll()
+    {
+        try {
+            $mediaFolderID = \Input::get('mediaFolderID');
+            $breadcrumb = [];
+            if ($mediaFolderID) {
+                $mediaFolder = (new GetMediaFolderInteractor())->getMediaFolderByID($mediaFolderID, true);
+                $folder = clone $mediaFolder;
+
+                while ($folder->parentID != 0) {
+                    $folder = (new GetMediaFolderInteractor())->getMediaFolderByID($folder->parentID, true);
+                    array_unshift($breadcrumb, $folder);
+                }
+            }
+            array_unshift($breadcrumb, ['ID' => 0, 'name' => 'Root']);
+
+            return response()->json(
+                array(
+                    'medias' => array_merge(
+                        (new GetMediaFoldersInteractor())->getAllByMediaFolder($mediaFolderID, true),
+                        (new GetMediasInteractor())->getAllByMediaFolder($mediaFolderID, true)
+                    ),
+                    'mediaFolder' => (isset($mediaFolder) ? $mediaFolder : null),
+                    'breadcrumb' => $breadcrumb,
+                )
+            );
+        } catch(\Exception $e) {
+            dd($e->getMessage());
+        }
+    }
+
+    public function moveInMediaFolder()
+    {
+        try {
+            $mediaID = \Input::get('mediaID');
+            $mediaFolderID = \Input::get('mediaFolderID');
+
+            $dataStructure = new DataStructure([
+                'mediaFolderID' => $mediaFolderID,
+            ]);
+
+            (new UpdateMediaInteractor())->run($mediaID, $dataStructure);
+
+            return response()->json(
+                array(
+                    'mediaID' => $mediaID,
+                )
+            );
+        } catch(\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 
     public function create()
@@ -32,21 +87,55 @@ class MediaController extends AdminController
 
     public function store()
     {
+        $fileName = basename(\Input::get('fileName'));
+
         $mediaStructure = new DataStructure([
             'name' => \Input::get('name'),
             'alt' => \Input::get('alt'),
             'title' => \Input::get('title'),
+            'mediaFolderID' => \Input::get('mediaFolderID'),
         ]);
 
         try {
-            $mediaID = (new CreateMediaInteractor())->run($mediaStructure);
+            if ($mediaID = (new CreateMediaInteractor())->run($mediaStructure)) {
+                if (!is_dir($this->getMediaFolder($mediaID))) {
+                    mkdir($this->getMediaFolder($mediaID));
+                }
+                File::move(public_path() . '/' . Shortcut::get_uploads_folder() . 'temp/' . $fileName, $this->getMediaFolder($mediaID) . $fileName);
 
-            return \Redirect::route('back_medias_edit', array('mediaID' => $mediaID));
+                $mediaStructure = new DataStructure([
+                    'fileName' => basename($fileName),
+                ]);
+                (new UpdateMediaInteractor())->run($mediaID, $mediaStructure);
+
+                $media = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
+
+                //Media formats
+                $mediaFormats = (new GetMediaFormatsInteractor())->getAll(true);
+                if (is_array($mediaFormats) && sizeof($mediaFormats) > 0) {
+                    foreach ($mediaFormats as $mediaFormat) {
+                        $media = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
+                        $fileName = $media->fileName;
+                        $newFileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $fileName;
+
+                        $manager = new ImageManager();
+                        $image = $manager->make($this->getMediaFolder($mediaID) . $fileName);
+                        $image->resize($mediaFormat->width, $mediaFormat->height)
+                            ->save($this->getMediaFolder($mediaID) . $newFileName);
+                    }
+                }
+            }
+
+            return response()->json(
+                array(
+                    'media' => (isset($media) ? $media : null),
+                )
+            );
         } catch (\Exception $e) {
-            return view('w-cms-laravel::back.editorial.medias.create', [
+            /*return view('w-cms-laravel::back.editorial.medias.create', [
                 'error' => $e->getMessage(),
                 'media' => $mediaStructure
-            ]);
+            ]);*/
         }
     }
 
@@ -106,22 +195,30 @@ class MediaController extends AdminController
         }
     }
 
-    public function delete($mediaID)
+    public function delete()
     {
+        $mediaID = \Input::get('ID');
         try {
             (new DeleteMediaInteractor())->run($mediaID);
 
             array_map('unlink', glob($this->getMediaFolder($mediaID) . '*'));
             rmdir($this->getMediaFolder($mediaID));
 
-            return \Redirect::route('back_medias_index');
+            return response()->json(
+                array(
+                    'success' => true,
+                    'mediaID' => $mediaID,
+                )
+            );
+
+            //return \Redirect::route('back_medias_index');
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
-            return \Redirect::route('back_medias_index');
+            //return \Redirect::route('back_medias_index');
         }
     }
 
-    public function upload()
+    /*public function upload()
     {
         $mediaID = \Input::get('ID');
         $fileName = \Input::file('image')->getClientOriginalName();
@@ -139,6 +236,29 @@ class MediaController extends AdminController
                     'image' => asset(Shortcut::get_uploads_folder() . $mediaID . '/' . $fileName),
                     'fileName' => $fileName,
                     'media_format_images' => $mediaFormatsImages
+                )
+            );
+        } catch (\Exception $e) {
+            \Session::flash('error', $e->getMessage());
+            return \Response::json(
+                array(
+                    'fileName' => $e->getMessage(),
+                )
+            );
+        }
+    }*/
+
+    public function upload()
+    {
+        $fileName = \Input::file('image')->getClientOriginalName();
+
+        try {
+            \Input::file('image')->move(public_path() . '/' . Shortcut::get_uploads_folder() . 'temp/', $fileName);
+
+            return \Response::json(
+                array(
+                    'fileName' => asset(Shortcut::get_uploads_folder() . 'temp/' . $fileName),
+                    'baseFileName' => basename($fileName),
                 )
             );
         } catch (\Exception $e) {

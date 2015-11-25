@@ -21,4 +21,5 @@ return array(
     'preview' => 'Prévisualiser',
     'yes' => 'Oui',
     'no' => 'Non',
+    'back' => 'Revenir',
 );

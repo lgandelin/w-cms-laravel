@@ -54,6 +54,7 @@
                                 <li><a href="{{ route('back_articles_index') }}"><span class="icon glyphicon glyphicon-font"></span>{{ trans('w-cms-laravel::header.articles') }}</a></li>
                                 <li><a href="{{ route('back_menus_index') }}"><span class="icon glyphicon glyphicon-align-justify"></span>{{ trans('w-cms-laravel::header.menus') }}</a></li>
                                 <li><a href="{{ route('back_medias_index') }}"><span class="icon glyphicon glyphicon-picture"></span>{{ trans('w-cms-laravel::header.medias') }}</a></li>
+                                <li><a href="{{ route('back_media_formats_index') }}"><span class="icon glyphicon glyphicon-inbox"></span>{{ trans('w-cms-laravel::header.media_formats') }}</a></li>
 
                                 @if ($editorial_menu_items)
                                     @foreach ($editorial_menu_items as $menu_item)
@@ -101,6 +102,9 @@
 		{!! HTML::script('vendor/w-cms-laravel/back/vendor/bootstrap/js/bootstrap.min.js') !!}
 		{!! HTML::script('vendor/w-cms-laravel/back/vendor/ckeditor/ckeditor.js') !!}
 		{!! HTML::script('vendor/w-cms-laravel/back/js/includes.js') !!}
+		{!! HTML::script('vendor/w-cms-laravel/back/js/handlebars-v4.0.4.js') !!}
+        {!! HTML::script('https://code.jquery.com/ui/1.11.3/jquery-ui.js') !!}
+        {!! HTML::script('vendor/w-cms-laravel/back/js/medias.js') !!}
 
         <script type="text/javascript">
             var route_pages_update_infos = "{{ route('back_pages_update_infos') }}";
@@ -113,6 +117,7 @@
             var route_areas_update_order = "{{ route('back_areas_update_order') }}";
             var route_areas_display = "{{ route('back_areas_display') }}";
             var route_areas_delete = "{{ route('back_areas_delete') }}";
+            var route_areas_get = "{{ route('back_areas_get') }}";
 
             var route_blocks_get_infos = "{{ route('back_blocks_get_infos') }}";
             var route_blocks_update_infos = "{{ route('back_blocks_update_infos') }}";
@@ -121,6 +126,7 @@
             var route_blocks_update_order = "{{ route('back_blocks_update_order') }}";
             var route_blocks_display = "{{ route('back_blocks_display') }}";
             var route_blocks_delete = "{{ route('back_blocks_delete') }}";
+            var route_blocks_get = "{{ route('back_blocks_get') }}";
 
             var route_menu_items_create = "{{ route('back_menu_items_create') }}";
             var route_menu_items_get_infos = "{{ route('back_menu_items_get_infos') }}";
@@ -130,8 +136,16 @@
             var route_menu_items_delete = "{{ route('back_menu_items_delete') }}";
 
             var route_media_upload = "{{ route('back_medias_upload') }}";
+            var route_media_store = "{{ route('back_medias_store') }}";
+            var route_medias_delete = "{{ route('back_medias_delete') }}";
             var route_media_create_and_upload = "{{ route('back_medias_create_and_upload') }}";
             var route_media_crop = "{{ route('back_medias_crop') }}";
+            var route_get_medias = "{{ route('back_medias_get') }}";
+            var route_media_move_in_media_folder = "{{ route('back_medias_move_in_media_folder') }}";
+            var route_media_folders_move_in_media_folder = "{{ route('back_media_folders_move_in_media_folder') }}";
+
+            var route_medias_folder_create = "{{ route('back_media_folders_store') }}";
+            var route_medias_folder_delete = "{{ route('back_media_folders_delete') }}";
         </script>
 
 		@yield('javascripts')

@@ -2,11 +2,14 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Areas\CreateAreaInteractor;
 use Webaccess\WCMSCore\Interactors\Areas\DeleteAreaInteractor;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreaInteractor;
+use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Areas\UpdateAreaInteractor;
 use Webaccess\WCMSCore\DataStructure;
+use Webaccess\WCMSCore\Interactors\Pages\GetPageInteractor;
 use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class AreaController extends AdminController
@@ -17,6 +20,26 @@ class AreaController extends AdminController
             $area = (new GetAreaInteractor())->getAreaByID($areaID, true);
 
             return json_encode(array('success' => true, 'area' => $area->toArray()));
+        } catch (\Exception $e) {
+            return json_encode(array('success' => false, 'error' => $e->getMessage()));
+        }
+    }
+
+    public function get()
+    {
+        $pageID = \Input::get('pageID');
+        $page = (new GetPageInteractor())->getPageByID($pageID, true);
+        $draftVersion = Context::get('version_repository')->findByID($page->draftVersionID);
+
+        try {
+            $areas = (new GetAreasInteractor())->getByPageIDAndVersionNumber($pageID, $draftVersion->getNumber(), true);
+            foreach ($areas as $area) {
+                if (!$area->display) {
+                    $area->hidden = true;
+                }
+            }
+
+            return json_encode(array('success' => true, 'areas' => $areas));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
