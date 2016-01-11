@@ -15,6 +15,10 @@ use Webaccess\WCMSLaravel\Http\Controllers\Back\AdminController;
 
 class BlockController extends AdminController
 {
+    public function __construct() {
+        Context::add('versions_enabled', false);
+    }
+
     public function get_infos($blockID)
     {
         try {
@@ -53,7 +57,7 @@ class BlockController extends AdminController
 
         try {
             $areaID = $blockStructure->areaID;
-            list($blockID, $newPageVersion) = (new CreateBlockInteractor())->run($blockStructure);
+            list($blockID, $newPageVersion) = (new CreateBlockInteractor())->run($blockStructure, env('VERSIONS_ENABLED'));
             $block = (new GetBlockInteractor())->getBlockByID($blockID, true);
 
             $page = (new GetPageInteractor())->getPageFromAreaID($areaID);
@@ -75,7 +79,7 @@ class BlockController extends AdminController
         }
 
         try {
-            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure);
+            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure, env('VERSIONS_ENABLED'));
 
             $page = (new GetPageInteractor())->getPageFromBlockID($blockID);
             $version = Context::get('version_repository')->findByID($page->getDraftVersionID());
@@ -100,7 +104,7 @@ class BlockController extends AdminController
         }
 
         try {
-            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure);
+            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure, env('VERSIONS_ENABLED'));
 
             $page = (new GetPageInteractor())->getPageFromBlockID($blockID);
             $version = Context::get('version_repository')->findByID($page->getDraftVersionID());
@@ -118,7 +122,7 @@ class BlockController extends AdminController
             $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
             $blockStructure->areaID = \Input::get('area_id');
 
-            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure);
+            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure, env('VERSIONS_ENABLED'));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
         }
@@ -150,7 +154,7 @@ class BlockController extends AdminController
             $page = (new GetPageInteractor())->getPageFromBlockID($blockID);
             $version = Context::get('version_repository')->findByID($page->getDraftVersionID());
 
-            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure);
+            $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure, env('VERSIONS_ENABLED'));
             return json_encode(array('success' => true, 'new_page_version' => $newPageVersion, 'version' => $version->toStructure()->toArray()));
         } catch (\Exception $e) {
             return json_encode(array('success' => false, 'error' => $e->getMessage()));
@@ -162,7 +166,7 @@ class BlockController extends AdminController
         $blockID = \Input::get('ID');
 
         try {
-            $newPageVersion = (new DeleteBlockInteractor())->run($blockID);
+            $newPageVersion = (new DeleteBlockInteractor())->run($blockID, env('VERSIONS_ENABLED'));
 
             $page = (new GetPageInteractor())->getPageFromBlockID($blockID);
             $version = Context::get('version_repository')->findByID($page->getDraftVersionID());
