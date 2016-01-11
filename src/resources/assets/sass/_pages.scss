@@ -80,6 +80,21 @@
 
 	#structure {
 
+        .areas-wrapper {
+            position: relative;
+        }
+        
+        .update-in-progress {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            opacity: 0.75;
+            background: #fff url("../img/spinner.gif") no-repeat center center;
+            z-index: 9999999;
+        }
+
 		.title {
 			font-weight: bold;
 			display: block;
@@ -208,5 +223,20 @@
 
     .align-right {
         float: right;
+    }
+}
+
+#medias-modal {
+    .modal-body {
+        overflow: hidden;
+    }
+
+    .medias-list ul li {
+        width:150px;
+        height: 140px;
+        list-style: none;
+        float: left;
+        margin: 20px 20px 0 0 !important;
+        position: relative;
     }
 }

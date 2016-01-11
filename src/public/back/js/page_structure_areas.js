@@ -26,11 +26,14 @@ $(document).ready(function() {
         var modal = $('#area-infos-modal');
         $(modal).find('.btn-valid').attr('data-id', area_id).attr('data-action', 'update');
 
+        $('.areas-wrapper .update-in-progress').show();
         $.ajax({
             type: "GET",
             url: route_areas_get_infos + '/' + area_id,
             success: function(data) {
                 data = JSON.parse(data);
+
+                $('.areas-wrapper .update-in-progress').hide();
 
                 if (data.success) {
                     $(modal).find('.name').val(data.area.name);
@@ -42,6 +45,10 @@ $(document).ready(function() {
                     $(modal).modal('show');
                 } else {
 
+                }
+
+                if (data.new_page_version) {
+                    reload_page_new_version();
                 }
             }
         });
@@ -55,8 +62,8 @@ $(document).ready(function() {
                 'width': $('#area-infos-modal .width').val(),
                 'height': $('#area-infos-modal .height').val(),
                 'class': $('#area-infos-modal .class').val(),
-                'is_master': $('#area-infos-modal input[name="area_is_master"]:checked').val(),
-                'page_id': $(this).attr('data-page-id'),
+                'isMaster': $('#area-infos-modal input[name="area_is_master"]:checked').val(),
+                'pageID': $(this).attr('data-page-id'),
                 'order': 999,
                 'display': 1,
                 '_token': $('input[name="_token"]').val()
@@ -90,6 +97,10 @@ $(document).ready(function() {
                         $('#area-infos-modal').modal('hide');
                     } else {
 
+                    }
+
+                    if (data.new_page_version) {
+                        reload_page_new_version();
                     }
                 }
             });
@@ -133,6 +144,10 @@ $(document).ready(function() {
                     } else {
 
                     }
+
+                    if (data.new_page_version) {
+                        reload_page_new_version();
+                    }
                 }
             });
         }
@@ -148,12 +163,15 @@ $(document).ready(function() {
                 '_token': $('input[name="_token"]').val()
             };
 
+            $('.areas-wrapper .update-in-progress').show();
+
             $.ajax({
                 type: "POST",
                 url: route_areas_delete,
                 data: data,
                 success: function(data) {
                     data = JSON.parse(data);
+                    $('.areas-wrapper .update-in-progress').hide();
 
                     if (data.success) {
                         $('.area[data-id="' + area_id + '"]').remove();
@@ -161,6 +179,10 @@ $(document).ready(function() {
                         var label_error = $('<p class="alert alert-danger">' + data.error + '</p>');
                         $('#structure .areas-wrapper').after(label_error);
                         label_error.fadeIn().delay(2000).fadeOut();
+                    }
+
+                    if (data.new_page_version) {
+                        reload_page_new_version();
                     }
                 }
             });
@@ -178,12 +200,16 @@ $(document).ready(function() {
             '_token': $('input[name="_token"]').val()
         };
 
+        $('.areas-wrapper .update-in-progress').show();
+
         $.ajax({
             type: "POST",
             url: route_areas_display,
             data: data,
             success: function(data) {
                 data = JSON.parse(data);
+
+                $('.areas-wrapper .update-in-progress').hide();
 
                 if (data.success) {
                     var area = $('#structure .area[data-id="' + area_id + '"]');
@@ -198,6 +224,10 @@ $(document).ready(function() {
                     var label_error = $('<p class="alert alert-danger">' + data.error + '</p>');
                     $('#structure .areas-wrapper').after(label_error);
                     label_error.fadeIn().delay(2000).fadeOut();
+                }
+
+                if (data.new_page_version) {
+                    reload_page_new_version();
                 }
             }
         });
@@ -223,11 +253,20 @@ function init_area_sortable() {
                 'areas': JSON.stringify($(this).sortable('toArray')),
                 '_token': $('input[name="_token"]').val()
             }
+            $('.areas-wrapper .update-in-progress').show();
 
             $.ajax({
                 data: data,
                 type: 'POST',
-                url: route_areas_update_order
+                url: route_areas_update_order,
+                success: function(data) {
+                    $('.areas-wrapper .update-in-progress').hide();
+
+                    data = JSON.parse(data);
+                    if (data.new_page_version) {
+                        reload_page_new_version();
+                    }
+                }
             });
         },
         tolerance: 'pointer'
@@ -257,11 +296,27 @@ function init_area_resizable() {
                 'width': area.attr('data-width'),
                 '_token': $('input[name="_token"]').val()
             }
+
+            $('.areas-wrapper .update-in-progress').show();
+
             $.ajax({
                 type: "POST",
                 url: route_areas_update_infos,
                 data: input_data,
+                success: function(data) {
+                    $('.areas-wrapper .update-in-progress').hide();
+
+                    data = JSON.parse(data);
+                    if (data.new_page_version) {
+                        reload_page_new_version();
+                    }
+                }
             });
         }
     });
+}
+
+function reload_page_new_version() {
+    alert('New version detected, the page is going to reload');
+    window.location.reload()
 }

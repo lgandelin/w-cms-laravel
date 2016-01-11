@@ -120,6 +120,10 @@ $(document).ready(function() {
                     label_error.fadeIn().delay(2000).fadeOut();
                     button.val('Submit');
                 }
+
+                if (data.new_page_version) {
+                    reload_page_new_version();
+                }
             }
         });
     });

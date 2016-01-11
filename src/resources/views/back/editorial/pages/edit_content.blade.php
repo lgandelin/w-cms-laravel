@@ -89,7 +89,12 @@
         @endif
     </div>
     <!-- Blocks content -->
-    <input type="button" class="btn-publish btn btn-success pull-right" value="{{ trans('w-cms-laravel::generic.publish') }}" data-page-uri="{{ $page->uri }}" />
+    <!--<input type="button" class="btn-publish btn btn-success pull-right" value="{{ trans('w-cms-laravel::generic.publish') }}" data-page-uri="{{ $page->uri }}" />-->
+
+    <p>
+        <strong>Version number : </strong> <span class="badge">{{ $current_version->number }}</span><br/>
+        <strong>Draft version number : </strong> <span class="badge">{{ $draft_version->number }}</span>
+    </p>
 </div>
 <!-- CONTENT -->
 

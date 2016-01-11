@@ -44,6 +44,13 @@
                         {{ trans('w-cms-laravel::header.medias') }}
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{ route('back_media_formats_index') }}">
+                        <span class="icon glyphicon glyphicon-inbox"></span>
+                        {{ trans('w-cms-laravel::header.media_formats') }}
+                    </a>
+                </li>
             </ul>
 
 		</div>
