@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Interactors\ArticleCategories\CreateArticleCategoryInteractor;
 use Webaccess\WCMSCore\Interactors\ArticleCategories\DeleteArticleCategoryInteractor;
 use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
@@ -28,8 +29,8 @@ class ArticleCategoryController extends AdminController
     public function store()
     {
         $articleCategoryStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'description' => \Input::get('description'),
+            'name' => Input::get('name'),
+            'description' => Input::get('description'),
             'lang_id' => $this->getLangID(),
         ]);
 
@@ -58,10 +59,10 @@ class ArticleCategoryController extends AdminController
 
     public function update()
     {
-        $articleCategoryID = \Input::get('ID');
+        $articleCategoryID = Input::get('ID');
         $articleCategoryStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'description' => \Input::get('description'),
+            'name' => Input::get('name'),
+            'description' => Input::get('description'),
         ]);
 
         try {

@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\General;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Interactors\Users\CreateUserInteractor;
 use Webaccess\WCMSCore\Interactors\Users\DeleteUserInteractor;
 use Webaccess\WCMSCore\Interactors\Users\GetUserInteractor;
@@ -28,11 +29,11 @@ class UserController extends AdminController
     public function store()
     {
         $userStructure = new DataStructure([
-            'login' => \Input::get('login'),
-            'password' => (\Input::get('password')) ? sha1(\Input::get('password')) : null,
-            'last_name' => \Input::get('last_name'),
-            'first_name' => \Input::get('first_name'),
-            'email' => \Input::get('email'),
+            'login' => Input::get('login'),
+            'password' => (Input::get('password')) ? sha1(Input::get('password')) : null,
+            'last_name' => Input::get('last_name'),
+            'first_name' => Input::get('first_name'),
+            'email' => Input::get('email'),
         ]);
         
         try {
@@ -60,13 +61,13 @@ class UserController extends AdminController
 
     public function update()
     {
-        $userID = \Input::get('ID');
+        $userID = Input::get('ID');
         $userStructure = new DataStructure([
-            'login' => \Input::get('login'),
-            'password' => (\Input::get('password')) ? \Hash::make(\Input::get('password')) : null,
-            'last_name' => \Input::get('last_name'),
-            'first_name' => \Input::get('first_name'),
-            'email' => \Input::get('email'),
+            'login' => Input::get('login'),
+            'password' => (Input::get('password')) ? \Hash::make(Input::get('password')) : null,
+            'last_name' => Input::get('last_name'),
+            'first_name' => Input::get('first_name'),
+            'email' => Input::get('email'),
         ]);
 
         try {

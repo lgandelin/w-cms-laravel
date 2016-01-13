@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Areas\CreateAreaInteractor;
 use Webaccess\WCMSCore\Interactors\Areas\DeleteAreaInteractor;
@@ -27,7 +28,7 @@ class AreaController extends AdminController
 
     public function get()
     {
-        $pageID = \Input::get('pageID');
+        $pageID = Input::get('pageID');
         $page = (new GetPageInteractor())->getPageByID($pageID, true);
         $draftVersion = Context::get('version_repository')->findByID($page->draftVersionID);
 
@@ -48,7 +49,7 @@ class AreaController extends AdminController
     public function create()
     {
         $areaStructure = new DataStructure();
-        foreach (\Input::all() as $key => $value) {
+        foreach (Input::all() as $key => $value) {
             $areaStructure->$key = $value;
         }
 
@@ -64,14 +65,14 @@ class AreaController extends AdminController
 
     public function update_infos()
     {
-        $areaID = \Input::get('ID');
+        $areaID = Input::get('ID');
 
         $areaStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'width' => \Input::get('width'),
-            'height' => \Input::get('height'),
-            'class' => \Input::get('class'),
-            'is_master' => \Input::get('is_master'),
+            'name' => Input::get('name'),
+            'width' => Input::get('width'),
+            'height' => Input::get('height'),
+            'class' => Input::get('class'),
+            'is_master' => Input::get('is_master'),
         ]);
 
         try {
@@ -85,7 +86,7 @@ class AreaController extends AdminController
     public function update_order()
     {
         $newPageVersion = false;
-        $areas = json_decode(\Input::get('areas'));
+        $areas = json_decode(Input::get('areas'));
         for ($i = 0; $i < sizeof($areas); $i++) {
             $areaID = preg_replace('/a-/', '', $areas[$i]);
 
@@ -108,9 +109,9 @@ class AreaController extends AdminController
     public function display()
     {
         try {
-            $areaID = \Input::get('ID');
+            $areaID = Input::get('ID');
             $areaStructure = new DataStructure([
-                'display'=> \Input::get('display')
+                'display'=> Input::get('display')
             ]);
 
             $newPageVersion = (new UpdateAreaInteractor())->run($areaID, $areaStructure);
@@ -122,7 +123,7 @@ class AreaController extends AdminController
 
     public function delete()
     {
-        $areaID = \Input::get('ID');
+        $areaID = Input::get('ID');
 
         try {
             $newPageVersion = (new DeleteAreaInteractor())->run($areaID);

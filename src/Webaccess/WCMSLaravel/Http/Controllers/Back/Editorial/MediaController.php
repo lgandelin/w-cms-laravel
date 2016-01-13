@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Interactors\MediaFolders\GetMediaFolderInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFolders\GetMediaFoldersInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatInteractor;
@@ -30,7 +31,7 @@ class MediaController extends AdminController
     public function getAll()
     {
         try {
-            $mediaFolderID = \Input::get('mediaFolderID');
+            $mediaFolderID = Input::get('mediaFolderID');
             $breadcrumb = [];
             if ($mediaFolderID) {
                 $mediaFolder = (new GetMediaFolderInteractor())->getMediaFolderByID($mediaFolderID, true);
@@ -61,8 +62,8 @@ class MediaController extends AdminController
     public function moveInMediaFolder()
     {
         try {
-            $mediaID = \Input::get('mediaID');
-            $mediaFolderID = \Input::get('mediaFolderID');
+            $mediaID = Input::get('mediaID');
+            $mediaFolderID = Input::get('mediaFolderID');
 
             $dataStructure = new DataStructure([
                 'mediaFolderID' => $mediaFolderID,
@@ -87,13 +88,13 @@ class MediaController extends AdminController
 
     public function store()
     {
-        $fileName = basename(\Input::get('fileName'));
+        $fileName = basename(Input::get('fileName'));
 
         $mediaStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'alt' => \Input::get('alt'),
-            'title' => \Input::get('title'),
-            'mediaFolderID' => \Input::get('mediaFolderID'),
+            'name' => Input::get('name'),
+            'alt' => Input::get('alt'),
+            'title' => Input::get('title'),
+            'mediaFolderID' => Input::get('mediaFolderID'),
         ]);
 
         try {
@@ -156,21 +157,21 @@ class MediaController extends AdminController
 
     public function update()
     {
-        $mediaID = \Input::get('ID');
-        $fileName = \Input::get('file_name');
+        $mediaID = Input::get('ID');
+        $fileName = Input::get('file_name');
 
-        if (!$fileName && \Input::file('image')) {
-            $type = preg_replace('/image\//', '', \Input::file('image')->getMimeType());
+        if (!$fileName && Input::file('image')) {
+            $type = preg_replace('/image\//', '', Input::file('image')->getMimeType());
             $fileName = $mediaID . '.' . $type;
         }
 
         $oldMedia = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
 
         $mediaStructure = new DataStructure([
-            'name' => \Input::get('name'),
+            'name' => Input::get('name'),
             'fileName' => $fileName,
-            'alt' => \Input::get('alt'),
-            'title' => \Input::get('title'),
+            'alt' => Input::get('alt'),
+            'title' => Input::get('title'),
         ]);
 
         try {
@@ -197,7 +198,7 @@ class MediaController extends AdminController
 
     public function delete()
     {
-        $mediaID = \Input::get('ID');
+        $mediaID = Input::get('ID');
         try {
             (new DeleteMediaInteractor())->run($mediaID);
 
@@ -220,8 +221,8 @@ class MediaController extends AdminController
 
     /*public function upload()
     {
-        $mediaID = \Input::get('ID');
-        $fileName = \Input::file('image')->getClientOriginalName();
+        $mediaID = Input::get('ID');
+        $fileName = Input::file('image')->getClientOriginalName();
 
         $mediaStructure = new DataStructure([
             'fileName' => $fileName,
@@ -250,10 +251,10 @@ class MediaController extends AdminController
 
     public function upload()
     {
-        $fileName = \Input::file('image')->getClientOriginalName();
+        $fileName = Input::file('image')->getClientOriginalName();
 
         try {
-            \Input::file('image')->move(public_path() . '/' . Shortcut::get_uploads_folder() . 'temp/', $fileName);
+            Input::file('image')->move(public_path() . '/' . Shortcut::get_uploads_folder() . 'temp/', $fileName);
 
             return \Response::json(
                 array(
@@ -273,12 +274,12 @@ class MediaController extends AdminController
 
     public function create_and_upload()
     {
-        $fileName = \Input::file('image')->getClientOriginalName();
+        $fileName = Input::file('image')->getClientOriginalName();
 
         $mediaStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'alt' => \Input::get('alt'),
-            'title' => \Input::get('title'),
+            'name' => Input::get('name'),
+            'alt' => Input::get('alt'),
+            'title' => Input::get('title'),
             'fileName' => $fileName,
         ]);
 
@@ -303,12 +304,12 @@ class MediaController extends AdminController
 
     public function crop()
     {
-        $mediaID = \Input::get('ID');
-        $mediaFormatID = \Input::get('media_format_id');
-        $width = \Input::get('width');
-        $height = \Input::get('height');
-        $x = \Input::get('x');
-        $y = \Input::get('y');
+        $mediaID = Input::get('ID');
+        $mediaFormatID = Input::get('media_format_id');
+        $width = Input::get('width');
+        $height = Input::get('height');
+        $x = Input::get('x');
+        $y = Input::get('y');
 
         $media = (new GetMediaInteractor())->getMediaByID($mediaID, null, true);
         $mediaFormat = (new GetMediaFormatInteractor())->getMediaFormatByID($mediaFormatID, true);
@@ -339,9 +340,9 @@ class MediaController extends AdminController
     {
         $mediaFormatsImages = [];
         //Upload new image
-        if (\Input::file('image')) {
+        if (Input::file('image')) {
             array_map('unlink', glob($this->getMediaFolder($mediaID) . '*'));
-            \Input::file('image')->move($this->getMediaFolder($mediaID), $fileName);
+            Input::file('image')->move($this->getMediaFolder($mediaID), $fileName);
 
             //Upload image foreach media format
             $mediaFormats = (new GetMediaFormatsInteractor())->getAll(true);

@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\General;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Interactors\Langs\CreateLangInteractor;
 use Webaccess\WCMSCore\Interactors\Langs\DeleteLangInteractor;
 use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
@@ -28,10 +29,10 @@ class LangController extends AdminController
     public function store()
     {
         $langStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'prefix' => \Input::get('prefix'),
-            'code' => \Input::get('code'),
-            'is_default' => \Input::get('is_default'),
+            'name' => Input::get('name'),
+            'prefix' => Input::get('prefix'),
+            'code' => Input::get('code'),
+            'is_default' => Input::get('is_default'),
         ]);
         
         try {
@@ -59,12 +60,12 @@ class LangController extends AdminController
 
     public function update()
     {
-        $langID = \Input::get('ID');
+        $langID = Input::get('ID');
         $langStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'prefix' => \Input::get('prefix'),
-            'code' => \Input::get('code'),
-            'is_default' => \Input::get('is_default'),
+            'name' => Input::get('name'),
+            'prefix' => Input::get('prefix'),
+            'code' => Input::get('code'),
+            'is_default' => Input::get('is_default'),
         ]);
 
         try {

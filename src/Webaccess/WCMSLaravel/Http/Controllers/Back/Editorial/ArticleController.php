@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
 use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoryInteractor;
 use Webaccess\WCMSCore\Interactors\Articles\CreateArticleInteractor;
@@ -55,16 +56,16 @@ class ArticleController extends AdminController
 
     public function store()
     {
-        $publicationDate = \DateTime::createFromFormat('d/m/Y H:i', \Input::get('publication_date'));
+        $publicationDate = \DateTime::createFromFormat('d/m/Y H:i', Input::get('publication_date'));
         $articleStructure = new DataStructure([
-            'title' => \Input::get('title'),
-            'summary' => \Input::get('summary'),
-            'text' => \Input::get('text'),
+            'title' => Input::get('title'),
+            'summary' => Input::get('summary'),
+            'text' => Input::get('text'),
             'lang_id' => $this->getLangID(),
-            'category_id' => \Input::get('category_id'),
-            'author_id' => \Input::get('author_id'),
-            'page_id' => \Input::get('page_id'),
-            'media_id' => \Input::get('media_id'),
+            'category_id' => Input::get('category_id'),
+            'author_id' => Input::get('author_id'),
+            'page_id' => Input::get('page_id'),
+            'media_id' => Input::get('media_id'),
             'publication_date' => $publicationDate->format('Y-m-d H:i:s'),
         ]);
 
@@ -96,24 +97,24 @@ class ArticleController extends AdminController
 
     public function update()
     {
-        $articleID = \Input::get('ID');
-        $publicationDate = \DateTime::createFromFormat('d/m/Y H:i', \Input::get('publication_date'));
+        $articleID = Input::get('ID');
+        $publicationDate = \DateTime::createFromFormat('d/m/Y H:i', Input::get('publication_date'));
         $articleStructure = new DataStructure([
-            'title' => \Input::get('title'),
-            'summary' => \Input::get('summary'),
-            'text' => \Input::get('text'),
-            'category_id' => \Input::get('category_id'),
-            'author_id' => \Input::get('author_id'),
-            'page_id' => \Input::get('page_id'),
-            'media_id' => \Input::get('media_id'),
+            'title' => Input::get('title'),
+            'summary' => Input::get('summary'),
+            'text' => Input::get('text'),
+            'category_id' => Input::get('category_id'),
+            'author_id' => Input::get('author_id'),
+            'page_id' => Input::get('page_id'),
+            'media_id' => Input::get('media_id'),
             'publication_date' => $publicationDate->format('Y-m-d H:i:s'),
         ]);
         try {
             (new UpdateArticleInteractor())->run($articleID, $articleStructure);
 
             //Create associated page
-            if (\Input::get('create_associated_page') && \Input::get('page_id')) {
-                $pageStructure = (new GetPageInfoFromMasterInteractor())->getPageStructure(\Input::get('page_id'), \Input::get('title'));
+            if (Input::get('create_associated_page') && Input::get('page_id')) {
+                $pageStructure = (new GetPageInfoFromMasterInteractor())->getPageStructure(Input::get('page_id'), Input::get('title'));
 
                 //Replace "ghost" block with the article block
                 $articleStructure = new ArticleBlockStructure([

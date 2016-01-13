@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Structure;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
 use Webaccess\WCMSCore\Interactors\Articles\GetArticlesInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\CreateBlockInteractor;
@@ -46,43 +47,43 @@ class BlockController extends AdminController
     public function store()
     {
         $blockStructure = new HTMLBlockStructure();
-        $blockStructure->name = \Input::get('name');
-        $blockStructure->class = \Input::get('class');
+        $blockStructure->name = Input::get('name');
+        $blockStructure->class = Input::get('class');
 
         try {
             $blockID = (new CreateBlockInteractor())->run($blockStructure);
 
-            if (\Input::exists('menu_id'))
+            if (Input::exists('menu_id'))
                 $blockStructure = new MenuBlockStructure([
-                    'menu_id' => (\Input::get('menu_id')) ? \Input::get('menu_id') : null,
+                    'menu_id' => (Input::get('menu_id')) ? Input::get('menu_id') : null,
                     'type' => 'menu'
                 ]);
-            elseif (\Input::exists('html'))
+            elseif (Input::exists('html'))
                 $blockStructure = new HTMLBlockStructure([
-                    'html' => (\Input::get('html')) ? \Input::get('html') : null,
+                    'html' => (Input::get('html')) ? Input::get('html') : null,
                     'type' => 'html'
                 ]);
-            elseif (\Input::exists('view_file'))
+            elseif (Input::exists('view_file'))
                 $blockStructure = new ViewFileBlockStructure([
-                    'view_file' => (\Input::get('view_file')) ? \Input::get('view_file') : null,
+                    'view_file' => (Input::get('view_file')) ? Input::get('view_file') : null,
                     'type' => 'view_file'
                 ]);
-            elseif (\Input::exists('article_id'))
+            elseif (Input::exists('article_id'))
                 $blockStructure = new ArticleBlockStructure([
-                    'article_id' => (\Input::get('article_id')) ? \Input::get('article_id') : null,
+                    'article_id' => (Input::get('article_id')) ? Input::get('article_id') : null,
                     'type' => 'article'
                 ]);
-            elseif (\Input::exists('article_list_category_id') || \Input::exists('article_list_order') || \Input::exists('article_list_number'))
+            elseif (Input::exists('article_list_category_id') || Input::exists('article_list_order') || Input::exists('article_list_number'))
                 $blockStructure = new ArticleListBlockStructure([
-                    'article_list_category_id' => (\Input::get('article_list_category_id')) ? \Input::get('article_list_category_id') : null,
-                    'article_list_order' => (\Input::get('article_list_order')) ? \Input::get('article_list_order') : null,
-                    'article_list_number' => (\Input::get('article_list_number')) ? \Input::get('article_list_number') : null,
+                    'article_list_category_id' => (Input::get('article_list_category_id')) ? Input::get('article_list_category_id') : null,
+                    'article_list_order' => (Input::get('article_list_order')) ? Input::get('article_list_order') : null,
+                    'article_list_number' => (Input::get('article_list_number')) ? Input::get('article_list_number') : null,
                     'type' => 'article_list'
                 ]);
-            elseif (\Input::exists('media_id'))
+            elseif (Input::exists('media_id'))
                 $blockStructure = new MediaBlockStructure([
-                    'media_id' => (\Input::get('media_id')) ? \Input::get('media_id') : null,
-                    'media_link' => (\Input::get('media_link')) ? \Input::get('media_link') : null,
+                    'media_id' => (Input::get('media_id')) ? Input::get('media_id') : null,
+                    'media_link' => (Input::get('media_link')) ? Input::get('media_link') : null,
                     'type' => 'media'
                 ]);
 
@@ -126,47 +127,47 @@ class BlockController extends AdminController
 
     public function update()
     {
-        $blockID = \Input::get('ID');
+        $blockID = Input::get('ID');
 
         $blockStructure = new HTMLBlockStructure();
-        if (\Input::exists('menu_id'))
+        if (Input::exists('menu_id'))
             $blockStructure = new MenuBlockStructure([
-                'menu_id' => (\Input::get('menu_id')) ? \Input::get('menu_id') : null,
+                'menu_id' => (Input::get('menu_id')) ? Input::get('menu_id') : null,
                 'type' => 'menu'
             ]);
-        elseif (\Input::exists('html'))
+        elseif (Input::exists('html'))
             $blockStructure = new HTMLBlockStructure([
-                'html' => (\Input::get('html')) ? \Input::get('html') : null,
+                'html' => (Input::get('html')) ? Input::get('html') : null,
                 'type' => 'html'
             ]);
-        elseif (\Input::exists('view_file'))
+        elseif (Input::exists('view_file'))
             $blockStructure = new ViewFileBlockStructure([
-                'view_file' => (\Input::get('view_file')) ? \Input::get('view_file') : null,
+                'view_file' => (Input::get('view_file')) ? Input::get('view_file') : null,
                 'type' => 'view_file'
             ]);
-        elseif (\Input::exists('article_id'))
+        elseif (Input::exists('article_id'))
             $blockStructure = new ArticleBlockStructure([
-                'article_id' => (\Input::get('article_id')) ? \Input::get('article_id') : null,
+                'article_id' => (Input::get('article_id')) ? Input::get('article_id') : null,
                 'type' => 'article'
             ]);
-        elseif (\Input::exists('article_list_category_id') || \Input::exists('article_list_order') || \Input::exists('article_list_number'))
+        elseif (Input::exists('article_list_category_id') || Input::exists('article_list_order') || Input::exists('article_list_number'))
             $blockStructure = new ArticleListBlockStructure([
-                'article_list_category_id' => (\Input::get('article_list_category_id')) ? \Input::get('article_list_category_id') : null,
-                'article_list_order' => (\Input::get('article_list_order')) ? \Input::get('article_list_order') : null,
-                'article_list_number' => (\Input::get('article_list_number')) ? \Input::get('article_list_number') : null,
+                'article_list_category_id' => (Input::get('article_list_category_id')) ? Input::get('article_list_category_id') : null,
+                'article_list_order' => (Input::get('article_list_order')) ? Input::get('article_list_order') : null,
+                'article_list_number' => (Input::get('article_list_number')) ? Input::get('article_list_number') : null,
                 'type' => 'article_list'
             ]);
-        elseif (\Input::exists('media_id'))
+        elseif (Input::exists('media_id'))
             $blockStructure = new MediaBlockStructure([
-                'media_id' => (\Input::get('media_id')) ? \Input::get('media_id') : null,
-                'media_link' => (\Input::get('media_link')) ? \Input::get('media_link') : null,
-                'media_format_id' => (\Input::get('media_format_id')) ? \Input::get('media_format_id') : null,
+                'media_id' => (Input::get('media_id')) ? Input::get('media_id') : null,
+                'media_link' => (Input::get('media_link')) ? Input::get('media_link') : null,
+                'media_format_id' => (Input::get('media_format_id')) ? Input::get('media_format_id') : null,
                 'type' => 'media'
             ]);
 
         $blockStructure->ID = $blockID;
-        $blockStructure->name = \Input::get('name');
-        $blockStructure->class = \Input::get('class');
+        $blockStructure->name = Input::get('name');
+        $blockStructure->class = Input::get('class');
 
         try {
             (new UpdateBlockInteractor())->run($blockID, $blockStructure);

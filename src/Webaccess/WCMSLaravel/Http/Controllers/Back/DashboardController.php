@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Interactors\Users\GetUserInteractor;
 use Webaccess\WCMSCore\Interactors\Users\LoginUserInteractor;
 
@@ -19,8 +20,8 @@ class DashboardController extends AdminController
 
     public function login()
     {
-        $login = \Input::get('login');
-        $password = \Input::get('password');
+        $login = Input::get('login');
+        $password = Input::get('password');
 
         try {
             if ((new LoginUserInteractor())->run($login, $password)) {

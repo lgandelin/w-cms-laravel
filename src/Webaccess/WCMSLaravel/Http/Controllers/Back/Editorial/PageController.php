@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
@@ -43,13 +44,13 @@ class PageController extends AdminController
 	{
         $lang = (new GetLangInteractor())->getLangByID($this->getLangID(), true);
         $pageStructure = new DataStructure([
-		    'name' => \Input::get('name'),
-		    'uri' => $lang->prefix . \Input::get('uri'),
+		    'name' => Input::get('name'),
+		    'uri' => $lang->prefix . Input::get('uri'),
 		    'lang_id' => $this->getLangID(),
-		    'identifier' => \Input::get('identifier'),
-            'master_page_id' => \Input::get('master_page_id'),
-            'is_master' => \Input::get('is_master'),
-            'is_visible' => \Input::get('is_visible'),
+		    'identifier' => Input::get('identifier'),
+            'master_page_id' => Input::get('master_page_id'),
+            'is_master' => Input::get('is_master'),
+            'is_visible' => Input::get('is_visible'),
 		]);
 
 		try {
@@ -121,12 +122,12 @@ class PageController extends AdminController
 
     public function update_infos()
     {
-        $pageID = \Input::get('ID');
+        $pageID = Input::get('ID');
         $pageStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'identifier' => \Input::get('identifier'),
-            'is_master' => \Input::get('is_master'),
-            'is_visible' => \Input::get('is_visible'),
+            'name' => Input::get('name'),
+            'identifier' => Input::get('identifier'),
+            'is_master' => Input::get('is_master'),
+            'is_visible' => Input::get('is_visible'),
         ]);
 
         try {
@@ -139,13 +140,13 @@ class PageController extends AdminController
 
     public function update_seo()
     {
-        $pageID = \Input::get('ID');
+        $pageID = Input::get('ID');
         $pageStructure = new DataStructure([
-            'uri' => \Input::get('uri'),
-            'meta_title' => \Input::get('meta_title'),
-            'meta_description' => \Input::get('meta_description'),
-            'meta_keywords' => \Input::get('meta_keywords'),
-            'is_indexed' => filter_var(\Input::get('is_indexed'), FILTER_VALIDATE_BOOLEAN)
+            'uri' => Input::get('uri'),
+            'meta_title' => Input::get('meta_title'),
+            'meta_description' => Input::get('meta_description'),
+            'meta_keywords' => Input::get('meta_keywords'),
+            'is_indexed' => filter_var(Input::get('is_indexed'), FILTER_VALIDATE_BOOLEAN)
         ]);
 
         try {
@@ -181,7 +182,7 @@ class PageController extends AdminController
     public function clear_cache()
     {
         if (env('CACHE_ENABLED')) {
-            \Cache::forget(\Input::get('uri'));
+            \Cache::forget(Input::get('uri'));
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Interactors\MenuItems\GetMenuItemsInteractor;
 use Webaccess\WCMSCore\Interactors\Menus\CreateMenuInteractor;
 use Webaccess\WCMSCore\Interactors\Menus\DeleteMenuInteractor;
@@ -31,8 +32,8 @@ class MenuController extends AdminController
     public function store()
     {
         $menuStructure = new DataStructure([
-            'identifier' => \Input::get('identifier'),
-            'name' => \Input::get('name'),
+            'identifier' => Input::get('identifier'),
+            'name' => Input::get('name'),
             'lang_id' => $this->getLangID()
         ]);
         
@@ -65,10 +66,10 @@ class MenuController extends AdminController
 
     public function update()
     {
-        $menuID = \Input::get('ID');
+        $menuID = Input::get('ID');
         $menuStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'identifier' => \Input::get('identifier'),
+            'name' => Input::get('name'),
+            'identifier' => Input::get('identifier'),
         ]);
 
         try {

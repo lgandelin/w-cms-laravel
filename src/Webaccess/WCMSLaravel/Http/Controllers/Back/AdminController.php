@@ -11,12 +11,12 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->beforeFilter(function()
+        /*$this->beforeFilter(function()
         {
             if (!\Session::has('user')) {
                 return \Redirect::to('admin/login');
             }
-        }, array('except' => ['login_index', 'login']));
+        }, array('except' => ['login_index', 'login']));*/
 
         //Global variables
         \View::share('user', \Session::get('user'));

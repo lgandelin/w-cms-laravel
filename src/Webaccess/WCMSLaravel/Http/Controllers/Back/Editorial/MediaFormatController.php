@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Interactors\MediaFormats\CreateMediaFormatInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFormats\DeleteMediaFormatInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFormats\GetMediaFormatInteractor;
@@ -28,9 +29,9 @@ class MediaFormatController extends AdminController
     public function store()
     {
         $mediaFormatStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'width' => \Input::get('width'),
-            'height' => \Input::get('height'),
+            'name' => Input::get('name'),
+            'width' => Input::get('width'),
+            'height' => Input::get('height'),
         ]);
 
         try {
@@ -60,11 +61,11 @@ class MediaFormatController extends AdminController
 
     public function update()
     {
-        $mediaFormatID = \Input::get('ID');
+        $mediaFormatID = Input::get('ID');
         $mediaFormatStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'width' => \Input::get('width'),
-            'height' => \Input::get('height'),
+            'name' => Input::get('name'),
+            'width' => Input::get('width'),
+            'height' => Input::get('height'),
         ]);
 
         try {

@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Interactors\MediaFolders\CreateMediaFolderInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFolders\DeleteMediaFolderInteractor;
 use Webaccess\WCMSCore\Interactors\MediaFolders\GetMediaFolderInteractor;
@@ -14,8 +15,8 @@ class MediaFolderController extends AdminController
     public function store()
     {
         $mediaFolderStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'parentID' => \Input::get('parent_id'),
+            'name' => Input::get('name'),
+            'parentID' => Input::get('parent_id'),
         ]);
 
         try {
@@ -40,8 +41,8 @@ class MediaFolderController extends AdminController
     public function moveInMediaFolder()
     {
         try {
-            $mediaFolderID = \Input::get('mediaFolderID');
-            $parentMediaFolderID = \Input::get('parentMediaFolderID');
+            $mediaFolderID = Input::get('mediaFolderID');
+            $parentMediaFolderID = Input::get('parentMediaFolderID');
 
             $dataStructure = new DataStructure([
                 'parentID' => $parentMediaFolderID,
@@ -61,10 +62,10 @@ class MediaFolderController extends AdminController
 
     public function update()
     {
-        $mediaFolderID = \Input::get('ID');
+        $mediaFolderID = Input::get('ID');
         $mediaFolderStructure = new DataStructure([
-            'name' => \Input::get('name'),
-            'parentID' => \Input::get('parent_id'),
+            'name' => Input::get('name'),
+            'parentID' => Input::get('parent_id'),
         ]);
 
         try {
@@ -79,7 +80,7 @@ class MediaFolderController extends AdminController
 
     public function delete()
     {
-        $mediaFolderID = \Input::get('ID');
+        $mediaFolderID = Input::get('ID');
         try {
             (new DeleteMediaFolderInteractor())->run($mediaFolderID);
 

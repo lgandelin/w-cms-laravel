@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Interactors\MenuItems\CreateMenuItemInteractor;
 use Webaccess\WCMSCore\Interactors\MenuItems\DeleteMenuItemInteractor;
 use Webaccess\WCMSCore\Interactors\MenuItems\GetMenuItemInteractor;
@@ -14,13 +15,13 @@ class MenuItemController extends AdminController
     public function create()
     {
         $menuItemStructure = new DataStructure([
-            'menu_id' => \Input::get('menuID'),
-            'label' => \Input::get('label'),
+            'menu_id' => Input::get('menuID'),
+            'label' => Input::get('label'),
             'order' => 999,
-            'page_id' => \Input::get('pageID'),
-            'class' => \Input::get('class'),
+            'page_id' => Input::get('pageID'),
+            'class' => Input::get('class'),
             'display' => 0,
-            'external_url' => \Input::get('externalURL'),
+            'external_url' => Input::get('externalURL'),
         ]);
 
         try {
@@ -44,12 +45,12 @@ class MenuItemController extends AdminController
 
     public function update_infos()
     {
-        $menuItemID = \Input::get('ID');
+        $menuItemID = Input::get('ID');
         $menuItemStructure = new DataStructure([
-            'label' => \Input::get('label'),
-            'page_id' => \Input::get('pageID'),
-            'class' => \Input::get('class'),
-            'external_url' => \Input::get('externalURL'),
+            'label' => Input::get('label'),
+            'page_id' => Input::get('pageID'),
+            'class' => Input::get('class'),
+            'external_url' => Input::get('externalURL'),
         ]);
 
         try {
@@ -62,7 +63,7 @@ class MenuItemController extends AdminController
 
     public function update_order()
     {
-        $menuItems = json_decode(\Input::get('menu_items'));
+        $menuItems = json_decode(Input::get('menu_items'));
         for ($i = 0; $i < sizeof($menuItems ); $i++) {
             $menuItemID = preg_replace('/mi-/', '', $menuItems[$i]);
             $menuItemStructure = new DataStructure([
@@ -82,9 +83,9 @@ class MenuItemController extends AdminController
     public function display()
     {
         try {
-            $menuItemID = \Input::get('ID');
+            $menuItemID = Input::get('ID');
             $menuItemStructure = new DataStructure([
-                'display'=> \Input::get('display')
+                'display'=> Input::get('display')
             ]);
 
             (new UpdateMenuItemInteractor())->run($menuItemID, $menuItemStructure);
@@ -96,7 +97,7 @@ class MenuItemController extends AdminController
 
     public function delete()
     {
-        $menuItemID = \Input::get('ID');
+        $menuItemID = Input::get('ID');
 
         try {
             (new DeleteMenuItemInteractor())->run($menuItemID);

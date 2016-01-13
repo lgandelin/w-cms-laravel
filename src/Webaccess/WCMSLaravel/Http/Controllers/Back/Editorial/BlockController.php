@@ -2,6 +2,7 @@
 
 namespace Webaccess\WCMSLaravel\Http\Controllers\Back\Editorial;
 
+use Illuminate\Support\Facades\Input;
 use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Blocks\CreateBlockInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\DeleteBlockInteractor;
@@ -32,7 +33,7 @@ class BlockController extends AdminController
 
     public function get()
     {
-        $areaID = \Input::get('areaID');
+        $areaID = Input::get('areaID');
 
         try {
             $blocks = (new GetBlocksInteractor())->getAllByAreaID($areaID, true);
@@ -51,7 +52,7 @@ class BlockController extends AdminController
     public function create()
     {
         $blockStructure = new DataStructure();
-        foreach (\Input::all() as $key => $value) {
+        foreach (Input::all() as $key => $value) {
             $blockStructure->$key = $value;
         }
 
@@ -71,10 +72,10 @@ class BlockController extends AdminController
 
     public function update_content()
     {
-        $blockID = \Input::get('ID');
+        $blockID = Input::get('ID');
 
         $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
-        foreach (\Input::all() as $key => $value) {
+        foreach (Input::all() as $key => $value) {
             $blockStructure->$key = $value;
         }
 
@@ -92,14 +93,14 @@ class BlockController extends AdminController
 
     public function update_infos()
     {
-        $blockID = \Input::get('ID');
+        $blockID = Input::get('ID');
 
         //Update block type if necessary
-        (new UpdateBlockTypeInteractor())->run($blockID, \Input::get('type'));
+        (new UpdateBlockTypeInteractor())->run($blockID, Input::get('type'));
 
         //Update block infos
         $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
-        foreach (\Input::all() as $key => $value) {
+        foreach (Input::all() as $key => $value) {
             $blockStructure->$key = $value;
         }
 
@@ -118,9 +119,9 @@ class BlockController extends AdminController
     public function update_order()
     {
         try {
-            $blockID = \Input::get('block_id');
+            $blockID = Input::get('block_id');
             $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
-            $blockStructure->areaID = \Input::get('area_id');
+            $blockStructure->areaID = Input::get('area_id');
 
             $newPageVersion = (new UpdateBlockInteractor())->run($blockID, $blockStructure, env('VERSIONS_ENABLED'));
         } catch (\Exception $e) {
@@ -128,7 +129,7 @@ class BlockController extends AdminController
         }
 
         $newPageVersion = false;
-        $blocks = json_decode(\Input::get('blocks'));
+        $blocks = json_decode(Input::get('blocks'));
         for ($i = 0; $i < sizeof($blocks); $i++) {
             $blockID = preg_replace('/b-/', '', $blocks[$i]);
             $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
@@ -147,9 +148,9 @@ class BlockController extends AdminController
     public function display()
     {
         try {
-            $blockID = \Input::get('ID');
+            $blockID = Input::get('ID');
             $blockStructure = (new GetBlockInteractor())->getBlockByID($blockID, true);
-            $blockStructure->display = \Input::get('display');
+            $blockStructure->display = Input::get('display');
 
             $page = (new GetPageInteractor())->getPageFromBlockID($blockID);
             $version = Context::get('version_repository')->findByID($page->getDraftVersionID());
@@ -163,7 +164,7 @@ class BlockController extends AdminController
 
     public function delete()
     {
-        $blockID = \Input::get('ID');
+        $blockID = Input::get('ID');
 
         try {
             $newPageVersion = (new DeleteBlockInteractor())->run($blockID, env('VERSIONS_ENABLED'));
